@@ -145,10 +145,28 @@ body{animation:pageG 20s infinite}
 .hero__greeting{font-family:var(--mono);font-size:.9rem;color:var(--red);margin-bottom:16px;opacity:0;animation:fadeUp .8s var(--ease) .3s forwards}
 
 /* ── STRANGER THINGS TITLE ── */
-.st-title{font-family:var(--st-font);text-transform:uppercase;letter-spacing:.06em;font-size:clamp(2.2rem,8vw,5rem);font-weight:700;line-height:1.1;margin-bottom:24px}
-.st-l{display:inline-block;opacity:0;color:var(--red);text-shadow:0 0 7px rgba(204,0,0,.8),0 0 15px rgba(204,0,0,.5),0 0 30px rgba(204,0,0,.3),0 0 60px rgba(204,0,0,.12),0 0 100px rgba(204,0,0,.05);animation:stReveal 1.2s ease forwards;animation-delay:calc(var(--d) * .08s + 1.6s)}
-.st-l--space{width:.3em}
-@keyframes stReveal{0%{opacity:0;transform:scale(1.6);filter:brightness(0)}25%{opacity:1;filter:brightness(3)}100%{opacity:1;transform:scale(1);filter:brightness(1)}}
+.st-title{font-family:var(--st-font);text-transform:uppercase;letter-spacing:.06em;font-size:clamp(2.2rem,8vw,5rem);font-weight:700;line-height:1.1;margin-bottom:24px;position:relative}
+.st-l{display:inline-block;opacity:0;color:transparent;-webkit-text-stroke:1.5px var(--red);animation:stFloat 7s cubic-bezier(.2,.05,.2,1) forwards;animation-delay:1.5s;transform-origin:center;will-change:transform,opacity,color,text-shadow}
+.st-l--space{width:.3em;animation:none}
+.st-l:nth-child(1){--tx:-220px;--ty:-120px;--s:3.5}
+.st-l:nth-child(2){--tx:-80px;--ty:180px;--s:2.8}
+.st-l:nth-child(3){--tx:40px;--ty:-220px;--s:4.2}
+.st-l:nth-child(4){--tx:180px;--ty:80px;--s:3.1}
+.st-l:nth-child(5){--tx:120px;--ty:-160px;--s:3.8}
+.st-l:nth-child(6){--tx:260px;--ty:120px;--s:2.5}
+.st-l:nth-child(8){--tx:-220px;--ty:80px;--s:3.9}
+.st-l:nth-child(9){--tx:-120px;--ty:-180px;--s:2.6}
+.st-l:nth-child(10){--tx:0px;--ty:220px;--s:4.5}
+.st-l:nth-child(11){--tx:80px;--ty:-120px;--s:3.2}
+.st-l:nth-child(12){--tx:220px;--ty:180px;--s:3.7}
+.st-l:nth-child(14){--tx:120px;--ty:220px;--s:4.0}
+@keyframes stFloat{
+  0%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(var(--s));color:transparent;-webkit-text-stroke:1.5px var(--red);text-shadow:0 0 0 transparent}
+  15%{opacity:1;transform:translate(calc(var(--tx)*0.8),calc(var(--ty)*0.8)) scale(calc(var(--s)*0.9));color:transparent;-webkit-text-stroke:1.5px var(--red);text-shadow:0 0 20px rgba(204,0,0,0.8)}
+  85%{opacity:1;transform:translate(calc(var(--tx)*0.1),calc(var(--ty)*0.1)) scale(calc(1+(var(--s)-1)*0.1));color:transparent;-webkit-text-stroke:1.5px var(--red);text-shadow:0 0 30px rgba(204,0,0,0.9)}
+  95%{transform:translate(0,0) scale(1);color:transparent;-webkit-text-stroke:1px var(--red);text-shadow:0 0 20px rgba(204,0,0,0.5)}
+  100%{opacity:1;transform:translate(0,0) scale(1);color:var(--red);-webkit-text-stroke:0px var(--red);text-shadow:0 0 10px rgba(204,0,0,.8),0 0 20px rgba(204,0,0,.6),0 0 40px rgba(204,0,0,.4),0 0 80px rgba(204,0,0,.2)}
+}
 
 .hero__role-line{display:flex;align-items:center;justify-content:center;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--text-2);margin-bottom:16px;min-height:2em;opacity:0;animation:fadeUp .8s var(--ease) 3s forwards}
 .hero__role{color:var(--gold);font-weight:600}
