@@ -74,30 +74,30 @@ if(sCanvas){
   animSC();
 }
 
-/* ── NAV & SECTION UNLOCKS ── */
+/* ── NAV ── */
 const nav=$('#nav'),ham=$('#hamburger'),mob=$('#mobileMenu'),navLinks=$$('.nav__link'),sects=$$('section[id]');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>50),{passive:true});
 ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':''});
 $$('.mobile-menu__link').forEach(l=>l.addEventListener('click',()=>{ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow=''}));
 
-/* Section Unlock Observer (Upside Down Descent) */
-const sectionObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      // Trigger a dimension tear flash
-      document.body.classList.add('dim-flash');
-      setTimeout(()=>document.body.classList.remove('dim-flash'),600);
-      
-      // Unlock specific depths
-      if(e.target.id==='projects') document.body.classList.add('depth-breach');
-      if(e.target.id==='experience') document.body.classList.add('depth-upsidedown');
-      if(e.target.id==='contact') document.body.classList.add('depth-vecna');
-    }
-  });
-},{threshold:0.3});
-sects.forEach(s=>sectionObs.observe(s));
 function updNav(){const y=window.scrollY+200;sects.forEach(s=>{const t=s.offsetTop,h=s.offsetHeight,id=s.getAttribute('id');if(y>=t&&y<t+h)navLinks.forEach(l=>l.classList.toggle('active',l.dataset.section===id))})}
 window.addEventListener('scroll',updNav,{passive:true});
+
+/* ── SMOOTH PARALLAX DESCENT ENGINE ── */
+let targetScrollY = 0;
+let currentScrollY = 0;
+function updSmoothProg(){
+  const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;
+  targetScrollY = d>0?s/d:0;
+}
+window.addEventListener('scroll',updSmoothProg,{passive:true});
+
+function smoothParallaxAnim() {
+  currentScrollY += (targetScrollY - currentScrollY) * 0.08;
+  document.body.style.setProperty('--scroll-y', currentScrollY.toFixed(4));
+  requestAnimationFrame(smoothParallaxAnim);
+}
+smoothParallaxAnim();
 
 /* ── SCROLL REVEAL ── */
 const revObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const p=e.target.parentElement;const sibs=$$('.scroll-reveal',p);const i=sibs.indexOf(e.target);setTimeout(()=>e.target.classList.add('visible'),i*120);revObs.unobserve(e.target)}})},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
