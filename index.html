@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afnaan Ahmed P — Software Engineer & AI Developer</title>
+    <meta name="description" content="Portfolio of Afnaan Ahmed P — M.Tech Software Engineering student at VIT Chennai. Builder of production APIs, ML pipelines, real-time systems, and AI-powered applications.">
+    <meta property="og:title" content="Afnaan Ahmed P — Portfolio">
+    <meta property="og:description" content="Software Engineer & AI Developer. Builder of production APIs, ML pipelines, and real-time systems.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="mouse-spotlight" id="mouseSpotlight"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="#hero" class="nav__logo">A.</a>
+        <div class="nav__links">
+            <a href="#about" class="nav__link" data-section="about">About</a>
+            <a href="#skills" class="nav__link" data-section="skills">Skills</a>
+            <a href="#projects" class="nav__link" data-section="projects">Projects</a>
+            <a href="#experience" class="nav__link" data-section="experience">Experience</a>
+            <a href="#contact" class="nav__link" data-section="contact">Contact</a>
+        </div>
+        <button class="nav__menu-btn" id="menuBtn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about" class="mobile-menu__link">About</a>
+        <a href="#skills" class="mobile-menu__link">Skills</a>
+        <a href="#projects" class="mobile-menu__link">Projects</a>
+        <a href="#experience" class="mobile-menu__link">Experience</a>
+        <a href="#contact" class="mobile-menu__link">Contact</a>
+    </div>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="hero__bg">
+            <div class="hero__gradient hero__gradient--1"></div>
+            <div class="hero__gradient hero__gradient--2"></div>
+            <div class="hero__gradient hero__gradient--3"></div>
+            <div class="hero__mesh"></div>
+        </div>
+        <div class="hero__content">
+            <p class="hero__greeting reveal-text">Hello, I'm</p>
+            <h1 class="hero__name" id="heroName">
+                <span class="hero__name-letter" style="--i:0">A</span><span class="hero__name-letter" style="--i:1">f</span><span class="hero__name-letter" style="--i:2">n</span><span class="hero__name-letter" style="--i:3">a</span><span class="hero__name-letter" style="--i:4">a</span><span class="hero__name-letter" style="--i:5">n</span><span class="hero__name-space"> </span><span class="hero__name-letter" style="--i:6">A</span><span class="hero__name-letter" style="--i:7">h</span><span class="hero__name-letter" style="--i:8">m</span><span class="hero__name-letter" style="--i:9">e</span><span class="hero__name-letter" style="--i:10">d</span>
+            </h1>
+            <div class="hero__role-wrapper">
+                <span class="hero__role-prefix">I build&nbsp;</span>
+                <span class="hero__role" id="heroRole">production APIs</span>
+                <span class="hero__cursor">|</span>
+            </div>
+            <p class="hero__tagline reveal-text" style="--delay: 1.2s">M.Tech Software Engineering · VIT Chennai · 2027</p>
+            <div class="hero__cta reveal-text" style="--delay: 1.5s">
+                <a href="#projects" class="btn btn--primary magnetic">View My Work</a>
+                <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="btn btn--ghost magnetic">GitHub ↗</a>
+            </div>
+        </div>
+        <div class="hero__scroll-indicator">
+            <div class="hero__scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="section about" id="about">
+        <div class="section__container">
+            <div class="section__label scroll-reveal">// about me</div>
+            <div class="about__grid">
+                <div class="about__text scroll-reveal">
+                    <h2 class="section__title">I turn ideas into <span class="text-gradient">engineered systems</span> that work.</h2>
+                    <p class="about__description">I'm a pre-final year M.Tech Integrated student in Software Engineering at VIT Chennai. I don't just write code — I architect complete systems. From real-time WebSocket servers streaming live data, to ML pipelines processing 43 clinical signals, to RAG-powered AI applications on AWS — I build things end-to-end and ship them.</p>
+                    <p class="about__description">My work sits at the intersection of <strong>software engineering</strong>, <strong>machine learning</strong>, and <strong>cloud infrastructure</strong>. I care about clean architecture, testable code, and systems that scale.</p>
+                </div>
+                <div class="about__stats scroll-reveal" style="--delay: 0.2s">
+                    <div class="stat">
+                        <span class="stat__number" data-target="4">0</span>
+                        <span class="stat__label">Production Projects</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number" data-target="2">0</span>
+                        <span class="stat__label">Industry Internships</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number" data-target="96" data-suffix="%">0</span>
+                        <span class="stat__label">Best Model Accuracy</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number" data-target="66">0</span>
+                        <span class="stat__label">Subjects Completed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section class="section skills" id="skills">
+        <div class="section__container">
+            <div class="section__label scroll-reveal">// tech stack</div>
+            <h2 class="section__title scroll-reveal">Tools I <span class="text-gradient">think in</span>.</h2>
+            <div class="skills__constellation" id="skillsConstellation">
+                <!-- Languages -->
+                <span class="skill-tag" data-category="lang" style="--x: 8; --y: 15; --drift: 12s">Python</span>
+                <span class="skill-tag" data-category="lang" style="--x: 22; --y: 8; --drift: 15s">JavaScript</span>
+                <span class="skill-tag" data-category="lang" style="--x: 75; --y: 12; --drift: 18s">Java</span>
+                <span class="skill-tag" data-category="lang" style="--x: 60; --y: 5; --drift: 14s">C</span>
+                <span class="skill-tag" data-category="lang" style="--x: 88; --y: 20; --drift: 16s">SQL</span>
+                <span class="skill-tag" data-category="lang" style="--x: 42; --y: 18; --drift: 13s">HTML/CSS</span>
+                <!-- Backend -->
+                <span class="skill-tag" data-category="backend" style="--x: 5; --y: 35; --drift: 17s">FastAPI</span>
+                <span class="skill-tag" data-category="backend" style="--x: 30; --y: 30; --drift: 11s">REST API</span>
+                <span class="skill-tag" data-category="backend" style="--x: 55; --y: 32; --drift: 19s">WebSocket</span>
+                <span class="skill-tag" data-category="backend" style="--x: 78; --y: 38; --drift: 14s">Microservices</span>
+                <span class="skill-tag" data-category="backend" style="--x: 15; --y: 42; --drift: 16s">JSON Schema</span>
+                <!-- Software Engineering -->
+                <span class="skill-tag" data-category="swe" style="--x: 40; --y: 48; --drift: 13s">OOP</span>
+                <span class="skill-tag" data-category="swe" style="--x: 65; --y: 52; --drift: 18s">Design Patterns</span>
+                <span class="skill-tag" data-category="swe" style="--x: 85; --y: 50; --drift: 15s">DSA</span>
+                <span class="skill-tag" data-category="swe" style="--x: 10; --y: 55; --drift: 12s">Clean Code</span>
+                <span class="skill-tag" data-category="swe" style="--x: 50; --y: 58; --drift: 20s">Code Review</span>
+                <!-- Testing -->
+                <span class="skill-tag" data-category="test" style="--x: 25; --y: 65; --drift: 16s">pytest</span>
+                <span class="skill-tag" data-category="test" style="--x: 70; --y: 68; --drift: 14s">Selenium</span>
+                <span class="skill-tag" data-category="test" style="--x: 45; --y: 72; --drift: 17s">TDD</span>
+                <!-- Cloud & DevOps -->
+                <span class="skill-tag" data-category="cloud" style="--x: 8; --y: 78; --drift: 15s">AWS Lambda</span>
+                <span class="skill-tag" data-category="cloud" style="--x: 35; --y: 82; --drift: 13s">S3</span>
+                <span class="skill-tag" data-category="cloud" style="--x: 55; --y: 85; --drift: 19s">DynamoDB</span>
+                <span class="skill-tag" data-category="cloud" style="--x: 80; --y: 80; --drift: 11s">Docker</span>
+                <span class="skill-tag" data-category="cloud" style="--x: 20; --y: 88; --drift: 18s">Git/GitHub</span>
+                <span class="skill-tag" data-category="cloud" style="--x: 90; --y: 88; --drift: 16s">Linux</span>
+                <!-- AI & Data -->
+                <span class="skill-tag" data-category="ai" style="--x: 5; --y: 95; --drift: 14s">PyTorch</span>
+                <span class="skill-tag" data-category="ai" style="--x: 30; --y: 92; --drift: 17s">Scikit-learn</span>
+                <span class="skill-tag" data-category="ai" style="--x: 50; --y: 96; --drift: 12s">XGBoost</span>
+                <span class="skill-tag" data-category="ai" style="--x: 72; --y: 93; --drift: 15s">OpenCV</span>
+                <span class="skill-tag" data-category="ai" style="--x: 88; --y: 96; --drift: 19s">RAG</span>
+                <span class="skill-tag" data-category="ai" style="--x: 62; --y: 100; --drift: 13s">ChromaDB</span>
+                <span class="skill-tag" data-category="ai" style="--x: 40; --y: 100; --drift: 16s">Pandas</span>
+                <span class="skill-tag" data-category="ai" style="--x: 18; --y: 100; --drift: 11s">NumPy</span>
+            </div>
+            <div class="skills__legend scroll-reveal">
+                <span class="legend-item" data-category="lang"><span class="legend-dot"></span>Languages</span>
+                <span class="legend-item" data-category="backend"><span class="legend-dot"></span>Backend</span>
+                <span class="legend-item" data-category="swe"><span class="legend-dot"></span>Engineering</span>
+                <span class="legend-item" data-category="test"><span class="legend-dot"></span>Testing</span>
+                <span class="legend-item" data-category="cloud"><span class="legend-dot"></span>Cloud & DevOps</span>
+                <span class="legend-item" data-category="ai"><span class="legend-dot"></span>AI & Data</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS (Sticky Peel Stack) ===== -->
+    <section class="section projects" id="projects">
+        <div class="section__container">
+            <div class="section__label scroll-reveal">// selected work</div>
+            <h2 class="section__title scroll-reveal">Things I've <span class="text-gradient">shipped</span>.</h2>
+        </div>
+        <div class="projects__stack">
+            <!-- Project 1 -->
+            <div class="project-panel" data-accent="var(--clr-amber)">
+                <div class="project-panel__inner">
+                    <div class="project-panel__index">01</div>
+                    <div class="project-panel__content">
+                        <h3 class="project-panel__title">LexCloud</h3>
+                        <p class="project-panel__subtitle">Cloud-Native API Backend with AI Integration</p>
+                        <div class="project-panel__divider"></div>
+                        <p class="project-panel__desc">Production-grade REST API on AWS using FastAPI — handles JSON ingestion, schema validation, and storage across DynamoDB and S3 with serverless Lambda compute. Extended with a Generative AI layer (LLaMA-3 + ChromaDB RAG) for intelligent document retrieval and text generation. Clean OOP architecture with pytest, structured logging, and CI-ready config.</p>
+                        <div class="project-panel__tags">
+                            <span>Python</span><span>FastAPI</span><span>AWS Lambda</span><span>S3</span><span>DynamoDB</span><span>LLaMA-3</span><span>RAG</span><span>ChromaDB</span><span>pytest</span><span>Git</span>
+                        </div>
+                        <div class="project-panel__metrics">
+                            <div class="metric"><span class="metric__value">5</span><span class="metric__label">AWS Services</span></div>
+                            <div class="metric"><span class="metric__value">RAG</span><span class="metric__label">AI Pipeline</span></div>
+                            <div class="metric"><span class="metric__value">100%</span><span class="metric__label">Serverless</span></div>
+                        </div>
+                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="project-panel__link magnetic">View on GitHub ↗</a>
+                    </div>
+                    <div class="project-panel__year">2024</div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-panel" data-accent="var(--clr-blue)">
+                <div class="project-panel__inner">
+                    <div class="project-panel__index">02</div>
+                    <div class="project-panel__content">
+                        <h3 class="project-panel__title">ATCC VPark</h3>
+                        <p class="project-panel__subtitle">Real-Time Full-Stack System with WebSocket Streaming</p>
+                        <div class="project-panel__divider"></div>
+                        <p class="project-panel__desc">Full-stack real-time application: Python backend (FastAPI) serving REST endpoints and WebSocket connections that stream live YOLOv8 inference data to a JavaScript dashboard with sub-second latency. Complete hardware integration layer via serial communication (PySerial → Arduino) for automated physical control. Containerised in Docker for one-command deployment.</p>
+                        <div class="project-panel__tags">
+                            <span>Python</span><span>FastAPI</span><span>WebSocket</span><span>YOLOv8</span><span>OpenCV</span><span>Docker</span><span>JavaScript</span><span>Arduino</span>
+                        </div>
+                        <div class="project-panel__metrics">
+                            <div class="metric"><span class="metric__value">&lt;1s</span><span class="metric__label">Latency</span></div>
+                            <div class="metric"><span class="metric__value">Real-time</span><span class="metric__label">Streaming</span></div>
+                            <div class="metric"><span class="metric__value">Full Stack</span><span class="metric__label">HW + SW</span></div>
+                        </div>
+                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="project-panel__link magnetic">View on GitHub ↗</a>
+                    </div>
+                    <div class="project-panel__year">2026</div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-panel" data-accent="var(--clr-green)">
+                <div class="project-panel__inner">
+                    <div class="project-panel__index">03</div>
+                    <div class="project-panel__content">
+                        <h3 class="project-panel__title">Sepsis Mortality Prediction</h3>
+                        <p class="project-panel__subtitle">Clinical Time-Series ML Pipeline</p>
+                        <div class="project-panel__divider"></div>
+                        <p class="project-panel__desc">Modular data processing pipeline on large-scale hospital ICU datasets (MIMIC-IV). Engineered 172 features from 43 clinical time-series signals. XGBoost classifier achieved 96% AUC-ROC — outperforming four published baselines by 10–16 points. SHAP explainability for every prediction. Clean-code architecture with separate testable modules for ingestion, preprocessing, feature extraction, training, and evaluation.</p>
+                        <div class="project-panel__tags">
+                            <span>Python</span><span>XGBoost</span><span>Scikit-learn</span><span>SHAP</span><span>Pandas</span><span>SQL</span><span>NumPy</span><span>Matplotlib</span>
+                        </div>
+                        <div class="project-panel__metrics">
+                            <div class="metric"><span class="metric__value">96%</span><span class="metric__label">AUC-ROC</span></div>
+                            <div class="metric"><span class="metric__value">172</span><span class="metric__label">Features</span></div>
+                            <div class="metric"><span class="metric__value">43</span><span class="metric__label">Signals</span></div>
+                        </div>
+                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="project-panel__link magnetic">View on GitHub ↗</a>
+                    </div>
+                    <div class="project-panel__year">2026</div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-panel" data-accent="var(--clr-pink)">
+                <div class="project-panel__inner">
+                    <div class="project-panel__index">04</div>
+                    <div class="project-panel__content">
+                        <h3 class="project-panel__title">Non-Invasive Diagnostics</h3>
+                        <p class="project-panel__subtitle">Healthcare Computer Vision Pipeline</p>
+                        <div class="project-panel__divider"></div>
+                        <p class="project-panel__desc">Two-stage computer vision pipeline: YOLOv8 object detection (93.5% mAP) to localise regions of interest, followed by CNN transfer learning classifier achieving 96% accuracy (AUC 0.98) on 852 test images. Validated against 251 lab-confirmed patient samples with 89.3% sensitivity. Grad-CAM heatmaps for model interpretability. Full ML lifecycle managed independently under Git version control.</p>
+                        <div class="project-panel__tags">
+                            <span>Python</span><span>PyTorch</span><span>YOLOv8</span><span>OpenCV</span><span>CNN</span><span>Transfer Learning</span><span>Grad-CAM</span><span>Git</span>
+                        </div>
+                        <div class="project-panel__metrics">
+                            <div class="metric"><span class="metric__value">96%</span><span class="metric__label">Accuracy</span></div>
+                            <div class="metric"><span class="metric__value">0.98</span><span class="metric__label">AUC Score</span></div>
+                            <div class="metric"><span class="metric__value">251</span><span class="metric__label">Patients</span></div>
+                        </div>
+                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="project-panel__link magnetic">View on GitHub ↗</a>
+                    </div>
+                    <div class="project-panel__year">2025</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EXPERIENCE (Terminal) ===== -->
+    <section class="section experience" id="experience">
+        <div class="section__container">
+            <div class="section__label scroll-reveal">// experience</div>
+            <h2 class="section__title scroll-reveal">Where I've <span class="text-gradient">contributed</span>.</h2>
+            <div class="terminal scroll-reveal" id="terminal">
+                <div class="terminal__header">
+                    <div class="terminal__dots">
+                        <span class="terminal__dot terminal__dot--red"></span>
+                        <span class="terminal__dot terminal__dot--yellow"></span>
+                        <span class="terminal__dot terminal__dot--green"></span>
+                    </div>
+                    <span class="terminal__title">afnaan@career:~</span>
+                </div>
+                <div class="terminal__body" id="terminalBody">
+                    <div class="terminal__line"><span class="terminal__prompt">$</span> git log --oneline --all</div>
+                    <div class="terminal__entry" data-delay="400">
+                        <span class="terminal__hash">e7f2a1b</span>
+                        <span class="terminal__branch">(HEAD -> career)</span>
+                        <span class="terminal__msg">Research Intern — Healthcare AI @ CHAIR, VIT Chennai</span>
+                        <div class="terminal__details">
+                            <span class="terminal__date">May 2025 – Aug 2025 · Chennai, Tamil Nadu</span>
+                            <p>Independently executed a full-cycle AI/ML research project on clinical healthcare data. Built deep learning models (PyTorch, YOLOv8, CNN) achieving 96% accuracy. Participated in code reviews and design discussions. Delivered validated diagnostic model with Grad-CAM explainability and comprehensive documentation.</p>
+                            <a href="https://vitchennaievents.com/certificates/generate.php?c=VDJPc09rRXRJbDgoSUJrK1Fqc2xnVXFWQWcybS9ZT01KOGcyV3ZPSmNORGFjM2Zuakxaall1bVVoME00ZHFxUllhQmh5S1dLbjZqcVpxSXVIMDhXQjZVS3g1UUxkeENkRml1RmVmTXZqVUJSdWtXMGVoWXNTUEpSc0VSZVdSNUF2ejBqYVk0ajE4Zm82Wmxkbm9HaCt6MW9GS0ZFS1AyOVBwVlltQTJtTEdRPQ==" target="_blank" rel="noopener" class="terminal__cert">📄 View Certificate</a>
+                        </div>
+                    </div>
+                    <div class="terminal__entry" data-delay="800">
+                        <span class="terminal__hash">a3c9d4e</span>
+                        <span class="terminal__msg">Python Training Intern @ Colan Infotech Pvt Ltd</span>
+                        <div class="terminal__details">
+                            <span class="terminal__date">Jun 2024 – Jul 2024 · Pernambut, Tamil Nadu (On-site)</span>
+                            <p>Structured training on Python programming, software design patterns, scripting, and Git-based version control. Participated in code reviews and collaborative coding sessions following agile practices in a professional development environment.</p>
+                        </div>
+                    </div>
+                    <div class="terminal__entry" data-delay="1200">
+                        <span class="terminal__hash">f1b8e2c</span>
+                        <span class="terminal__msg">M.Tech Integrated — Software Engineering @ VIT Chennai</span>
+                        <div class="terminal__details">
+                            <span class="terminal__date">2022 – 2027 · CGPA: 7.92 / 10.0 · No Backlogs</span>
+                            <p>66 subjects completed. A grades in: Artificial Intelligence, Design Patterns, OOP, Software Reuse, IoT Domain Analytics, Programming in Java. Relevant: DSA, DBMS, Software Engineering, Agile Development, Software Testing, Computer Networks, OS, Big Data.</p>
+                        </div>
+                    </div>
+                    <div class="terminal__entry" data-delay="1600">
+                        <span class="terminal__hash">b5a0c7f</span>
+                        <span class="terminal__msg">Class XII — 85.20% @ Mazharul Uloom HSS, Ambur</span>
+                        <div class="terminal__details">
+                            <span class="terminal__date">2019 – 2021 · Tamil Nadu State Board · PCBM</span>
+                        </div>
+                    </div>
+                    <div class="terminal__line terminal__line--end" data-delay="2000"><span class="terminal__prompt">$</span> <span class="terminal__cursor-blink">█</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LEADERSHIP ===== -->
+    <section class="section leadership" id="leadership">
+        <div class="section__container">
+            <div class="section__label scroll-reveal">// beyond code</div>
+            <h2 class="section__title scroll-reveal">I also <span class="text-gradient">lead teams</span>.</h2>
+            <div class="leadership__grid">
+                <div class="leadership__item scroll-reveal">
+                    <div class="leadership__icon">🛡️</div>
+                    <h4>Cybersecurity Division</h4>
+                    <p class="leadership__org">Microsoft Innovations Club, VIT Chennai</p>
+                    <p class="leadership__period">Oct 2023 – Jun 2024</p>
+                    <p>Organised CTF competitions and technical workshops for 500+ participants. Handled event coordination and logistics.</p>
+                </div>
+                <div class="leadership__item scroll-reveal" style="--delay: 0.15s">
+                    <div class="leadership__icon">🥽</div>
+                    <h4>Marketing & Management</h4>
+                    <p class="leadership__org">Augmented & Virtual Reality Club, VIT Chennai</p>
+                    <p class="leadership__period">May 2023 – Mar 2024</p>
+                    <p>Led cross-functional student teams for campus tech events. Drove 30% registration growth through targeted outreach.</p>
+                </div>
+                <div class="leadership__item scroll-reveal" style="--delay: 0.3s">
+                    <div class="leadership__icon">💡</div>
+                    <h4>Operations Member</h4>
+                    <p class="leadership__org">Fraternity of Young Innovators, VIT Chennai</p>
+                    <p class="leadership__period">Nov 2023 – Jun 2024</p>
+                    <p>Coordinated planning, scheduling, and execution of inter-college innovation events and design symposiums.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="section contact" id="contact">
+        <div class="section__container">
+            <div class="section__label scroll-reveal">// let's connect</div>
+            <h2 class="contact__title scroll-reveal">Got a project in mind?<br><span class="text-gradient">Let's talk.</span></h2>
+            <div class="contact__links scroll-reveal" style="--delay: 0.2s">
+                <a href="mailto:Afnaanahmed.k391@gmail.com" class="contact__link magnetic">
+                    <span class="contact__link-icon">✉</span>
+                    <span class="contact__link-text">Afnaanahmed.k391@gmail.com</span>
+                </a>
+                <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" rel="noopener" class="contact__link magnetic">
+                    <span class="contact__link-icon">in</span>
+                    <span class="contact__link-text">LinkedIn</span>
+                </a>
+                <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="contact__link magnetic">
+                    <span class="contact__link-icon">&lt;/&gt;</span>
+                    <span class="contact__link-text">GitHub</span>
+                </a>
+                <a href="tel:+919150713929" class="contact__link magnetic">
+                    <span class="contact__link-icon">📞</span>
+                    <span class="contact__link-text">+91 9150713929</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <p>Designed & Built by <strong>Afnaan Ahmed P</strong> · 2025</p>
+        <button class="footer__top magnetic" id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
