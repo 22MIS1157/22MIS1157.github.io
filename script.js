@@ -80,7 +80,7 @@ window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scro
 ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':''});
 $$('.mobile-menu__link').forEach(l=>l.addEventListener('click',()=>{ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow=''}));
 
-function updNav(){const y=window.scrollY+200;sects.forEach(s=>{const t=s.offsetTop,h=s.offsetHeight,id=s.getAttribute('id');if(y>=t&&y<t+h)navLinks.forEach(l=>l.classList.toggle('active',l.dataset.section===id))})}
+function updNav(){const y=window.scrollY+200;sects.forEach(s=>{const t=s.offsetTop,h=s.offsetHeight,id=s.getAttribute('id');if(y>=t&&y<t+h){navLinks.forEach(l=>l.classList.toggle('active',l.dataset.section===id));s.classList.add('active');}else{s.classList.remove('active');}})}
 window.addEventListener('scroll',updNav,{passive:true});
 
 /* ── SMOOTH PARALLAX DESCENT ENGINE ── */
