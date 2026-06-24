@@ -29,6 +29,8 @@ a{color:inherit;text-decoration:none}button{border:none;background:none;font-fam
   animation:atmPulse 6s ease-in-out infinite}
 @keyframes atmPulse{0%,100%{opacity:.5}50%{opacity:1}}
 
+.ud-vignette{position:fixed;inset:0;pointer-events:none;z-index:9000;background:radial-gradient(circle,transparent 30%,rgba(180,0,0,calc(var(--scroll-y,0)*0.2)) 150%);transition:background 0.2s linear}
+
 /* Floating Upside Down spores/ash — Pure CSS */
 .ud-spores{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
 .ud-spores span{position:absolute;display:block;width:3px;height:3px;background:rgba(204,0,0,.3);border-radius:50%;animation:sporeFloat linear infinite}
@@ -67,9 +69,6 @@ a{color:inherit;text-decoration:none}button{border:none;background:none;font-fam
 .vecna-mini__dot{width:3px;height:3px;border-radius:50%;background:var(--red);position:absolute}
 @keyframes clkS{to{transform:rotate(360deg)}}@keyframes clkM{to{transform:rotate(360deg)}}
 
-/* Page-wide subtle glitch */
-body{animation:pageG 20s infinite}
-@keyframes pageG{0%,97%,100%{transform:none;filter:none}97.3%{transform:translateX(2px) skewX(.2deg);filter:hue-rotate(5deg)}97.6%{transform:translateX(-1px);filter:none}}
 .section__title{animation:flick 6s infinite}
 @keyframes flick{0%,88%,90%,92%,100%{opacity:1}89%{opacity:.82}91%{opacity:.88}}
 
@@ -79,9 +78,8 @@ body{animation:pageG 20s infinite}
 .loader{position:fixed;inset:0;z-index:99999;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity .8s,visibility .8s}
 .loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
 .loader__inner{text-align:center}
-.loader__retro-msg{font-family:var(--st-font);font-size:clamp(0.8rem, 3vw, 1.2rem);color:var(--red);letter-spacing:.25em;text-transform:uppercase;margin-bottom:20px;text-shadow:0 0 10px rgba(204,0,0,.6)}
-.loader__retro-msg::after{content:"ENTERING THE UPSIDE DOWN...";animation:retroMsgAnim 3.5s linear forwards}
-@keyframes retroMsgAnim{0%,45%{content:"ENTERING THE UPSIDE DOWN...";opacity:1}46%,48%,50%{opacity:0}47%,49%{opacity:1}51%,100%{content:"HELLO FROM DEVELOPER AFNAAN";opacity:1;filter:brightness(1.5)}}
+.loader__retro-msg{font-family:var(--st-font);font-size:clamp(0.8rem, 3vw, 1.2rem);color:var(--red);letter-spacing:.25em;text-transform:uppercase;margin-bottom:20px;text-shadow:0 0 10px rgba(204,0,0,.6);transition:opacity 0.2s, color 0.4s;animation:flicker-in 1s forwards}
+@keyframes flicker-in{0%,20%,40%{opacity:0}10%,30%,100%{opacity:1}}
 .loader__subtitle{font-family:var(--mono);font-size:.65rem;color:var(--red);letter-spacing:.2em;margin-bottom:16px;text-transform:uppercase;opacity:.6}
 .loader__title{font-family:var(--st-font);font-size:clamp(2rem,8vw,4rem);font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;line-height:1.1;margin-bottom:24px;text-shadow:0 0 10px rgba(204,0,0,.6),0 0 30px rgba(204,0,0,.3),0 0 60px rgba(204,0,0,.15)}
 .loader__bar{width:200px;height:2px;background:rgba(255,255,255,.06);border-radius:1px;overflow:hidden;margin:0 auto}

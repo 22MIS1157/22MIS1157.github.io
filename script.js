@@ -11,15 +11,25 @@ const isMobile='ontouchstart' in window||navigator.maxTouchPoints>0;
 
 /* ── LOADER ── */
 const loader=$('#loader');
-window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('hidden'),3600));
+const rMsg=$('#loaderRetroMsg');
+if(rMsg){
+  setTimeout(()=>{rMsg.style.opacity=0;}, 2200);
+  setTimeout(()=>{rMsg.textContent='HELLO FROM DEVELOPER AFNAAN';rMsg.style.color='#fff';rMsg.style.opacity=1;}, 2400);
+}
+window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('hidden'),4500));
 
 /* ── GREETING ── */
 const greetEl=$('#heroGreeting');
 if(greetEl){const h=new Date().getHours();let g='Hello';if(h>=5&&h<12)g='Good morning';else if(h>=12&&h<17)g='Good afternoon';else if(h>=17&&h<21)g='Good evening';else g='Late night? Same here';greetEl.textContent=g+". I'm"}
 
-/* ── SCROLL PROGRESS ── */
+/* ── SCROLL PROGRESS & UPSIDE DOWN VIGNETTE ── */
 const prog=$('#scrollProgress');
-function updProg(){const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;prog.style.width=(d>0?(s/d)*100:0)+'%'}
+function updProg(){
+  const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;
+  const p=d>0?s/d:0;
+  prog.style.width=(p*100)+'%';
+  document.body.style.setProperty('--scroll-y', p.toFixed(2));
+}
 window.addEventListener('scroll',updProg,{passive:true});
 
 /* ── NAV ── */
