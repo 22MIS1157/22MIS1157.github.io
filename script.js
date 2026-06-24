@@ -83,6 +83,28 @@ $$('.mobile-menu__link').forEach(l=>l.addEventListener('click',()=>{ham.classLis
 function updNav(){const y=window.scrollY+200;sects.forEach(s=>{const t=s.offsetTop,h=s.offsetHeight,id=s.getAttribute('id');if(y>=t&&y<t+h){navLinks.forEach(l=>l.classList.toggle('active',l.dataset.section===id));s.classList.add('active');}else{s.classList.remove('active');}})}
 window.addEventListener('scroll',updNav,{passive:true});
 
+/* ── CINEMATIC FLOATING TITLE TRANSITIONS ── */
+function animTitles() {
+  sects.forEach(s => {
+    const title = s.querySelector('.section-bg-text');
+    if(!title) return;
+    const rect = s.getBoundingClientRect();
+    const h = window.innerHeight;
+    if(rect.top < h && rect.top > 0) {
+      let op = 0;
+      if (rect.top > h * 0.6) op = (h - rect.top) / (h * 0.4);
+      else if (rect.top > h * 0.2) op = 1;
+      else op = rect.top / (h * 0.2);
+      title.style.opacity = op;
+      title.style.transform = `translate(-50%, -50%) scale(${0.85 + op*0.15})`;
+    } else {
+      title.style.opacity = 0;
+    }
+  });
+  requestAnimationFrame(animTitles);
+}
+animTitles();
+
 /* ── SMOOTH PARALLAX DESCENT ENGINE ── */
 let targetScrollY = 0;
 let currentScrollY = 0;
