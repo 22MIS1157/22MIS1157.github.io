@@ -39,21 +39,10 @@
     <!-- SCROLL PROGRESS -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
-    <!-- NAV -->
+    <!-- ── NAVIGATION ── -->
     <nav class="nav" id="nav">
-        <a href="#hero" class="nav__logo">A<span class="nav__logo-dot">.</span></a>
-        <div class="nav__links">
-            <a href="#about" class="nav__link" data-section="about">About</a>
-            <a href="#skills" class="nav__link" data-section="skills">Skills</a>
-            <a href="#projects" class="nav__link" data-section="projects">Operations</a>
-            <a href="#experience" class="nav__link" data-section="experience">Experience</a>
-            <a href="#contact" class="nav__link" data-section="contact">Connect</a>
-        </div>
-        <button class="nav__hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+        <a href="#home" class="nav__brand txt-scramble" style="font-family: var(--st-font); letter-spacing: 2px;">AA</a>
     </nav>
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#about" class="mobile-menu__link">About</a><a href="#skills" class="mobile-menu__link">Skills</a><a href="#projects" class="mobile-menu__link">Operations</a><a href="#experience" class="mobile-menu__link">Experience</a><a href="#contact" class="mobile-menu__link">Connect</a>
-    </div>
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="hero">
@@ -82,12 +71,12 @@
     </section>
 
     <!-- ===== ABOUT ===== -->
-    <section class="section" id="about">
+    <section id="about" class="about section">
         <div class="section-bg-text">ABOUT</div>
         <div class="section__divider"></div>
         <div class="section__vine section__vine--l"></div>
         <div class="container">
-            <span class="section__label scroll-reveal">PART I // About Me</span>
+            <h2 class="about__title scroll-reveal">The <span class="text-gradient">Upside Down</span> of Tech</h2>
             <div class="about">
                 <div class="about__text">
                     <h2 class="section__title scroll-reveal txt-scramble">I don't just write code.<br>I <span class="text-gradient">architect systems</span>.</h2>
@@ -120,7 +109,6 @@
         <div class="section__divider"></div>
         <div class="section__vine section__vine--r"></div>
         <div class="container">
-            <span class="section__label scroll-reveal">PART II // Tech Stack</span>
             <h2 class="section__title scroll-reveal txt-scramble">The tools I <span class="text-gradient">think in</span>.</h2>
         </div>
         <div class="marquee-wrapper">
@@ -138,7 +126,6 @@
         <div class="section__divider"></div>
         <div class="section__vine section__vine--l"></div>
         <div class="container">
-            <span class="section__label scroll-reveal">PART III // Operations</span>
             <h2 class="section__title scroll-reveal txt-scramble">Systems I've <span class="text-gradient">deployed</span>.</h2>
             <div class="projects-feed">
                 <article class="pmod pmod--featured scroll-reveal" data-accent="red" data-project="vpark">
@@ -196,8 +183,7 @@
         <div class="section__divider"></div>
         <div class="section__vine section__vine--r"></div>
         <div class="container">
-            <span class="section__label scroll-reveal">PART IV // Experience</span>
-            <h2 class="section__title scroll-reveal txt-scramble">Where I've <span class="text-gradient">contributed</span>.</h2>
+            <h2 class="timeline__title scroll-reveal">Hawkins Lab <span class="text-gradient">Logs</span></h2>
             <div class="timeline">
                 <div class="timeline__line"></div>
                 <div class="timeline__item scroll-reveal scroll-reveal--left"><div class="timeline__dot"></div><div class="timeline__content"><div class="timeline__head"><h3>Research Intern — Healthcare AI</h3><span class="timeline__date">May – Aug 2025</span></div><p class="timeline__org">CHAIR, VIT Chennai</p><p class="timeline__desc">Full-cycle AI/ML research. PyTorch, YOLOv8, CNN — 96% accuracy with Grad-CAM.</p><a href="https://vitchennaievents.com/certificates/generate.php?c=VDJPc09rRXRJbDgoSUJrK1Fqc2xnVXFWQWcybS9ZT01KOGcyV3ZPSmNORGFjM2Zuakxaall1bVVoME00ZHFxUllhQmh5S1dLbjZqcVpxSXVIMDhXQjZVS3g1UUxkeENkRml1RmVmTXZqVUJSdWtXMGVoWXNTUEpSc0VSZVdSNUF2ejBqYVk0ajE4Zm82Wmxkbm9HaCt6MW9GS0ZFS1AyOVBwVlltQTJtTEdRPQ==" target="_blank" rel="noopener" class="timeline__cert">📄 View Certificate</a></div></div>
@@ -222,7 +208,6 @@
         <div class="section-bg-text">CONTACT</div>
         <div class="section__divider"></div>
         <div class="container">
-            <span class="section__label scroll-reveal">PART V // Connect</span>
             <h2 class="contact__title scroll-reveal txt-scramble">Let's create something<br><span class="text-gradient">extraordinary.</span></h2>
             <div class="contact__links">
                 <a href="mailto:Afnaanahmed.k391@gmail.com" class="contact__item scroll-reveal scroll-reveal--left"><span class="contact__icon">✉</span><span class="contact__text">Afnaanahmed.k391@gmail.com</span></a>
