@@ -79,8 +79,9 @@ body{animation:pageG 20s infinite}
 .loader{position:fixed;inset:0;z-index:99999;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity .8s,visibility .8s}
 .loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
 .loader__inner{text-align:center}
-.loader__retro-msg{font-family:var(--st-font);font-size:clamp(0.8rem, 3vw, 1.2rem);color:var(--red);letter-spacing:.25em;text-transform:uppercase;margin-bottom:20px;opacity:0;animation:retroFlicker 3s ease forwards;text-shadow:0 0 10px rgba(204,0,0,.6)}
-@keyframes retroFlicker{0%{opacity:0}10%,12%,14%,16%{opacity:1}11%,13%,15%{opacity:0.2}20%{opacity:1;filter:brightness(2)}100%{opacity:1}}
+.loader__retro-msg{font-family:var(--st-font);font-size:clamp(0.8rem, 3vw, 1.2rem);color:var(--red);letter-spacing:.25em;text-transform:uppercase;margin-bottom:20px;text-shadow:0 0 10px rgba(204,0,0,.6)}
+.loader__retro-msg::after{content:"ENTERING THE UPSIDE DOWN...";animation:retroMsgAnim 3.5s linear forwards}
+@keyframes retroMsgAnim{0%,45%{content:"ENTERING THE UPSIDE DOWN...";opacity:1}46%,48%,50%{opacity:0}47%,49%{opacity:1}51%,100%{content:"HELLO FROM DEVELOPER AFNAAN";opacity:1;filter:brightness(1.5)}}
 .loader__subtitle{font-family:var(--mono);font-size:.65rem;color:var(--red);letter-spacing:.2em;margin-bottom:16px;text-transform:uppercase;opacity:.6}
 .loader__title{font-family:var(--st-font);font-size:clamp(2rem,8vw,4rem);font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;line-height:1.1;margin-bottom:24px;text-shadow:0 0 10px rgba(204,0,0,.6),0 0 30px rgba(204,0,0,.3),0 0 60px rgba(204,0,0,.15)}
 .loader__bar{width:200px;height:2px;background:rgba(255,255,255,.06);border-radius:1px;overflow:hidden;margin:0 auto}
@@ -164,9 +165,8 @@ body{animation:pageG 20s infinite}
 .st-l:nth-child(14){--tx:120px;--ty:220px;--s:4.0}
 @keyframes stFloat{
   0%{opacity:0;transform:translate3d(var(--tx),var(--ty),0) scale(var(--s));color:transparent;-webkit-text-stroke:1.5px var(--red)}
-  15%{opacity:1;transform:translate3d(calc(var(--tx)*0.8),calc(var(--ty)*0.8),0) scale(calc(var(--s)*0.9));color:transparent;-webkit-text-stroke:1.5px var(--red)}
-  85%{opacity:1;transform:translate3d(calc(var(--tx)*0.1),calc(var(--ty)*0.1),0) scale(calc(1+(var(--s)-1)*0.1));color:transparent;-webkit-text-stroke:1.5px var(--red)}
-  95%{transform:translate3d(0,0,0) scale(1);color:transparent;-webkit-text-stroke:1px var(--red)}
+  10%{opacity:1;color:transparent;-webkit-text-stroke:1.5px var(--red)}
+  98%{transform:translate3d(0,0,0) scale(1);color:transparent;-webkit-text-stroke:1.5px var(--red);text-shadow:0 0 0 transparent}
   100%{opacity:1;transform:translate3d(0,0,0) scale(1);color:var(--red);-webkit-text-stroke:0px var(--red);text-shadow:0 0 10px rgba(204,0,0,.8),0 0 20px rgba(204,0,0,.6),0 0 40px rgba(204,0,0,.4),0 0 80px rgba(204,0,0,.2)}
 }
 

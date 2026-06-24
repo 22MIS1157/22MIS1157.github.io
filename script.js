@@ -11,10 +11,6 @@ const isMobile='ontouchstart' in window||navigator.maxTouchPoints>0;
 
 /* ── LOADER ── */
 const loader=$('#loader');
-const rMsg=$('#loaderRetroMsg');
-if(rMsg){
-  setTimeout(()=>rMsg.textContent='HELLO FROM DEVELOPER AFNAAN',1600);
-}
 window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('hidden'),3600));
 
 /* ── GREETING ── */
