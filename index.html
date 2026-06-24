@@ -10,26 +10,25 @@
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Scroll Progress -->
+
+    <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
     <!-- Navigation -->
     <nav class="nav" id="nav">
-        <a href="#hero" class="nav__logo">
-            <span class="nav__logo-bracket">{</span>A<span class="nav__logo-bracket">}</span>
-        </a>
+        <a href="#hero" class="nav__logo">{A}</a>
         <div class="nav__links">
-            <a href="#about" class="nav__link">About</a>
-            <a href="#skills" class="nav__link">Skills</a>
-            <a href="#projects" class="nav__link">Projects</a>
-            <a href="#experience" class="nav__link">Experience</a>
-            <a href="#contact" class="nav__link">Contact</a>
+            <a href="#about" class="nav__link" data-section="about">About</a>
+            <a href="#skills" class="nav__link" data-section="skills">Skills</a>
+            <a href="#projects" class="nav__link" data-section="projects">Projects</a>
+            <a href="#experience" class="nav__link" data-section="experience">Experience</a>
+            <a href="#contact" class="nav__link" data-section="contact">Contact</a>
         </div>
-        <button class="nav__menu-btn" id="menuBtn" aria-label="Toggle menu">
+        <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
             <span></span><span></span><span></span>
         </button>
     </nav>
@@ -45,610 +44,261 @@
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="hero">
-        <!-- Animated background -->
-        <div class="hero__bg-grid"></div>
-        <div class="hero__orb hero__orb--1"></div>
-        <div class="hero__orb hero__orb--2"></div>
-        <div class="hero__orb hero__orb--3"></div>
-
+        <div class="hero__bg">
+            <div class="hero__orb hero__orb--1"></div>
+            <div class="hero__orb hero__orb--2"></div>
+            <div class="hero__orb hero__orb--3"></div>
+            <div class="hero__grid"></div>
+        </div>
         <div class="hero__content">
-            <div class="hero__badge anim-fade" style="--d:0.2s">
-                <span class="hero__badge-dot"></span>
-                Open to Internship Opportunities
+            <p class="hero__greeting">Hello, World. I'm</p>
+            <h1 class="hero__name">Afnaan Ahmed P</h1>
+            <div class="hero__role-line">
+                <span>I build </span>
+                <span class="hero__role" id="heroRole">intelligent systems</span>
+                <span class="hero__cursor">|</span>
             </div>
-            <h1 class="hero__title">
-                <span class="hero__line anim-slide-up" style="--d:0.3s">Hi, I'm <span class="text-glow">Afnaan</span></span>
-                <span class="hero__line anim-slide-up" style="--d:0.5s">I engineer <span class="hero__morph" id="heroMorph">intelligent systems</span></span>
-            </h1>
-            <p class="hero__sub anim-fade" style="--d:0.8s">M.Tech Software Engineering · VIT Chennai · Class of 2027</p>
-            <div class="hero__actions anim-fade" style="--d:1s">
-                <a href="#projects" class="btn btn--primary">
-                    <span>Explore My Work</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                </a>
-                <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="btn btn--outline">
-                    <span>GitHub</span>
-                </a>
-                <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" rel="noopener" class="btn btn--outline">
-                    <span>LinkedIn</span>
-                </a>
+            <p class="hero__tagline">M.Tech Software Engineering · VIT Chennai · Class of 2027</p>
+            <div class="hero__cta">
+                <a href="#projects" class="btn btn--primary">Explore My Work ↗</a>
+                <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="btn btn--ghost">GitHub</a>
+                <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" rel="noopener" class="btn btn--ghost">LinkedIn</a>
             </div>
         </div>
-
-        <div class="hero__scroll">
-            <div class="hero__scroll-track">
-                <div class="hero__scroll-thumb"></div>
-            </div>
+        <div class="hero__scroll-hint">
+            <span>Scroll</span>
+            <div class="hero__scroll-line"></div>
         </div>
     </section>
 
     <!-- ===== ABOUT ===== -->
     <section class="section" id="about">
         <div class="container">
-            <div class="section__eyebrow scroll-reveal">About Me</div>
-            <div class="about__layout">
+            <span class="section__label scroll-reveal">About Me</span>
+            <div class="about">
                 <div class="about__text">
-                    <h2 class="section__heading scroll-reveal">I don't just write code.<br>I <span class="text-glow">architect systems</span>.</h2>
-                    <p class="about__p scroll-reveal" style="--d:0.1s">I'm a pre-final year M.Tech Integrated student in Software Engineering at VIT Chennai. From real-time WebSocket servers streaming live inference data, to ML pipelines processing 43 clinical signals, to RAG-powered AI applications on AWS — I build things end-to-end and ship them.</p>
-                    <p class="about__p scroll-reveal" style="--d:0.2s">My work sits at the intersection of <strong>software engineering</strong>, <strong>machine learning</strong>, and <strong>cloud infrastructure</strong>. I care about clean architecture, testable code, and systems that actually scale.</p>
+                    <h2 class="section__title scroll-reveal">I don't just write code.<br>I <span class="text-gradient">architect systems</span>.</h2>
+                    <p class="about__desc scroll-reveal">I'm a pre-final year M.Tech Integrated student in Software Engineering at VIT Chennai. From real-time WebSocket servers streaming live inference data, to ML pipelines processing 43 clinical signals, to RAG-powered AI applications on AWS — I build things end-to-end and ship them.</p>
+                    <p class="about__desc scroll-reveal">My work sits at the intersection of <strong>software engineering</strong>, <strong>machine learning</strong>, and <strong>cloud infrastructure</strong>. I care about clean architecture, testable code, and systems that actually scale.</p>
                 </div>
-                <div class="about__numbers">
-                    <div class="num-card scroll-reveal" style="--d:0.1s">
-                        <span class="num-card__value" data-count="4">0</span>
-                        <span class="num-card__label">Shipped Projects</span>
+                <div class="about__stats">
+                    <div class="stat scroll-reveal">
+                        <span class="stat__number" data-target="4">0</span>
+                        <span class="stat__label">Shipped Projects</span>
                     </div>
-                    <div class="num-card scroll-reveal" style="--d:0.2s">
-                        <span class="num-card__value" data-count="2">0</span>
-                        <span class="num-card__label">Internships</span>
+                    <div class="stat scroll-reveal">
+                        <span class="stat__number" data-target="2">0</span>
+                        <span class="stat__label">Internships</span>
                     </div>
-                    <div class="num-card scroll-reveal" style="--d:0.3s">
-                        <span class="num-card__value" data-count="96" data-suffix="%">0</span>
-                        <span class="num-card__label">Best Model AUC</span>
+                    <div class="stat scroll-reveal">
+                        <span class="stat__number" data-target="96" data-suffix="%">0</span>
+                        <span class="stat__label">Best Model AUC</span>
                     </div>
-                    <div class="num-card scroll-reveal" style="--d:0.4s">
-                        <span class="num-card__value" data-count="7.92">0</span>
-                        <span class="num-card__label">CGPA / 10</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== SKILLS ===== -->
-    <section class="section section--alt" id="skills">
-        <div class="container">
-            <div class="section__eyebrow scroll-reveal">Tech Stack</div>
-            <h2 class="section__heading scroll-reveal">The tools I <span class="text-glow">think in</span>.</h2>
-
-            <div class="skills__grid">
-                <div class="skill-group scroll-reveal" style="--d:0s; --accent: var(--amber)">
-                    <div class="skill-group__header">
-                        <span class="skill-group__icon">⚡</span>
-                        <h3>Languages</h3>
-                    </div>
-                    <div class="skill-group__tags">
-                        <span>Python</span><span>JavaScript</span><span>Java</span><span>C</span><span>SQL</span><span>HTML/CSS</span>
-                    </div>
-                </div>
-
-                <div class="skill-group scroll-reveal" style="--d:0.1s; --accent: var(--blue)">
-                    <div class="skill-group__header">
-                        <span class="skill-group__icon">🔗</span>
-                        <h3>Backend & APIs</h3>
-                    </div>
-                    <div class="skill-group__tags">
-                        <span>FastAPI</span><span>REST API</span><span>WebSocket</span><span>JSON Schema</span><span>Microservices</span>
-                    </div>
-                </div>
-
-                <div class="skill-group scroll-reveal" style="--d:0.2s; --accent: var(--green)">
-                    <div class="skill-group__header">
-                        <span class="skill-group__icon">🏗️</span>
-                        <h3>Engineering</h3>
-                    </div>
-                    <div class="skill-group__tags">
-                        <span>OOP</span><span>Design Patterns</span><span>DSA</span><span>Clean Code</span><span>Code Review</span><span>Modular Architecture</span>
-                    </div>
-                </div>
-
-                <div class="skill-group scroll-reveal" style="--d:0s; --accent: var(--pink)">
-                    <div class="skill-group__header">
-                        <span class="skill-group__icon">🧪</span>
-                        <h3>Testing & QA</h3>
-                    </div>
-                    <div class="skill-group__tags">
-                        <span>pytest</span><span>Selenium</span><span>TDD</span><span>Error Logging</span><span>Regression Testing</span>
-                    </div>
-                </div>
-
-                <div class="skill-group scroll-reveal" style="--d:0.1s; --accent: var(--purple)">
-                    <div class="skill-group__header">
-                        <span class="skill-group__icon">☁️</span>
-                        <h3>Cloud & DevOps</h3>
-                    </div>
-                    <div class="skill-group__tags">
-                        <span>AWS Lambda</span><span>S3</span><span>DynamoDB</span><span>API Gateway</span><span>Docker</span><span>Git</span><span>Linux</span>
-                    </div>
-                </div>
-
-                <div class="skill-group scroll-reveal" style="--d:0.2s; --accent: var(--cyan)">
-                    <div class="skill-group__header">
-                        <span class="skill-group__icon">🧠</span>
-                        <h3>AI & Data</h3>
-                    </div>
-                    <div class="skill-group__tags">
-                        <span>PyTorch</span><span>Scikit-learn</span><span>XGBoost</span><span>OpenCV</span><span>RAG</span><span>ChromaDB</span><span>Pandas</span><span>NumPy</span>
+                    <div class="stat scroll-reveal">
+                        <span class="stat__number" data-target="792" data-divide="100">0</span>
+                        <span class="stat__label">CGPA / 10</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== PROJECTS ===== -->
-    <section class="section blueprint-section" id="projects">
-        <div class="blueprint-grid-overlay"></div>
+    <!-- ===== SKILLS — Infinite Marquee Tickers ===== -->
+    <section class="section section--dark" id="skills">
         <div class="container">
-            <div class="section__eyebrow scroll-reveal">Selected Work</div>
-            <h2 class="section__heading scroll-reveal">Systems Architecture & <span class="text-glow">Shipped Projects</span></h2>
-            
-            <!-- Global SVG Path tracer that connects projects -->
-            <div class="blueprint-pipeline-container">
-                <svg class="blueprint-path-svg" viewBox="0 0 100 1200" preserveAspectRatio="none">
-                    <path class="blueprint-path-bg" d="M 50,0 L 50,1200" fill="none"></path>
-                    <path class="blueprint-path-active" id="activePipelinePath" d="M 50,0 L 50,1200" fill="none"></path>
-                </svg>
+            <span class="section__label scroll-reveal">Tech Stack</span>
+            <h2 class="section__title scroll-reveal">The tools I <span class="text-gradient">think in</span>.</h2>
+        </div>
+        <div class="marquee-wrapper">
+            <div class="marquee-row scroll-reveal" data-direction="right">
+                <div class="marquee-track"><div class="marquee-content">
+                    <span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">JavaScript</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML / CSS</span>
+                    <span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">JavaScript</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML / CSS</span>
+                </div></div>
             </div>
-
-            <!-- Project 1: LexCloud -->
-            <div class="schematic-project scroll-reveal" data-project="lexcloud">
-                <div class="schematic-layout">
-                    <!-- Left Panel: Specs & Telemetry -->
-                    <div class="schematic-info">
-                        <div class="schematic-meta">
-                            <span class="schematic-num">SYS_NODE_01</span>
-                            <span class="schematic-year">2024</span>
-                        </div>
-                        <h3 class="schematic-title">LexCloud</h3>
-                        <p class="schematic-subtitle">Cloud-Native API Backend with AI RAG Pipeline</p>
-                        <p class="schematic-desc">Production-grade REST API deployed on AWS serverless stack. Ingests raw JSON payloads, performs schema validation via Pydantic, and handles storage across DynamoDB and S3. Integrates a custom RAG pipeline querying a ChromaDB vector store with cosine similarity, feeding retrieved context to a LLaMA-3 LLM to generate secure, domain-aware responses.</p>
-                        
-                        <div class="schematic-tags">
-                            <span>Python</span><span>FastAPI</span><span>AWS Lambda</span><span>DynamoDB</span><span>S3</span><span>LLaMA-3</span><span>ChromaDB</span><span>RAG</span><span>pytest</span>
-                        </div>
-
-                        <div class="schematic-telemetry">
-                            <div class="telemetry-gauge">
-                                <svg class="gauge-svg" viewBox="0 0 100 100">
-                                    <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
-                                    <circle class="gauge-fill" cx="50" cy="50" r="40" data-value="100" style="stroke-dasharray: 251.2; stroke-dashoffset: 251.2;"></circle>
-                                </svg>
-                                <div class="gauge-info">
-                                    <span class="gauge-num">100%</span>
-                                    <span class="gauge-label">Serverless</span>
-                                </div>
-                            </div>
-                            <div class="telemetry-gauge">
-                                <svg class="gauge-svg" viewBox="0 0 100 100">
-                                    <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
-                                    <circle class="gauge-fill" cx="50" cy="50" r="40" data-value="94" style="stroke-dasharray: 251.2; stroke-dashoffset: 251.2;"></circle>
-                                </svg>
-                                <div class="gauge-info">
-                                    <span class="gauge-num">94%</span>
-                                    <span class="gauge-label">RAG Accuracy</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="schematic-link">
-                            <span>Source Code</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </a>
-                    </div>
-
-                    <!-- Right Panel: Dataflow Diagram & Interactive Console -->
-                    <div class="schematic-diagram">
-                        <div class="diagram-title">DATA FLOW SCHEMATIC</div>
-                        <div class="pipeline-flow" data-project="lexcloud">
-                            <div class="flow-node active" data-node="client" data-desc="Client Request: Payload sent via REST endpoint.">
-                                <span class="flow-node__icon">💻</span>
-                                <span class="flow-node__label">Client</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="fastapi" data-desc="FastAPI Gateway: Handles routing, CORS, and Pydantic validation.">
-                                <span class="flow-node__icon">⚡</span>
-                                <span class="flow-node__label">FastAPI</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="lambda" data-desc="AWS Lambda: Executes backend router serverlessly under 50ms.">
-                                <span class="flow-node__icon">☁️</span>
-                                <span class="flow-node__label">Lambda</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="storage" data-desc="DynamoDB/S3: DynamoDB writes metadata log; S3 commits raw documents.">
-                                <span class="flow-node__icon">📦</span>
-                                <span class="flow-node__label">DB & S3</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="chromadb" data-desc="ChromaDB RAG: Queries document chunks with cosine distance.">
-                                <span class="flow-node__icon">🔍</span>
-                                <span class="flow-node__label">RAG</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="llama" data-desc="LLaMA-3 Model: Generates final response using augmented context.">
-                                <span class="flow-node__icon">🧠</span>
-                                <span class="flow-node__label">LLaMA-3</span>
-                            </div>
-                        </div>
-
-                        <div class="blueprint-console" id="console-lexcloud">
-                            <div class="console-header">
-                                <span class="console-dot-status"></span>
-                                <span class="console-title">DEBUG CONSOLE // LEXCLOUD</span>
-                                <span class="console-coord">[X:01, Y:78]</span>
-                            </div>
-                            <div class="console-body">
-                                <div class="console-line"><span class="c-dim">[06-25 02:46:11]</span> <span class="c-ok">READY</span> System pipeline loaded successfully.</div>
-                                <div class="console-line c-dynamic">Hover over pipeline nodes to execute trace simulation...</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="marquee-row scroll-reveal" data-direction="left">
+                <div class="marquee-track"><div class="marquee-content">
+                    <span class="marquee-item mi--backend">FastAPI</span><span class="marquee-item mi--backend">REST API</span><span class="marquee-item mi--backend">WebSocket</span><span class="marquee-item mi--backend">Microservices</span><span class="marquee-item mi--backend">JSON Schema</span><span class="marquee-item mi--backend">Pydantic</span>
+                    <span class="marquee-item mi--backend">FastAPI</span><span class="marquee-item mi--backend">REST API</span><span class="marquee-item mi--backend">WebSocket</span><span class="marquee-item mi--backend">Microservices</span><span class="marquee-item mi--backend">JSON Schema</span><span class="marquee-item mi--backend">Pydantic</span>
+                </div></div>
             </div>
-
-            <!-- Project 2: ATCC VPark -->
-            <div class="schematic-project scroll-reveal" data-project="atcc-vpark">
-                <div class="schematic-layout">
-                    <!-- Left Panel: Specs & Telemetry -->
-                    <div class="schematic-info">
-                        <div class="schematic-meta">
-                            <span class="schematic-num">SYS_NODE_02</span>
-                            <span class="schematic-year">2026</span>
-                        </div>
-                        <h3 class="schematic-title">ATCC VPark</h3>
-                        <p class="schematic-subtitle">Real-Time Full-Stack System with WebSocket Streaming</p>
-                        <p class="schematic-desc">Full-stack real-time automation system. Captures video stream frames and processes them through an inference pipeline running YOLOv8 object detection. Coordinates detections to track open parking spaces, broadcasting live JSON state changes over a FastAPI WebSocket connection to a custom dashboard with sub-second latency. Transmits trigger flags to physical gates via serial relays.</p>
-                        
-                        <div class="schematic-tags">
-                            <span>Python</span><span>FastAPI</span><span>WebSocket</span><span>YOLOv8</span><span>OpenCV</span><span>Docker</span><span>JavaScript</span><span>Arduino</span>
-                        </div>
-
-                        <div class="schematic-telemetry">
-                            <div class="telemetry-gauge">
-                                <svg class="gauge-svg" viewBox="0 0 100 100">
-                                    <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
-                                    <circle class="gauge-fill" cx="50" cy="50" r="40" data-value="95" style="stroke-dasharray: 251.2; stroke-dashoffset: 251.2;"></circle>
-                                </svg>
-                                <div class="gauge-info">
-                                    <span class="gauge-num">&lt;100ms</span>
-                                    <span class="gauge-label">Latency</span>
-                                </div>
-                            </div>
-                            <div class="telemetry-gauge">
-                                <svg class="gauge-svg" viewBox="0 0 100 100">
-                                    <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
-                                    <circle class="gauge-fill" cx="50" cy="50" r="40" data-value="100" style="stroke-dasharray: 251.2; stroke-dashoffset: 251.2;"></circle>
-                                </svg>
-                                <div class="gauge-info">
-                                    <span class="gauge-num">30 FPS</span>
-                                    <span class="gauge-label">Frame Processing</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="schematic-link">
-                            <span>Source Code</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </a>
-                    </div>
-
-                    <!-- Right Panel: Dataflow Diagram & Interactive Console -->
-                    <div class="schematic-diagram">
-                        <div class="diagram-title">DATA FLOW SCHEMATIC</div>
-                        <div class="pipeline-flow" data-project="atcc-vpark">
-                            <div class="flow-node active" data-node="cam" data-desc="Camera Source: Captures real-time parking lot video stream.">
-                                <span class="flow-node__icon">📷</span>
-                                <span class="flow-node__label">Video Cam</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="yolo" data-desc="YOLOv8 Engine: Extracts bounded bounding boxes and filters parking state.">
-                                <span class="flow-node__icon">🤖</span>
-                                <span class="flow-node__label">YOLOv8</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="ws" data-desc="WebSocket: Streams serialized coordinates to UI client every 33ms.">
-                                <span class="flow-node__icon">🔗</span>
-                                <span class="flow-node__label">WebSocket</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="ui" data-desc="UI Dashboard: Renders canvas vectors of lot availability coordinates.">
-                                <span class="flow-node__icon">📊</span>
-                                <span class="flow-node__label">Dashboard</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="arduino" data-desc="Arduino Controller: Listens to serial port to trip gate relays.">
-                                <span class="flow-node__icon">⚙️</span>
-                                <span class="flow-node__label">Arduino</span>
-                            </div>
-                        </div>
-
-                        <div class="blueprint-console" id="console-atcc-vpark">
-                            <div class="console-header">
-                                <span class="console-dot-status"></span>
-                                <span class="console-title">DEBUG CONSOLE // ATCC VPARK</span>
-                                <span class="console-coord">[X:02, Y:43]</span>
-                            </div>
-                            <div class="console-body">
-                                <div class="console-line"><span class="c-dim">[06-25 02:46:11]</span> <span class="c-ok">READY</span> Video stream serial decoder initialized.</div>
-                                <div class="console-line c-dynamic">Hover over pipeline nodes to execute trace simulation...</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="marquee-row scroll-reveal" data-direction="right">
+                <div class="marquee-track"><div class="marquee-content">
+                    <span class="marquee-item mi--cloud">AWS Lambda</span><span class="marquee-item mi--cloud">S3</span><span class="marquee-item mi--cloud">DynamoDB</span><span class="marquee-item mi--cloud">API Gateway</span><span class="marquee-item mi--cloud">Docker</span><span class="marquee-item mi--cloud">Git</span><span class="marquee-item mi--cloud">Linux</span>
+                    <span class="marquee-item mi--cloud">AWS Lambda</span><span class="marquee-item mi--cloud">S3</span><span class="marquee-item mi--cloud">DynamoDB</span><span class="marquee-item mi--cloud">API Gateway</span><span class="marquee-item mi--cloud">Docker</span><span class="marquee-item mi--cloud">Git</span><span class="marquee-item mi--cloud">Linux</span>
+                </div></div>
             </div>
-
-            <!-- Project 3: Sepsis Mortality Prediction -->
-            <div class="schematic-project scroll-reveal" data-project="sepsis">
-                <div class="schematic-layout">
-                    <!-- Left Panel: Specs & Telemetry -->
-                    <div class="schematic-info">
-                        <div class="schematic-meta">
-                            <span class="schematic-num">SYS_NODE_03</span>
-                            <span class="schematic-year">2026</span>
-                        </div>
-                        <h3 class="schematic-title">Sepsis Mortality Prediction</h3>
-                        <p class="schematic-subtitle">Clinical Time-Series ML Pipeline</p>
-                        <p class="schematic-desc">Predictive health monitoring pipeline on hospital ICU patient datasets (MIMIC-IV). Filters and cleans multi-modal clinical time-series inputs, engineering 172 robust features across 43 clinical signals. An XGBoost model classifies sepsis mortality risk, attaining an AUC-ROC of 96% and outperforming standard clinical indicators. Integrates SHAP game-theory explanations for real-time feature attribution output.</p>
-                        
-                        <div class="schematic-tags">
-                            <span>Python</span><span>XGBoost</span><span>Scikit-learn</span><span>SHAP</span><span>Pandas</span><span>SQL</span><span>NumPy</span>
-                        </div>
-
-                        <div class="schematic-telemetry">
-                            <div class="telemetry-gauge">
-                                <svg class="gauge-svg" viewBox="0 0 100 100">
-                                    <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
-                                    <circle class="gauge-fill" cx="50" cy="50" r="40" data-value="96" style="stroke-dasharray: 251.2; stroke-dashoffset: 251.2;"></circle>
-                                </svg>
-                                <div class="gauge-info">
-                                    <span class="gauge-num">96%</span>
-                                    <span class="gauge-label">AUC-ROC</span>
-                                </div>
-                            </div>
-                            <div class="telemetry-gauge">
-                                <svg class="gauge-svg" viewBox="0 0 100 100">
-                                    <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
-                                    <circle class="gauge-fill" cx="50" cy="50" r="40" data-value="86" style="stroke-dasharray: 251.2; stroke-dashoffset: 251.2;"></circle>
-                                </svg>
-                                <div class="gauge-info">
-                                    <span class="gauge-num">172</span>
-                                    <span class="gauge-label">Engineered Features</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="schematic-link">
-                            <span>Source Code</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </a>
-                    </div>
-
-                    <!-- Right Panel: Dataflow Diagram & Interactive Console -->
-                    <div class="schematic-diagram">
-                        <div class="diagram-title">DATA FLOW SCHEMATIC</div>
-                        <div class="pipeline-flow" data-project="sepsis">
-                            <div class="flow-node active" data-node="data" data-desc="MIMIC-IV Database: Pulls temporal demographics & clinical data vectors.">
-                                <span class="flow-node__icon">📁</span>
-                                <span class="flow-node__label">ICU Data</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="engineer" data-desc="Feature Engineering: Imputes nulls, aggregates rates, constructs 172 time-series indicators.">
-                                <span class="flow-node__icon">🛠️</span>
-                                <span class="flow-node__label">Features</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="xgboost" data-desc="XGBoost Classifier: Sequential boosting tree yields probability distribution.">
-                                <span class="flow-node__icon">📈</span>
-                                <span class="flow-node__label">XGBoost</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="shap" data-desc="SHAP Interpreter: Calculates additive feature attribution values per patient.">
-                                <span class="flow-node__icon">💡</span>
-                                <span class="flow-node__label">SHAP Explainer</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="report" data-desc="Risk Report: Transmits patient emergency alerts directly to clinician telemetry dashboard.">
-                                <span class="flow-node__icon">🚨</span>
-                                <span class="flow-node__label">Alerts</span>
-                            </div>
-                        </div>
-
-                        <div class="blueprint-console" id="console-sepsis">
-                            <div class="console-header">
-                                <span class="console-dot-status"></span>
-                                <span class="console-title">DEBUG CONSOLE // SEPSIS ML</span>
-                                <span class="console-coord">[X:03, Y:51]</span>
-                            </div>
-                            <div class="console-body">
-                                <div class="console-line"><span class="c-dim">[06-25 02:46:11]</span> <span class="c-ok">READY</span> Clinical ICU models loaded in memory.</div>
-                                <div class="console-line c-dynamic">Hover over pipeline nodes to execute trace simulation...</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="marquee-row scroll-reveal" data-direction="left">
+                <div class="marquee-track"><div class="marquee-content">
+                    <span class="marquee-item mi--ai">PyTorch</span><span class="marquee-item mi--ai">Scikit-learn</span><span class="marquee-item mi--ai">XGBoost</span><span class="marquee-item mi--ai">OpenCV</span><span class="marquee-item mi--ai">RAG</span><span class="marquee-item mi--ai">ChromaDB</span><span class="marquee-item mi--ai">Pandas</span><span class="marquee-item mi--ai">NumPy</span>
+                    <span class="marquee-item mi--ai">PyTorch</span><span class="marquee-item mi--ai">Scikit-learn</span><span class="marquee-item mi--ai">XGBoost</span><span class="marquee-item mi--ai">OpenCV</span><span class="marquee-item mi--ai">RAG</span><span class="marquee-item mi--ai">ChromaDB</span><span class="marquee-item mi--ai">Pandas</span><span class="marquee-item mi--ai">NumPy</span>
+                </div></div>
             </div>
+            <div class="marquee-row scroll-reveal" data-direction="right">
+                <div class="marquee-track"><div class="marquee-content">
+                    <span class="marquee-item mi--eng">OOP</span><span class="marquee-item mi--eng">Design Patterns</span><span class="marquee-item mi--eng">DSA</span><span class="marquee-item mi--eng">Clean Code</span><span class="marquee-item mi--eng">TDD</span><span class="marquee-item mi--eng">pytest</span><span class="marquee-item mi--eng">Selenium</span><span class="marquee-item mi--eng">Modular Architecture</span>
+                    <span class="marquee-item mi--eng">OOP</span><span class="marquee-item mi--eng">Design Patterns</span><span class="marquee-item mi--eng">DSA</span><span class="marquee-item mi--eng">Clean Code</span><span class="marquee-item mi--eng">TDD</span><span class="marquee-item mi--eng">pytest</span><span class="marquee-item mi--eng">Selenium</span><span class="marquee-item mi--eng">Modular Architecture</span>
+                </div></div>
+            </div>
+        </div>
+    </section>
 
-            <!-- Project 4: Non-Invasive Diagnostics -->
-            <div class="schematic-project scroll-reveal" data-project="diagnostics">
-                <div class="schematic-layout">
-                    <!-- Left Panel: Specs & Telemetry -->
-                    <div class="schematic-info">
-                        <div class="schematic-meta">
-                            <span class="schematic-num">SYS_NODE_04</span>
-                            <span class="schematic-year">2025</span>
-                        </div>
-                        <h3 class="schematic-title">Non-Invasive Diagnostics</h3>
-                        <p class="schematic-subtitle">Healthcare Computer Vision Pipeline</p>
-                        <p class="schematic-desc">Two-stage computer vision model for non-invasive medical diagnostic scanning. Integrates YOLOv8 object detection to identify and localize regions of interest on scans (93.5% mAP), cropping targets to feed a second-stage transfer learning CNN. The convolutional classifier identifies tissue conditions (96.0% accuracy, 0.98 AUC). Generates Grad-CAM activation heatmaps to visually verify model decision boundaries.</p>
-                        
-                        <div class="schematic-tags">
-                            <span>Python</span><span>PyTorch</span><span>YOLOv8</span><span>OpenCV</span><span>CNN</span><span>Transfer Learning</span><span>Grad-CAM</span>
-                        </div>
+    <!-- ===== PROJECTS — Full-Width Modules (NO CARDS) ===== -->
+    <section class="section" id="projects">
+        <div class="container">
+            <span class="section__label scroll-reveal">Selected Work</span>
+            <h2 class="section__title scroll-reveal">Things I've <span class="text-gradient">shipped</span>.</h2>
 
-                        <div class="schematic-telemetry">
-                            <div class="telemetry-gauge">
-                                <svg class="gauge-svg" viewBox="0 0 100 100">
-                                    <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
-                                    <circle class="gauge-fill" cx="50" cy="50" r="40" data-value="96" style="stroke-dasharray: 251.2; stroke-dashoffset: 251.2;"></circle>
-                                </svg>
-                                <div class="gauge-info">
-                                    <span class="gauge-num">96%</span>
-                                    <span class="gauge-label">Accuracy</span>
-                                </div>
-                            </div>
-                            <div class="telemetry-gauge">
-                                <svg class="gauge-svg" viewBox="0 0 100 100">
-                                    <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
-                                    <circle class="gauge-fill" cx="50" cy="50" r="40" data-value="89" style="stroke-dasharray: 251.2; stroke-dashoffset: 251.2;"></circle>
-                                </svg>
-                                <div class="gauge-info">
-                                    <span class="gauge-num">89.3%</span>
-                                    <span class="gauge-label">Sensitivity</span>
-                                </div>
-                            </div>
+            <div class="projects-feed">
+                <!-- Project 1 -->
+                <article class="pmod scroll-reveal" data-accent="cyan">
+                    <div class="pmod__bar"></div>
+                    <div class="pmod__body">
+                        <div class="pmod__head">
+                            <span class="pmod__num">01</span>
+                            <div><h3 class="pmod__name">LexCloud</h3><p class="pmod__sub">Cloud-Native API Backend with AI Integration</p></div>
+                            <span class="pmod__year">2024</span>
                         </div>
-
-                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="schematic-link">
-                            <span>Source Code</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </a>
+                        <p class="pmod__desc">Production-grade REST API on AWS using FastAPI — handles JSON ingestion, schema validation, and storage across DynamoDB and S3 with serverless Lambda. Extended with a Generative AI layer using LLaMA-3 + ChromaDB RAG pipeline for intelligent document retrieval and text generation. Clean OOP architecture with pytest, structured logging, and CI-ready config.</p>
+                        <div class="pmod__tags"><span>Python</span><span>FastAPI</span><span>AWS Lambda</span><span>S3</span><span>DynamoDB</span><span>LLaMA-3</span><span>RAG</span><span>ChromaDB</span><span>pytest</span></div>
+                        <div class="pmod__metrics">
+                            <div class="pm"><span class="pm__v">5</span><span class="pm__l">AWS Services</span></div>
+                            <div class="pm"><span class="pm__v">RAG</span><span class="pm__l">Pipeline</span></div>
+                            <div class="pm"><span class="pm__v">100%</span><span class="pm__l">Serverless</span></div>
+                        </div>
+                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub →</a>
                     </div>
+                </article>
 
-                    <!-- Right Panel: Dataflow Diagram & Interactive Console -->
-                    <div class="schematic-diagram">
-                        <div class="diagram-title">DATA FLOW SCHEMATIC</div>
-                        <div class="pipeline-flow" data-project="diagnostics">
-                            <div class="flow-node active" data-node="image" data-desc="Lab Scan Image: Accepts digital medical scan formats.">
-                                <span class="flow-node__icon">🖼️</span>
-                                <span class="flow-node__label">Scan Input</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="detection" data-desc="YOLOv8 ROI: Scans image vectors to localize region bounding coordinates.">
-                                <span class="flow-node__icon">🎯</span>
-                                <span class="flow-node__label">YOLOv8 ROI</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="cnn" data-desc="CNN Classifier: Deep neural nodes process cropped patch for tissue features.">
-                                <span class="flow-node__icon">🧬</span>
-                                <span class="flow-node__label">CNN Model</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="gradcam" data-desc="Grad-CAM Heatmap: Computes activation gradients of last layer as transparent overlay.">
-                                <span class="flow-node__icon">🗺️</span>
-                                <span class="flow-node__label">Grad-CAM</span>
-                            </div>
-                            <div class="flow-connector"><span></span></div>
-                            <div class="flow-node" data-node="report" data-desc="Diagnostic Report: Yields prediction confidence output logs.">
-                                <span class="flow-node__icon">📝</span>
-                                <span class="flow-node__label">Diagnosis</span>
-                            </div>
+                <!-- Project 2 -->
+                <article class="pmod scroll-reveal" data-accent="violet">
+                    <div class="pmod__bar"></div>
+                    <div class="pmod__body">
+                        <div class="pmod__head">
+                            <span class="pmod__num">02</span>
+                            <div><h3 class="pmod__name">ATCC VPark</h3><p class="pmod__sub">Real-Time Full-Stack System with WebSocket Streaming</p></div>
+                            <span class="pmod__year">2026</span>
                         </div>
-
-                        <div class="blueprint-console" id="console-diagnostics">
-                            <div class="console-header">
-                                <span class="console-dot-status"></span>
-                                <span class="console-title">DEBUG CONSOLE // DIAGNOSTICS</span>
-                                <span class="console-coord">[X:04, Y:19]</span>
-                            </div>
-                            <div class="console-body">
-                                <div class="console-line"><span class="c-dim">[06-25 02:46:11]</span> <span class="c-ok">READY</span> Computer vision pipeline initialized.</div>
-                                <div class="console-line c-dynamic">Hover over pipeline nodes to execute trace simulation...</div>
-                            </div>
+                        <p class="pmod__desc">Full-stack real-time application: Python backend (FastAPI) serving REST endpoints and WebSocket connections that stream live YOLOv8 inference data to a JavaScript dashboard with sub-second latency. Complete hardware integration layer via serial communication (PySerial → Arduino) for automated physical control. Containerised in Docker.</p>
+                        <div class="pmod__tags"><span>Python</span><span>FastAPI</span><span>WebSocket</span><span>YOLOv8</span><span>OpenCV</span><span>Docker</span><span>JavaScript</span><span>Arduino</span></div>
+                        <div class="pmod__metrics">
+                            <div class="pm"><span class="pm__v">&lt;1s</span><span class="pm__l">Latency</span></div>
+                            <div class="pm"><span class="pm__v">Real-time</span><span class="pm__l">Streaming</span></div>
+                            <div class="pm"><span class="pm__v">Full Stack</span><span class="pm__l">HW + SW</span></div>
                         </div>
+                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub →</a>
                     </div>
-                </div>
+                </article>
+
+                <!-- Project 3 -->
+                <article class="pmod scroll-reveal" data-accent="emerald">
+                    <div class="pmod__bar"></div>
+                    <div class="pmod__body">
+                        <div class="pmod__head">
+                            <span class="pmod__num">03</span>
+                            <div><h3 class="pmod__name">Sepsis Mortality Prediction</h3><p class="pmod__sub">Clinical Time-Series ML Pipeline</p></div>
+                            <span class="pmod__year">2026</span>
+                        </div>
+                        <p class="pmod__desc">Modular data processing pipeline on large-scale hospital ICU datasets (MIMIC-IV). Engineered 172 features from 43 clinical time-series signals. XGBoost classifier achieved 96% AUC-ROC — outperforming four published baselines by 10–16 points. SHAP explainability for every prediction. Clean-code architecture with separate testable modules.</p>
+                        <div class="pmod__tags"><span>Python</span><span>XGBoost</span><span>Scikit-learn</span><span>SHAP</span><span>Pandas</span><span>SQL</span><span>NumPy</span></div>
+                        <div class="pmod__metrics">
+                            <div class="pm"><span class="pm__v">96%</span><span class="pm__l">AUC-ROC</span></div>
+                            <div class="pm"><span class="pm__v">172</span><span class="pm__l">Features</span></div>
+                            <div class="pm"><span class="pm__v">43</span><span class="pm__l">Signals</span></div>
+                        </div>
+                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub →</a>
+                    </div>
+                </article>
+
+                <!-- Project 4 -->
+                <article class="pmod scroll-reveal" data-accent="amber">
+                    <div class="pmod__bar"></div>
+                    <div class="pmod__body">
+                        <div class="pmod__head">
+                            <span class="pmod__num">04</span>
+                            <div><h3 class="pmod__name">Non-Invasive Diagnostics</h3><p class="pmod__sub">Healthcare Computer Vision Pipeline</p></div>
+                            <span class="pmod__year">2025</span>
+                        </div>
+                        <p class="pmod__desc">Two-stage computer vision pipeline: YOLOv8 object detection (93.5% mAP) to localise regions of interest, followed by CNN transfer learning classifier achieving 96% accuracy (AUC 0.98) on 852 test images. Validated against 251 lab-confirmed patient samples with 89.3% sensitivity. Grad-CAM heatmaps for model interpretability.</p>
+                        <div class="pmod__tags"><span>Python</span><span>PyTorch</span><span>YOLOv8</span><span>OpenCV</span><span>CNN</span><span>Transfer Learning</span><span>Grad-CAM</span></div>
+                        <div class="pmod__metrics">
+                            <div class="pm"><span class="pm__v">96%</span><span class="pm__l">Accuracy</span></div>
+                            <div class="pm"><span class="pm__v">0.98</span><span class="pm__l">AUC</span></div>
+                            <div class="pm"><span class="pm__v">251</span><span class="pm__l">Patients</span></div>
+                        </div>
+                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub →</a>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
 
     <!-- ===== EXPERIENCE ===== -->
-    <section class="section section--alt" id="experience">
+    <section class="section section--dark" id="experience">
         <div class="container">
-            <div class="section__eyebrow scroll-reveal">Experience</div>
-            <h2 class="section__heading scroll-reveal">Where I've <span class="text-glow">contributed</span>.</h2>
+            <span class="section__label scroll-reveal">Experience</span>
+            <h2 class="section__title scroll-reveal">Where I've <span class="text-gradient">contributed</span>.</h2>
 
             <div class="timeline">
-                <div class="timeline__item scroll-reveal" style="--d:0s">
+                <div class="timeline__line"></div>
+                <div class="timeline__item scroll-reveal">
                     <div class="timeline__dot"></div>
-                    <div class="timeline__card">
-                        <div class="timeline__header">
-                            <h3>Research Intern — Healthcare AI</h3>
-                            <span class="timeline__date">May 2025 – Aug 2025</span>
-                        </div>
+                    <div class="timeline__content">
+                        <div class="timeline__head"><h3>Research Intern — Healthcare AI</h3><span class="timeline__date">May 2025 – Aug 2025</span></div>
                         <p class="timeline__org">Centre for Healthcare Advancement, Innovation & Research (CHAIR), VIT Chennai</p>
                         <p class="timeline__desc">Independently executed a full-cycle AI/ML research project on clinical healthcare data. Built deep learning models (PyTorch, YOLOv8, CNN) achieving 96% accuracy with Grad-CAM explainability. Participated in code reviews and design discussions with research supervisors.</p>
                         <a href="https://vitchennaievents.com/certificates/generate.php?c=VDJPc09rRXRJbDgoSUJrK1Fqc2xnVXFWQWcybS9ZT01KOGcyV3ZPSmNORGFjM2Zuakxaall1bVVoME00ZHFxUllhQmh5S1dLbjZqcVpxSXVIMDhXQjZVS3g1UUxkeENkRml1RmVmTXZqVUJSdWtXMGVoWXNTUEpSc0VSZVdSNUF2ejBqYVk0ajE4Zm82Wmxkbm9HaCt6MW9GS0ZFS1AyOVBwVlltQTJtTEdRPQ==" target="_blank" rel="noopener" class="timeline__cert">📄 View Certificate</a>
                     </div>
                 </div>
-
-                <div class="timeline__item scroll-reveal" style="--d:0.15s">
+                <div class="timeline__item scroll-reveal">
                     <div class="timeline__dot"></div>
-                    <div class="timeline__card">
-                        <div class="timeline__header">
-                            <h3>Python Training Intern</h3>
-                            <span class="timeline__date">Jun 2024 – Jul 2024</span>
-                        </div>
+                    <div class="timeline__content">
+                        <div class="timeline__head"><h3>Python Training Intern</h3><span class="timeline__date">Jun 2024 – Jul 2024</span></div>
                         <p class="timeline__org">Colan Infotech Private Limited · On-site</p>
                         <p class="timeline__desc">Completed structured training in Python programming, software design patterns, scripting, and Git-based version control. Participated in code reviews and collaborative coding sessions following agile practices.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Education -->
-            <div class="section__eyebrow scroll-reveal" style="margin-top:64px">Education</div>
+            <span class="section__label scroll-reveal" style="margin-top:64px">Education</span>
             <div class="timeline">
-                <div class="timeline__item scroll-reveal" style="--d:0s">
+                <div class="timeline__line"></div>
+                <div class="timeline__item scroll-reveal">
                     <div class="timeline__dot timeline__dot--edu"></div>
-                    <div class="timeline__card">
-                        <div class="timeline__header">
-                            <h3>M.Tech Integrated — Software Engineering</h3>
-                            <span class="timeline__date">2022 – 2027</span>
-                        </div>
+                    <div class="timeline__content">
+                        <div class="timeline__head"><h3>M.Tech Integrated — Software Engineering</h3><span class="timeline__date">2022 – 2027</span></div>
                         <p class="timeline__org">Vellore Institute of Technology (VIT), Chennai · CGPA: 7.92 · No Backlogs</p>
                         <p class="timeline__desc">A grades in: Artificial Intelligence, Design Patterns, OOP, Software Reuse, IoT Domain Analytics, Programming in Java. 66 subjects completed.</p>
                     </div>
                 </div>
-                <div class="timeline__item scroll-reveal" style="--d:0.15s">
+                <div class="timeline__item scroll-reveal">
                     <div class="timeline__dot timeline__dot--edu"></div>
-                    <div class="timeline__card">
-                        <div class="timeline__header">
-                            <h3>Class XII — PCBM</h3>
-                            <span class="timeline__date">2019 – 2021</span>
-                        </div>
+                    <div class="timeline__content">
+                        <div class="timeline__head"><h3>Class XII — PCBM</h3><span class="timeline__date">2019 – 2021</span></div>
                         <p class="timeline__org">Mazharul Uloom HSS, Ambur · 85.20% · Tamil Nadu State Board</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Leadership -->
-            <div class="section__eyebrow scroll-reveal" style="margin-top:64px">Leadership</div>
-            <div class="leadership__row">
-                <div class="lead-card scroll-reveal" style="--d:0s">
-                    <span class="lead-card__emoji">🛡️</span>
-                    <h4>Cybersecurity Division</h4>
-                    <p>Microsoft Innovations Club · VIT Chennai</p>
-                    <small>CTF competitions & workshops for 500+ participants</small>
+            <span class="section__label scroll-reveal" style="margin-top:64px">Leadership</span>
+            <div class="leadership-row">
+                <div class="leadership-item scroll-reveal">
+                    <span class="leadership-item__icon">🛡️</span>
+                    <h4 class="leadership-item__title">Cybersecurity Division</h4>
+                    <p class="leadership-item__org">Microsoft Innovations Club · VIT Chennai</p>
+                    <p class="leadership-item__detail">CTF competitions & workshops for 500+ participants</p>
                 </div>
-                <div class="lead-card scroll-reveal" style="--d:0.1s">
-                    <span class="lead-card__emoji">🥽</span>
-                    <h4>Marketing & Management</h4>
-                    <p>AR/VR Club · VIT Chennai</p>
-                    <small>Led cross-functional teams · 30% registration growth</small>
+                <div class="leadership-item scroll-reveal">
+                    <span class="leadership-item__icon">🥽</span>
+                    <h4 class="leadership-item__title">Marketing & Management</h4>
+                    <p class="leadership-item__org">AR/VR Club · VIT Chennai</p>
+                    <p class="leadership-item__detail">Led cross-functional teams · 30% registration growth</p>
                 </div>
-                <div class="lead-card scroll-reveal" style="--d:0.2s">
-                    <span class="lead-card__emoji">💡</span>
-                    <h4>Operations Member</h4>
-                    <p>Fraternity of Young Innovators</p>
-                    <small>Inter-college innovation events & symposiums</small>
+                <div class="leadership-item scroll-reveal">
+                    <span class="leadership-item__icon">💡</span>
+                    <h4 class="leadership-item__title">Operations Member</h4>
+                    <p class="leadership-item__org">Fraternity of Young Innovators</p>
+                    <p class="leadership-item__detail">Inter-college innovation events & symposiums</p>
                 </div>
             </div>
         </div>
@@ -657,28 +307,24 @@
     <!-- ===== CONTACT ===== -->
     <section class="section" id="contact">
         <div class="container">
-            <div class="section__eyebrow scroll-reveal">Let's Connect</div>
-            <h2 class="contact__heading scroll-reveal">Got a role or project?<br><span class="text-glow">I'd love to hear about it.</span></h2>
-            <div class="contact__grid">
-                <a href="mailto:Afnaanahmed.k391@gmail.com" class="contact-card scroll-reveal" style="--d:0s">
-                    <span class="contact-card__icon">✉️</span>
-                    <span class="contact-card__label">Email</span>
-                    <span class="contact-card__value">Afnaanahmed.k391@gmail.com</span>
+            <span class="section__label scroll-reveal">Let's Connect</span>
+            <h2 class="contact__title scroll-reveal">Got a role or project?<br><span class="text-gradient">I'd love to hear about it.</span></h2>
+            <div class="contact__links">
+                <a href="mailto:Afnaanahmed.k391@gmail.com" class="contact__item scroll-reveal">
+                    <span class="contact__icon">✉</span>
+                    <span class="contact__text">Afnaanahmed.k391@gmail.com</span>
                 </a>
-                <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" class="contact-card scroll-reveal" style="--d:0.1s">
-                    <span class="contact-card__icon">💼</span>
-                    <span class="contact-card__label">LinkedIn</span>
-                    <span class="contact-card__value">afnaan22mis1157</span>
+                <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" class="contact__item scroll-reveal">
+                    <span class="contact__icon">in</span>
+                    <span class="contact__text">linkedin.com/in/afnaan22mis1157</span>
                 </a>
-                <a href="https://github.com/22MIS1157" target="_blank" class="contact-card scroll-reveal" style="--d:0.2s">
-                    <span class="contact-card__icon">💻</span>
-                    <span class="contact-card__label">GitHub</span>
-                    <span class="contact-card__value">22MIS1157</span>
+                <a href="https://github.com/22MIS1157" target="_blank" class="contact__item scroll-reveal">
+                    <span class="contact__icon">⌘</span>
+                    <span class="contact__text">github.com/22MIS1157</span>
                 </a>
-                <a href="tel:+919150713929" class="contact-card scroll-reveal" style="--d:0.3s">
-                    <span class="contact-card__icon">📱</span>
-                    <span class="contact-card__label">Phone</span>
-                    <span class="contact-card__value">+91 9150713929</span>
+                <a href="tel:+919150713929" class="contact__item scroll-reveal">
+                    <span class="contact__icon">☎</span>
+                    <span class="contact__text">+91 9150713929</span>
                 </a>
             </div>
         </div>
@@ -686,10 +332,8 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container footer__inner">
-            <p>Designed & Built by <strong>Afnaan Ahmed P</strong> · 2025</p>
-            <button class="footer__top" id="scrollTopBtn" aria-label="Scroll to top">↑ Top</button>
-        </div>
+        <p>Designed & Built by <strong>Afnaan Ahmed P</strong> · 2025</p>
+        <button class="footer__top" id="scrollTopBtn" aria-label="Scroll to top">↑</button>
     </footer>
 
     <script src="script.js"></script>

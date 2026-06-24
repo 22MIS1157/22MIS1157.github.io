@@ -1,52 +1,40 @@
 /* ============================================
    AFNAAN AHMED P — PORTFOLIO JS
-   All interactivity: cursor, spotlight, scroll
-   animations, typing, counters, terminal, nav
+   All class selectors match index.html exactly.
+   NO custom cursor. Clean interactivity only.
    ============================================ */
 
 (function () {
   'use strict';
 
-  // ── Utilities ──
-  const $ = (sel, ctx = document) => ctx.querySelector(sel);
-  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
-  const lerp = (a, b, t) => a + (b - a) * t;
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
-  const isMobile = window.matchMedia('(max-width: 600px)').matches || 'ontouchstart' in window;
-
-  // ── Magnetic Effect ──
-  if (!isMobile) {
-    $$('.magnetic').forEach(el => {
-      el.addEventListener('mousemove', e => {
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        el.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-      });
-      el.addEventListener('mouseleave', () => {
-        el.style.transform = '';
-      });
-    });
+  // ── Scroll Progress Bar ──
+  const progressBar = $('#scrollProgress');
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
   }
+  window.addEventListener('scroll', updateProgress, { passive: true });
 
   // ── Navigation ──
   const nav = $('#nav');
-  const menuBtn = $('#menuBtn');
+  const hamburger = $('#hamburger');
   const mobileMenu = $('#mobileMenu');
   const navLinks = $$('.nav__link');
   const sections = $$('section[id]');
 
-  // Scroll — add glass effect to nav
-  let lastScroll = 0;
+  // Glass effect on scroll
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    nav.classList.toggle('scrolled', scrollY > 50);
-    lastScroll = scrollY;
+    nav.classList.toggle('scrolled', window.scrollY > 50);
   }, { passive: true });
 
-  // Mobile menu toggle
-  menuBtn.addEventListener('click', () => {
-    menuBtn.classList.toggle('open');
+  // Hamburger toggle
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
     mobileMenu.classList.toggle('open');
     document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
   });
@@ -54,7 +42,7 @@
   // Close mobile menu on link click
   $$('.mobile-menu__link').forEach(link => {
     link.addEventListener('click', () => {
-      menuBtn.classList.remove('open');
+      hamburger.classList.remove('open');
       mobileMenu.classList.remove('open');
       document.body.style.overflow = '';
     });
@@ -88,11 +76,11 @@
     },
     { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
   );
-
   $$('.scroll-reveal').forEach(el => revealObserver.observe(el));
 
-  // ── Hero Role Typing Effect ──
+  // ── Hero Typing Effect ──
   const roles = [
+    'intelligent systems',
     'production APIs',
     'ML pipelines',
     'real-time systems',
@@ -102,9 +90,9 @@
   ];
   const heroRole = $('#heroRole');
   let roleIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
-  let typeSpeed = 80;
+  let charIndex = roles[0].length; // Start with first role fully typed
+  let isDeleting = true;
+  let typeSpeed = 2000; // Initial pause before starting to delete
 
   function typeRole() {
     const current = roles[roleIndex];
@@ -114,9 +102,9 @@
       charIndex++;
       if (charIndex === current.length) {
         isDeleting = true;
-        typeSpeed = 2000; // Pause before deleting
+        typeSpeed = 2200;
       } else {
-        typeSpeed = 60 + Math.random() * 40;
+        typeSpeed = 55 + Math.random() * 35;
       }
     } else {
       heroRole.textContent = current.substring(0, charIndex - 1);
@@ -124,15 +112,14 @@
       if (charIndex === 0) {
         isDeleting = false;
         roleIndex = (roleIndex + 1) % roles.length;
-        typeSpeed = 400; // Pause before next word
+        typeSpeed = 350;
       } else {
-        typeSpeed = 30;
+        typeSpeed = 25;
       }
     }
-
     setTimeout(typeRole, typeSpeed);
   }
-  setTimeout(typeRole, 1800);
+  setTimeout(typeRole, 2200);
 
   // ── Stat Counter Animation ──
   const statObserver = new IntersectionObserver(
@@ -142,16 +129,21 @@
           const numEl = entry.target;
           const target = parseInt(numEl.dataset.target);
           const suffix = numEl.dataset.suffix || '';
-          const duration = 1500;
+          const divide = numEl.dataset.divide ? parseInt(numEl.dataset.divide) : 0;
+          const duration = 1400;
           const start = performance.now();
 
           function update(now) {
             const elapsed = now - start;
             const progress = Math.min(elapsed / duration, 1);
-            // Ease out cubic
             const eased = 1 - Math.pow(1 - progress, 3);
-            const current = Math.round(eased * target);
-            numEl.textContent = current + suffix;
+            let current = Math.round(eased * target);
+
+            if (divide > 0) {
+              numEl.textContent = (current / divide).toFixed(2) + suffix;
+            } else {
+              numEl.textContent = current + suffix;
+            }
 
             if (progress < 1) {
               requestAnimationFrame(update);
@@ -166,39 +158,18 @@
   );
   $$('.stat__number').forEach(el => statObserver.observe(el));
 
-  // ── Terminal Entries Animation ──
-  const terminalObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const terminal = entry.target;
-          const termEntries = $$('.terminal__entry', terminal);
-          const endLine = $('.terminal__line--end', terminal);
-
-          termEntries.forEach((el, i) => {
-            setTimeout(() => {
-              el.classList.add('visible');
-            }, (i + 1) * 500);
-          });
-
-          if (endLine) {
-            setTimeout(() => {
-              endLine.style.opacity = '1';
-            }, (termEntries.length + 1) * 500);
-          }
-
-          terminalObserver.unobserve(terminal);
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
-  const terminalEl = $('#terminal');
-  if (terminalEl) terminalObserver.observe(terminalEl);
-
-  // Initially hide the end line
-  const endLine = $('.terminal__line--end');
-  if (endLine) endLine.style.opacity = '0';
+  // ── Smooth Anchor Scrolling ──
+  $$('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 64;
+        const top = target.offsetTop - navH;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
 
   // ── Scroll to Top ──
   const scrollTopBtn = $('#scrollTopBtn');
@@ -208,146 +179,35 @@
     });
   }
 
-  // ── Skill Constellation — Mouse Parallax ──
-  if (!isMobile) {
-    const constellation = $('#skillsConstellation');
-    if (constellation) {
-      constellation.addEventListener('mousemove', e => {
-        const rect = constellation.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-        $$('.skill-tag', constellation).forEach(tag => {
-          const speed = parseFloat(getComputedStyle(tag).getPropertyValue('--drift')) || 15;
-          const factor = speed / 15;
-          tag.style.transform = `translate(${x * 15 * factor}px, ${y * 10 * factor}px)`;
-        });
-      });
-
-      constellation.addEventListener('mouseleave', () => {
-        $$('.skill-tag', constellation).forEach(tag => {
-          tag.style.transform = '';
-        });
-      });
-    }
-  }
-
-  // ── Legend Category Hover Highlight ──
-  $$('.legend-item').forEach(legend => {
-    const cat = legend.dataset.category;
-
-    legend.addEventListener('mouseenter', () => {
-      $$('.skill-tag').forEach(tag => {
-        if (tag.dataset.category === cat) {
-          tag.style.transform = 'scale(1.12)';
-          tag.style.zIndex = '10';
-        } else {
-          tag.style.opacity = '0.2';
-        }
-      });
-    });
-
-    legend.addEventListener('mouseleave', () => {
-      $$('.skill-tag').forEach(tag => {
-        tag.style.transform = '';
-        tag.style.zIndex = '';
-        tag.style.opacity = '';
-      });
-    });
-  });
-
-  // ── Scroll-Linked Blueprint Pipeline Path ──
-  const projectsSection = $('#projects');
-  const activePipelinePath = $('#activePipelinePath');
-
-  if (projectsSection && activePipelinePath) {
-    const pathLength = activePipelinePath.getTotalLength();
-    activePipelinePath.style.strokeDasharray = pathLength;
-    activePipelinePath.style.strokeDashoffset = pathLength;
-
+  // ── Parallax Hero Orbs on Scroll ──
+  const orbs = $$('.hero__orb');
+  if (orbs.length > 0) {
     window.addEventListener('scroll', () => {
-      const rect = projectsSection.getBoundingClientRect();
-      const viewHeight = window.innerHeight;
-      const startY = rect.top - viewHeight / 2;
-      const scrollableHeight = rect.height;
-      let progress = -startY / (scrollableHeight - viewHeight / 2);
-      progress = Math.max(0, Math.min(1, progress));
-
-      activePipelinePath.style.strokeDashoffset = pathLength - (progress * pathLength);
+      const scrollY = window.scrollY;
+      orbs.forEach((orb, i) => {
+        const speed = (i + 1) * 0.04;
+        orb.style.transform += ''; // reset handled by CSS keyframes
+        orb.style.marginTop = -(scrollY * speed) + 'px';
+      });
     }, { passive: true });
   }
 
-  // ── Telemetry Dials Scroll Reveal ──
-  const gaugeObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const project = entry.target;
-          $$('.gauge-fill', project).forEach(fill => {
-            const val = parseInt(fill.dataset.value) || 0;
-            // Total circumference is 2 * PI * r = 2 * 3.14159 * 40 = 251.2
-            const offset = 251.2 * (1 - val / 100);
-            fill.style.strokeDashoffset = offset;
-          });
-          gaugeObserver.unobserve(project);
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
-  $$('.schematic-project').forEach(p => gaugeObserver.observe(p));
-
-  // ── Flowchart Hover Interaction & Debug Log Simulator ──
-  $$('.schematic-project').forEach(project => {
-    const nodes = $$('.flow-node', project);
-    const dynamicLog = $('.c-dynamic', project);
-    let typingTimeout;
-
-    function typeLogText(text) {
-      clearTimeout(typingTimeout);
-      dynamicLog.textContent = '';
-      let charIdx = 0;
-      function type() {
-        if (charIdx < text.length) {
-          dynamicLog.textContent += text.charAt(charIdx);
-          charIdx++;
-          typingTimeout = setTimeout(type, 12);
-        }
-      }
-      type();
-    }
-
-    nodes.forEach(node => {
-      node.addEventListener('mouseenter', () => {
-        nodes.forEach(n => n.classList.remove('active'));
-        node.classList.add('active');
-        const desc = node.dataset.desc;
-        const nodeName = node.dataset.node.toUpperCase();
-        if (desc && dynamicLog) {
-          typeLogText(`[TRACE // ${nodeName}] ${desc}`);
-        }
-      });
+  // ── Project Module Hover — Accent Glow Pulse ──
+  $$('.pmod').forEach(mod => {
+    const bar = mod.querySelector('.pmod__bar');
+    mod.addEventListener('mouseenter', () => {
+      bar.style.transition = 'box-shadow .2s, width .2s';
     });
-  });
-
-  // ── Smooth Anchor Scrolling ──
-  $$('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', e => {
-      const target = document.querySelector(anchor.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 64;
-        const top = target.offsetTop - navH;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }
+    mod.addEventListener('mouseleave', () => {
+      bar.style.transition = 'box-shadow .5s, width .3s';
     });
   });
 
   // ── Page Load ──
   window.addEventListener('load', () => {
     document.body.classList.add('loaded');
-    // Trigger initial nav check
     updateActiveNav();
+    updateProgress();
   });
 
 })();
