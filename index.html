@@ -4,32 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afnaan Ahmed P — Software Engineer & AI Developer</title>
-    <meta name="description" content="Portfolio of Afnaan Ahmed P — M.Tech Software Engineering, VIT Chennai. Builder of production APIs, ML pipelines, real-time systems, and AI applications.">
+    <meta name="description" content="Portfolio of Afnaan Ahmed P — M.Tech Software Engineering, VIT Chennai.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- LOADER -->
+    <!-- LOADER — Stranger Things style -->
     <div class="loader" id="loader">
         <div class="loader__inner">
-            <p class="loader__label">AFNAAN AHMED P</p>
-            <p class="loader__text">INITIALIZING PORTFOLIO<span class="loader__dots"></span></p>
+            <p class="loader__subtitle">A NETFLIX ORIGINAL PORTFOLIO</p>
+            <h1 class="loader__title">AFNAAN<br>AHMED P</h1>
             <div class="loader__bar"><div class="loader__fill"></div></div>
         </div>
     </div>
 
-    <!-- STRANGER THINGS — Red Lightning SVGs (fixed bg) -->
-    <svg class="st-lightning st-lightning--1" viewBox="0 0 100 800" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 0 L42 160 L72 145 L30 340 L62 325 L20 540 L58 520 L10 800" stroke="#cc0000" stroke-width="2.5"/></svg>
-    <svg class="st-lightning st-lightning--2" viewBox="0 0 100 800" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 0 L58 180 L28 165 L70 380 L38 365 L80 560 L42 540 L90 800" stroke="#cc0000" stroke-width="2"/></svg>
-    <svg class="st-lightning st-lightning--3" viewBox="0 0 100 800" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M60 0 L50 200 L78 185 L40 420 L68 400 L30 650 L65 630 L15 800" stroke="#ff3333" stroke-width="1.5"/></svg>
+    <!-- RED THUNDER FLASHES (full-screen, not SVG lines) -->
+    <div class="thunder thunder--1"></div>
+    <div class="thunder thunder--2"></div>
+    <div class="thunder thunder--3"></div>
 
-    <!-- RED ATMOSPHERIC OVERLAY -->
+    <!-- RED ATMOSPHERIC OVERLAY (Upside Down) -->
     <div class="st-atmosphere"></div>
 
-    <!-- VECNA CLOCK (subtle bottom-right) -->
-    <div class="vecna-clock" id="vecnaClock"><div class="vecna-clock__hand"></div><div class="vecna-clock__hand vecna-clock__hand--m"></div><div class="vecna-clock__center"></div></div>
+    <!-- Floating Upside Down spores/ash (CSS) -->
+    <div class="ud-spores"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+    <!-- VECNA CLOCK (corner) -->
+    <div class="vecna-mini" id="vecnaMini"><div class="vecna-mini__hand"></div><div class="vecna-mini__hand vecna-mini__hand--m"></div><div class="vecna-mini__dot"></div></div>
 
     <!-- SCROLL PROGRESS -->
     <div class="scroll-progress" id="scrollProgress"></div>
@@ -60,7 +63,11 @@
         </div>
         <div class="hero__content">
             <p class="hero__greeting" id="heroGreeting">Good evening. I'm</p>
-            <h1 class="hero__name glitch" data-text="Afnaan Ahmed P">Afnaan Ahmed P</h1>
+            <!-- STRANGER THINGS TITLE — letter-by-letter glow reveal -->
+            <h1 class="hero__name st-title">
+                <span class="st-l" style="--d:0">A</span><span class="st-l" style="--d:1">F</span><span class="st-l" style="--d:2">N</span><span class="st-l" style="--d:3">A</span><span class="st-l" style="--d:4">A</span><span class="st-l" style="--d:5">N</span><br>
+                <span class="st-l" style="--d:7">A</span><span class="st-l" style="--d:8">H</span><span class="st-l" style="--d:9">M</span><span class="st-l" style="--d:10">E</span><span class="st-l" style="--d:11">D</span><span class="st-l st-l--space" style="--d:12">&nbsp;</span><span class="st-l" style="--d:13">P</span>
+            </h1>
             <div class="hero__role-line"><span>I build </span><span class="hero__role" id="heroRole">intelligent systems</span><span class="hero__cursor">|</span></div>
             <p class="hero__tagline">M.Tech Software Engineering · VIT Chennai · Class of 2027</p>
             <div class="hero__cta">
@@ -69,12 +76,13 @@
                 <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" rel="noopener" class="btn btn--ghost magnetic">LinkedIn</a>
             </div>
         </div>
-        <div class="hero__scroll-hint"><span>Scroll</span><div class="hero__scroll-line"></div></div>
+        <div class="hero__scroll-hint"><span>Scroll to the Upside Down</span><div class="hero__scroll-line"></div></div>
     </section>
 
     <!-- ===== ABOUT ===== -->
     <section class="section" id="about">
         <div class="section__divider"></div>
+        <div class="section__vine section__vine--l"></div>
         <div class="container">
             <span class="section__label scroll-reveal">PART I // About Me</span>
             <div class="about">
@@ -106,6 +114,7 @@
     <!-- ===== SKILLS ===== -->
     <section class="section section--dark" id="skills">
         <div class="section__divider"></div>
+        <div class="section__vine section__vine--r"></div>
         <div class="container">
             <span class="section__label scroll-reveal">PART II // Tech Stack</span>
             <h2 class="section__title scroll-reveal txt-scramble">The tools I <span class="text-gradient">think in</span>.</h2>
@@ -122,58 +131,51 @@
     <!-- ===== PROJECTS / OPERATIONS ===== -->
     <section class="section" id="projects">
         <div class="section__divider"></div>
+        <div class="section__vine section__vine--l"></div>
         <div class="container">
             <span class="section__label scroll-reveal">PART III // Operations</span>
             <h2 class="section__title scroll-reveal txt-scramble">Systems I've <span class="text-gradient">deployed</span>.</h2>
-
             <div class="projects-feed">
-                <!-- OP 01: VPark — FEATURED -->
                 <article class="pmod pmod--featured scroll-reveal" data-accent="red" data-project="vpark">
                     <div class="pmod__featured-badge">⭐ FEATURED PROJECT</div>
                     <canvas class="pmod__canvas" data-anim="vpark"></canvas>
                     <div class="pmod__bar"></div>
                     <div class="pmod__body">
                         <div class="pmod__head"><span class="pmod__num">01</span><div><h3 class="pmod__name">ATCC VPark</h3><p class="pmod__sub">Real-Time Full-Stack System with WebSocket Streaming</p></div><span class="pmod__year">2026</span></div>
-                        <p class="pmod__desc">Full-stack real-time parking automation system. Captures video stream frames and processes them through a YOLOv8 inference pipeline for vehicle detection. Broadcasts live JSON state over FastAPI WebSocket to a custom JavaScript dashboard with sub-second latency. Transmits trigger signals to physical gate relays via PySerial → Arduino. Containerised in Docker.</p>
+                        <p class="pmod__desc">Full-stack real-time parking automation. YOLOv8 inference pipeline → FastAPI WebSocket → JavaScript dashboard with sub-second latency. PySerial → Arduino for physical gate control. Dockerised.</p>
                         <div class="pmod__tags"><span>Python</span><span>FastAPI</span><span>WebSocket</span><span>YOLOv8</span><span>OpenCV</span><span>Docker</span><span>JavaScript</span><span>Arduino</span></div>
                         <div class="pmod__metrics"><div class="pm"><span class="pm__v">&lt;1s</span><span class="pm__l">Latency</span></div><div class="pm"><span class="pm__v">Real-time</span><span class="pm__l">Streaming</span></div><div class="pm"><span class="pm__v">Full Stack</span><span class="pm__l">HW + SW</span></div></div>
                         <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub →</a>
                     </div>
                 </article>
-
-                <!-- OP 02: Anemia -->
                 <article class="pmod scroll-reveal" data-accent="emerald" data-project="anemia">
                     <canvas class="pmod__canvas" data-anim="anemia"></canvas>
                     <div class="pmod__bar"></div>
                     <div class="pmod__body">
                         <div class="pmod__head"><span class="pmod__num">02</span><div><h3 class="pmod__name">Non-Invasive Anemia Detection</h3><p class="pmod__sub">Healthcare Computer Vision Pipeline</p></div><span class="pmod__year">2025</span></div>
-                        <p class="pmod__desc">Two-stage computer vision pipeline. YOLOv8 (93.5% mAP) localises conjunctival nail-bed regions, then a CNN transfer-learning classifier achieves 96% accuracy (AUC 0.98) on 852 test images. Validated against 251 lab-confirmed patient samples with 89.3% sensitivity. Grad-CAM heatmaps for interpretability.</p>
+                        <p class="pmod__desc">YOLOv8 (93.5% mAP) localises conjunctival nail-bed regions → CNN classifier: 96% accuracy, 0.98 AUC. Validated on 251 lab-confirmed patients. Grad-CAM heatmaps.</p>
                         <div class="pmod__tags"><span>Python</span><span>PyTorch</span><span>YOLOv8</span><span>OpenCV</span><span>CNN</span><span>Transfer Learning</span><span>Grad-CAM</span></div>
                         <div class="pmod__metrics"><div class="pm"><span class="pm__v">96%</span><span class="pm__l">Accuracy</span></div><div class="pm"><span class="pm__v">0.98</span><span class="pm__l">AUC</span></div><div class="pm"><span class="pm__v">251</span><span class="pm__l">Patients</span></div></div>
                         <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub →</a>
                     </div>
                 </article>
-
-                <!-- OP 03: LexCloud -->
                 <article class="pmod scroll-reveal" data-accent="gold" data-project="lexcloud">
                     <canvas class="pmod__canvas" data-anim="lexcloud"></canvas>
                     <div class="pmod__bar"></div>
                     <div class="pmod__body">
-                        <div class="pmod__head"><span class="pmod__num">03</span><div><h3 class="pmod__name">LexCloud</h3><p class="pmod__sub">Cloud-Native API Backend with AI Integration</p></div><span class="pmod__year">2024</span></div>
-                        <p class="pmod__desc">Production REST API on AWS serverless — JSON ingestion, Pydantic validation, storage across DynamoDB + S3. Extended with LLaMA-3 + ChromaDB RAG pipeline for intelligent document retrieval and context-augmented generation. Clean OOP, pytest, structured logging, CI-ready.</p>
+                        <div class="pmod__head"><span class="pmod__num">03</span><div><h3 class="pmod__name">LexCloud</h3><p class="pmod__sub">Cloud-Native API + AI Integration</p></div><span class="pmod__year">2024</span></div>
+                        <p class="pmod__desc">Serverless REST API on AWS — DynamoDB + S3 storage. LLaMA-3 + ChromaDB RAG pipeline for intelligent document retrieval. Clean OOP, pytest, CI-ready.</p>
                         <div class="pmod__tags"><span>Python</span><span>FastAPI</span><span>AWS Lambda</span><span>S3</span><span>DynamoDB</span><span>LLaMA-3</span><span>RAG</span><span>ChromaDB</span><span>pytest</span></div>
                         <div class="pmod__metrics"><div class="pm"><span class="pm__v">5</span><span class="pm__l">AWS Services</span></div><div class="pm"><span class="pm__v">RAG</span><span class="pm__l">Pipeline</span></div><div class="pm"><span class="pm__v">100%</span><span class="pm__l">Serverless</span></div></div>
                         <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub →</a>
                     </div>
                 </article>
-
-                <!-- OP 04: Sepsis -->
                 <article class="pmod scroll-reveal" data-accent="cyan" data-project="sepsis">
                     <canvas class="pmod__canvas" data-anim="sepsis"></canvas>
                     <div class="pmod__bar"></div>
                     <div class="pmod__body">
                         <div class="pmod__head"><span class="pmod__num">04</span><div><h3 class="pmod__name">Sepsis Mortality Prediction</h3><p class="pmod__sub">Clinical Time-Series ML Pipeline</p></div><span class="pmod__year">2026</span></div>
-                        <p class="pmod__desc">Modular pipeline on MIMIC-IV ICU data. Engineered 172 features from 43 clinical time-series signals. XGBoost achieved 96% AUC-ROC — outperforming four published baselines by 10–16 pts. SHAP game-theory explainability per prediction. Clean-code modular architecture.</p>
+                        <p class="pmod__desc">MIMIC-IV ICU data. 172 features from 43 signals. XGBoost: 96% AUC-ROC, beating 4 baselines by 10-16 pts. SHAP explainability per prediction.</p>
                         <div class="pmod__tags"><span>Python</span><span>XGBoost</span><span>Scikit-learn</span><span>SHAP</span><span>Pandas</span><span>SQL</span><span>NumPy</span></div>
                         <div class="pmod__metrics"><div class="pm"><span class="pm__v">96%</span><span class="pm__l">AUC-ROC</span></div><div class="pm"><span class="pm__v">172</span><span class="pm__l">Features</span></div><div class="pm"><span class="pm__v">43</span><span class="pm__l">Signals</span></div></div>
                         <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub →</a>
@@ -186,25 +188,25 @@
     <!-- ===== EXPERIENCE ===== -->
     <section class="section section--dark" id="experience">
         <div class="section__divider"></div>
+        <div class="section__vine section__vine--r"></div>
         <div class="container">
             <span class="section__label scroll-reveal">PART IV // Experience</span>
             <h2 class="section__title scroll-reveal txt-scramble">Where I've <span class="text-gradient">contributed</span>.</h2>
             <div class="timeline">
                 <div class="timeline__line"></div>
-                <div class="timeline__item scroll-reveal scroll-reveal--left"><div class="timeline__dot"></div><div class="timeline__content"><div class="timeline__head"><h3>Research Intern — Healthcare AI</h3><span class="timeline__date">May – Aug 2025</span></div><p class="timeline__org">CHAIR, VIT Chennai</p><p class="timeline__desc">Full-cycle AI/ML research. Built deep learning models (PyTorch, YOLOv8, CNN) achieving 96% accuracy with Grad-CAM explainability.</p><a href="https://vitchennaievents.com/certificates/generate.php?c=VDJPc09rRXRJbDgoSUJrK1Fqc2xnVXFWQWcybS9ZT01KOGcyV3ZPSmNORGFjM2Zuakxaall1bVVoME00ZHFxUllhQmh5S1dLbjZqcVpxSXVIMDhXQjZVS3g1UUxkeENkRml1RmVmTXZqVUJSdWtXMGVoWXNTUEpSc0VSZVdSNUF2ejBqYVk0ajE4Zm82Wmxkbm9HaCt6MW9GS0ZFS1AyOVBwVlltQTJtTEdRPQ==" target="_blank" rel="noopener" class="timeline__cert">📄 View Certificate</a></div></div>
-                <div class="timeline__item scroll-reveal scroll-reveal--left"><div class="timeline__dot"></div><div class="timeline__content"><div class="timeline__head"><h3>Python Training Intern</h3><span class="timeline__date">Jun – Jul 2024</span></div><p class="timeline__org">Colan Infotech Pvt Ltd · On-site</p><p class="timeline__desc">Python programming, software design patterns, Git version control, agile practices.</p></div></div>
+                <div class="timeline__item scroll-reveal scroll-reveal--left"><div class="timeline__dot"></div><div class="timeline__content"><div class="timeline__head"><h3>Research Intern — Healthcare AI</h3><span class="timeline__date">May – Aug 2025</span></div><p class="timeline__org">CHAIR, VIT Chennai</p><p class="timeline__desc">Full-cycle AI/ML research. PyTorch, YOLOv8, CNN — 96% accuracy with Grad-CAM.</p><a href="https://vitchennaievents.com/certificates/generate.php?c=VDJPc09rRXRJbDgoSUJrK1Fqc2xnVXFWQWcybS9ZT01KOGcyV3ZPSmNORGFjM2Zuakxaall1bVVoME00ZHFxUllhQmh5S1dLbjZqcVpxSXVIMDhXQjZVS3g1UUxkeENkRml1RmVmTXZqVUJSdWtXMGVoWXNTUEpSc0VSZVdSNUF2ejBqYVk0ajE4Zm82Wmxkbm9HaCt6MW9GS0ZFS1AyOVBwVlltQTJtTEdRPQ==" target="_blank" rel="noopener" class="timeline__cert">📄 View Certificate</a></div></div>
+                <div class="timeline__item scroll-reveal scroll-reveal--left"><div class="timeline__dot"></div><div class="timeline__content"><div class="timeline__head"><h3>Python Training Intern</h3><span class="timeline__date">Jun – Jul 2024</span></div><p class="timeline__org">Colan Infotech Pvt Ltd</p><p class="timeline__desc">Python, design patterns, Git, agile practices.</p></div></div>
             </div>
             <span class="section__label scroll-reveal" style="margin-top:64px">Education</span>
-            <div class="timeline">
-                <div class="timeline__line"></div>
-                <div class="timeline__item scroll-reveal scroll-reveal--left"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__content"><div class="timeline__head"><h3>M.Tech Integrated — Software Engineering</h3><span class="timeline__date">2022 – 2027</span></div><p class="timeline__org">VIT Chennai · CGPA: 7.92 · No Backlogs</p><p class="timeline__desc">A grades in AI, Design Patterns, OOP, Software Reuse, IoT Analytics, Java.</p></div></div>
-                <div class="timeline__item scroll-reveal scroll-reveal--left"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__content"><div class="timeline__head"><h3>Class XII — PCBM</h3><span class="timeline__date">2019 – 2021</span></div><p class="timeline__org">Mazharul Uloom HSS, Ambur · 85.20%</p></div></div>
+            <div class="timeline"><div class="timeline__line"></div>
+                <div class="timeline__item scroll-reveal scroll-reveal--left"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__content"><div class="timeline__head"><h3>M.Tech Integrated — Software Engineering</h3><span class="timeline__date">2022 – 2027</span></div><p class="timeline__org">VIT Chennai · CGPA: 7.92</p></div></div>
+                <div class="timeline__item scroll-reveal scroll-reveal--left"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__content"><div class="timeline__head"><h3>Class XII — PCBM · 85.20%</h3><span class="timeline__date">2021</span></div><p class="timeline__org">Mazharul Uloom HSS, Ambur</p></div></div>
             </div>
             <span class="section__label scroll-reveal" style="margin-top:64px">Leadership</span>
             <div class="leadership-row">
-                <div class="leadership-item scroll-reveal"><span class="leadership-item__icon">🛡️</span><h4 class="leadership-item__title">Cybersecurity Division</h4><p class="leadership-item__org">Microsoft Innovations Club</p><p class="leadership-item__detail">CTF competitions · 500+ participants</p></div>
-                <div class="leadership-item scroll-reveal"><span class="leadership-item__icon">🥽</span><h4 class="leadership-item__title">Marketing Lead</h4><p class="leadership-item__org">AR/VR Club</p><p class="leadership-item__detail">Cross-functional teams · 30% growth</p></div>
-                <div class="leadership-item scroll-reveal"><span class="leadership-item__icon">💡</span><h4 class="leadership-item__title">Operations Member</h4><p class="leadership-item__org">Fraternity of Young Innovators</p><p class="leadership-item__detail">Inter-college innovation events</p></div>
+                <div class="leadership-item scroll-reveal"><span class="leadership-item__icon">🛡️</span><h4 class="leadership-item__title">Cybersecurity Division</h4><p class="leadership-item__org">Microsoft Innovations Club</p><p class="leadership-item__detail">CTF · 500+ participants</p></div>
+                <div class="leadership-item scroll-reveal"><span class="leadership-item__icon">🥽</span><h4 class="leadership-item__title">Marketing Lead</h4><p class="leadership-item__org">AR/VR Club</p><p class="leadership-item__detail">30% registration growth</p></div>
+                <div class="leadership-item scroll-reveal"><span class="leadership-item__icon">💡</span><h4 class="leadership-item__title">Operations</h4><p class="leadership-item__org">Young Innovators</p><p class="leadership-item__detail">Innovation events</p></div>
             </div>
         </div>
     </section>
@@ -224,8 +226,29 @@
         </div>
     </section>
 
+    <!-- ===== VECNA SECTION — Dramatic Finale ===== -->
+    <section class="vecna-section" id="vecna">
+        <div class="vecna-section__bg"></div>
+        <div class="vecna-section__vines vecna-section__vines--l"></div>
+        <div class="vecna-section__vines vecna-section__vines--r"></div>
+        <div class="container vecna-section__inner">
+            <div class="vecna-clock-big" id="vecnaBigClock">
+                <div class="vecna-clock-big__face">
+                    <span class="vcm" style="--r:0deg"></span><span class="vcm" style="--r:30deg"></span><span class="vcm" style="--r:60deg"></span><span class="vcm" style="--r:90deg"></span><span class="vcm" style="--r:120deg"></span><span class="vcm" style="--r:150deg"></span><span class="vcm" style="--r:180deg"></span><span class="vcm" style="--r:210deg"></span><span class="vcm" style="--r:240deg"></span><span class="vcm" style="--r:270deg"></span><span class="vcm" style="--r:300deg"></span><span class="vcm" style="--r:330deg"></span>
+                    <div class="vch vch--hr" id="vBigHr"></div>
+                    <div class="vch vch--min" id="vBigMin"></div>
+                    <div class="vch vch--sec" id="vBigSec"></div>
+                    <div class="vecna-clock-big__dot"></div>
+                </div>
+            </div>
+            <h2 class="vecna-section__title scroll-reveal">The clock is ticking...</h2>
+            <p class="vecna-section__sub scroll-reveal">Every second that passes is a chance lost to the Upside Down.<br>Don't wait. Reach out before time runs out.</p>
+            <a href="#contact" class="btn btn--primary btn--vecna scroll-reveal">Contact Me Now →</a>
+        </div>
+    </section>
+
     <footer class="footer">
-        <p>Designed & Built by <strong>Afnaan Ahmed P</strong> · 2025</p>
+        <p>Designed & Built by <strong>Afnaan Ahmed P</strong> · 2025 · Stranger Things inspired 🔴</p>
         <button class="footer__top" id="scrollTopBtn" aria-label="Top">↑</button>
     </footer>
     <script src="script.js"></script>
