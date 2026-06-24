@@ -12,49 +12,7 @@
   const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   const lerp = (a, b, t) => a + (b - a) * t;
 
-  // ── Custom Cursor ──
-  const cursorGlow = $('#cursorGlow');
-  const spotlight = $('#mouseSpotlight');
-  let mouseX = 0, mouseY = 0;
-  let cursorX = 0, cursorY = 0;
-  let spotX = 0, spotY = 0;
   const isMobile = window.matchMedia('(max-width: 600px)').matches || 'ontouchstart' in window;
-
-  if (!isMobile) {
-    document.addEventListener('mousemove', e => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    // Hover detection for magnetic elements and links
-    const hoverTargets = 'a, button, .btn, .magnetic, .skill-tag, .project-panel__link, .contact__link, .legend-item';
-    document.addEventListener('mouseover', e => {
-      if (e.target.closest(hoverTargets)) {
-        cursorGlow.classList.add('hovering');
-      }
-    });
-    document.addEventListener('mouseout', e => {
-      if (e.target.closest(hoverTargets)) {
-        cursorGlow.classList.remove('hovering');
-      }
-    });
-
-    // Smooth cursor animation loop
-    function animateCursor() {
-      cursorX = lerp(cursorX, mouseX, 0.15);
-      cursorY = lerp(cursorY, mouseY, 0.15);
-      spotX = lerp(spotX, mouseX, 0.08);
-      spotY = lerp(spotY, mouseY, 0.08);
-
-      cursorGlow.style.left = cursorX + 'px';
-      cursorGlow.style.top = cursorY + 'px';
-      spotlight.style.left = spotX + 'px';
-      spotlight.style.top = spotY + 'px';
-
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-  }
 
   // ── Magnetic Effect ──
   if (!isMobile) {
@@ -298,41 +256,79 @@
     });
   });
 
-  // ── Project Panel Sticky Scale Effect ──
-  function updateProjectPanels() {
-    const panels = $$('.project-panel');
-    const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 64;
+  // ── Scroll-Linked Blueprint Pipeline Path ──
+  const projectsSection = $('#projects');
+  const activePipelinePath = $('#activePipelinePath');
 
-    panels.forEach((panel, i) => {
-      const rect = panel.getBoundingClientRect();
-      const stickyTop = navH + 20;
+  if (projectsSection && activePipelinePath) {
+    const pathLength = activePipelinePath.getTotalLength();
+    activePipelinePath.style.strokeDasharray = pathLength;
+    activePipelinePath.style.strokeDashoffset = pathLength;
 
-      // When panel is stuck at top
-      if (rect.top <= stickyTop + 5 && i < panels.length - 1) {
-        // Calculate how far the next panel has pushed this one
-        const nextPanel = panels[i + 1];
-        if (nextPanel) {
-          const nextRect = nextPanel.getBoundingClientRect();
-          const overlap = stickyTop + rect.height - nextRect.top;
+    window.addEventListener('scroll', () => {
+      const rect = projectsSection.getBoundingClientRect();
+      const viewHeight = window.innerHeight;
+      const startY = rect.top - viewHeight / 2;
+      const scrollableHeight = rect.height;
+      let progress = -startY / (scrollableHeight - viewHeight / 2);
+      progress = Math.max(0, Math.min(1, progress));
 
-          if (overlap > 0) {
-            const progress = Math.min(overlap / rect.height, 1);
-            const scale = 1 - progress * 0.04;
-            const opacity = 1 - progress * 0.5;
-            panel.querySelector('.project-panel__inner').style.transform = `scale(${scale})`;
-            panel.querySelector('.project-panel__inner').style.opacity = opacity;
-          } else {
-            panel.querySelector('.project-panel__inner').style.transform = '';
-            panel.querySelector('.project-panel__inner').style.opacity = '';
-          }
-        }
-      } else {
-        panel.querySelector('.project-panel__inner').style.transform = '';
-        panel.querySelector('.project-panel__inner').style.opacity = '';
-      }
-    });
+      activePipelinePath.style.strokeDashoffset = pathLength - (progress * pathLength);
+    }, { passive: true });
   }
-  window.addEventListener('scroll', updateProjectPanels, { passive: true });
+
+  // ── Telemetry Dials Scroll Reveal ──
+  const gaugeObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const project = entry.target;
+          $$('.gauge-fill', project).forEach(fill => {
+            const val = parseInt(fill.dataset.value) || 0;
+            // Total circumference is 2 * PI * r = 2 * 3.14159 * 40 = 251.2
+            const offset = 251.2 * (1 - val / 100);
+            fill.style.strokeDashoffset = offset;
+          });
+          gaugeObserver.unobserve(project);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+  $$('.schematic-project').forEach(p => gaugeObserver.observe(p));
+
+  // ── Flowchart Hover Interaction & Debug Log Simulator ──
+  $$('.schematic-project').forEach(project => {
+    const nodes = $$('.flow-node', project);
+    const dynamicLog = $('.c-dynamic', project);
+    let typingTimeout;
+
+    function typeLogText(text) {
+      clearTimeout(typingTimeout);
+      dynamicLog.textContent = '';
+      let charIdx = 0;
+      function type() {
+        if (charIdx < text.length) {
+          dynamicLog.textContent += text.charAt(charIdx);
+          charIdx++;
+          typingTimeout = setTimeout(type, 12);
+        }
+      }
+      type();
+    }
+
+    nodes.forEach(node => {
+      node.addEventListener('mouseenter', () => {
+        nodes.forEach(n => n.classList.remove('active'));
+        node.classList.add('active');
+        const desc = node.dataset.desc;
+        const nodeName = node.dataset.node.toUpperCase();
+        if (desc && dynamicLog) {
+          typeLogText(`[TRACE // ${nodeName}] ${desc}`);
+        }
+      });
+    });
+  });
 
   // ── Smooth Anchor Scrolling ──
   $$('a[href^="#"]').forEach(anchor => {
