@@ -14,7 +14,7 @@ const loader=$('#loader');
 const rMsg=$('#loaderRetroMsg');
 if(rMsg){
   setTimeout(()=>{rMsg.style.opacity=0;}, 2200);
-  setTimeout(()=>{rMsg.textContent='HELLO FROM DEVELOPER AFNAAN';rMsg.style.color='#fff';rMsg.style.opacity=1;}, 2400);
+  setTimeout(()=>{rMsg.textContent='CONNECTION ESTABLISHED...';rMsg.style.color='#fff';rMsg.style.opacity=1;}, 2400);
 }
 window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('hidden'),4500));
 
