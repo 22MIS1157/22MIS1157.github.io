@@ -278,21 +278,7 @@ function drawSepsis(ctx,w,h,t){
   if((t*.003)%2<.1){ctx.beginPath();ctx.arc(w-15,15,4,0,Math.PI*2);ctx.fillStyle='rgba(6,182,212,0.8)';ctx.fill()}
 }
 
-/* ============================================
-   VECNA CLOCK — Real-time hands
-   ============================================ */
-function updateVecnaClock(){
-  const now=new Date();
-  const s=now.getSeconds()+now.getMilliseconds()/1000;
-  const m=now.getMinutes()+s/60;
-  const h=(now.getHours()%12)+m/60;
-  const secEl=$('#vBigSec'),minEl=$('#vBigMin'),hrEl=$('#vBigHr');
-  if(secEl)secEl.style.transform=`rotate(${s*6}deg)`;
-  if(minEl)minEl.style.transform=`rotate(${m*6}deg)`;
-  if(hrEl)hrEl.style.transform=`rotate(${h*30}deg)`;
-  requestAnimationFrame(updateVecnaClock);
-}
-updateVecnaClock();
+
 
 /* ── INIT ── */
 window.addEventListener('load',()=>{updNav();updProg()});

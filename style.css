@@ -21,15 +21,7 @@ a{color:inherit;text-decoration:none}button{border:none;background:none;font-fam
 @keyframes tf2{0%,94%,100%{opacity:0}95%{opacity:.8}95.3%{opacity:0}95.8%{opacity:.5}96%{opacity:0}}
 @keyframes tf3{0%,88%,100%{opacity:0}89%{opacity:.6}89.3%{opacity:0}89.8%{opacity:.4}90%{opacity:0}}
 
-/* ============================================
-   UPSIDE DOWN ATMOSPHERE
-   ============================================ */
-.st-atmosphere{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.2;transition:opacity 2s ease;
-  background:radial-gradient(ellipse at 50% 0%,rgba(204,0,0,.04),transparent 60%),radial-gradient(ellipse at 20% 100%,rgba(204,0,0,.03),transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(100,0,0,.02),transparent 40%);
-  animation:atmPulse 6s ease-in-out infinite}
-@keyframes atmPulse{0%,100%{opacity:.5}50%{opacity:1}}
 
-.ud-vignette{position:fixed;inset:0;pointer-events:none;z-index:9000;background:radial-gradient(circle,transparent 30%,rgba(180,0,0,calc(var(--scroll-y,0)*0.5)) 150%);}
 
 .scroll-canvas{position:fixed;inset:0;pointer-events:none;z-index:1;width:100%;height:100%;opacity:calc(0.2 + var(--scroll-y,0)*0.8);}
 
@@ -59,13 +51,7 @@ a{color:inherit;text-decoration:none}button{border:none;background:none;font-fam
 .section__vine--l{left:0;background:repeating-linear-gradient(170deg,transparent 0px,transparent 12px,rgba(204,0,0,.015) 12px,rgba(204,0,0,.015) 14px);mask-image:linear-gradient(to right,rgba(0,0,0,.5),transparent);-webkit-mask-image:linear-gradient(to right,rgba(0,0,0,.5),transparent)}
 .section__vine--r{right:0;background:repeating-linear-gradient(-170deg,transparent 0px,transparent 12px,rgba(204,0,0,.015) 12px,rgba(204,0,0,.015) 14px);mask-image:linear-gradient(to left,rgba(0,0,0,.5),transparent);-webkit-mask-image:linear-gradient(to left,rgba(0,0,0,.5),transparent)}
 
-/* Mini Vecna clock (corner) */
-.vecna-mini{position:fixed;bottom:20px;right:20px;width:40px;height:40px;border:2px solid rgba(204,0,0,.12);border-radius:50%;z-index:2;display:flex;align-items:center;justify-content:center;animation:vPulse 4s ease-in-out infinite}
-@keyframes vPulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 20px rgba(204,0,0,.1)}}
-.vecna-mini__hand{position:absolute;bottom:50%;left:50%;width:1.5px;height:12px;background:rgba(204,0,0,.4);transform-origin:bottom center;animation:clkS 60s linear infinite;border-radius:1px;margin-left:-.75px}
-.vecna-mini__hand--m{height:9px;animation:clkM 3600s linear infinite;background:rgba(204,0,0,.25)}
-.vecna-mini__dot{width:3px;height:3px;border-radius:50%;background:var(--red);position:absolute}
-@keyframes clkS{to{transform:rotate(360deg)}}@keyframes clkM{to{transform:rotate(360deg)}}
+
 
 .section__title{animation:flick 6s infinite}
 @keyframes flick{0%,88%,90%,92%,100%{opacity:1}89%{opacity:.82}91%{opacity:.88}}
@@ -273,32 +259,7 @@ a{color:inherit;text-decoration:none}button{border:none;background:none;font-fam
 .contact__icon{font-size:1rem;font-weight:800;color:var(--red);width:28px;text-align:center;flex-shrink:0}
 .contact__text{font-size:.92rem;color:var(--text-2);transition:color .3s}.contact__item:hover .contact__text{color:var(--text-1)}
 
-/* ============================================
-   VECNA SECTION — Grand Finale
-   ============================================ */
-.vecna-section{position:relative;padding:clamp(80px,12vh,120px) 0;overflow:hidden;background:var(--bg-alt)}
-.vecna-section__bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(204,0,0,.06),transparent 60%);animation:vecnaBg 5s ease-in-out infinite}
-@keyframes vecnaBg{0%,100%{opacity:.5}50%{opacity:1}}
-.vecna-section__vines{position:absolute;top:0;bottom:0;width:80px;z-index:0}
-.vecna-section__vines--l{left:0;background:repeating-linear-gradient(160deg,transparent 0px,transparent 8px,rgba(204,0,0,.025) 8px,rgba(204,0,0,.025) 10px);mask-image:linear-gradient(to right,rgba(0,0,0,.6),transparent);-webkit-mask-image:linear-gradient(to right,rgba(0,0,0,.6),transparent)}
-.vecna-section__vines--r{right:0;background:repeating-linear-gradient(-160deg,transparent 0px,transparent 8px,rgba(204,0,0,.025) 8px,rgba(204,0,0,.025) 10px);mask-image:linear-gradient(to left,rgba(0,0,0,.6),transparent);-webkit-mask-image:linear-gradient(to left,rgba(0,0,0,.6),transparent)}
-.vecna-section__inner{position:relative;z-index:1;text-align:center}
 
-/* BIG VECNA CLOCK */
-.vecna-clock-big{width:clamp(120px,20vw,180px);height:clamp(120px,20vw,180px);margin:0 auto 40px;position:relative}
-.vecna-clock-big__face{position:relative;width:100%;height:100%;border:3px solid rgba(204,0,0,.2);border-radius:50%;animation:vecnaClockPulse 4s ease-in-out infinite}
-@keyframes vecnaClockPulse{0%,100%{box-shadow:0 0 0 rgba(204,0,0,0),0 0 0 4px rgba(204,0,0,0)}50%{box-shadow:0 0 40px rgba(204,0,0,.15),0 0 0 4px rgba(204,0,0,.06)}}
-.vcm{position:absolute;top:50%;left:50%;width:2px;height:8px;background:rgba(204,0,0,.2);transform-origin:center -35px;transform:rotate(var(--r)) translateY(-50%);border-radius:1px;margin-left:-1px;margin-top:-35px}
-.vch{position:absolute;bottom:50%;left:50%;transform-origin:bottom center;border-radius:2px;margin-left:-1px}
-.vch--hr{width:3px;height:28%;background:rgba(204,0,0,.5)}
-.vch--min{width:2px;height:36%;background:rgba(204,0,0,.35)}
-.vch--sec{width:1px;height:42%;background:rgba(204,0,0,.7)}
-.vecna-clock-big__dot{position:absolute;top:50%;left:50%;width:6px;height:6px;border-radius:50%;background:var(--red);transform:translate(-50%,-50%);box-shadow:0 0 8px var(--red)}
-
-.vecna-section__title{font-family:var(--st-font);font-size:clamp(1.8rem,5vw,3rem);font-weight:700;color:var(--red);text-shadow:0 0 10px rgba(204,0,0,.5),0 0 30px rgba(204,0,0,.2);margin-bottom:16px;text-transform:uppercase;letter-spacing:.04em}
-.vecna-section__sub{font-size:.95rem;color:var(--text-2);line-height:1.6;margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto}
-.btn--vecna{box-shadow:0 0 20px rgba(204,0,0,.2);animation:vecnaBtnPulse 3s ease-in-out infinite}
-@keyframes vecnaBtnPulse{0%,100%{box-shadow:0 0 20px rgba(204,0,0,.15)}50%{box-shadow:0 0 40px rgba(204,0,0,.3)}}
 
 /* FOOTER */
 .footer{display:flex;align-items:center;justify-content:space-between;padding:24px clamp(20px,4vw,48px);border-top:1px solid var(--border)}
