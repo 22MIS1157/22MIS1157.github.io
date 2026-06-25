@@ -128,10 +128,10 @@ a{color:inherit;text-decoration:none}button{border:none;background:none;font-fam
 @keyframes oF2{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-50px,30px) scale(1.1)}66%{transform:translate(40px,-25px) scale(.9)}}
 
 .hero__content{position:relative;z-index:2;text-align:center;padding:0 24px}
-.hero__greeting{font-family:var(--mono);font-size:.9rem;color:var(--red);margin-bottom:16px;opacity:0;animation:fadeUp .8s var(--ease) .3s forwards}
+.hero__greeting{font-family:var(--mono);font-size:.9rem;color:var(--red);margin-bottom:8px;opacity:0;animation:fadeUp .8s var(--ease) .3s forwards}
 
 /* ── STRANGER THINGS TITLE ── */
-.st-title{font-family:var(--st-font);text-transform:uppercase;letter-spacing:.06em;font-size:clamp(2.2rem,8vw,5rem);font-weight:700;line-height:1.1;margin-bottom:24px;position:relative}
+.st-title{font-family:var(--st-font);text-transform:uppercase;letter-spacing:.02em;font-size:clamp(2.2rem,8vw,5rem);font-weight:700;line-height:1;margin-bottom:12px;position:relative}
 .st-l{display:inline-block;opacity:0;color:transparent;-webkit-text-stroke:1.5px var(--red);animation:stFloat 6.5s cubic-bezier(.2,.05,.2,1) forwards;animation-delay:3.5s;transform-origin:center;will-change:transform,opacity,color}
 .st-l--space{width:.3em;animation:none}
 .st-l:nth-child(1){--tx:-220px;--ty:-120px;--s:3.5}
@@ -153,12 +153,21 @@ a{color:inherit;text-decoration:none}button{border:none;background:none;font-fam
   100%{opacity:1;transform:translate3d(0,0,0) scale(1);color:var(--red);-webkit-text-stroke:0px var(--red);text-shadow:0 0 10px rgba(204,0,0,.8),0 0 20px rgba(204,0,0,.6),0 0 40px rgba(204,0,0,.4),0 0 80px rgba(204,0,0,.2)}
 }
 
-.hero__role-line{display:flex;align-items:center;justify-content:center;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--text-2);margin-bottom:16px;min-height:2em;opacity:0;animation:fadeUp .8s var(--ease) 3s forwards}
+.hero__role-line{display:flex;align-items:center;justify-content:center;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--text-2);margin-bottom:12px;min-height:2em;opacity:0;animation:fadeUp .8s var(--ease) 3s forwards}
 .hero__role{color:var(--gold);font-weight:600}
 .hero__cursor{color:var(--gold);animation:blink 1s step-end infinite;margin-left:2px}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.hero__tagline{font-size:.9rem;color:var(--text-3);margin-bottom:36px;opacity:0;animation:fadeUp .8s var(--ease) 3.2s forwards}
+.hero__tagline{font-size:.9rem;color:var(--text-3);margin-bottom:24px;opacity:0;animation:fadeUp .8s var(--ease) 3.2s forwards}
+.hero__sys-status{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:24px;font-family:var(--mono);font-size:.75rem;color:var(--text-3);letter-spacing:.1em;opacity:0;animation:fadeUp .8s var(--ease) 3.3s forwards}
+.sys-dot{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red);animation:blink 2s infinite}
+.sys-divider{color:var(--border)}
 .hero__cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s var(--ease) 3.5s forwards}
+.btn__glitch{position:relative;display:inline-block;letter-spacing:.05em}
+.btn:hover .btn__glitch::before,.btn:hover .btn__glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;background:transparent}
+.btn:hover .btn__glitch::before{left:2px;text-shadow:-1px 0 var(--red);animation:glitch-anim-1 .3s infinite linear alternate-reverse}
+.btn:hover .btn__glitch::after{left:-2px;text-shadow:-1px 0 var(--gold);animation:glitch-anim-2 .3s infinite linear alternate-reverse}
+@keyframes glitch-anim-1{0%{clip-path:inset(20% 0 80% 0)}50%{clip-path:inset(50% 0 30% 0)}100%{clip-path:inset(80% 0 5% 0)}}
+@keyframes glitch-anim-2{0%{clip-path:inset(10% 0 60% 0)}50%{clip-path:inset(30% 0 20% 0)}100%{clip-path:inset(70% 0 15% 0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 .hero__scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp .8s var(--ease) 4s forwards}
 .hero__scroll-hint span{font-size:.65rem;color:var(--text-3);letter-spacing:.12em;text-transform:uppercase}
@@ -262,9 +271,9 @@ a{color:inherit;text-decoration:none}button{border:none;background:none;font-fam
 
 
 /* FOOTER */
-.footer{display:flex;align-items:center;justify-content:space-between;padding:24px clamp(20px,4vw,48px);border-top:1px solid var(--border)}
+.footer{display:flex;align-items:center;justify-content:center;position:relative;padding:24px clamp(20px,4vw,48px);border-top:1px solid var(--border)}
 .footer p{font-size:.8rem;color:var(--text-3)}.footer strong{color:var(--text-2)}
-.footer__top{width:36px;height:36px;border-radius:6px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--text-3);transition:all .3s var(--ease)}.footer__top:hover{border-color:var(--red);color:var(--red);transform:translateY(-3px)}
+.footer__top{position:absolute;right:clamp(20px,4vw,48px);width:36px;height:36px;border-radius:6px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--text-3);transition:all .3s var(--ease)}.footer__top:hover{border-color:var(--red);color:var(--red);transform:translateY(-3px)}
 
 /* ============================================
    RESPONSIVE — All effects work on mobile
