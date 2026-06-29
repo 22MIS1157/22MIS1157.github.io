@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════
    SOLO LEVELING PORTFOLIO — ADVANCED ANIMATION ENGINE
-   System Awakening Intro, Particle Extraction Name Engine,
-   Custom Canvas Simulators, 3D Scroll & Tilt System
+   Malevolent Shrine Slash Engine, Dynamic Scroll Title Tracker,
+   Upgraded Skills Telemetry, Custom Canvas Simulators
    ═══════════════════════════════════════════════════ */
 
 (function () {
@@ -10,58 +10,7 @@
     const $$ = s => document.querySelectorAll(s);
 
     /* ═══════════════════════════
-       1. SYSTEM AWAKENING INTRO
-    ═══════════════════════════ */
-    const introOverlay = $('#introOverlay');
-    const introFill = $('#introFill');
-    const introLog = $('#introLog');
-
-    const bootLogs = [
-        'INITIALIZING HUNTER PROFILE...',
-        'AUTHENTICATING SYSTEM ACCESS...',
-        'HUNTER DETECTED: AFNAAN AHMED P',
-        'AWAKENING COMPLETE · S-RANK'
-    ];
-
-    let logIndex = 0;
-    let progressVal = 0;
-
-    function runIntroSequence() {
-        if (!introOverlay) return;
-
-        const progressInterval = setInterval(() => {
-            progressVal += 4;
-            if (introFill) introFill.style.width = Math.min(progressVal, 100) + '%';
-
-            if (progressVal % 25 === 0 && logIndex < bootLogs.length) {
-                if (introLog) introLog.textContent = bootLogs[logIndex];
-                logIndex++;
-            }
-
-            if (progressVal >= 100) {
-                clearInterval(progressInterval);
-                setTimeout(() => {
-                    introOverlay.classList.add('unlocked');
-                    // Trigger Hero Name Particle Summoning
-                    triggerNameSummon();
-                }, 300);
-            }
-        }, 30);
-    }
-
-    // Fast boot failsafe
-    setTimeout(() => {
-        if (introOverlay && !introOverlay.classList.contains('unlocked')) {
-            introOverlay.classList.add('unlocked');
-            triggerNameSummon();
-        }
-    }, 2500);
-
-    runIntroSequence();
-
-
-    /* ═══════════════════════════
-       2. HERO NAME PARTICLE SUMMONING ENGINE
+       1. HERO NAME SUMMONING & MALEVOLENT SHRINE SLASHES
     ═══════════════════════════ */
     const nameCanvas = $('#nameCanvas');
     let nameCtx = null;
@@ -89,6 +38,12 @@
                 assembled: false
             };
         });
+
+        // Trigger Malevolent Shrine Slash Slashes CSS animation
+        if (nameWrapper) {
+            nameWrapper.classList.add('shrine-active');
+            triggerSlashDischarge();
+        }
 
         // Initialize particles exploding from central shadow portal
         const pCount = 220;
@@ -149,11 +104,6 @@
             nameCtx.arc(p.x, p.y, p.size * (1 + alpha), 0, Math.PI * 2);
             nameCtx.fillStyle = p.color + alpha + ')';
             nameCtx.fill();
-
-            nameCtx.beginPath();
-            nameCtx.arc(p.x, p.y, p.size * 3 * alpha, 0, Math.PI * 2);
-            nameCtx.fillStyle = p.color + (alpha * 0.15) + ')';
-            nameCtx.fill();
         });
 
         if (!completed) {
@@ -201,7 +151,93 @@
 
 
     /* ═══════════════════════════
-       3. GLOBAL CANVAS & LIGHTNING DISCHARGE
+       2. SLASH CANVAS DISCHARGE (MALEVOLENT SHRINE SPARKS)
+    ═══════════════════════════ */
+    const slashCanvas = $('#slashCanvas');
+    let slashCtx = null;
+    let sparkParticles = [];
+
+    function triggerSlashDischarge() {
+        if (!slashCanvas) return;
+        slashCtx = slashCanvas.getContext('2d');
+        slashCanvas.width = window.innerWidth;
+        slashCanvas.height = window.innerHeight;
+
+        // Generate spark particle burst along diagonal cut trajectories
+        for (let i = 0; i < 60; i++) {
+            sparkParticles.push({
+                x: window.innerWidth / 2 + (Math.random() - 0.5) * 300,
+                y: window.innerHeight / 3 + (Math.random() - 0.5) * 150,
+                vx: (Math.random() - 0.5) * 25,
+                vy: (Math.random() - 0.5) * 25,
+                color: Math.random() > 0.5 ? '#ff0055' : '#00d4ff',
+                size: Math.random() * 3 + 1,
+                life: Math.random() * 25 + 10,
+                age: 0
+            });
+        }
+        animateSparks();
+    }
+
+    function animateSparks() {
+        if (!slashCtx || sparkParticles.length === 0) return;
+        slashCtx.clearRect(0, 0, slashCanvas.width, slashCanvas.height);
+
+        sparkParticles = sparkParticles.filter(p => {
+            p.x += p.vx; p.y += p.vy; p.age++;
+            if (p.age > p.life) return false;
+            const alpha = 1 - p.age / p.life;
+            slashCtx.beginPath();
+            slashCtx.arc(p.x, p.y, p.size * alpha, 0, Math.PI * 2);
+            slashCtx.fillStyle = p.color;
+            slashCtx.shadowColor = p.color;
+            slashCtx.shadowBlur = 10;
+            slashCtx.fill();
+            slashCtx.shadowBlur = 0;
+            return true;
+        });
+
+        if (sparkParticles.length > 0) {
+            requestAnimationFrame(animateSparks);
+        }
+    }
+
+
+    /* ═══════════════════════════
+       3. DYNAMIC SCROLL TITLE TRACKER (APPEARS & DISAPPEARS)
+    ═══════════════════════════ */
+    function updateScrollTitles() {
+        const viewHeight = window.innerHeight;
+
+        $$('.sys-section').forEach(sec => {
+            const titleEl = sec.querySelector('.dynamic-scroll-title');
+            if (!titleEl) return;
+
+            const rect = sec.getBoundingClientRect();
+            // Distance of section top relative to middle of screen
+            const distFromCenter = Math.abs((rect.top + rect.height / 2) - (viewHeight / 2));
+            const threshold = viewHeight * 0.6;
+
+            if (rect.top < viewHeight && rect.bottom > 0) {
+                // Approaching or visible
+                if (distFromCenter < threshold) {
+                    // Normalize opacity: Peak opacity when entering, fades out as it centers
+                    let opacity = (distFromCenter / threshold);
+                    opacity = Math.min(0.85, Math.max(0, opacity));
+                    titleEl.style.opacity = opacity;
+                    titleEl.style.transform = `translate(-50%, -50%) scale(${1.2 - opacity * 0.3})`;
+                } else {
+                    titleEl.style.opacity = 0;
+                }
+            } else {
+                titleEl.style.opacity = 0;
+            }
+        });
+    }
+
+
+    /* ═══════════════════════════
+       4. GLOBAL CANVAS & ATMOSPHERE
     ═══════════════════════════ */
     const globalCanvas = $('#globalCanvas');
     if (globalCanvas) {
@@ -278,7 +314,7 @@
 
 
     /* ═══════════════════════════
-       4. HERO ENERGY ATMOSPHERE
+       5. HERO ENERGY ATMOSPHERE
     ═══════════════════════════ */
     const heroCanvas = $('#heroCanvas');
     if (heroCanvas) {
@@ -324,7 +360,7 @@
 
 
     /* ═══════════════════════════
-       5. HIGH-FIDELITY PROJECT CUSTOM SIMULATORS
+       6. HIGH-FIDELITY PROJECT CUSTOM SIMULATORS
     ═══════════════════════════ */
     $$('.project-card-canvas').forEach(canvas => {
         const c = canvas.getContext('2d');
@@ -338,7 +374,6 @@
         resize();
         window.addEventListener('resize', resize);
 
-        // VPark Simulator
         function runVpark() {
             c.clearRect(0, 0, w, h);
             c.strokeStyle = 'rgba(0, 212, 255, 0.08)'; c.lineWidth = 1;
@@ -363,7 +398,6 @@
             });
         }
 
-        // Anemia Simulator
         function runAnemia() {
             c.clearRect(0, 0, w, h);
             const cx = w/2, cy = h/2 - 20, rx = 30, ry = 50;
@@ -384,7 +418,6 @@
             c.fillText(classified ? 'HEALTHY (96% ACC)' : 'DIAGNOSING NAIL...', cx - 45, cy + ry + 25);
         }
 
-        // LexCloud Simulator
         const nodes = [
             { x: w/2, y: 40, label: 'GW' },
             { x: 35, y: 110, label: 'LAMBDA' },
@@ -414,7 +447,6 @@
             });
         }
 
-        // Sepsis Simulator
         function runSepsis() {
             c.clearRect(0, 0, w, h);
             c.beginPath();
@@ -444,7 +476,7 @@
 
 
     /* ═══════════════════════════
-       6. SCROLL REVEALS & PROGRESS BAR
+       7. SCROLL REVEALS & PROGRESS BAR
     ═══════════════════════════ */
     const progressBar = $('#scrollProgress');
     function handleScroll() {
@@ -458,6 +490,8 @@
         if (nav) {
             nav.style.background = top > 80 ? 'rgba(4, 7, 18, 0.95)' : 'rgba(4, 7, 18, 0.85)';
         }
+
+        updateScrollTitles();
     }
 
     const revealObserver = new IntersectionObserver((entries) => {
@@ -476,7 +510,7 @@
 
 
     /* ═══════════════════════════
-       7. STAT NUMERICAL COUNTERS
+       8. STAT NUMERICAL COUNTERS
     ═══════════════════════════ */
     const counterObserver = new IntersectionObserver((entries) => {
         entries.forEach(e => {
@@ -506,7 +540,7 @@
 
 
     /* ═══════════════════════════
-       8. HERO ROLE TYPING LOOPER
+       9. HERO ROLE TYPING LOOPER
     ═══════════════════════════ */
     const heroRole = $('#heroRole');
     if (heroRole) {
@@ -531,7 +565,7 @@
 
 
     /* ═══════════════════════════
-       9. SMOOTH SCROLL ACTIONS
+       10. SMOOTH SCROLL ACTIONS
     ═══════════════════════════ */
     const scrollTop = $('#scrollTopBtn');
     if (scrollTop) scrollTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
@@ -557,5 +591,8 @@
             ticking = true;
         }
     });
+
+    // Instant name summoning execution on load
+    triggerNameSummon();
 
 })();
