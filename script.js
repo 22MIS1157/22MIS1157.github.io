@@ -32,249 +32,241 @@
     });
 
     /* ═══════════════════════════
-       2. SUKUNA ARRIVAL ENTRANCE SEQUENCE
+       2. TECH PROGRESS & CINEMATIC ENTRANCE
        ═══════════════════════════ */
+    const telemetryTexts = [
+        "INITIALIZING CORE COMPILING PROCESS...",
+        "LOADING ENGINE BINARIES [OK]",
+        "COGNITIVE MODULE INDEX VERIFIED",
+        "ESTABLISHING WEBSOCKET CONNECTION CHANNEL...",
+        "CONNECTING TO ARDUINO NANO BAUD 9600 [OK]",
+        "PARSING IMAGES: LOCAL HULLlocalizer [OK]",
+        "STABILIZING THREE.JS WEBGL SIMPLEX WIND FIELD",
+        "COMPUTING Grad-CAM GRADIENTS [0.98 AUC]",
+        "SYNCHRONIZING SECURE AWS DYNAMODB GATEWAY",
+        "ACTIVE SYSTEM CLASSIFICATION: SENIOR GRADE",
+        "DEPLOYING REST APIS SERVERLESS...",
+        "PREPARING METRIC SCANS [SUCCESS]"
+    ];
+
+    function initTelemetry() {
+        const left = $('#streamLeft');
+        const right = $('#streamRight');
+        if (!left || !right) return;
+
+        const populate = (container) => {
+            for (let i = 0; i < 35; i++) {
+                const div = document.createElement('div');
+                div.className = 'telemetry-line';
+                div.textContent = telemetryTexts[Math.floor(Math.random() * telemetryTexts.length)];
+                container.appendChild(div);
+            }
+        };
+        populate(left);
+        populate(right);
+
+        // Infinite loop scroll via GSAP
+        gsap.to([left, right], {
+            y: -120,
+            duration: 8,
+            ease: 'none',
+            repeat: -1
+        });
+    }
+
     function runSukunaEntrance() {
         const overlay = $('#entranceLoader');
         if (!overlay) return;
 
+        // Disable scrolling during load
+        document.body.style.overflow = 'hidden';
+
         // Skip animation on revisit or reduced motion
         if (sessionStorage.getItem('sukunaArrived') === '1' || prefersReducedMotion) {
             overlay.style.display = 'none';
+            document.body.style.overflow = '';
             triggerAllObservers();
             if (!isMobile) initThreeJsParticles();
             return;
         }
 
-        if (isMobile) {
-            // Simplified Mobile Entrance (2 Lines)
-            const entLine1 = $('#entNameLine1');
-            const entLine2 = $('#entNameLine2');
-            if (entLine1 && entLine2) {
-                entLine1.innerHTML = `<span class="ent-char ent-char-glow">AFNAAN</span>`;
-                entLine2.innerHTML = `<span class="ent-char ent-char-glow">AHMED P</span>`;
+        // Initialize telemetry stream
+        initTelemetry();
+
+        // 1. Loader progress bar simulation
+        const loaderBar = $('#loaderBar');
+        const loaderPercent = $('#loaderPercent');
+        const progressObj = { progress: 0 };
+
+        const progressTL = gsap.timeline({
+            onComplete: () => {
+                triggerEntranceTransitions();
             }
-            
-            const mobileTL = gsap.timeline({
+        });
+
+        progressTL.to(progressObj, {
+            progress: 100,
+            duration: 2.2,
+            ease: 'power2.inOut',
+            onUpdate: () => {
+                const val = Math.round(progressObj.progress);
+                if (loaderBar) loaderBar.style.width = val + '%';
+                if (loaderPercent) loaderPercent.textContent = val + '%';
+            }
+        });
+
+        function triggerEntranceTransitions() {
+            // Collapse core sigil & progress HUD
+            gsap.to(['#loaderSigilCore', '#loaderHudProgress'], {
+                scale: 0.1,
+                opacity: 0,
+                duration: 0.4,
+                ease: 'power3.in',
                 onComplete: () => {
-                    overlay.style.display = 'none';
-                    sessionStorage.setItem('sukunaArrived', '1');
-                    triggerAllObservers();
+                    const sigil = $('#loaderSigilCore');
+                    const hud = $('#loaderHudProgress');
+                    if (sigil) sigil.style.display = 'none';
+                    if (hud) hud.style.display = 'none';
                 }
             });
 
-            mobileTL.to('#entranceNameWrap', { opacity: 1, duration: 0.6 })
-                    .to(overlay, { opacity: 0, duration: 0.3, ease: 'power2.inOut' }, '+=0.8');
-            return;
-        }
+            // If mobile, jump to simple clean reveal
+            if (isMobile) {
+                const entLine1 = $('#entNameLine1');
+                const entLine2 = $('#entNameLine2');
+                if (entLine1 && entLine2) {
+                    entLine1.innerHTML = `<span class="ent-char ent-char-glow">AFNAAN</span>`;
+                    entLine2.innerHTML = `<span class="ent-char ent-char-glow">AHMED P</span>`;
+                }
+                
+                const mobileTL = gsap.timeline({
+                    onComplete: () => {
+                        overlay.style.display = 'none';
+                        document.body.style.overflow = '';
+                        sessionStorage.setItem('sukunaArrived', '1');
+                        triggerAllObservers();
+                    }
+                });
 
-        // --- Desktop Cinematic Entrance Sequence ---
-        const pulseCanvas = $('#pulseCanvas');
-        const pulseCtx = pulseCanvas.getContext('2d');
-        const impactCanvas = $('#impactCanvas');
-        const impactCtx = impactCanvas.getContext('2d');
+                mobileTL.to('#entranceNameWrap', { opacity: 1, duration: 0.6 })
+                        .to(overlay, { opacity: 0, duration: 0.3, ease: 'power2.inOut' }, '+=0.8');
+                return;
+            }
 
-        function resizeOverlayCanvases() {
-            pulseCanvas.width = window.innerWidth;
-            pulseCanvas.height = window.innerHeight;
+            // Desktop cinematic transitions
+            const impactCanvas = $('#impactCanvas');
+            const impactCtx = impactCanvas.getContext('2d');
             impactCanvas.width = window.innerWidth;
             impactCanvas.height = window.innerHeight;
-        }
-        resizeOverlayCanvases();
-        window.addEventListener('resize', resizeOverlayCanvases);
 
-        // Core variables
-        const cx = window.innerWidth / 2;
-        const cy = window.innerHeight / 2;
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
 
-        // Phase 1 Pulse Ring Setup
-        let pulseRadius = 0;
-        let pulseActive = true;
-        function drawPulseRing() {
-            if (!pulseActive) return;
-            pulseCtx.clearRect(0, 0, pulseCanvas.width, pulseCanvas.height);
-            if (pulseRadius > 0) {
-                pulseCtx.beginPath();
-                pulseCtx.arc(cx, cy, pulseRadius, 0, Math.PI * 2);
-                pulseCtx.strokeStyle = 'rgba(153, 27, 27, 0.25)'; // --sukuna-crimson
-                pulseCtx.lineWidth = 1;
-                pulseCtx.stroke();
+            let impactLines = [];
+            let drawImpact = false;
+
+            function generateImpactLines() {
+                impactLines = [];
+                const count = 120;
+                const maxRadius = Math.max(window.innerWidth, window.innerHeight);
+                for (let i = 0; i < count; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const thickness = Math.random() * 1.5 + 0.5;
+                    impactLines.push({ angle: angle, thickness: thickness, maxRadius: maxRadius });
+                }
             }
-            requestAnimationFrame(drawPulseRing);
-        }
-        drawPulseRing();
 
-        // Phase 4 Impact Frame Setup
-        let impactLines = [];
-        let drawImpact = false;
-        function generateImpactLines() {
-            impactLines = [];
-            const count = 120;
-            const maxRadius = Math.max(window.innerWidth, window.innerHeight);
-            for (let i = 0; i < count; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const thickness = Math.random() * 1.5 + 0.5; // 0.5px to 2px
-                impactLines.push({
-                    angle: angle,
-                    thickness: thickness,
-                    maxRadius: maxRadius
+            function drawImpactFrame() {
+                if (!drawImpact) return;
+                impactCtx.clearRect(0, 0, impactCanvas.width, impactCanvas.height);
+                impactCtx.strokeStyle = 'rgba(248, 250, 252, 0.12)';
+                impactLines.forEach(l => {
+                    impactCtx.beginPath();
+                    impactCtx.lineWidth = l.thickness;
+                    impactCtx.moveTo(cx, cy);
+                    impactCtx.lineTo(cx + Math.cos(l.angle) * l.maxRadius, cy + Math.sin(l.angle) * l.maxRadius);
+                    impactCtx.stroke();
                 });
             }
-        }
-        function drawImpactFrame() {
-            if (!drawImpact) return;
-            impactCtx.clearRect(0, 0, impactCanvas.width, impactCanvas.height);
-            impactCtx.strokeStyle = 'rgba(248, 250, 252, 0.1)'; // --infinity-white
-            impactLines.forEach(l => {
-                impactCtx.beginPath();
-                impactCtx.lineWidth = l.thickness;
-                impactCtx.moveTo(cx, cy);
-                impactCtx.lineTo(cx + Math.cos(l.angle) * l.maxRadius, cy + Math.sin(l.angle) * l.maxRadius);
-                impactCtx.stroke();
+
+            const entLine1 = $('#entNameLine1');
+            const entLine2 = $('#entNameLine2');
+            if (entLine1 && entLine2) {
+                const splitEntName = (el) => {
+                    const text = el.textContent.trim();
+                    el.innerHTML = text.split('').map(char => {
+                        if (char === ' ') return '&nbsp;';
+                        return `<span class="ent-char">${char}<span class="ent-underline"></span></span>`;
+                    }).join('');
+                };
+                splitEntName(entLine1);
+                splitEntName(entLine2);
+            }
+            const nameChars = $$('.ent-char');
+
+            const entranceTL = gsap.timeline({
+                onComplete: () => {
+                    overlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                    sessionStorage.setItem('sukunaArrived', '1');
+                    triggerAllObservers();
+                    initThreeJsParticles();
+                }
             });
-        }
 
-        // Setup Name Char Nodes for Phase 5 (2 Lines)
-        const entLine1 = $('#entNameLine1');
-        const entLine2 = $('#entNameLine2');
-        if (entLine1 && entLine2) {
-            const splitEntName = (el) => {
-                const text = el.textContent.trim();
-                el.innerHTML = text.split('').map(char => {
-                    if (char === ' ') return '&nbsp;';
-                    return `<span class="ent-char">${char}<span class="ent-underline"></span></span>`;
-                }).join('');
-            };
-            splitEntName(entLine1);
-            splitEntName(entLine2);
-        }
-        const nameChars = $$('.ent-char');
-
-        // GSAP orchestrated Entrance Sequence
-        const entranceTL = gsap.timeline({
-            onComplete: () => {
-                pulseActive = false;
-                overlay.style.display = 'none';
-                sessionStorage.setItem('sukunaArrived', '1');
-                triggerAllObservers();
-                initThreeJsParticles();
-            }
-        });
-
-        // Phase 1: Crimson expanding pulse
-        entranceTL.to({}, {
-            duration: 0.3,
-            onUpdate: function() {
-                pulseRadius = this.progress() * (window.innerWidth * 0.5);
-            },
-            onComplete: () => { pulseRadius = 0; }
-        });
-
-        // Phase 2: Materialize Cursed Mark
-        entranceTL.to('#cursedMarkWrap', { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)' }, '+=0.1');
-        // Concentric shockwave rings expansion
-        entranceTL.to('#ringCrimson', {
-            width: '80vw',
-            height: '80vw',
-            opacity: 0.3,
-            duration: 0.5,
-            ease: 'power2.out',
-            onStart: () => {
-                const el = $('#ringCrimson');
-                el.style.left = '50%'; el.style.top = '50%'; el.style.transform = 'translate(-50%, -50%)';
-            }
-        }, '-=0.4');
-        entranceTL.to('#ringPurple', {
-            width: '80vw',
-            height: '80vw',
-            opacity: 0.3,
-            duration: 0.5,
-            ease: 'power2.out',
-            onStart: () => {
-                const el = $('#ringPurple');
-                el.style.left = '50%'; el.style.top = '50%'; el.style.transform = 'translate(-50%, -50%)';
-            }
-        }, '-=0.35');
-        entranceTL.to('#ringBlue', {
-            width: '80vw',
-            height: '80vw',
-            opacity: 0.3,
-            duration: 0.5,
-            ease: 'power2.out',
-            onStart: () => {
-                const el = $('#ringBlue');
-                el.style.left = '50%'; el.style.top = '50%'; el.style.transform = 'translate(-50%, -50%)';
-            }
-        }, '-=0.3');
-
-        // Shockwaves fade out
-        entranceTL.to('.shockwave-ring', { opacity: 0, duration: 0.4, ease: 'power2.in' }, '-=0.25');
-
-        // Phase 3: Domain Grid rises
-        entranceTL.to('#perspectiveGridWrap', { opacity: 1, duration: 0.3 }, '-=0.2');
-        entranceTL.to('.domain-grid-plane', {
-            rotationX: 0,
-            translateY: 0,
-            duration: 0.7,
-            ease: 'power4.out' // matches cubic-bezier(.16,1,.3,1)
-        }, '-=0.3');
-
-        // Phase 4: Impact frame 40ms flash
-        entranceTL.add(() => {
-            generateImpactLines();
-            drawImpact = true;
-            drawImpactFrame();
-        }, '+=0.2');
-        entranceTL.to({}, { duration: 0.04 }); // 40ms flash hold
-        entranceTL.add(() => {
-            drawImpact = false;
-            impactCtx.clearRect(0, 0, impactCanvas.width, impactCanvas.height);
-        });
-        
-        // Hide initial overlay elements during flash
-        entranceTL.to(['#cursedMarkWrap', '#perspectiveGridWrap'], { opacity: 0, duration: 0.2 }, '-=0.04');
-
-        // Phase 5: Name burns in character-by-character
-        entranceTL.to('#entranceNameWrap', { opacity: 1, duration: 0.1 });
-        
-        nameChars.forEach((nc, idx) => {
-            const letterTL = gsap.timeline();
-            letterTL.fromTo(nc, 
-                { opacity: 0, scaleY: 2.2, skewX: -10 },
-                { opacity: 1, scaleY: 1, skewX: 0, duration: 0.3, ease: 'power2.out' }
-            );
-            letterTL.add(() => { nc.classList.add('ent-char-glow'); });
-            const line = nc.querySelector('.ent-underline');
-            if (line) {
-                letterTL.to(line, { width: '100%', duration: 0.04, ease: 'none' });
-            }
-            entranceTL.add(letterTL, `-=${0.24 - idx * 0.06}`);
-        });
-
-        // Subtitle word-by-word reveal
-        const subWords = ["SOFTWARE", "ENGINEER", "&", "AI", "DEVELOPER"];
-        const roleEl = $('#entRoleType');
-        subWords.forEach((word, idx) => {
+            // Impact flash frame (40ms)
             entranceTL.add(() => {
-                const span = document.createElement('span');
-                span.style.color = 'var(--text-accent)';
-                span.style.opacity = '0';
-                span.style.marginRight = '8px';
-                span.textContent = word;
-                roleEl.appendChild(span);
-                
-                gsap.timeline()
-                    .to(span, { opacity: 1, duration: 0.1 })
-                    .to(span, { color: 'var(--text-accent)', duration: 0.3 });
-            }, `+=${0.1 * idx}`);
-        });
+                generateImpactLines();
+                drawImpact = true;
+                drawImpactFrame();
+            }, '+=0.2');
+            entranceTL.to({}, { duration: 0.04 });
+            entranceTL.add(() => {
+                drawImpact = false;
+                impactCtx.clearRect(0, 0, impactCanvas.width, impactCanvas.height);
+            });
 
-        // Phase 6: Reality tears open via horizontal slice
-        entranceTL.to(overlay, {
-            clipPath: 'polygon(50% 0%, 50% 0%, 50% 100%, 50% 100%)',
-            duration: 0.7,
-            ease: 'power4.inOut' // matches cubic-bezier(.87,0,.13,1)
-        }, '+=1.0');
+            // Name ignition
+            entranceTL.to('#entranceNameWrap', { opacity: 1, duration: 0.1 }, '-=0.02');
+            nameChars.forEach((nc, idx) => {
+                const letterTL = gsap.timeline();
+                letterTL.fromTo(nc, 
+                    { opacity: 0, scaleY: 2.2, skewX: -10 },
+                    { opacity: 1, scaleY: 1, skewX: 0, duration: 0.3, ease: 'power2.out' }
+                );
+                letterTL.add(() => { nc.classList.add('ent-char-glow'); });
+                const line = nc.querySelector('.ent-underline');
+                if (line) {
+                    letterTL.to(line, { width: '100%', duration: 0.04, ease: 'none' });
+                }
+                entranceTL.add(letterTL, `-=${0.24 - idx * 0.06}`);
+            });
+
+            // Subtitle typing reveal
+            const subWords = ["SOFTWARE", "ENGINEER", "&", "AI", "DEVELOPER"];
+            const roleEl = $('#entRoleType');
+            subWords.forEach((word, idx) => {
+                entranceTL.add(() => {
+                    const span = document.createElement('span');
+                    span.style.color = 'var(--text-accent)';
+                    span.style.opacity = '0';
+                    span.style.marginRight = '8px';
+                    span.textContent = word;
+                    roleEl.appendChild(span);
+                    
+                    gsap.timeline()
+                        .to(span, { opacity: 1, duration: 0.1 })
+                        .to(span, { color: 'var(--text-accent)', duration: 0.3 });
+                }, `+=${0.1 * idx}`);
+            });
+
+            // Gate Split transition (clipPath diagonal slide out)
+            entranceTL.to(overlay, {
+                clipPath: 'polygon(50% 0%, 50% 0%, 50% 100%, 50% 100%)',
+                duration: 0.8,
+                ease: 'power4.inOut'
+            }, '+=1.0');
+        }
     }
 
     /* ═══════════════════════════

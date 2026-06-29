@@ -20,35 +20,33 @@
 
     <!-- ━━ ENTRANCE ANIMATION: SYSTEM ARRIVAL SEQUENCE ━━ -->
     <div class="tech-entrance-overlay" id="entranceLoader">
-        <!-- Phase 1: Center Pulse Canvas -->
-        <canvas class="pulse-canvas" id="pulseCanvas"></canvas>
-        
-        <!-- Phase 2: Calligraphic Brand Mark -->
-        <div class="cursed-mark-container" id="cursedMarkWrap">
-            <svg class="brand-mark-svg" viewBox="0 0 100 100" id="brandMarkSvg">
-                <path class="mark-path" d="M 20 25 L 80 25" />
-                <path class="mark-path" d="M 50 25 L 50 75" />
-                <path class="mark-path" d="M 30 45 L 70 45" />
-                <path class="mark-path" d="M 35 65 L 65 65" />
-                <path class="mark-path" d="M 25 35 Q 50 55 75 35" />
-                <path class="mark-path" d="M 25 75 Q 50 55 75 75" />
-            </svg>
+        <!-- 3D Perspective Grid Background -->
+        <div class="loader-perspective-grid">
+            <div class="loader-grid-plane"></div>
         </div>
 
-        <!-- Concentric shockwave overlays -->
-        <div class="shockwave-ring ring--crimson" id="ringCrimson"></div>
-        <div class="shockwave-ring ring--purple" id="ringPurple"></div>
-        <div class="shockwave-ring ring--blue" id="ringBlue"></div>
+        <!-- Telemetry Streams -->
+        <div class="telemetry-stream stream--left" id="streamLeft"></div>
+        <div class="telemetry-stream stream--right" id="streamRight"></div>
 
-        <!-- Phase 3: Perspective Domain Grid -->
-        <div class="domain-perspective-grid-container" id="perspectiveGridWrap">
-            <div class="domain-grid-plane"></div>
+        <!-- Central Glowing Glyphs (Anime themed) -->
+        <div class="loader-sigil-core" id="loaderSigilCore">
+            <div class="sigil-ring ring-1"></div>
+            <div class="sigil-ring ring-2"></div>
+            <div class="sigil-ring ring-3"></div>
+            <div class="sigil-core-orb"></div>
         </div>
 
-        <!-- Phase 4: Impact Frame Burst Canvas -->
-        <canvas class="impact-canvas" id="impactCanvas"></canvas>
+        <!-- Progress Metrics -->
+        <div class="loader-hud-progress" id="loaderHudProgress">
+            <span class="hud-status-lbl">INITIALIZING TECH ENGINE</span>
+            <div class="hud-bar-container">
+                <div class="hud-progress-bar" id="loaderBar"></div>
+            </div>
+            <span class="hud-percent-lbl" id="loaderPercent">0%</span>
+        </div>
 
-        <!-- Phase 5: Name Burn In (2 Lines) -->
+        <!-- Name Block (rendered on 2 lines) -->
         <div class="entrance-name-container" id="entranceNameWrap">
             <h1 class="entrance-name-title" id="entName">
                 <span class="ent-name-line" id="entNameLine1">AFNAAN</span>
@@ -56,6 +54,9 @@
             </h1>
             <div class="entrance-role-type" id="entRoleType"></div>
         </div>
+
+        <!-- Impact Frame Burst Canvas -->
+        <canvas class="impact-canvas" id="impactCanvas"></canvas>
     </div>
 
     <!-- ━━ PERSISTENT GLOBAL BACKGROUNDS ━━ -->
