@@ -1,38 +1,29 @@
-/* ═══════════════════════════════════════════════════
-   JJK ANIME PORTFOLIO — SYSTEM ENGINE (script.js)
-   Malevolent Archway Loader, Cursed Energy Particle Canvas,
-   Skills Constellation Webs, Project Telemetries, and
-   Malevolent Cleave/Dismantle Split Cover Trigger.
-   ═══════════════════════════════════════════════════ */
-
 (function() {
     'use strict';
 
-    // DOM Selectors
+    // Helper Selectors
     const $ = s => document.querySelector(s);
     const $$ = s => document.querySelectorAll(s);
 
-    /* ═══════════════════════════
-       1. GLOBAL SESSION STATE & MEDIA CHECK
-       ═══════════════════════════ */
+    // Globals & Preferences
     const isMobile = window.innerWidth < 768;
-    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let threeParticles = null; // ThreeJS instance reference
 
     /* ═══════════════════════════
-       2. SCROLL INDICATOR PROGRESS BAR
+       1. SCROLL PROGRESS & STICKY NAV
        ═══════════════════════════ */
     window.addEventListener('scroll', () => {
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = (window.scrollY / docHeight) * 100;
-        const progressEl = $('#scrollProgress');
-        if (progressEl) {
-            progressEl.style.width = scrollPercent + '%';
+        if (docHeight > 0) {
+            const scrollPercent = (window.scrollY / docHeight) * 100;
+            const progressEl = $('#scrollProgress');
+            if (progressEl) progressEl.style.width = scrollPercent + '%';
         }
 
-        // Sticky Nav update
         const nav = $('#sysNav');
         if (nav) {
-            if (window.scrollY > 80) {
+            if (window.scrollY > 60) {
                 nav.classList.add('scrolled');
             } else {
                 nav.classList.remove('scrolled');
@@ -41,685 +32,929 @@
     });
 
     /* ═══════════════════════════
-       3. HTML5 CANVAS: CURSED ENERGY BACKGROUND
+       2. SUKUNA ARRIVAL ENTRANCE SEQUENCE
        ═══════════════════════════ */
-    const canvas = $('#globalCanvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        const maxParticles = isMobile ? 25 : 75;
-        let mouse = { x: -1000, y: -1000 };
+    function runSukunaEntrance() {
+        const overlay = $('#entranceLoader');
+        if (!overlay) return;
 
-        function resizeBg() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeBg();
-        window.addEventListener('resize', resizeBg);
-
-        window.addEventListener('mousemove', e => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        // Initialize particles
-        for (let i = 0; i < maxParticles; i++) {
-            // Colors matching our JJK palette
-            const colors = ['rgba(56, 189, 248, ', 'rgba(167, 139, 250, ', 'rgba(236, 72, 153, '];
-            const randColor = colors[Math.floor(Math.random() * colors.length)];
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 4 + 1.5,
-                vx: (Math.random() - 0.5) * 0.4,
-                vy: -(Math.random() * 0.3 + 0.1),
-                color: randColor,
-                alpha: Math.random() * 0.4 + 0.15,
-                osc: Math.random() * 100,
-                oscSpeed: Math.random() * 0.02 + 0.005
-            });
-        }
-
-        function drawParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Hollow Purple Attraction Core coordinates (centered in skills section)
-            const skillsSec = $('#skills');
-            let attractCore = null;
-            if (skillsSec) {
-                const sRect = skillsSec.getBoundingClientRect();
-                if (sRect.top < window.innerHeight && sRect.bottom > 0) {
-                    const coreNode = $('.skill-core-center');
-                    if (coreNode) {
-                        const cRect = coreNode.getBoundingClientRect();
-                        attractCore = {
-                            x: cRect.left + cRect.width / 2,
-                            y: cRect.top + cRect.height / 2
-                        };
-                    }
-                }
-            }
-
-            particles.forEach(p => {
-                p.y += p.vy;
-                p.x += p.vx;
-                p.osc += p.oscSpeed;
-
-                // Wave oscillation
-                p.x += Math.sin(p.osc) * 0.15;
-
-                // Attraction force to skills core
-                if (attractCore) {
-                    const dx = attractCore.x - p.x;
-                    const dy = attractCore.y - p.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist > 50) {
-                        p.x += (dx / dist) * 0.65;
-                        p.y += (dy / dist) * 0.65;
-                    }
-                }
-
-                // Repel away from mouse cursor
-                const dx = mouse.x - p.x;
-                const dy = mouse.y - p.y;
-                const mDist = Math.sqrt(dx * dx + dy * dy);
-                if (mDist < 120) {
-                    const force = (120 - mDist) * 0.015;
-                    p.x -= (dx / mDist) * force;
-                    p.y -= (dy / mDist) * force;
-                }
-
-                // Warp coordinates on bounds exit
-                if (p.y < -10) {
-                    p.y = canvas.height + 10;
-                    p.x = Math.random() * canvas.width;
-                }
-                if (p.x < -10) p.x = canvas.width + 10;
-                if (p.x > canvas.width + 10) p.x = -10;
-
-                ctx.beginPath();
-                const rad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
-                rad.addColorStop(0, p.color + p.alpha + ')');
-                rad.addColorStop(1, p.color + '0)');
-                ctx.fillStyle = rad;
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
-            });
-
-            requestAnimationFrame(drawParticles);
-        }
-        drawParticles();
-    }
-
-
-    /* ═══════════════════════════
-       4. HTML5 CANVAS: MALEVOLENT ARCHWAY ENTRY SEQUENCE
-       ═══════════════════════════ */
-    function runShrineLoader() {
-        const loader = $('#shrineLoader');
-        const lCanvas = $('#loaderCanvas');
-        if (!loader || !lCanvas) return;
-
-        // Skip animation on revisit
-        if (sessionStorage.getItem('jjkArrived') === '1' || isReducedMotion) {
-            loader.style.display = 'none';
-            triggerAllCountUps();
+        // Skip animation on revisit or reduced motion
+        if (sessionStorage.getItem('sukunaArrived') === '1' || prefersReducedMotion) {
+            overlay.style.display = 'none';
+            triggerAllObservers();
+            if (!isMobile) initThreeJsParticles();
             return;
         }
 
-        const lCtx = lCanvas.getContext('2d');
-        let frame = 0;
-        let pulseRadius = 5;
-        let lines = [];
-        let running = true;
-
-        function resizeLoader() {
-            lCanvas.width = window.innerWidth;
-            lCanvas.height = window.innerHeight;
-        }
-        resizeLoader();
-        window.addEventListener('resize', resizeLoader);
-
-        // Core central coordinates
-        const cx = () => lCanvas.width / 2;
-        const cy = () => lCanvas.height / 2;
-
-        // Initialize expanding energy threads
-        for (let i = 0; i < 90; i++) {
-            const angle = Math.random() * Math.PI * 2;
-            const targetDist = Math.max(lCanvas.width, lCanvas.height) * 0.75;
-            lines.push({
-                angle: angle,
-                tx: cx() + Math.cos(angle) * targetDist,
-                ty: cy() + Math.sin(angle) * targetDist,
-                progress: 0,
-                speed: 0.008 + Math.random() * 0.015,
-                delay: Math.random() * 60,
-                color: Math.random() > 0.4 ? 'rgba(56, 189, 248, ' : 'rgba(236, 72, 153, '
-            });
-        }
-
-        function drawLoaderLoop() {
-            if (!running) return;
-            lCtx.clearRect(0, 0, lCanvas.width, lCanvas.height);
-            frame++;
-
-            // Draw central point
-            if (frame < 120) {
-                pulseRadius = 4 + Math.sin(frame * 0.1) * 2;
-                lCtx.beginPath();
-                const rad = lCtx.createRadialGradient(cx(), cy(), 0, cx(), cy(), pulseRadius * 2);
-                rad.addColorStop(0, '#ffffff');
-                rad.addColorStop(0.3, 'rgba(56, 189, 248, 0.8)');
-                rad.addColorStop(1, 'rgba(124, 58, 237, 0)');
-                lCtx.fillStyle = rad;
-                lCtx.arc(cx(), cy(), pulseRadius * 2, 0, Math.PI * 2);
-                lCtx.fill();
-            }
-
-            // Draw expanding lines
-            if (frame > 40 && frame < 200) {
-                lines.forEach(l => {
-                    if (frame - 40 < l.delay) return;
-                    if (l.progress < 1) l.progress += l.speed;
-
-                    const curX = cx() + (l.tx - cx()) * l.progress;
-                    const curY = cy() + (l.ty - cy()) * l.progress;
-
-                    lCtx.beginPath();
-                    lCtx.moveTo(cx(), cy());
-                    lCtx.lineTo(curX, curY);
-                    lCtx.strokeStyle = l.color + (1 - l.progress) * 0.6 + ')';
-                    lCtx.lineWidth = 0.8;
-                    lCtx.stroke();
-                });
-            }
-
-            requestAnimationFrame(drawLoaderLoop);
-        }
-        drawLoaderLoop();
-
-        // GSAP orchestrated Timeline
-        const loaderTL = gsap.timeline({
-            onComplete: () => {
-                running = false;
-                loader.style.display = 'none';
-                sessionStorage.setItem('jjkArrived', '1');
-                triggerAllCountUps();
-            }
-        });
-
-        // Step 1: Draw lines & pulse center
-        loaderTL.to({}, { duration: 1.2 }) // Initial pause
-                .to('#loaderArch', { opacity: 0.85, scale: 1, duration: 0.8, ease: 'back.out(1.5)' })
-                .to('#loaderArch', { rotation: 10, duration: 0.5, ease: 'power2.out' })
-                .to('#loaderArch', { rotation: -10, duration: 0.5, ease: 'power2.out' })
-                // Step 2: Dismantle Cleave Slash impact
-                .to('#loaderSlash', { opacity: 1, scaleX: 1, duration: 0.25, ease: 'power4.inOut' }, '-=0.4')
-                // Step 3: Void Blast Flash
-                .to('#loaderFlash', { opacity: 0.85, duration: 0.15 })
-                .to('#loaderFlash', { opacity: 0, duration: 0.4 })
-                .add(() => {
-                    if ($('#loaderArch')) $('#loaderArch').style.display = 'none';
-                    if ($('#loaderSlash')) $('#loaderSlash').style.display = 'none';
-                }, '-=0.4')
-                // Step 4: Name reveals
-                .to('#loaderNameWrap', { opacity: 1, duration: 0.3 }, '-=0.2')
-                .from('.l-word', {
-                    opacity: 0,
-                    scaleY: 3,
-                    skewX: -20,
-                    stagger: 0.15,
-                    duration: 0.6,
-                    ease: 'jjkSnap'
-                }, '-=0.1')
-                .to('#loaderSub', { opacity: 1, y: 0, duration: 0.4 }, '+=0.1')
-                .to('#loaderType', {
-                    text: "INTELLIGENT SYSTEMS ENGINEER // 2026",
-                    duration: 1.2,
-                    ease: "none"
-                })
-                .to({}, { duration: 1.0 }) // Hold name
-                // Step 5: Screen Wipes dissolution
-                .to(loader, {
-                    clipPath: 'circle(0% at 50% 50%)',
-                    opacity: 0,
-                    yPercent: -100,
-                    duration: 0.85,
-                    ease: 'power4.inOut'
-                });
-    }
-    runShrineLoader();
-
-
-    /* ═══════════════════════════
-       5. INTERSECTION OBSERVER: MALEVOLENT SLASH SPLIT (ABOUT)
-       ═══════════════════════════ */
-    function initMalevolentSlashSplit() {
-        const cover = $('#slashCover');
-        const triggerSec = $('#about');
-        if (!cover || !triggerSec) return;
-
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const slashLine = $('#slashLine');
-                    if (slashLine) {
-                        // 1. Draw crimson dismantle cut line down the center
-                        slashLine.style.transform = 'translateX(-50%) scaleY(1)';
-                        
-                        setTimeout(() => {
-                            // 2. Split left/right halves
-                            const halves = $$('.slash-half');
-                            if (halves[0]) halves[0].style.transform = 'translateX(-100%)';
-                            if (halves[1]) halves[1].style.transform = 'translateX(100%)';
-                            slashLine.style.opacity = '0';
-
-                            // Clean up DOM nodes
-                            setTimeout(() => {
-                                cover.style.display = 'none';
-                                cover.remove();
-                            }, 850);
-                        }, 500);
-                    }
-                    observer.unobserve(triggerSec);
+        if (isMobile) {
+            // Simplified Mobile Entrance
+            const entName = $('#entName');
+            if (entName) entName.innerHTML = `<span class="ent-char ent-char-glow">AFNAAN AHMED P</span>`;
+            
+            const mobileTL = gsap.timeline({
+                onComplete: () => {
+                    overlay.style.display = 'none';
+                    sessionStorage.setItem('sukunaArrived', '1');
+                    triggerAllObservers();
                 }
             });
-        }, { threshold: 0.05 });
 
-        observer.observe(triggerSec);
-    }
-    initMalevolentSlashSplit();
-
-
-    /* ═══════════════════════════
-       6. SKILLS CONSTELLATION WEB PACKETS
-       ═══════════════════════════ */
-    const sCanvas = $('#skillsWebCanvas');
-    if (sCanvas) {
-        const sCtx = sCanvas.getContext('2d');
-        let packets = [];
-
-        function resizeSkillsCanvas() {
-            const container = $('.skill-constellation-container');
-            if (container) {
-                sCanvas.width = container.offsetWidth;
-                sCanvas.height = container.offsetHeight;
-            }
+            mobileTL.to('#entranceNameWrap', { opacity: 1, duration: 0.6 })
+                    .to('#entKanjiSub', { opacity: 1, duration: 0.4 })
+                    .to(overlay, { opacity: 0, duration: 0.3, ease: 'power2.inOut' }, '+=0.8');
+            return;
         }
-        resizeSkillsCanvas();
-        window.addEventListener('resize', resizeSkillsCanvas);
 
-        // Populate packets along paths
-        setInterval(() => {
-            const coreNode = $('.skill-core-center');
-            const nodes = $$('.hex-node');
-            if (!coreNode || nodes.length === 0) return;
+        // --- Desktop Cinematic Entrance Sequence ---
+        const pulseCanvas = $('#pulseCanvas');
+        const pulseCtx = pulseCanvas.getContext('2d');
+        const impactCanvas = $('#impactCanvas');
+        const impactCtx = impactCanvas.getContext('2d');
 
-            const cRect = coreNode.getBoundingClientRect();
-            const containerRect = $('.skill-constellation-container').getBoundingClientRect();
-            const cx = (cRect.left + cRect.width / 2) - containerRect.left;
-            const cy = (cRect.top + cRect.height / 2) - containerRect.top;
+        function resizeOverlayCanvases() {
+            pulseCanvas.width = window.innerWidth;
+            pulseCanvas.height = window.innerHeight;
+            impactCanvas.width = window.innerWidth;
+            impactCanvas.height = window.innerHeight;
+        }
+        resizeOverlayCanvases();
+        window.addEventListener('resize', resizeOverlayCanvases);
 
-            // Pick a random destination node
-            const destNode = nodes[Math.floor(Math.random() * nodes.length)];
-            const dRect = destNode.getBoundingClientRect();
-            const dx = (dRect.left + dRect.width / 2) - containerRect.left;
-            const dy = (dRect.top + dRect.height / 2) - containerRect.top;
+        // Core variables
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
 
-            packets.push({
-                x: cx,
-                y: cy,
-                tx: dx,
-                ty: dy,
-                progress: 0,
-                speed: 0.015 + Math.random() * 0.015,
-                color: destNode.classList.contains('hex-node--cyan') ? '#38BDF8' :
-                       destNode.classList.contains('hex-node--purple') ? '#A78BFA' :
-                       destNode.classList.contains('hex-node--gold') ? '#F59E0B' : '#0099FF'
-            });
-        }, 300);
+        // Phase 1 Pulse Ring Setup
+        let pulseRadius = 0;
+        let pulseActive = true;
+        function drawPulseRing() {
+            if (!pulseActive) return;
+            pulseCtx.clearRect(0, 0, pulseCanvas.width, pulseCanvas.height);
+            if (pulseRadius > 0) {
+                pulseCtx.beginPath();
+                pulseCtx.arc(cx, cy, pulseRadius, 0, Math.PI * 2);
+                pulseCtx.strokeStyle = 'rgba(153, 27, 27, 0.25)'; // --sukuna-crimson
+                pulseCtx.lineWidth = 1;
+                pulseCtx.stroke();
+            }
+            requestAnimationFrame(drawPulseRing);
+        }
+        drawPulseRing();
 
-        function drawSkillsConstellation() {
-            sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
-
-            const coreNode = $('.skill-core-center');
-            const nodes = $$('.hex-node');
-            if (coreNode && nodes.length > 0) {
-                const cRect = coreNode.getBoundingClientRect();
-                const containerRect = $('.skill-constellation-container').getBoundingClientRect();
-                const cx = (cRect.left + cRect.width / 2) - containerRect.left;
-                const cy = (cRect.top + cRect.height / 2) - containerRect.top;
-
-                // Draw connector lines
-                sCtx.beginPath();
-                sCtx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
-                sCtx.lineWidth = 1;
-                nodes.forEach(node => {
-                    const dRect = node.getBoundingClientRect();
-                    const dx = (dRect.left + dRect.width / 2) - containerRect.left;
-                    const dy = (dRect.top + dRect.height / 2) - containerRect.top;
-                    sCtx.moveTo(cx, cy);
-                    sCtx.lineTo(dx, dy);
+        // Phase 4 Impact Frame Setup
+        let impactLines = [];
+        let drawImpact = false;
+        function generateImpactLines() {
+            impactLines = [];
+            const count = 120;
+            const maxRadius = Math.max(window.innerWidth, window.innerHeight);
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const thickness = Math.random() * 1.5 + 0.5; // 0.5px to 2px
+                impactLines.push({
+                    angle: angle,
+                    thickness: thickness,
+                    maxRadius: maxRadius
                 });
-                sCtx.stroke();
             }
-
-            // Draw spark packets
-            packets = packets.filter(p => {
-                p.progress += p.speed;
-                if (p.progress >= 1) return false;
-
-                const curX = p.x + (p.tx - p.x) * p.progress;
-                const curY = p.y + (p.ty - p.y) * p.progress;
-
-                sCtx.beginPath();
-                sCtx.arc(curX, curY, 2, 0, Math.PI * 2);
-                sCtx.fillStyle = p.color;
-                sCtx.shadowBlur = 6;
-                sCtx.shadowColor = p.color;
-                sCtx.fill();
-                sCtx.shadowBlur = 0; // reset
-
-                return true;
-            });
-
-            requestAnimationFrame(drawSkillsConstellation);
         }
-        drawSkillsConstellation();
+        function drawImpactFrame() {
+            if (!drawImpact) return;
+            impactCtx.clearRect(0, 0, impactCanvas.width, impactCanvas.height);
+            impactCtx.strokeStyle = 'rgba(248, 250, 252, 0.1)'; // --infinity-white
+            impactLines.forEach(l => {
+                impactCtx.beginPath();
+                impactCtx.lineWidth = l.thickness;
+                impactCtx.moveTo(cx, cy);
+                impactCtx.lineTo(cx + Math.cos(l.angle) * l.maxRadius, cy + Math.sin(l.angle) * l.maxRadius);
+                impactCtx.stroke();
+            });
+        }
+
+        // Setup Name Char Nodes for Phase 5
+        const nameText = "AFNAAN AHMED P";
+        const entName = $('#entName');
+        entName.innerHTML = nameText.split('').map(char => {
+            if (char === ' ') return '&nbsp;';
+            return `<span class="ent-char">${char}<span class="ent-underline"></span></span>`;
+        }).join('');
+        const nameChars = $$('.ent-char');
+
+        // GSAP orchestrated Entrance Sequence
+        const entranceTL = gsap.timeline({
+            onComplete: () => {
+                pulseActive = false;
+                overlay.style.display = 'none';
+                sessionStorage.setItem('sukunaArrived', '1');
+                triggerAllObservers();
+                initThreeJsParticles();
+            }
+        });
+
+        // Phase 1: Crimson expanding pulse
+        entranceTL.to({}, {
+            duration: 0.3,
+            onUpdate: function() {
+                pulseRadius = this.progress() * (window.innerWidth * 0.5);
+            },
+            onComplete: () => { pulseRadius = 0; }
+        });
+
+        // Phase 2: Materialize Cursed Mark
+        entranceTL.to('#cursedMarkWrap', { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)' }, '+=0.1');
+        // Concentric shockwave rings expansion
+        entranceTL.to('#ringCrimson', {
+            width: '80vw',
+            height: '80vw',
+            opacity: 0.3,
+            duration: 0.5,
+            ease: 'power2.out',
+            onStart: () => {
+                const el = $('#ringCrimson');
+                el.style.left = '50%'; el.style.top = '50%'; el.style.transform = 'translate(-50%, -50%)';
+            }
+        }, '-=0.4');
+        entranceTL.to('#ringPurple', {
+            width: '80vw',
+            height: '80vw',
+            opacity: 0.3,
+            duration: 0.5,
+            ease: 'power2.out',
+            onStart: () => {
+                const el = $('#ringPurple');
+                el.style.left = '50%'; el.style.top = '50%'; el.style.transform = 'translate(-50%, -50%)';
+            }
+        }, '-=0.35');
+        entranceTL.to('#ringBlue', {
+            width: '80vw',
+            height: '80vw',
+            opacity: 0.3,
+            duration: 0.5,
+            ease: 'power2.out',
+            onStart: () => {
+                const el = $('#ringBlue');
+                el.style.left = '50%'; el.style.top = '50%'; el.style.transform = 'translate(-50%, -50%)';
+            }
+        }, '-=0.3');
+
+        // Shockwaves fade out
+        entranceTL.to('.shockwave-ring', { opacity: 0, duration: 0.4, ease: 'power2.in' }, '-=0.25');
+
+        // Phase 3: Domain Grid rises
+        entranceTL.to('#perspectiveGridWrap', { opacity: 1, duration: 0.3 }, '-=0.2');
+        entranceTL.to('.domain-grid-plane', {
+            rotationX: 0,
+            translateY: 0,
+            duration: 0.7,
+            ease: 'power4.out' // matches cubic-bezier(.16,1,.3,1)
+        }, '-=0.3');
+
+        // Staggered reveal of massive Japanese characters
+        const kanjiChars = $$('.ent-kanji-char');
+        entranceTL.to('#entranceKanji', { opacity: 1, duration: 0.1 }, '-=0.6');
+        kanjiChars.forEach((kc, idx) => {
+            entranceTL.to(kc, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.2)' }, `-=${0.45 - idx * 0.15}`);
+        });
+
+        // Phase 4: Impact frame 40ms flash
+        entranceTL.add(() => {
+            generateImpactLines();
+            drawImpact = true;
+            drawImpactFrame();
+        }, '+=0.2');
+        entranceTL.to({}, { duration: 0.04 }); // 40ms flash hold
+        entranceTL.add(() => {
+            drawImpact = false;
+            impactCtx.clearRect(0, 0, impactCanvas.width, impactCanvas.height);
+        });
+        
+        // Hide initial overlay elements during flash
+        entranceTL.to(['#cursedMarkWrap', '#perspectiveGridWrap', '#entranceKanji'], { opacity: 0, duration: 0.2 }, '-=0.04');
+
+        // Phase 5: Name burns in character-by-character
+        entranceTL.to('#entranceNameWrap', { opacity: 1, duration: 0.1 });
+        
+        nameChars.forEach((nc, idx) => {
+            const letterTL = gsap.timeline();
+            letterTL.fromTo(nc, 
+                { opacity: 0, scaleY: 2.2, skewX: -10 },
+                { opacity: 1, scaleY: 1, skewX: 0, duration: 0.3, ease: 'power2.out' }
+            );
+            letterTL.add(() => { nc.classList.add('ent-char-glow'); });
+            const line = nc.querySelector('.ent-underline');
+            if (line) {
+                letterTL.to(line, { width: '100%', duration: 0.04, ease: 'none' });
+            }
+            entranceTL.add(letterTL, `-=${0.24 - idx * 0.06}`);
+        });
+
+        // Trace in the 「呪術師」 SVG paths
+        entranceTL.to('#entKanjiSub', { opacity: 1, duration: 0.4 }, '+=0.2');
+        entranceTL.fromTo('.jujutsushi-text', 
+            { strokeDasharray: 200, strokeDashoffset: 200, fill: 'rgba(251, 191, 36, 0)' },
+            { strokeDashoffset: 0, fill: 'rgba(251, 191, 36, 1)', duration: 1.2, ease: 'power2.out' },
+            '-=0.2'
+        );
+
+        // Subtitle word-by-word reveal
+        const subWords = ["SOFTWARE", "ENGINEER", "&", "AI", "DEVELOPER"];
+        const roleEl = $('#entRoleType');
+        subWords.forEach((word, idx) => {
+            entranceTL.add(() => {
+                const span = document.createElement('span');
+                span.style.color = 'var(--text-accent)';
+                span.style.opacity = '0';
+                span.style.marginRight = '8px';
+                span.textContent = word;
+                roleEl.appendChild(span);
+                
+                gsap.timeline()
+                    .to(span, { opacity: 1, duration: 0.1 })
+                    .to(span, { color: 'var(--text-accent)', duration: 0.3 });
+            }, `+=${0.1 * idx}`);
+        });
+
+        // Phase 6: Reality tears open via horizontal slice
+        entranceTL.to(overlay, {
+            clipPath: 'polygon(50% 0%, 50% 0%, 50% 100%, 50% 100%)',
+            duration: 0.7,
+            ease: 'power4.inOut' // matches cubic-bezier(.87,0,.13,1)
+        }, '+=1.0');
     }
 
-
     /* ═══════════════════════════
-       7. SKILLS INSPECTOR HUD INTERACTION
+       3. THREE.JS GLOBAL CANVAS BACKGROUND
        ═══════════════════════════ */
-    const telemetryFill = $('#telemetryFill');
-    const telemetryName = $('#telemetryName');
-    const telemetryDesc = $('#telemetryDesc');
-    const telemetryVal = $('#telemetryVal');
+    function initThreeJsParticles() {
+        const container = $('#threeJsContainer');
+        if (!container || prefersReducedMotion) return;
 
-    $$('.hex-node').forEach(node => {
-        node.addEventListener('mouseenter', () => {
-            const skill = node.dataset.skill;
-            const level = node.dataset.level;
-            const desc = node.dataset.desc;
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.z = 10;
 
-            if (telemetryName) telemetryName.textContent = skill.toUpperCase();
-            if (telemetryDesc) telemetryDesc.textContent = desc;
-            if (telemetryVal) telemetryVal.textContent = level;
-            if (telemetryFill) telemetryFill.style.width = level;
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        // Particle configuration variables
+        const count = 90;
+        const positions = new Float32Array(count * 3);
+        const properties = []; // Custom metadata for sways and shapes
+
+        for (let i = 0; i < count; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 20; // x
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 15; // y
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 5; // z
+
+            properties.push({
+                speedY: Math.random() * 0.008 + 0.003,
+                swaySeed: Math.random() * 100,
+                swaySpeed: Math.random() * 0.01 + 0.004,
+                colorIdx: Math.floor(Math.random() * 3)
+            });
+        }
+
+        // Particle material definitions using our custom JJK colors
+        const colors = [
+            new THREE.Color('#0EA5E9'), // --blue-technique
+            new THREE.Color('#7C3AED'), // --hollow-purple
+            new THREE.Color('#FBBF24')  // --malevolent-gold
+        ];
+
+        const particleColors = new Float32Array(count * 3);
+        for (let i = 0; i < count; i++) {
+            const color = colors[properties[i].colorIdx];
+            particleColors[i * 3] = color.r;
+            particleColors[i * 3 + 1] = color.g;
+            particleColors[i * 3 + 2] = color.b;
+        }
+
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
+
+        // Draw circles for particles rather than square frames
+        const canvasSprite = document.createElement('canvas');
+        canvasSprite.width = 16;
+        canvasSprite.height = 16;
+        const spriteCtx = canvasSprite.getContext('2d');
+        const grad = spriteCtx.createRadialGradient(8, 8, 0, 8, 8, 8);
+        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        grad.addColorStop(0.3, 'rgba(255, 255, 255, 0.8)');
+        grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        spriteCtx.fillStyle = grad;
+        spriteCtx.beginPath();
+        spriteCtx.arc(8, 8, 8, 0, Math.PI * 2);
+        spriteCtx.fill();
+        const texture = new THREE.CanvasTexture(canvasSprite);
+
+        const material = new THREE.PointsMaterial({
+            size: 0.16,
+            map: texture,
+            vertexColors: true,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
         });
-    });
+
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
+
+        threeParticles = {
+            scene: scene,
+            points: points,
+            properties: properties,
+            positions: positions,
+            velocityMultiplier: 1.0
+        };
+
+        // Scroll velocity surge loop
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            if (threeParticles) threeParticles.velocityMultiplier = 2.5;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                if (threeParticles) threeParticles.velocityMultiplier = 1.0;
+            }, 400);
+        });
+
+        // Animation Loop
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.05;
+
+            const posArr = points.geometry.attributes.position.array;
+            for (let i = 0; i < count; i++) {
+                // Upward drift
+                posArr[i * 3 + 1] += properties[i].speedY * threeParticles.velocityMultiplier;
+
+                // Sway lateral sway (sine noise representation)
+                posArr[i * 3] += Math.sin(time * 0.1 + properties[i].swaySeed) * 0.005;
+
+                // Reset position if drifting out of camera view bounds
+                if (posArr[i * 3 + 1] > 8) {
+                    posArr[i * 3 + 1] = -8;
+                    posArr[i * 3] = (Math.random() - 0.5) * 20;
+                }
+            }
+            points.geometry.attributes.position.needsUpdate = true;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Responsive Resizing
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    }
+
+    // Trigger Particle surges when entering a new section
+    function burstNewParticles() {
+        if (!threeParticles) return;
+        const count = 15;
+        const posArr = threeParticles.points.geometry.attributes.position.array;
+        const total = posArr.length / 3;
+
+        // Reset 15 random particles back to camera view top edge to drift
+        for (let i = 0; i < count; i++) {
+            const idx = Math.floor(Math.random() * total);
+            posArr[idx * 3 + 1] = 6.0; // peak top edge
+            posArr[idx * 3] = (Math.random() - 0.5) * 16;
+        }
+        threeParticles.points.geometry.attributes.position.needsUpdate = true;
+    }
+
+    /* ═══════════════════════════
+       4. BACKGROUND GRID PARALLAX
+       ═══════════════════════════ */
+    let lastScrollY = window.scrollY;
+    function runParallaxLoop() {
+        if (isMobile) return;
+        const scrolled = window.scrollY;
+
+        // Layer 1: Void Grid Background
+        const gridBg = $('#parallaxGridBg');
+        if (gridBg) {
+            gridBg.style.transform = `translateY(${scrolled * 0.15}px)`;
+        }
+
+        // Layer 2: Kanji watermarks
+        $$('.kanji-watermark').forEach(k => {
+            const depth = +k.dataset.depth || 0.4;
+            k.style.transform = `translateY(${scrolled * depth}px) ${k.classList.contains('vertical-watermark') ? '' : 'translateX(-50%)'}`;
+        });
+
+        // Layer 3: Decorative rotating seals
+        $$('.decorative-seal-circle').forEach(s => {
+            const depth = +s.dataset.depth || 0.65;
+            s.style.transform = `translateY(${scrolled * depth}px)`;
+        });
+
+        lastScrollY = scrolled;
+        requestAnimationFrame(runParallaxLoop);
+    }
+    if (!isMobile) requestAnimationFrame(runParallaxLoop);
 
 
     /* ═══════════════════════════
-       8. PROJECT CANVASES DIAGNOSTIC LOOP
+       5. HERO COMPONENT INTERACTION
        ═══════════════════════════ */
-    $$('.project-card-canvas').forEach(canvas => {
+    function initHeroInteractions() {
+        // Render name blocks
+        const heroTitle = $('#heroTitle');
+        if (heroTitle) {
+            const text = "AFNAAN AHMED P";
+            heroTitle.innerHTML = text.split('').map(char => {
+                if (char === ' ') return '&nbsp;';
+                return `<span class="hero-letter">${char}</span>`;
+            }).join('');
+
+            // Hover elastic repelling effect (Gojo Infinity simulation)
+            $$('.hero-letter').forEach(l => {
+                l.addEventListener('mouseenter', () => {
+                    gsap.to(l, {
+                        x: (Math.random() - 0.5) * 16,
+                        y: (Math.random() - 0.5) * 16,
+                        duration: 0.1,
+                        ease: 'none',
+                        onComplete: () => {
+                            gsap.to(l, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.3)' });
+                        }
+                    });
+                });
+            });
+        }
+
+        // Title Line floats
+        const titleLine = $('#heroTitleLine');
+        if (titleLine) {
+            const text = "SOFTWARE ENGINEER & AI DEVELOPER";
+            titleLine.innerHTML = text.split(' ').map(word => {
+                return `<span class="hero-word">${word}</span>&nbsp;`;
+            }).join('');
+
+            titleLine.addEventListener('mouseenter', () => {
+                gsap.fromTo('.hero-word',
+                    { y: 0 },
+                    { y: -5, stagger: 0.06, duration: 0.3, ease: 'power2.out', yoyo: true, repeat: 1 }
+                );
+            });
+        }
+    }
+    initHeroInteractions();
+
+    /* ═══════════════════════════
+       6. SKILLS DETAIL INSPECTOR
+       ═══════════════════════════ */
+    function initSkillsInspector() {
+        const inspector = $('#techInspector');
+        const inspectCat = $('#inspectCat');
+        const inspectTitle = $('#inspectTitle');
+        const inspectRank = $('#inspectRank');
+        const inspectDesc = $('#inspectDesc');
+
+        if (!inspector) return;
+
+        $$('.skill-pill-node').forEach(node => {
+            node.addEventListener('click', (e) => {
+                e.stopPropagation();
+
+                const rect = node.getBoundingClientRect();
+                const skill = node.dataset.skill;
+                const level = node.dataset.level;
+                const desc = node.dataset.desc;
+                const cat = node.closest('.domain-card').dataset.category;
+
+                // Set content
+                inspectCat.textContent = cat.toUpperCase();
+                inspectTitle.textContent = skill.toUpperCase();
+                inspectDesc.textContent = desc;
+
+                // Mastery translations
+                let mastery = "Novice Grade";
+                const lvlPct = parseInt(level);
+                if (lvlPct >= 95) mastery = "Domain Expansion Level";
+                else if (lvlPct >= 90) mastery = "Binding Vow Mastery";
+                else if (lvlPct >= 85) mastery = "Intermediate Grade";
+
+                inspectRank.textContent = `${mastery} (${level})`;
+
+                // Calculate overlay coordinate placement
+                const containerRect = $('.skills-grid').getBoundingClientRect();
+                const top = (rect.bottom - containerRect.top) + window.scrollY + 10;
+                const left = Math.max(10, Math.min(window.innerWidth - 340, rect.left - containerRect.left));
+
+                inspector.style.top = top + 'px';
+                inspector.style.left = left + 'px';
+                inspector.classList.add('active');
+            });
+        });
+
+        $('#closeInspectorBtn').addEventListener('click', () => {
+            inspector.classList.remove('active');
+        });
+
+        // Close inspector on global layout clicks
+        document.addEventListener('click', (e) => {
+            if (!inspector.contains(e.target)) {
+                inspector.classList.remove('active');
+            }
+        });
+    }
+    initSkillsInspector();
+
+    /* ═══════════════════════════
+       7. MISSION TELEMETRY SIMULATIONS (CANVASES)
+       ═══════════════════════════ */
+    $$('.telemetry-sim-canvas').forEach(canvas => {
         const c = canvas.getContext('2d');
         const sim = canvas.dataset.sim;
-        let w = 220, h = 300, frame = 0;
+        let w = canvas.width = canvas.offsetWidth || 400;
+        let h = canvas.height = canvas.offsetHeight || 140;
+        let frame = 0;
 
-        function resizeCanvas() {
-            w = canvas.width = canvas.offsetWidth || 220;
-            h = canvas.height = canvas.offsetHeight || 300;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', () => {
+            w = canvas.width = canvas.offsetWidth || 400;
+            h = canvas.height = canvas.offsetHeight || 140;
+        });
 
-        function drawVpark() {
+        function drawVPark() {
             c.clearRect(0, 0, w, h);
-            c.strokeStyle = 'rgba(56, 189, 248, 0.05)';
+            c.strokeStyle = 'rgba(14, 165, 233, 0.05)';
             c.lineWidth = 1;
+            // Draw grid
             for (let i = 0; i < w; i += 20) {
                 c.beginPath(); c.moveTo(i, 0); c.lineTo(i, h); c.stroke();
             }
 
-            const sweepY = (frame * 2.5) % h;
-            c.fillStyle = 'rgba(56, 189, 248, 0.08)';
-            c.fillRect(0, sweepY - 20, w, 20);
+            // Radar sweep
+            const sweepX = (frame * 2) % w;
+            c.fillStyle = 'rgba(14, 165, 233, 0.06)';
+            c.fillRect(sweepX - 25, 0, 25, h);
             c.beginPath();
-            c.moveTo(0, sweepY); c.lineTo(w, sweepY);
-            c.strokeStyle = 'rgba(56, 189, 248, 0.6)';
+            c.moveTo(sweepX, 0); c.lineTo(sweepX, h);
+            c.strokeStyle = 'rgba(14, 165, 233, 0.4)';
             c.lineWidth = 1.5;
             c.stroke();
 
-            const objects = [
-                { y: 60, detected: sweepY > 60 },
-                { y: 150, detected: sweepY > 150 },
-                { y: 220, detected: sweepY > 220 }
-            ];
-
-            objects.forEach((obj, idx) => {
-                c.strokeStyle = obj.detected ? '#10b981' : 'rgba(124, 58, 237, 0.2)';
-                c.strokeRect(30, obj.y, w - 60, 36);
-                c.fillStyle = obj.detected ? 'rgba(16, 185, 129, 0.7)' : 'rgba(124, 58, 237, 0.5)';
-                c.font = '8px monospace';
-                c.fillText(obj.detected ? `BOUNDING_BOX [V${idx+1}]` : `SCANNING AREA L${idx+1}...`, 35, obj.y + 14);
-                c.fillStyle = 'rgba(167, 139, 250, 0.6)';
-                c.fillText(obj.detected ? 'CONFIDENCE: 98.4%' : 'STATUS: CHECKING', 35, obj.y + 26);
-            });
+            // Mock bounding box detection
+            const active = sweepX > 180;
+            c.strokeStyle = active ? '#10B981' : 'rgba(255, 255, 255, 0.15)';
+            c.strokeRect(100, 30, 80, 50);
+            c.fillStyle = active ? '#10B981' : 'rgba(255, 255, 255, 0.3)';
+            c.font = '8px monospace';
+            c.fillText(active ? 'CAR DETECTED [98.2%]' : 'SCANNING FOR OBJECTS...', 105, 42);
         }
 
         function drawAnemia() {
             c.clearRect(0, 0, w, h);
-            const cx = w/2, cy = h/2, rx = 24, ry = 40;
-            c.beginPath();
-            c.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-            c.strokeStyle = 'rgba(167, 139, 250, 0.2)';
-            c.stroke();
+            c.strokeStyle = 'rgba(124, 58, 237, 0.05)';
+            c.lineWidth = 1;
+            for (let i = 0; i < h; i += 15) {
+                c.beginPath(); c.moveTo(0, i); c.lineTo(w, i); c.stroke();
+            }
 
-            const scanY = cy - ry + ((frame * 1.5) % (ry * 2));
+            // Medical scan line
+            const scanY = (frame * 1.5) % h;
             c.beginPath();
-            c.moveTo(cx - rx, scanY);
-            c.lineTo(cx + rx, scanY);
-            c.strokeStyle = 'rgba(167, 139, 250, 0.8)';
+            c.moveTo(0, scanY); c.lineTo(w, scanY);
+            c.strokeStyle = 'rgba(124, 58, 237, 0.6)';
             c.lineWidth = 1.5;
             c.stroke();
 
-            const completed = scanY > cy + 10;
+            // Heartbeat spikes in back
             c.beginPath();
-            c.ellipse(cx, cy, rx - 3, ry - 3, 0, 0, Math.PI * 2);
-            const grad = c.createRadialGradient(cx, cy + 15, 0, cx, cy + 15, rx);
-            grad.addColorStop(0, completed ? 'rgba(236, 72, 153, 0.5)' : 'rgba(56, 189, 248, 0.3)');
-            grad.addColorStop(1, 'transparent');
-            c.fillStyle = grad;
-            c.fill();
+            c.strokeStyle = 'rgba(124, 58, 237, 0.15)';
+            c.moveTo(0, h/2);
+            for (let i = 0; i < w; i++) {
+                let offset = 0;
+                if ((i + frame) % 100 < 10) {
+                    offset = Math.sin((i + frame) * 0.5) * 20;
+                }
+                c.lineTo(i, h/2 + offset);
+            }
+            c.stroke();
 
-            c.fillStyle = 'rgba(167, 139, 250, 0.6)';
+            c.fillStyle = 'rgba(124, 58, 237, 0.5)';
             c.font = '8px monospace';
-            c.fillText('EXPLAINABLE AI CLASSIFIER', 10, 16);
-            c.fillText(completed ? 'AUC: 0.98' : 'DIAGNOSING...', 10, 26);
+            c.fillText('GRAD-CAM NAIL BED SEGMENTATION LOOP', 15, 20);
         }
 
         const nodes = [
-            { x: w/2, y: 40, name: 'AWS' },
-            { x: 30, y: 120, name: 'LAMBDA' },
-            { x: w - 30, y: 120, name: 'S3' },
-            { x: w/2, y: 200, name: 'DB' },
-            { x: w/2, y: 260, name: 'RAG' }
+            { x: 50, y: 70 },
+            { x: 120, y: 40 },
+            { x: 120, y: 100 },
+            { x: 200, y: 70 },
+            { x: 280, y: 70 }
         ];
-        function drawLexcloud() {
+        function drawLexCloud() {
             c.clearRect(0, 0, w, h);
-            const links = [[0,1], [0,2], [1,3], [2,3], [3,4]];
-            links.forEach(([a,b]) => {
-                c.beginPath();
-                c.moveTo(nodes[a].x, nodes[a].y);
-                c.lineTo(nodes[b].x, nodes[b].y);
-                c.strokeStyle = 'rgba(99, 102, 241, 0.1)';
-                c.stroke();
+            // Draw link webs
+            c.strokeStyle = 'rgba(13, 148, 136, 0.15)';
+            c.lineWidth = 1;
+            c.beginPath();
+            c.moveTo(nodes[0].x, nodes[0].y);
+            c.lineTo(nodes[1].x, nodes[1].y);
+            c.lineTo(nodes[3].x, nodes[3].y);
+            c.moveTo(nodes[0].x, nodes[0].y);
+            c.lineTo(nodes[2].x, nodes[2].y);
+            c.lineTo(nodes[3].x, nodes[3].y);
+            c.lineTo(nodes[4].x, nodes[4].y);
+            c.stroke();
 
-                const pct = (frame * 0.01 + a * 0.25) % 1;
-                const px = nodes[a].x + (nodes[b].x - nodes[a].x) * pct;
-                const py = nodes[a].y + (nodes[b].y - nodes[a].y) * pct;
+            // Draw pulses
+            nodes.forEach((n, idx) => {
                 c.beginPath();
-                c.arc(px, py, 2.5, 0, Math.PI * 2);
-                c.fillStyle = '#6366F1';
+                c.arc(n.x, n.y, 6 + Math.sin(frame * 0.1 + idx) * 2, 0, Math.PI * 2);
+                c.fillStyle = 'rgba(13, 148, 136, 0.3)';
                 c.fill();
             });
-            nodes.forEach(n => {
-                c.beginPath();
-                c.arc(n.x, n.y, 10, 0, Math.PI * 2);
-                c.fillStyle = '#111827';
-                c.fill();
-                c.strokeStyle = 'rgba(99, 102, 241, 0.4)';
-                c.stroke();
-                c.fillStyle = 'rgba(167, 139, 250, 0.8)';
-                c.font = 'bold 5.5px monospace';
-                c.textAlign = 'center';
-                c.fillText(n.name, n.x, n.y + 2);
-                c.textAlign = 'left';
-            });
+
+            c.fillStyle = 'rgba(13, 148, 136, 0.6)';
+            c.font = '8px monospace';
+            c.fillText('RAG NODE RETRIEVAL PATHWAYS ACTIVE', 15, 20);
         }
 
         function drawSepsis() {
             c.clearRect(0, 0, w, h);
             c.beginPath();
-            c.strokeStyle = 'rgba(236, 72, 153, 0.6)';
-            c.lineWidth = 1.5;
-            
-            const midY = h / 2;
+            c.strokeStyle = 'var(--sukuna-crimson)';
+            c.lineWidth = 1.2;
+
+            const mid = h / 2;
             for (let x = 0; x < w; x++) {
-                const shift = (x + frame * 2.5) % w;
-                let y = midY;
-                const cycleX = shift % 60;
-                if (cycleX > 10 && cycleX < 14) y = midY - 15;
-                else if (cycleX >= 14 && cycleX < 17) y = midY + 22;
-                else if (cycleX >= 17 && cycleX < 20) y = midY - 6;
-                else y = midY + Math.sin(x * 0.08) * 0.5;
+                const shift = (x + frame * 3) % w;
+                let y = mid;
+                const cycle = shift % 80;
+                if (cycle > 12 && cycle < 18) y = mid - 25;
+                else if (cycle >= 18 && cycle < 24) y = mid + 30;
+                else if (cycle >= 24 && cycle < 28) y = mid - 8;
 
                 if (x === 0) c.moveTo(x, y); else c.lineTo(x, y);
             }
             c.stroke();
 
-            c.fillStyle = 'rgba(167, 139, 250, 0.6)';
+            c.fillStyle = 'rgba(153, 27, 27, 0.5)';
             c.font = '8px monospace';
-            c.fillText('ICU SEPSIS MONITOR', 10, 16);
-            c.fillText(`STABILITY: ${(92.5 + Math.sin(frame * 0.03) * 1.5).toFixed(1)}%`, 10, 26);
+            c.fillText('MIMIC-IV PATIENT VIABILITY STREAM', 15, 20);
         }
 
-        const simMap = { vpark: drawVpark, anemia: drawAnemia, lexcloud: drawLexcloud, sepsis: drawSepsis };
-        const runSim = simMap[sim];
-
-        function step() {
+        const runSim = { vpark: drawVPark, anemia: drawAnemia, lexcloud: drawLexCloud, sepsis: drawSepsis }[sim];
+        function loop() {
             frame++;
             if (runSim) runSim();
-            requestAnimationFrame(step);
+            requestAnimationFrame(loop);
         }
-        step();
+        loop();
     });
 
-
     /* ═══════════════════════════
-       9. STATS & TELEMETRY NUMERICAL COUNT UPS
+       8. INTERSECTION OBSERVERS: LAZY SCROLL ANIMATIONS
        ═══════════════════════════ */
-    function triggerAllCountUps() {
-        const observer = new IntersectionObserver(entries => {
+    function triggerAllObservers() {
+        // 1. General Scroll Reveal Nodes
+        const revealObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('revealed');
+                    
+                    // Fire global particle burst on new section enters
+                    burstNewParticles();
+                }
+            });
+        }, { threshold: 0.1 });
+        $$('.scroll-reveal-node').forEach(n => revealObserver.observe(n));
+
+        // 2. Headings Kanji wipe animations
+        const headingObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const sec = e.target;
+                    const watermark = sec.querySelector('.section-kanji-bg');
+                    const heading = sec.querySelector('.section-heading');
+
+                    const tl = gsap.timeline();
+                    if (watermark) {
+                        tl.fromTo(watermark, { opacity: 0, scale: 0.9 }, { opacity: 0.03, scale: 1, duration: 0.4 });
+                    }
+                    if (heading) {
+                        heading.style.clipPath = 'inset(0 100% 0 0)';
+                        tl.to(heading, { clipPath: 'inset(0 0% 0 0)', duration: 0.5, ease: 'power2.out' }, '-=0.2');
+                    }
+                    headingObserver.unobserve(sec);
+                }
+            });
+        }, { threshold: 0.1 });
+        $$('.sys-section').forEach(sec => headingObserver.observe(sec));
+
+        // 3. Stats and Telemetry Number Count-ups
+        const statObserver = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
                     const el = e.target;
                     if (el.dataset.counted) return;
                     el.dataset.counted = '1';
 
-                    const targetVal = +el.dataset.target;
+                    const target = +el.dataset.target;
                     const suffix = el.dataset.suffix || '';
-                    const duration = 1200;
-                    const startTime = performance.now();
-
-                    function updateCount(now) {
-                        const progress = Math.min((now - startTime) / duration, 1);
-                        const ease = 1 - Math.pow(1 - progress, 3);
-                        el.textContent = Math.round(ease * targetVal) + suffix;
-                        if (progress < 1) requestAnimationFrame(updateCount);
-                    }
-                    requestAnimationFrame(updateCount);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        $$('.hud-stat-num, .metric-val').forEach(n => observer.observe(n));
-    }
-
-
-    /* ═══════════════════════════
-       10. GLOBAL INTRINSIC SCROLL REVEALS
-       ═══════════════════════════ */
-    function initScrollReveals() {
-        const nodes = $$('.scroll-reveal-node');
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.classList.add('revealed');
+                    const start = { val: 0 };
                     
-                    // Trigger Location indicator header tag
-                    const sectionName = e.target.dataset.sectionName;
-                    const loc = $('#navLocation');
-                    if (loc && sectionName) {
-                        loc.textContent = `LOCATION: ${sectionName}`;
-                    }
+                    // Accelerate and sudden lock deceleration (JJK tech lock-in)
+                    gsap.to(start, {
+                        val: target,
+                        duration: 1.5,
+                        ease: 'power4.out',
+                        onUpdate: () => {
+                            el.textContent = Math.round(start.val) + suffix;
+                        }
+                    });
+                    statObserver.unobserve(el);
                 }
             });
         }, { threshold: 0.1 });
+        $$('.hud-stat-num, .m-val').forEach(n => statObserver.observe(n));
 
-        nodes.forEach(n => observer.observe(n));
+        // 4. Projects First-Entry Speed Lines trigger
+        let speedLinesTriggered = false;
+        const projectSec = $('#missions');
+        if (projectSec) {
+            const speedObserver = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting && !speedLinesTriggered) {
+                        speedLinesTriggered = true;
+                        triggerMangaSpeedLines();
+                        speedObserver.unobserve(projectSec);
+                    }
+                });
+            }, { threshold: 0.1 });
+            speedObserver.observe(projectSec);
+        }
     }
-    initScrollReveals();
-
 
     /* ═══════════════════════════
-       11. MOBILE HAMBURGER NAVIGATION DRAWER
+       9. 2D ANIME MOTION EFFECTS
        ═══════════════════════════ */
-    const menuBtn = $('#mobileMenuBtn');
-    const navLinks = $('#navLinks');
-    if (menuBtn && navLinks) {
-        menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('active');
-            navLinks.classList.toggle('active');
+    // Speed lines burst
+    function triggerMangaSpeedLines() {
+        const canvas = document.createElement('canvas');
+        canvas.style.position = 'fixed';
+        canvas.style.inset = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '800';
+        document.body.appendChild(canvas);
 
-            if (navLinks.classList.contains('active')) {
-                navLinks.style.display = 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'fixed';
-                navLinks.style.top = '60px';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.background = 'rgba(11, 15, 25, 0.98)';
-                navLinks.style.padding = '30px';
-                navLinks.style.gap = '16px';
-                navLinks.style.alignItems = 'center';
-                navLinks.style.borderBottom = '1px solid var(--gray-soft)';
-                
-                // Animate drawer links in
-                gsap.from(navLinks.children, {
-                    opacity: 0,
-                    y: -15,
-                    stagger: 0.08,
-                    duration: 0.4
-                });
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const count = 120;
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        const maxRadius = Math.max(window.innerWidth, window.innerHeight);
+
+        // All lines draw instantly
+        ctx.strokeStyle = 'rgba(248, 250, 252, 0.12)'; // --infinity-white
+        for (let i = 0; i < count; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            ctx.beginPath();
+            ctx.lineWidth = Math.random() * 1.5 + 0.5;
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(angle) * maxRadius, cy + Math.sin(angle) * maxRadius);
+            ctx.stroke();
+        }
+
+        // Fade out lines over 200ms
+        gsap.to(canvas, {
+            opacity: 0,
+            duration: 0.2,
+            onComplete: () => canvas.remove()
+        });
+    }
+
+    // Impact White Flash (CTA buttons)
+    function triggerImpactFlash() {
+        const flash = $('#domainFlash');
+        if (!flash) return;
+        gsap.timeline()
+            .to(flash, { opacity: 0.12, duration: 0.04 })
+            .to(flash, { opacity: 0, duration: 0.04 });
+    }
+
+    // Connect button click triggers
+    $$('.sys-btn, .mission-link, .timeline-link').forEach(btn => {
+        btn.addEventListener('click', triggerImpactFlash);
+    });
+
+    // Back to top expansion flash
+    const scrollTopBtn = $('#scrollTopBtn');
+    if (scrollTopBtn) {
+        scrollTopBtn.addEventListener('click', () => {
+            // Flash screen
+            triggerImpactFlash();
+            
+            // Core hexagonal visual flash at center screen
+            const burst = document.createElement('div');
+            burst.style.position = 'fixed';
+            burst.style.left = '50%';
+            burst.style.top = '50%';
+            burst.style.transform = 'translate(-50%, -50%) scale(0)';
+            burst.style.width = '100px';
+            burst.style.height = '100px';
+            burst.style.border = '2px solid var(--hollow-purple)';
+            burst.style.borderRadius = '50%';
+            burst.style.zIndex = '9999';
+            burst.style.pointerEvents = 'none';
+            document.body.appendChild(burst);
+
+            gsap.to(burst, {
+                scale: 12,
+                opacity: 0,
+                duration: 0.4,
+                ease: 'power3.out',
+                onComplete: () => burst.remove()
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    /* ═══════════════════════════
+       10. MOBILE NAVIGATION DRAWER
+       ═══════════════════════════ */
+    const mobileBtn = $('#mobileMenuBtn');
+    const overlayNav = $('#mobileNavOverlay');
+    if (mobileBtn && overlayNav) {
+        mobileBtn.addEventListener('click', () => {
+            mobileBtn.classList.toggle('active');
+            overlayNav.classList.toggle('active');
+            
+            const isOpen = overlayNav.classList.contains('active');
+            const lines = mobileBtn.querySelectorAll('.hamburger-line');
+            
+            if (isOpen) {
+                // transform lines to X
+                gsap.to(lines[0], { y: 6, rotation: 45, duration: 0.2 });
+                gsap.to(lines[1], { opacity: 0, duration: 0.1 });
+                gsap.to(lines[2], { y: -6, rotation: -45, duration: 0.2 });
+
+                // stagger animate mobile links in
+                gsap.fromTo('.mob-nav-item',
+                    { opacity: 0, y: -20 },
+                    { opacity: 1, y: 0, stagger: 0.08, duration: 0.3, ease: 'power2.out' }
+                );
             } else {
-                navLinks.style.display = '';
+                // transform back
+                gsap.to(lines[0], { y: 0, rotation: 0, duration: 0.2 });
+                gsap.to(lines[1], { opacity: 1, duration: 0.1 });
+                gsap.to(lines[2], { y: 0, rotation: 0, duration: 0.2 });
             }
         });
     }
 
-    // Close mobile drawer on clicking links
-    $$('.nav-item').forEach(item => {
+    // Close mobile overlay on drawer click link
+    $$('.mob-nav-item').forEach(item => {
         item.addEventListener('click', () => {
-            if (navLinks.classList.contains('active')) {
-                menuBtn.click();
+            if (overlayNav.classList.contains('active')) {
+                mobileBtn.click();
             }
         });
     });
 
-
     /* ═══════════════════════════
-       12. BACK-TO-TOP BUTTON
+       11. TIMELINE GRADIENT spine tracker
        ═══════════════════════════ */
-    const scrollTopBtn = $('#scrollTopBtn');
-    if (scrollTopBtn) {
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Ensure nodes stagger-in when scrolling
+    const timelineNodesObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const node = e.target.querySelector('.timeline-node');
+                const card = e.target.querySelector('.timeline-content-card');
+
+                if (node && card) {
+                    gsap.timeline()
+                        .fromTo(node, { scale: 0 }, { scale: 1.3, duration: 0.3, ease: 'back.out(1.5)' })
+                        .to(node, { scale: 1, duration: 0.1 })
+                        .fromTo(card,
+                            { opacity: 0, x: e.target.classList.contains('entry--left') ? -50 : 50 },
+                            { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' },
+                            '-=0.1'
+                        );
+                }
+                timelineNodesObserver.unobserve(e.target);
+            }
         });
-    }
+    }, { threshold: 0.15 });
+
+    $$('.timeline-entry').forEach(entry => timelineNodesObserver.observe(entry));
+
+    // Initialize loader
+    runSukunaEntrance();
 
 })();
