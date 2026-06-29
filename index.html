@@ -7,20 +7,30 @@
     <meta name="description" content="Portfolio of Afnaan Ahmed P — M.Tech Software Engineering, VIT Chennai.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Teko:wght@500;700&family=Rajdhani:wght@600;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@500;700&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script>
+        // HARD FAILSAFE: Ensure the page ALWAYS opens even if JS encounters a loading issue
+        setTimeout(function() {
+            var loader = document.getElementById('intro');
+            if (loader && !loader.classList.contains('hidden')) {
+                loader.classList.add('hidden');
+                setTimeout(function() { loader.style.display = 'none'; }, 1500);
+            }
+        }, 5500);
+    </script>
 </head>
 <body>
-    <!-- ═══ SYSTEM INTRO — Full screen animated sequence ═══ -->
+    <!-- ═══ SYSTEM BOOT INTRO ═══ -->
     <div class="intro" id="intro">
         <canvas id="introCanvas" class="intro__canvas"></canvas>
         <div class="intro__overlay">
             <div class="intro__glitch-lines"></div>
             <div class="intro__system-ui">
-                <div class="intro__line intro__line--1" id="iLine1"></div>
-                <div class="intro__line intro__line--2" id="iLine2"></div>
-                <div class="intro__line intro__line--3" id="iLine3"></div>
-                <div class="intro__line intro__line--4" id="iLine4"></div>
+                <div class="intro__line" id="iLine1"></div>
+                <div class="intro__line" id="iLine2"></div>
+                <div class="intro__line" id="iLine3"></div>
+                <div class="intro__line" id="iLine4"></div>
                 <div class="intro__arise" id="introArise">ARISE</div>
             </div>
         </div>
@@ -28,13 +38,20 @@
         <div class="intro__gate intro__gate--right"></div>
     </div>
 
-    <!-- Global effects canvas -->
+    <!-- Interactive Magic Circle Portal Behind Hero -->
+    <div class="portal-container">
+        <div class="magic-circle"></div>
+        <div class="magic-circle magic-circle--outer"></div>
+        <div class="magic-circle magic-circle--runes"></div>
+    </div>
+
+    <!-- Global Energy & Lightning Canvas -->
     <canvas id="globalCanvas" class="global-canvas"></canvas>
 
-    <!-- Scroll progress -->
+    <!-- Scroll Progress -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
-    <!-- Nav -->
+    <!-- ═══ NAVIGATION ═══ -->
     <nav class="nav" id="nav">
         <a href="#hero" class="nav__brand"><span class="nav__rank">S</span><span class="nav__name">AFNAAN</span></a>
         <div class="nav__links">
@@ -46,46 +63,58 @@
         </div>
     </nav>
 
-    <!-- ═══ HERO ═══ -->
+    <!-- ═══ HERO SECTION ═══ -->
     <section class="hero" id="hero">
         <canvas class="hero__canvas" id="heroCanvas"></canvas>
         <div class="hero__content">
-            <div class="sys-tag" id="sysTag"><span class="sys-tag__dot"></span><span id="sysGreeting">DEVELOPER DETECTED</span></div>
-            <!-- Name — particles form into letters -->
-            <div class="hero__name-wrap" id="heroNameWrap">
+            <div class="sys-tag"><span class="sys-tag__dot"></span><span id="sysGreeting">SYSTEM DETECTING...</span></div>
+            
+            <!-- Summoning Wrapper -->
+            <div class="hero__name-container">
                 <canvas id="nameCanvas" class="name-canvas"></canvas>
                 <h1 class="hero__name" id="heroName">
-                    <span class="sl-letter" data-char="A">A</span><span class="sl-letter" data-char="F">F</span><span class="sl-letter" data-char="N">N</span><span class="sl-letter" data-char="A">A</span><span class="sl-letter" data-char="A">A</span><span class="sl-letter" data-char="N">N</span>
+                    <span class="summon-letter" style="--d:0">A</span><span class="summon-letter" style="--d:1">F</span><span class="summon-letter" style="--d:2">N</span><span class="summon-letter" style="--d:3">A</span><span class="summon-letter" style="--d:4">A</span><span class="summon-letter" style="--d:5">N</span>
                     <br>
-                    <span class="sl-letter sl-letter--sub" data-char="A">A</span><span class="sl-letter sl-letter--sub" data-char="H">H</span><span class="sl-letter sl-letter--sub" data-char="M">M</span><span class="sl-letter sl-letter--sub" data-char="E">E</span><span class="sl-letter sl-letter--sub" data-char="D">D</span><span class="sl-letter sl-letter--sub sl-letter--space" data-char=" ">&nbsp;</span><span class="sl-letter sl-letter--sub" data-char="P">P</span>
+                    <span class="summon-letter summon-letter--sub" style="--d:6">A</span><span class="summon-letter summon-letter--sub" style="--d:7">H</span><span class="summon-letter summon-letter--sub" style="--d:8">M</span><span class="summon-letter summon-letter--sub" style="--d:9">E</span><span class="summon-letter summon-letter--sub" style="--d:10">D</span><span class="summon-letter summon-letter--sub summon-letter--space" style="--d:11">&nbsp;</span><span class="summon-letter summon-letter--sub" style="--d:12">P</span>
                 </h1>
             </div>
-            <div class="hero__rank-badge" id="heroBadge"><span class="rank-badge__label">RANK</span><span class="rank-badge__rank">S</span><span class="rank-badge__class">SOFTWARE ENGINEER</span></div>
-            <div class="hero__role-line" id="heroRoleLine"><span>I build </span><span class="hero__role" id="heroRole">intelligent systems</span><span class="hero__cursor">|</span></div>
-            <p class="hero__tagline" id="heroTagline">M.Tech Software Engineering · VIT Chennai · Class of 2027</p>
-            <div class="hero__cta" id="heroCta">
-                <a href="#projects" class="btn btn--primary"><span>VIEW PROJECTS</span></a>
-                <a href="#contact" class="btn btn--ghost"><span>CONTACT ME</span></a>
+
+            <div class="hero__rank-card">
+                <div class="rank-card__header">SYSTEM STATUS</div>
+                <div class="rank-card__body">
+                    <div class="rank-card__row"><span>HUNTER LEVEL:</span><span class="text-glow">S-RANK</span></div>
+                    <div class="rank-card__row"><span>DESIGNATION:</span><span>SOFTWARE ENGINEER</span></div>
+                </div>
+            </div>
+
+            <div class="hero__role-line"><span>I build </span><span class="hero__role" id="heroRole">intelligent systems</span><span class="hero__cursor">|</span></div>
+            
+            <div class="hero__cta">
+                <a href="#projects" class="btn btn--primary"><span>ENTER DUNGEON</span></a>
+                <a href="#contact" class="btn btn--ghost"><span>INITIATE CHAT</span></a>
             </div>
         </div>
-        <div class="hero__scroll-hint" id="heroScroll"><span>SCROLL TO EXPLORE</span><div class="hero__scroll-arrow"></div></div>
+        <div class="hero__scroll-hint"><span>SCROLL TO AWAKEN</span><div class="hero__scroll-arrow"></div></div>
     </section>
 
-    <!-- ═══ ABOUT ═══ -->
+    <!-- ═══ ABOUT SECTION ═══ -->
     <section id="about" class="section section-gate">
-        <div class="section__bg-text">ABOUT</div>
-        <div class="section__gate-line"></div>
+        <!-- Floating Foreground Title Overlay -->
+        <div class="section__overlay-text" id="aboutOverlayText">ABOUT</div>
         <div class="container">
             <div class="sys-window">
-                <div class="sys-window__header"><span class="sys-window__dot"></span><span class="sys-window__title">ABOUT ME</span><span class="sys-window__dot"></span></div>
+                <div class="sys-window__header">
+                    <span class="sys-window__dot"></span>
+                    <span class="sys-window__title">HUNTER PROFILE</span>
+                    <span class="sys-window__dot"></span>
+                </div>
                 <div class="sys-window__body">
                     <div class="about">
                         <div class="about__text">
-                            <h2 class="section__title scroll-reveal">I don't just write code.<br>I <span class="text-glow">architect systems</span>.</h2>
-                            <p class="about__desc scroll-reveal">I'm a pre-final year M.Tech Integrated student in Software Engineering at VIT Chennai. From real-time WebSocket servers streaming live inference data, to ML pipelines processing 43 clinical signals, to RAG-powered AI applications on AWS — I build things end-to-end and ship them.</p>
-                            <p class="about__desc scroll-reveal">My work sits at the intersection of <strong>software engineering</strong>, <strong>machine learning</strong>, and <strong>cloud infrastructure</strong>. I care about clean architecture, testable code, and systems that actually scale.</p>
-                            <p class="about__philosophy scroll-reveal">"The best code is the one that doesn't just work — it communicates intent."</p>
-                            <p class="about__exploring scroll-reveal">Currently exploring: <strong>Distributed Systems</strong> · <strong>MLOps</strong> · <strong>System Design</strong></p>
+                            <h2 class="section__title">I don't just write code. I <span class="text-glow">architect systems</span>.</h2>
+                            <p class="about__desc">I'm a pre-final year M.Tech Integrated student in Software Engineering at VIT Chennai. From real-time WebSocket servers streaming live inference data, to ML pipelines processing 43 clinical signals, to RAG-powered AI applications on AWS — I build things end-to-end and ship them.</p>
+                            <p class="about__desc">My work sits at the intersection of <strong>software engineering</strong>, <strong>machine learning</strong>, and <strong>cloud infrastructure</strong>. I care about clean architecture, testable code, and systems that scale.</p>
+                            <p class="about__philosophy">"The best code is the one that doesn't just work — it communicates intent."</p>
                         </div>
                         <div class="about__stats">
                             <div class="stat scroll-reveal"><span class="stat__number" data-target="4">0</span><span class="stat__label">Shipped Projects</span><div class="stat__bar"><div class="stat__fill" style="--w:80%"></div></div></div>
@@ -101,17 +130,17 @@
 
     <!-- Ticker -->
     <div class="ticker"><div class="ticker__track">
-        <span class="ticker__item">⚔ 4 Shipped Projects</span><span class="ticker__item">🛡 15+ Technologies</span><span class="ticker__item">📜 66 Subjects Cleared</span><span class="ticker__item">🏆 96% Best AUC</span><span class="ticker__item">☁ 5 AWS Services</span><span class="ticker__item">🔬 251 Patient Samples</span><span class="ticker__item">⚡ Sub-Second Latency</span><span class="ticker__item">☕ ∞ Coffee</span>
-        <span class="ticker__item">⚔ 4 Shipped Projects</span><span class="ticker__item">🛡 15+ Technologies</span><span class="ticker__item">📜 66 Subjects Cleared</span><span class="ticker__item">🏆 96% Best AUC</span><span class="ticker__item">☁ 5 AWS Services</span><span class="ticker__item">🔬 251 Patient Samples</span><span class="ticker__item">⚡ Sub-Second Latency</span><span class="ticker__item">☕ ∞ Coffee</span>
+        <span class="ticker__item">⚔ 4 Shipped Projects</span><span class="ticker__item">🛡 15+ Technologies</span><span class="ticker__item">📜 66 Subjects Cleared</span><span class="ticker__item">🏆 96% Best AUC</span><span class="ticker__item">☁ 5 AWS Services</span><span class="ticker__item">🔬 251 Patient Samples</span><span class="ticker__item">⚡ Sub-Second Latency</span>
+        <span class="ticker__item">⚔ 4 Shipped Projects</span><span class="ticker__item">🛡 15+ Technologies</span><span class="ticker__item">📜 66 Subjects Cleared</span><span class="ticker__item">🏆 96% Best AUC</span><span class="ticker__item">☁ 5 AWS Services</span><span class="ticker__item">🔬 251 Patient Samples</span><span class="ticker__item">⚡ Sub-Second Latency</span>
     </div></div>
 
-    <!-- ═══ SKILLS ═══ -->
+    <!-- ═══ SKILLS SECTION ═══ -->
     <section class="section section--alt section-gate" id="skills">
-        <div class="section__bg-text">SKILLS</div>
-        <div class="section__gate-line"></div>
+        <!-- Floating Foreground Title Overlay -->
+        <div class="section__overlay-text" id="skillsOverlayText">SKILLS</div>
         <div class="container">
-            <h2 class="section__title scroll-reveal">Technical <span class="text-glow">Skills</span></h2>
-            <p class="section__subtitle scroll-reveal">Tools and technologies I work with</p>
+            <h2 class="section__title">Technical <span class="text-glow">Arsenal</span></h2>
+            <p class="section__subtitle">Weapons and tools deployed in production</p>
         </div>
         <div class="marquee-wrapper">
             <div class="marquee-row scroll-reveal" data-direction="right"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML</span><span class="marquee-item mi--lang">CSS</span><span class="marquee-item mi--lang">JavaScript</span><span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML</span><span class="marquee-item mi--lang">CSS</span><span class="marquee-item mi--lang">JavaScript</span></div></div></div>
@@ -122,65 +151,112 @@
         </div>
     </section>
 
-    <!-- ═══ PROJECTS ═══ -->
+    <!-- ═══ PROJECTS SECTION ═══ -->
     <section class="section section-gate" id="projects">
-        <div class="section__bg-text">PROJECTS</div>
-        <div class="section__gate-line"></div>
+        <!-- Floating Foreground Title Overlay -->
+        <div class="section__overlay-text" id="projectsOverlayText">PROJECTS</div>
         <div class="container">
-            <h2 class="section__title scroll-reveal">Deployed <span class="text-glow">Systems</span></h2>
-            <p class="section__subtitle scroll-reveal">End-to-end projects I've built and shipped</p>
+            <h2 class="section__title">Active <span class="text-glow">Dungeons</span></h2>
+            <p class="section__subtitle">Production deployments and engineering records</p>
             <div class="quest-feed">
-                <article class="quest quest--featured scroll-reveal" data-project="vpark">
+                <!-- VPark -->
+                <article class="quest quest--featured" data-project="vpark">
                     <canvas class="quest__canvas" data-anim="vpark"></canvas>
-                    <div class="quest__rank-tag">⭐ FEATURED</div>
-                    <div class="quest__header"><span class="quest__num">PROJECT 01</span><span class="quest__status">✓ SHIPPED</span></div>
+                    <div class="quest__meta-header">
+                        <div class="quest__badge-group">
+                            <span class="quest__rank-badge">S-RANK</span>
+                            <span class="quest__feat-badge">⭐ FEATURED</span>
+                        </div>
+                        <span class="quest__status-badge">✓ ACTIVE</span>
+                    </div>
                     <h3 class="quest__name">ATCC VPark</h3>
-                    <p class="quest__type">AI + IoT Smart Parking with Live Web Dashboard</p>
+                    <p class="quest__type">AI + IoT Smart Parking System with Real-time Dashboard</p>
                     <p class="quest__desc">Real-time vehicle detection using mobile camera and YOLOv8 to count cars/bikes. Sends signal to Arduino to actuate servo gate within 1 second. Live dashboard refreshes every 2 seconds via FastAPI REST/WebSocket endpoints.</p>
                     <div class="quest__tags"><span>Python</span><span>YOLOv8</span><span>Arduino Nano</span><span>FastAPI</span><span>WebSocket</span><span>JavaScript</span><span>PySerial</span></div>
-                    <div class="quest__rewards"><div class="reward"><span class="reward__val">&lt;1s</span><span class="reward__label">Gate Actuation</span></div><div class="reward"><span class="reward__val">Real-time</span><span class="reward__label">Dashboard</span></div><div class="reward"><span class="reward__val">Full Stack</span><span class="reward__label">HW + SW</span></div></div>
-                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a><span class="quest__year">Apr 2026</span>
+                    <div class="quest__rewards">
+                        <div class="reward"><span class="reward__val">&lt;1s</span><span class="reward__label">Gate Actuation</span></div>
+                        <div class="reward"><span class="reward__val">Real-time</span><span class="reward__label">Dashboard</span></div>
+                        <div class="reward"><span class="reward__val">Full Stack</span><span class="reward__label">HW + SW</span></div>
+                    </div>
+                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">Explore Codebase →</a>
+                    <span class="quest__year">2026</span>
                 </article>
-                <article class="quest scroll-reveal" data-project="anemia">
+
+                <!-- Anemia -->
+                <article class="quest" data-project="anemia">
                     <canvas class="quest__canvas" data-anim="anemia"></canvas>
-                    <div class="quest__header"><span class="quest__num">PROJECT 02</span><span class="quest__status">✓ SHIPPED</span></div>
+                    <div class="quest__meta-header">
+                        <div class="quest__badge-group">
+                            <span class="quest__rank-badge quest__rank-badge--a">A-RANK</span>
+                        </div>
+                        <span class="quest__status-badge">✓ ACTIVE</span>
+                    </div>
                     <h3 class="quest__name">Non-Invasive Anemia Detection</h3>
                     <p class="quest__type">AI System from Fingernail Photos</p>
                     <p class="quest__desc">Two-step AI analyzing fingernail photos. Nail detection (93.5%) then classification (96% accuracy, 0.98 AUC). Validated on 251 patients. Grad-CAM explainability.</p>
                     <div class="quest__tags"><span>Python</span><span>PyTorch</span><span>YOLOv8</span><span>OpenCV</span><span>CNN</span><span>Grad-CAM</span></div>
-                    <div class="quest__rewards"><div class="reward"><span class="reward__val">96%</span><span class="reward__label">Accuracy</span></div><div class="reward"><span class="reward__val">0.98</span><span class="reward__label">AUC</span></div><div class="reward"><span class="reward__val">251</span><span class="reward__label">Patients</span></div></div>
-                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a><span class="quest__year">2025</span>
+                    <div class="quest__rewards">
+                        <div class="reward"><span class="reward__val">96%</span><span class="reward__label">Accuracy</span></div>
+                        <div class="reward"><span class="reward__val">0.98</span><span class="reward__label">AUC</span></div>
+                        <div class="reward"><span class="reward__val">251</span><span class="reward__label">Patients</span></div>
+                    </div>
+                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">Explore Codebase →</a>
+                    <span class="quest__year">2025</span>
                 </article>
-                <article class="quest scroll-reveal" data-project="lexcloud">
+
+                <!-- LexCloud -->
+                <article class="quest" data-project="lexcloud">
                     <canvas class="quest__canvas" data-anim="lexcloud"></canvas>
-                    <div class="quest__header"><span class="quest__num">PROJECT 03</span><span class="quest__status">✓ SHIPPED</span></div>
+                    <div class="quest__meta-header">
+                        <div class="quest__badge-group">
+                            <span class="quest__rank-badge quest__rank-badge--a">A-RANK</span>
+                        </div>
+                        <span class="quest__status-badge">✓ ACTIVE</span>
+                    </div>
                     <h3 class="quest__name">LexCloud</h3>
                     <p class="quest__type">Cloud-Native API + AI Integration</p>
                     <p class="quest__desc">Serverless REST API on AWS — DynamoDB + S3 storage. LLaMA-3 + ChromaDB RAG pipeline for intelligent document retrieval. Clean OOP, pytest, CI-ready.</p>
-                    <div class="quest__tags"><span>Python</span><span>FastAPI</span><span>AWS Lambda</span><span>S3</span><span>DynamoDB</span><span>LLaMA-3</span><span>RAG</span><span>ChromaDB</span><span>pytest</span></div>
-                    <div class="quest__rewards"><div class="reward"><span class="reward__val">5</span><span class="reward__label">AWS Services</span></div><div class="reward"><span class="reward__val">RAG</span><span class="reward__label">Pipeline</span></div><div class="reward"><span class="reward__val">100%</span><span class="reward__label">Serverless</span></div></div>
-                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a><span class="quest__year">2024</span>
+                    <div class="quest__tags"><span>Python</span><span>FastAPI</span><span>AWS Lambda</span><span>S3</span><span>DynamoDB</span><span>LLaMA-3</span><span>RAG</span><span>ChromaDB</span></div>
+                    <div class="quest__rewards">
+                        <div class="reward"><span class="reward__val">5</span><span class="reward__label">AWS Services</span></div>
+                        <div class="reward"><span class="reward__val">RAG</span><span class="reward__label">Pipeline</span></div>
+                        <div class="reward"><span class="reward__val">100%</span><span class="reward__label">Serverless</span></div>
+                    </div>
+                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">Explore Codebase →</a>
+                    <span class="quest__year">2024</span>
                 </article>
-                <article class="quest scroll-reveal" data-project="sepsis">
+
+                <!-- Sepsis ICU -->
+                <article class="quest" data-project="sepsis">
                     <canvas class="quest__canvas" data-anim="sepsis"></canvas>
-                    <div class="quest__header"><span class="quest__num">PROJECT 04</span><span class="quest__status">✓ SHIPPED</span></div>
+                    <div class="quest__meta-header">
+                        <div class="quest__badge-group">
+                            <span class="quest__rank-badge">S-RANK</span>
+                        </div>
+                        <span class="quest__status-badge">✓ ACTIVE</span>
+                    </div>
                     <h3 class="quest__name">Predicting ICU Patient Mortality</h3>
                     <p class="quest__type">Machine Learning on Clinical Data</p>
                     <p class="quest__desc">ML model for sepsis survival prediction (MIMIC-IV). 172 features from 43 measurements. XGBoost 0.96 AUC-ROC, outperforming 4 published models. SHAP explainability.</p>
                     <div class="quest__tags"><span>Python</span><span>XGBoost</span><span>SHAP</span><span>Scikit-learn</span><span>Pandas</span><span>NumPy</span><span>EDA</span></div>
-                    <div class="quest__rewards"><div class="reward"><span class="reward__val">0.96</span><span class="reward__label">AUC-ROC</span></div><div class="reward"><span class="reward__val">172</span><span class="reward__label">Features</span></div><div class="reward"><span class="reward__val">+16%</span><span class="reward__label">vs Baselines</span></div></div>
-                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a><span class="quest__year">2026</span>
+                    <div class="quest__rewards">
+                        <div class="reward"><span class="reward__val">0.96</span><span class="reward__label">AUC-ROC</span></div>
+                        <div class="reward"><span class="reward__val">172</span><span class="reward__label">Features</span></div>
+                        <div class="reward"><span class="reward__val">+16%</span><span class="reward__label">vs Baselines</span></div>
+                    </div>
+                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">Explore Codebase →</a>
+                    <span class="quest__year">2026</span>
                 </article>
             </div>
         </div>
     </section>
 
-    <!-- ═══ EXPERIENCE ═══ -->
+    <!-- ═══ EXPERIENCE SECTION ═══ -->
     <section class="section section--alt section-gate" id="experience">
-        <div class="section__bg-text">EXPERIENCE</div>
-        <div class="section__gate-line"></div>
+        <!-- Floating Foreground Title Overlay -->
+        <div class="section__overlay-text" id="experienceOverlayText">RECORDS</div>
         <div class="container">
-            <h2 class="section__title scroll-reveal">Work <span class="text-glow">Experience</span></h2>
+            <h2 class="section__title">Hunter <span class="text-glow">Logs</span></h2>
             <div class="timeline"><div class="timeline__line"></div>
                 <div class="timeline__item scroll-reveal"><div class="timeline__dot"></div><div class="timeline__card"><div class="timeline__head"><h3>Research Intern — Smart Healthcare</h3><span class="timeline__date">May – Aug 2025</span></div><p class="timeline__org">CHAIR, VIT Chennai</p><p class="timeline__desc">Led independent DL research. 4,260 images, PyTorch CNN. 96% accuracy & AUC 0.98.</p><a href="https://vitchennaievents.com/certificates/generate.php?c=VDJPc09rRXRJbDgoSUJrK1Fqc2xnVXFWQWcybS9ZT01KOGcyV3ZPSmNORGFjM2Zuakxaall1bVVoME00ZHFxUllhQmh5S1dLbjZqcVpxSXVIMDhXQjZVS3g1UUxkeENkRml1RmVmTXZqVUJSdWtXMGVoWXNTUEpSc0VSZVdSNUF2ejBqYVk0ajE4Zm82Wmxkbm9HaCt6MW9GS0ZFS1AyOVBwVlltQTJtTEdRPQ==" target="_blank" class="timeline__cert">📄 View Certificate</a></div></div>
                 <div class="timeline__item scroll-reveal"><div class="timeline__dot"></div><div class="timeline__card"><div class="timeline__head"><h3>Python Training Intern</h3><span class="timeline__date">Jun – Jul 2024</span></div><p class="timeline__org">Colan Infotech Pvt Ltd (On-site)</p><p class="timeline__desc">SDLC practices, code reviews, Git, agile norms. Outstanding (S) grade.</p></div></div>
@@ -190,7 +266,7 @@
                 <div class="timeline__item scroll-reveal"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__card"><div class="timeline__head"><h3>M.Tech Integrated — Software Engineering</h3><span class="timeline__date">2022 – 2027</span></div><p class="timeline__org">VIT Chennai · CGPA: 7.92</p></div></div>
                 <div class="timeline__item scroll-reveal"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__card"><div class="timeline__head"><h3>Class XII — PCBM · 85.20%</h3><span class="timeline__date">2021</span></div><p class="timeline__org">Mazharul Uloom HSS, Ambur</p></div></div>
             </div>
-            <h3 class="section__label scroll-reveal">Leadership</h3>
+            <h3 class="section__label scroll-reveal">Guild Achievements</h3>
             <div class="guild-row">
                 <div class="guild-card scroll-reveal"><span class="guild-card__icon">🛡️</span><h4 class="guild-card__title">Cybersecurity Division</h4><p class="guild-card__org">Microsoft Innovations Club</p><p class="guild-card__detail">CTF · 500+ participants</p></div>
                 <div class="guild-card scroll-reveal"><span class="guild-card__icon">🥽</span><h4 class="guild-card__title">Marketing Lead</h4><p class="guild-card__org">AR/VR Club</p><p class="guild-card__detail">30% registration growth</p></div>
@@ -199,15 +275,15 @@
         </div>
     </section>
 
-    <!-- ═══ CONTACT ═══ -->
+    <!-- ═══ CONTACT SECTION ═══ -->
     <section class="section section-gate" id="contact">
-        <div class="section__bg-text">CONTACT</div>
-        <div class="section__gate-line"></div>
+        <!-- Floating Foreground Title Overlay -->
+        <div class="section__overlay-text" id="contactOverlayText">CONTACT</div>
         <div class="container">
             <div class="sys-window">
-                <div class="sys-window__header"><span class="sys-window__dot"></span><span class="sys-window__title">GET IN TOUCH</span><span class="sys-window__dot"></span></div>
+                <div class="sys-window__header"><span class="sys-window__dot"></span><span class="sys-window__title">ESTABLISH LINK</span><span class="sys-window__dot"></span></div>
                 <div class="sys-window__body">
-                    <h2 class="contact__title scroll-reveal">Let's build something<br><span class="text-glow">extraordinary.</span></h2>
+                    <h2 class="contact__title scroll-reveal">Ready to build something <span class="text-glow">extraordinary?</span></h2>
                     <div class="contact__links">
                         <a href="mailto:Afnaanahmed.k391@gmail.com" class="contact__item scroll-reveal"><span class="contact__icon">✉</span><span class="contact__text">Afnaanahmed.k391@gmail.com</span></a>
                         <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" class="contact__item scroll-reveal"><span class="contact__icon">in</span><span class="contact__text">linkedin.com/in/afnaan22mis1157</span></a>
