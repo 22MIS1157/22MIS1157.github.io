@@ -283,6 +283,8 @@
                 // Step 5: Screen Wipes dissolution
                 .to(loader, {
                     clipPath: 'circle(0% at 50% 50%)',
+                    opacity: 0,
+                    yPercent: -100,
                     duration: 0.85,
                     ease: 'power4.inOut'
                 });
@@ -323,7 +325,7 @@
                     observer.unobserve(triggerSec);
                 }
             });
-        }, { threshold: 0.25 });
+        }, { threshold: 0.05 });
 
         observer.observe(triggerSec);
     }
@@ -633,7 +635,7 @@
                     requestAnimationFrame(updateCount);
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.1 });
 
         $$('.hud-stat-num, .metric-val').forEach(n => observer.observe(n));
     }
@@ -657,7 +659,7 @@
                     }
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
 
         nodes.forEach(n => observer.observe(n));
     }
