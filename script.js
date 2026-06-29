@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════
    SOLO LEVELING PORTFOLIO — ADVANCED ANIMATION ENGINE
-   Malevolent Shrine Slash Engine, Live Location HUD Tracker,
-   Upgraded Skills Telemetry, Custom Canvas Simulators
+   Kinetic Name Engine, Skills Interactive Constellation Web,
+   Live Telemetry HUD, Dynamic Canvas Simulators
    ═══════════════════════════════════════════════════ */
 
 (function () {
@@ -10,187 +10,282 @@
     const $$ = s => document.querySelectorAll(s);
 
     /* ═══════════════════════════
-       1. HERO NAME SUMMONING & MALEVOLENT SHRINE SLASHES
+       1. HERO KINETIC NAME & PORTAL ATMOSPHERE
     ═══════════════════════════ */
     const nameCanvas = $('#nameCanvas');
     let nameCtx = null;
     let nameParticles = [];
-    let nameSummonActive = false;
-    let letterTargets = [];
+    let nameScanY = 0;
+    let nameShockwave = {
+        active: true,
+        x: 400,
+        y: 120,
+        radius: 10,
+        maxRadius: 400,
+        opacity: 1
+    };
 
-    function triggerNameSummon() {
-        const nameWrapper = $('#heroNameWrap');
-        if (nameWrapper) {
-            nameWrapper.classList.add('shrine-active');
-            triggerSlashDischarge();
-        }
-
+    function initNameCanvas() {
         if (!nameCanvas) return;
         nameCtx = nameCanvas.getContext('2d');
         
-        nameCanvas.width = nameCanvas.offsetWidth || 800;
-        nameCanvas.height = nameCanvas.offsetHeight || 240;
+        const resize = () => {
+            nameCanvas.width = nameCanvas.offsetWidth || 800;
+            nameCanvas.height = nameCanvas.offsetHeight || 240;
+            nameShockwave.x = nameCanvas.width / 2;
+            nameShockwave.y = nameCanvas.height / 2;
+        };
+        resize();
+        window.addEventListener('resize', resize);
 
-        const chars = $$('.sl-char');
-        if (chars.length > 0 && nameWrapper) {
-            const wrapRect = nameWrapper.getBoundingClientRect();
-            letterTargets = Array.from(chars).map(el => {
-                const rect = el.getBoundingClientRect();
-                return {
-                    element: el,
-                    x: (rect.left + rect.width / 2) - wrapRect.left,
-                    y: (rect.top + rect.height / 2) - wrapRect.top
-                };
-            });
-        }
-
-        const pCount = 180;
-        for (let i = 0; i < pCount; i++) {
-            const tIdx = letterTargets.length > 0 ? i % letterTargets.length : 0;
-            const target = letterTargets[tIdx] || { x: nameCanvas.width/2, y: nameCanvas.height/2 };
-            
+        for (let i = 0; i < 50; i++) {
             nameParticles.push({
-                x: nameCanvas.width / 2 + (Math.random() - 0.5) * 80,
-                y: nameCanvas.height / 2 + (Math.random() - 0.5) * 50,
-                tx: target.x,
-                ty: target.y,
-                size: Math.random() * 2.8 + 1.2,
-                vx: (Math.random() - 0.5) * 16,
-                vy: (Math.random() - 0.5) * 12 - 4,
-                color: `hsla(${195 + Math.random() * 45}, 95%, ${65 + Math.random() * 20}%, `,
-                life: Math.random() * 50 + 30,
+                x: Math.random() * nameCanvas.width,
+                y: nameCanvas.height / 2 + (Math.random() - 0.5) * 60,
+                vy: -Math.random() * 0.7 - 0.3,
+                vx: (Math.random() - 0.5) * 0.4,
+                size: Math.random() * 2 + 1.2,
+                color: `hsla(${190 + Math.random() * 40}, 90%, 75%, `,
+                life: Math.random() * 50 + 20,
                 age: 0
             });
         }
+        
+        nameShockwave.active = true;
+        nameShockwave.radius = 10;
+        nameShockwave.opacity = 1;
 
-        nameSummonActive = true;
-        animateNameSummon();
+        animateNameEffects();
     }
 
-    function animateNameSummon() {
-        if (!nameSummonActive || !nameCtx) return;
-        nameCtx.clearRect(0, 0, nameCanvas.width, nameCanvas.height);
-        let completed = true;
-
-        nameParticles.forEach(p => {
-            p.age++;
-            if (p.age < 20) {
-                p.x += p.vx; p.y += p.vy;
-                p.vx *= 0.93; p.vy *= 0.93;
-                completed = false;
-            } else {
-                const dx = p.tx - p.x;
-                const dy = p.ty - p.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist > 2) {
-                    p.x += dx * 0.16;
-                    p.y += dy * 0.16;
-                    completed = false;
-                } else {
-                    p.x = p.tx; p.y = p.ty;
-                }
-            }
-
-            const alpha = Math.max(0, 1 - p.age / 90);
-            nameCtx.beginPath();
-            nameCtx.arc(p.x, p.y, p.size * (1 + alpha), 0, Math.PI * 2);
-            nameCtx.fillStyle = p.color + alpha + ')';
-            nameCtx.fill();
-        });
-
-        if (!completed) {
-            requestAnimationFrame(animateNameSummon);
-        } else {
-            animateAmbientNameFlames();
-        }
-    }
-
-    function animateAmbientNameFlames() {
+    function animateNameEffects() {
         if (!nameCtx) return;
         nameCtx.clearRect(0, 0, nameCanvas.width, nameCanvas.height);
 
-        if (Math.random() < 0.4 && nameParticles.length < 70) {
-            const target = letterTargets.length > 0 ? letterTargets[Math.floor(Math.random() * letterTargets.length)] : { x: nameCanvas.width/2, y: nameCanvas.height/2 };
+        // Draw grid lines
+        nameCtx.strokeStyle = 'rgba(0, 212, 255, 0.03)';
+        nameCtx.lineWidth = 1;
+        for (let x = 0; x < nameCanvas.width; x += 30) {
+            nameCtx.beginPath();
+            nameCtx.moveTo(x, 0);
+            nameCtx.lineTo(x, nameCanvas.height);
+            nameCtx.stroke();
+        }
+
+        // Draw shockwave
+        if (nameShockwave.active) {
+            nameShockwave.radius += 6;
+            nameShockwave.opacity -= 0.015;
+            if (nameShockwave.opacity <= 0) {
+                nameShockwave.active = false;
+            } else {
+                nameCtx.beginPath();
+                nameCtx.arc(nameShockwave.x, nameShockwave.y, nameShockwave.radius, 0, Math.PI * 2);
+                nameCtx.strokeStyle = `rgba(0, 212, 255, ${nameShockwave.opacity})`;
+                nameCtx.lineWidth = 2.5;
+                nameCtx.shadowColor = '#00d4ff';
+                nameCtx.shadowBlur = 15;
+                nameCtx.stroke();
+                nameCtx.shadowBlur = 0;
+            }
+        }
+
+        // Draw scanline
+        nameScanY = (nameScanY + 1.5) % nameCanvas.height;
+        nameCtx.beginPath();
+        nameCtx.moveTo(0, nameScanY);
+        nameCtx.lineTo(nameCanvas.width, nameScanY);
+        nameCtx.strokeStyle = 'rgba(0, 212, 255, 0.2)';
+        nameCtx.lineWidth = 1.5;
+        nameCtx.stroke();
+
+        if (Math.random() < 0.005 && !nameShockwave.active) {
+            nameShockwave.active = true;
+            nameShockwave.radius = 10;
+            nameShockwave.opacity = 1;
+        }
+
+        if (Math.random() < 0.4 && nameParticles.length < 75) {
             nameParticles.push({
-                x: target.x + (Math.random() - 0.5) * 26,
-                y: target.y + 14,
-                vy: -Math.random() * 0.8 - 0.4,
-                vx: (Math.random() - 0.5) * 0.3,
+                x: Math.random() * nameCanvas.width,
+                y: nameCanvas.height / 2 + (Math.random() - 0.5) * 50,
+                vy: -Math.random() * 0.8 - 0.3,
+                vx: (Math.random() - 0.5) * 0.4,
                 size: Math.random() * 2 + 1,
-                color: `hsla(${200 + Math.random() * 40}, 90%, 75%, `,
-                life: Math.random() * 30 + 15,
-                age: 0,
-                ambient: true
+                color: `hsla(${190 + Math.random() * 45}, 90%, 75%, `,
+                life: Math.random() * 40 + 20,
+                age: 0
             });
         }
 
         nameParticles = nameParticles.filter(p => {
-            if (p.ambient) {
-                p.x += p.vx; p.y += p.vy; p.age++;
-                if (p.age > p.life) return false;
-                const alpha = 1 - p.age / p.life;
-                nameCtx.beginPath();
-                nameCtx.arc(p.x, p.y, p.size * alpha, 0, Math.PI * 2);
-                nameCtx.fillStyle = p.color + (alpha * 0.45) + ')';
-                nameCtx.fill();
-                return true;
-            }
-            return false;
-        });
-
-        requestAnimationFrame(animateAmbientNameFlames);
-    }
-
-
-    /* ═══════════════════════════
-       2. SLASH CANVAS DISCHARGE (MALEVOLENT SHRINE SPARKS)
-    ═══════════════════════════ */
-    const slashCanvas = $('#slashCanvas');
-    let slashCtx = null;
-    let sparkParticles = [];
-
-    function triggerSlashDischarge() {
-        if (!slashCanvas) return;
-        slashCtx = slashCanvas.getContext('2d');
-        slashCanvas.width = window.innerWidth;
-        slashCanvas.height = window.innerHeight;
-
-        for (let i = 0; i < 60; i++) {
-            sparkParticles.push({
-                x: window.innerWidth / 2 + (Math.random() - 0.5) * 300,
-                y: window.innerHeight / 3 + (Math.random() - 0.5) * 150,
-                vx: (Math.random() - 0.5) * 25,
-                vy: (Math.random() - 0.5) * 25,
-                color: Math.random() > 0.5 ? '#ff0055' : '#00d4ff',
-                size: Math.random() * 3 + 1,
-                life: Math.random() * 25 + 10,
-                age: 0
-            });
-        }
-        animateSparks();
-    }
-
-    function animateSparks() {
-        if (!slashCtx || sparkParticles.length === 0) return;
-        slashCtx.clearRect(0, 0, slashCanvas.width, slashCanvas.height);
-
-        sparkParticles = sparkParticles.filter(p => {
             p.x += p.vx; p.y += p.vy; p.age++;
             if (p.age > p.life) return false;
             const alpha = 1 - p.age / p.life;
-            slashCtx.beginPath();
-            slashCtx.arc(p.x, p.y, p.size * alpha, 0, Math.PI * 2);
-            slashCtx.fillStyle = p.color;
-            slashCtx.shadowColor = p.color;
-            slashCtx.shadowBlur = 10;
-            slashCtx.fill();
-            slashCtx.shadowBlur = 0;
+            nameCtx.beginPath();
+            nameCtx.arc(p.x, p.y, p.size * alpha, 0, Math.PI * 2);
+            nameCtx.fillStyle = p.color + (alpha * 0.45) + ')';
+            nameCtx.fill();
             return true;
         });
 
-        if (sparkParticles.length > 0) {
-            requestAnimationFrame(animateSparks);
+        requestAnimationFrame(animateNameEffects);
+    }
+    initNameCanvas();
+
+
+    /* ═══════════════════════════
+       2. REVOLUTIONARY SKILLS TELEMETRY HUD & CONSTELLATION WEB
+    ═══════════════════════════ */
+    const telemetryName = $('#telemetryName');
+    const telemetryVal = $('#telemetryVal');
+    const telemetryFill = $('#telemetryFill');
+
+    $$('.hex-node').forEach(node => {
+        node.addEventListener('mouseenter', () => {
+            const skill = node.dataset.skill;
+            const level = node.dataset.level;
+            if (telemetryName) telemetryName.textContent = skill.toUpperCase();
+            if (telemetryVal) telemetryVal.textContent = level;
+            if (telemetryFill) telemetryFill.style.width = level;
+        });
+    });
+
+    // Skills Constellation Web Canvas Lines
+    const webCanvas = $('#skillsWebCanvas');
+    if (webCanvas) {
+        const wCtx = webCanvas.getContext('2d');
+        let coreNode = null;
+        let clusterHeaders = [];
+        let energyPackets = [];
+
+        function resizeWeb() {
+            webCanvas.width = webCanvas.parentElement.offsetWidth;
+            webCanvas.height = webCanvas.parentElement.offsetHeight;
+            initWebNodes();
         }
+
+        function initWebNodes() {
+            clusterHeaders = [];
+            const container = $('.skill-constellation-container');
+            if (!container) return;
+            const parentRect = container.getBoundingClientRect();
+
+            const coreEl = $('.skill-core-center');
+            if (coreEl) {
+                const rect = coreEl.getBoundingClientRect();
+                coreNode = {
+                    x: (rect.left + rect.width / 2) - parentRect.left,
+                    y: (rect.top + rect.height / 2) - parentRect.top
+                };
+            }
+
+            $$('.skill-group-cluster').forEach(cluster => {
+                const headerEl = cluster.querySelector('.cluster-title');
+                let hNode = null;
+                if (headerEl) {
+                    const rect = headerEl.getBoundingClientRect();
+                    hNode = {
+                        x: (rect.left + rect.width / 2) - parentRect.left,
+                        y: (rect.top + rect.height / 2) - parentRect.top,
+                        skills: []
+                    };
+                    clusterHeaders.push(hNode);
+                }
+
+                cluster.querySelectorAll('.hex-node').forEach(hex => {
+                    const rect = hex.getBoundingClientRect();
+                    const sNode = {
+                        x: (rect.left + rect.width / 2) - parentRect.left,
+                        y: (rect.top + rect.height / 2) - parentRect.top
+                    };
+                    if (hNode) hNode.skills.push(sNode);
+                });
+            });
+        }
+
+        setTimeout(resizeWeb, 250);
+        window.addEventListener('resize', resizeWeb);
+
+        function updateEnergyPackets() {
+            if (Math.random() < 0.04 && coreNode && clusterHeaders.length > 0) {
+                const targetHeader = clusterHeaders[Math.floor(Math.random() * clusterHeaders.length)];
+                energyPackets.push({
+                    x: coreNode.x,
+                    y: coreNode.y,
+                    tx: targetHeader.x,
+                    ty: targetHeader.y,
+                    speed: 2 + Math.random() * 2,
+                    progress: 0,
+                    type: 'core-to-cluster',
+                    targetHeader: targetHeader
+                });
+            }
+
+            energyPackets = energyPackets.filter(p => {
+                p.progress += 0.015 * p.speed;
+                if (p.progress >= 1) {
+                    if (p.type === 'core-to-cluster') {
+                        p.targetHeader.skills.forEach(skill => {
+                            energyPackets.push({
+                                x: p.targetHeader.x,
+                                y: p.targetHeader.y,
+                                tx: skill.x,
+                                ty: skill.y,
+                                speed: 1.5 + Math.random() * 1.5,
+                                progress: 0,
+                                type: 'cluster-to-skill'
+                            });
+                        });
+                    }
+                    return false;
+                }
+                p.cx = p.x + (p.tx - p.x) * p.progress;
+                p.cy = p.y + (p.ty - p.y) * p.progress;
+                return true;
+            });
+        }
+
+        function drawWebLines() {
+            if (!wCtx) return;
+            wCtx.clearRect(0, 0, webCanvas.width, webCanvas.height);
+
+            if (coreNode) {
+                clusterHeaders.forEach(ch => {
+                    wCtx.beginPath();
+                    wCtx.moveTo(coreNode.x, coreNode.y);
+                    wCtx.lineTo(ch.x, ch.y);
+                    wCtx.strokeStyle = 'rgba(0, 212, 255, 0.18)';
+                    wCtx.lineWidth = 1.5;
+                    wCtx.stroke();
+                });
+            }
+
+            clusterHeaders.forEach(ch => {
+                ch.skills.forEach(sn => {
+                    wCtx.beginPath();
+                    wCtx.moveTo(ch.x, ch.y);
+                    wCtx.lineTo(sn.x, sn.y);
+                    wCtx.strokeStyle = 'rgba(0, 212, 255, 0.08)';
+                    wCtx.lineWidth = 1;
+                    wCtx.stroke();
+                });
+            });
+
+            updateEnergyPackets();
+            energyPackets.forEach(p => {
+                wCtx.beginPath();
+                wCtx.arc(p.cx, p.cy, 3, 0, Math.PI * 2);
+                wCtx.fillStyle = '#00d4ff';
+                wCtx.shadowColor = '#00d4ff';
+                wCtx.shadowBlur = 8;
+                wCtx.fill();
+                wCtx.shadowBlur = 0;
+            });
+
+            requestAnimationFrame(drawWebLines);
+        }
+        setTimeout(drawWebLines, 400);
     }
 
 
@@ -482,15 +577,11 @@
                     const fill = e.target.querySelector('.stat-progress-fill');
                     if (fill) fill.style.width = fill.style.getPropertyValue('--w');
                 }
-                if (e.target.classList.contains('domain-card')) {
-                    const fills = e.querySelectorAll('.skill-meter-fill');
-                    fills.forEach(f => f.style.width = f.style.getPropertyValue('--w'));
-                }
             }
         });
     }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
 
-    $$('.scroll-reveal-node, .domain-card').forEach(el => revealObserver.observe(el));
+    $$('.scroll-reveal-node').forEach(el => revealObserver.observe(el));
 
 
     /* ═══════════════════════════
@@ -575,8 +666,5 @@
             ticking = true;
         }
     });
-
-    // Instant name summoning execution on load
-    triggerNameSummon();
 
 })();
