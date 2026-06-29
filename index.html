@@ -11,27 +11,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- LOADER — Dungeon Gate -->
-    <div class="loader" id="loader">
-        <div class="loader__gate loader__gate--left"></div>
-        <div class="loader__gate loader__gate--right"></div>
-        <div class="loader__core">
-            <div class="loader__ring"></div>
-            <div class="loader__ring loader__ring--2"></div>
-            <div class="loader__ring loader__ring--3"></div>
-            <div class="loader__sys-text">
-                <p class="loader__msg" id="loaderMsg">SYSTEM INITIALIZING...</p>
-                <div class="loader__bar"><div class="loader__fill"></div></div>
-                <p class="loader__sub">PROFILE DETECTED</p>
+    <!-- ═══ SYSTEM INTRO — Full screen animated sequence ═══ -->
+    <div class="intro" id="intro">
+        <canvas id="introCanvas" class="intro__canvas"></canvas>
+        <div class="intro__overlay">
+            <div class="intro__glitch-lines"></div>
+            <div class="intro__system-ui">
+                <div class="intro__line intro__line--1" id="iLine1"></div>
+                <div class="intro__line intro__line--2" id="iLine2"></div>
+                <div class="intro__line intro__line--3" id="iLine3"></div>
+                <div class="intro__line intro__line--4" id="iLine4"></div>
+                <div class="intro__arise" id="introArise">ARISE</div>
             </div>
         </div>
+        <div class="intro__gate intro__gate--left"></div>
+        <div class="intro__gate intro__gate--right"></div>
     </div>
 
-    <!-- Arise flash -->
-    <div class="arise-flash" id="ariseFlash"></div>
-
-    <!-- Global shadow particles -->
-    <canvas id="shadowCanvas" class="shadow-canvas"></canvas>
+    <!-- Global effects canvas -->
+    <canvas id="globalCanvas" class="global-canvas"></canvas>
 
     <!-- Scroll progress -->
     <div class="scroll-progress" id="scrollProgress"></div>
@@ -50,43 +48,33 @@
 
     <!-- ═══ HERO ═══ -->
     <section class="hero" id="hero">
-        <div class="hero__bg">
-            <div class="hero__orb hero__orb--1"></div>
-            <div class="hero__orb hero__orb--2"></div>
-            <div class="hero__grid"></div>
-            <canvas class="hero__particles" id="heroParticles"></canvas>
-        </div>
-        <!-- Blue flame canvas behind name -->
-        <canvas class="flame-canvas" id="flameCanvas"></canvas>
+        <canvas class="hero__canvas" id="heroCanvas"></canvas>
         <div class="hero__content">
-            <div class="sys-notify">
-                <span class="sys-notify__icon">!</span>
-                <span class="sys-notify__text" id="sysGreeting">A NEW DEVELOPER HAS ARRIVED</span>
+            <div class="sys-tag" id="sysTag"><span class="sys-tag__dot"></span><span id="sysGreeting">DEVELOPER DETECTED</span></div>
+            <!-- Name — particles form into letters -->
+            <div class="hero__name-wrap" id="heroNameWrap">
+                <canvas id="nameCanvas" class="name-canvas"></canvas>
+                <h1 class="hero__name" id="heroName">
+                    <span class="sl-letter" data-char="A">A</span><span class="sl-letter" data-char="F">F</span><span class="sl-letter" data-char="N">N</span><span class="sl-letter" data-char="A">A</span><span class="sl-letter" data-char="A">A</span><span class="sl-letter" data-char="N">N</span>
+                    <br>
+                    <span class="sl-letter sl-letter--sub" data-char="A">A</span><span class="sl-letter sl-letter--sub" data-char="H">H</span><span class="sl-letter sl-letter--sub" data-char="M">M</span><span class="sl-letter sl-letter--sub" data-char="E">E</span><span class="sl-letter sl-letter--sub" data-char="D">D</span><span class="sl-letter sl-letter--sub sl-letter--space" data-char=" ">&nbsp;</span><span class="sl-letter sl-letter--sub" data-char="P">P</span>
+                </h1>
             </div>
-            <!-- NAME — Blue Flame Arise -->
-            <h1 class="hero__name" id="heroName">
-                <span class="flame-letter" style="--i:0">A</span><span class="flame-letter" style="--i:1">F</span><span class="flame-letter" style="--i:2">N</span><span class="flame-letter" style="--i:3">A</span><span class="flame-letter" style="--i:4">A</span><span class="flame-letter" style="--i:5">N</span>
-                <br>
-                <span class="flame-letter flame-letter--sub" style="--i:7">A</span><span class="flame-letter flame-letter--sub" style="--i:8">H</span><span class="flame-letter flame-letter--sub" style="--i:9">M</span><span class="flame-letter flame-letter--sub" style="--i:10">E</span><span class="flame-letter flame-letter--sub" style="--i:11">D</span><span class="flame-letter flame-letter--sub flame-letter--space" style="--i:12">&nbsp;</span><span class="flame-letter flame-letter--sub" style="--i:13">P</span>
-            </h1>
-            <div class="hero__rank-badge">
-                <span class="rank-badge__label">RANK</span>
-                <span class="rank-badge__rank">S</span>
-                <span class="rank-badge__class">SOFTWARE ENGINEER</span>
-            </div>
-            <div class="hero__role-line"><span>I build </span><span class="hero__role" id="heroRole">intelligent systems</span><span class="hero__cursor">|</span></div>
-            <p class="hero__tagline">M.Tech Software Engineering · VIT Chennai · Class of 2027</p>
-            <div class="hero__cta">
+            <div class="hero__rank-badge" id="heroBadge"><span class="rank-badge__label">RANK</span><span class="rank-badge__rank">S</span><span class="rank-badge__class">SOFTWARE ENGINEER</span></div>
+            <div class="hero__role-line" id="heroRoleLine"><span>I build </span><span class="hero__role" id="heroRole">intelligent systems</span><span class="hero__cursor">|</span></div>
+            <p class="hero__tagline" id="heroTagline">M.Tech Software Engineering · VIT Chennai · Class of 2027</p>
+            <div class="hero__cta" id="heroCta">
                 <a href="#projects" class="btn btn--primary"><span>VIEW PROJECTS</span></a>
                 <a href="#contact" class="btn btn--ghost"><span>CONTACT ME</span></a>
             </div>
         </div>
-        <div class="hero__scroll-hint"><span>SCROLL TO EXPLORE</span><div class="hero__scroll-arrow"></div></div>
+        <div class="hero__scroll-hint" id="heroScroll"><span>SCROLL TO EXPLORE</span><div class="hero__scroll-arrow"></div></div>
     </section>
 
     <!-- ═══ ABOUT ═══ -->
-    <section id="about" class="section section-reveal">
+    <section id="about" class="section section-gate">
         <div class="section__bg-text">ABOUT</div>
+        <div class="section__gate-line"></div>
         <div class="container">
             <div class="sys-window">
                 <div class="sys-window__header"><span class="sys-window__dot"></span><span class="sys-window__title">ABOUT ME</span><span class="sys-window__dot"></span></div>
@@ -118,8 +106,9 @@
     </div></div>
 
     <!-- ═══ SKILLS ═══ -->
-    <section class="section section--alt section-reveal" id="skills">
+    <section class="section section--alt section-gate" id="skills">
         <div class="section__bg-text">SKILLS</div>
+        <div class="section__gate-line"></div>
         <div class="container">
             <h2 class="section__title scroll-reveal">Technical <span class="text-glow">Skills</span></h2>
             <p class="section__subtitle scroll-reveal">Tools and technologies I work with</p>
@@ -134,8 +123,9 @@
     </section>
 
     <!-- ═══ PROJECTS ═══ -->
-    <section class="section section-reveal" id="projects">
+    <section class="section section-gate" id="projects">
         <div class="section__bg-text">PROJECTS</div>
+        <div class="section__gate-line"></div>
         <div class="container">
             <h2 class="section__title scroll-reveal">Deployed <span class="text-glow">Systems</span></h2>
             <p class="section__subtitle scroll-reveal">End-to-end projects I've built and shipped</p>
@@ -149,8 +139,7 @@
                     <p class="quest__desc">Real-time vehicle detection using mobile camera and YOLOv8 to count cars/bikes. Sends signal to Arduino to actuate servo gate within 1 second. Live dashboard refreshes every 2 seconds via FastAPI REST/WebSocket endpoints.</p>
                     <div class="quest__tags"><span>Python</span><span>YOLOv8</span><span>Arduino Nano</span><span>FastAPI</span><span>WebSocket</span><span>JavaScript</span><span>PySerial</span></div>
                     <div class="quest__rewards"><div class="reward"><span class="reward__val">&lt;1s</span><span class="reward__label">Gate Actuation</span></div><div class="reward"><span class="reward__val">Real-time</span><span class="reward__label">Dashboard</span></div><div class="reward"><span class="reward__val">Full Stack</span><span class="reward__label">HW + SW</span></div></div>
-                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a>
-                    <span class="quest__year">Apr 2026</span>
+                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a><span class="quest__year">Apr 2026</span>
                 </article>
                 <article class="quest scroll-reveal" data-project="anemia">
                     <canvas class="quest__canvas" data-anim="anemia"></canvas>
@@ -160,8 +149,7 @@
                     <p class="quest__desc">Two-step AI analyzing fingernail photos. Nail detection (93.5%) then classification (96% accuracy, 0.98 AUC). Validated on 251 patients. Grad-CAM explainability.</p>
                     <div class="quest__tags"><span>Python</span><span>PyTorch</span><span>YOLOv8</span><span>OpenCV</span><span>CNN</span><span>Grad-CAM</span></div>
                     <div class="quest__rewards"><div class="reward"><span class="reward__val">96%</span><span class="reward__label">Accuracy</span></div><div class="reward"><span class="reward__val">0.98</span><span class="reward__label">AUC</span></div><div class="reward"><span class="reward__val">251</span><span class="reward__label">Patients</span></div></div>
-                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a>
-                    <span class="quest__year">2025</span>
+                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a><span class="quest__year">2025</span>
                 </article>
                 <article class="quest scroll-reveal" data-project="lexcloud">
                     <canvas class="quest__canvas" data-anim="lexcloud"></canvas>
@@ -171,8 +159,7 @@
                     <p class="quest__desc">Serverless REST API on AWS — DynamoDB + S3 storage. LLaMA-3 + ChromaDB RAG pipeline for intelligent document retrieval. Clean OOP, pytest, CI-ready.</p>
                     <div class="quest__tags"><span>Python</span><span>FastAPI</span><span>AWS Lambda</span><span>S3</span><span>DynamoDB</span><span>LLaMA-3</span><span>RAG</span><span>ChromaDB</span><span>pytest</span></div>
                     <div class="quest__rewards"><div class="reward"><span class="reward__val">5</span><span class="reward__label">AWS Services</span></div><div class="reward"><span class="reward__val">RAG</span><span class="reward__label">Pipeline</span></div><div class="reward"><span class="reward__val">100%</span><span class="reward__label">Serverless</span></div></div>
-                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a>
-                    <span class="quest__year">2024</span>
+                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a><span class="quest__year">2024</span>
                 </article>
                 <article class="quest scroll-reveal" data-project="sepsis">
                     <canvas class="quest__canvas" data-anim="sepsis"></canvas>
@@ -182,16 +169,16 @@
                     <p class="quest__desc">ML model for sepsis survival prediction (MIMIC-IV). 172 features from 43 measurements. XGBoost 0.96 AUC-ROC, outperforming 4 published models. SHAP explainability.</p>
                     <div class="quest__tags"><span>Python</span><span>XGBoost</span><span>SHAP</span><span>Scikit-learn</span><span>Pandas</span><span>NumPy</span><span>EDA</span></div>
                     <div class="quest__rewards"><div class="reward"><span class="reward__val">0.96</span><span class="reward__label">AUC-ROC</span></div><div class="reward"><span class="reward__val">172</span><span class="reward__label">Features</span></div><div class="reward"><span class="reward__val">+16%</span><span class="reward__label">vs Baselines</span></div></div>
-                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a>
-                    <span class="quest__year">2026</span>
+                    <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="quest__link">View on GitHub →</a><span class="quest__year">2026</span>
                 </article>
             </div>
         </div>
     </section>
 
     <!-- ═══ EXPERIENCE ═══ -->
-    <section class="section section--alt section-reveal" id="experience">
+    <section class="section section--alt section-gate" id="experience">
         <div class="section__bg-text">EXPERIENCE</div>
+        <div class="section__gate-line"></div>
         <div class="container">
             <h2 class="section__title scroll-reveal">Work <span class="text-glow">Experience</span></h2>
             <div class="timeline"><div class="timeline__line"></div>
@@ -213,8 +200,9 @@
     </section>
 
     <!-- ═══ CONTACT ═══ -->
-    <section class="section section-reveal" id="contact">
+    <section class="section section-gate" id="contact">
         <div class="section__bg-text">CONTACT</div>
+        <div class="section__gate-line"></div>
         <div class="container">
             <div class="sys-window">
                 <div class="sys-window__header"><span class="sys-window__dot"></span><span class="sys-window__title">GET IN TOUCH</span><span class="sys-window__dot"></span></div>
