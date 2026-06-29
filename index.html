@@ -3,41 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Afnaan Ahmed P 「領域展開」— Software Engineer & AI Developer</title>
-    <meta name="description" content="Portfolio of Afnaan Ahmed P — Jujutsu Sorcerer of Software Engineering & AI. Ethereal JJK Theme.">
+    <title>Afnaan Ahmed P — Software Engineer & AI Developer</title>
+    <meta name="description" content="Professional Portfolio of Afnaan Ahmed P — Software Engineer & AI Developer. Engineered with high-fidelity telemetry.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Noto+Serif+JP:wght@600;900&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Noto+Serif+JP:wght@900&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ━━ DOMAIN EXPANSION ENTRY LOADER OVERLAY ━━ -->
-    <div class="domain-loader-overlay" id="domainLoader">
+    <!-- ━━ MALEVOLENT ARCHWAY ENTRY LOADER ━━ -->
+    <div class="shrine-loader-overlay" id="shrineLoader">
         <canvas id="loaderCanvas" class="loader-canvas"></canvas>
         <div class="loader-void-flash" id="loaderFlash"></div>
-        <div class="loader-seal-container" id="loaderSeal">
-            <!-- Concentric Summoning Seal SVG -->
-            <svg class="summon-seal-svg" viewBox="0 0 200 200">
-                <circle cx="100" cy="100" r="90" class="seal-ring" />
-                <circle cx="100" cy="100" r="70" class="seal-ring" stroke-dasharray="5,5" />
-                <polygon points="100,20 170,140 30,140" class="seal-poly" />
-                <polygon points="100,180 170,60 30,60" class="seal-poly" />
+        
+        <!-- Abstract Malevolent Archway SVG -->
+        <div class="loader-arch-container" id="loaderArch">
+            <svg class="shrine-arch-svg" viewBox="0 0 200 200">
+                <!-- Base pillars -->
+                <path d="M 40 180 L 40 80 Q 40 50 100 50 Q 160 50 160 80 L 160 180" class="arch-outline" />
+                <path d="M 20 50 Q 100 20 180 50" class="arch-roof-top" />
+                <path d="M 25 65 Q 100 35 175 65" class="arch-roof-bottom" />
+                <!-- Center orb -->
+                <circle cx="100" cy="100" r="12" class="arch-core" />
             </svg>
         </div>
-        <div class="loader-kanji-wrap" id="loaderKanji">領域展開</div>
+
+        <div class="loader-slash-cut" id="loaderSlash"></div>
         <div class="loader-name-wrap" id="loaderNameWrap">
             <h1 class="loader-title" id="loaderTitle">
                 <span class="l-word">AFNAAN</span>
                 <span class="l-word">AHMED P</span>
             </h1>
-            <div class="loader-subtitle" id="loaderSub">呪術師</div>
+            <div class="loader-subtitle" id="loaderSub">INTELLIGENT SYSTEMS</div>
             <div class="loader-typewriter" id="loaderType"></div>
         </div>
     </div>
 
     <!-- ━━ GLOBAL CANVAS BACKGROUND ━━ -->
     <canvas id="globalCanvas" class="global-canvas"></canvas>
-    <div class="global-hex-grid"></div>
+    <div class="global-grid-lines"></div>
 
     <!-- ━━ SCROLL READING BAR ━━ -->
     <div class="scroll-reading-bar" id="scrollProgress"></div>
@@ -45,18 +49,18 @@
     <!-- ━━ NAVIGATION ━━ -->
     <nav class="sys-nav" id="sysNav">
         <a href="#hero" class="nav-brand">
-            <span class="nav-rank-icon">S</span>
+            <span class="nav-brand-icon">Ω</span>
             <span class="nav-brand-text">AFNAAN</span>
         </a>
-        <div class="nav-location-indicator" id="navLocation">SYSTEM ONLINE</div>
+        <div class="nav-location-indicator" id="navLocation">CORE_INITIALIZED</div>
         <div class="nav-links" id="navLinks">
-            <a href="#about" class="nav-item"><span class="nav-kanji">プロフィール</span>Profile</a>
-            <a href="#skills" class="nav-item"><span class="nav-kanji">技術</span>Technique Core</a>
-            <a href="#projects" class="nav-item"><span class="nav-kanji">任務</span>Missions</a>
-            <a href="#experience" class="nav-item"><span class="nav-kanji">記録</span>Records</a>
-            <a href="#contact" class="nav-item"><span class="nav-kanji">連絡</span>Contact</a>
+            <a href="#about" class="nav-item">About</a>
+            <a href="#skills" class="nav-item">Core Tech</a>
+            <a href="#projects" class="nav-item">Deployments</a>
+            <a href="#experience" class="nav-item">Timeline</a>
+            <a href="#contact" class="nav-item">Contact</a>
         </div>
-        <div class="sorcerer-badge">GRADE 1 SORCERER</div>
+        <div class="system-status-badge">SYSTEMS_ACTIVE</div>
         <!-- Hamburger mobile trigger -->
         <button class="hamburger-btn" id="mobileMenuBtn" aria-label="Toggle Navigation">
             <span class="hamburger-line"></span>
@@ -67,17 +71,14 @@
 
     <!-- ━━ HERO SECTION ━━ -->
     <section class="hero-section" id="hero">
-        <!-- Kanji Decoration -->
-        <div class="kanji-watermark kanji-watermark--hero">力</div>
-        
-        <!-- Intricate Seal Rotating Circles -->
-        <div class="seal-circle seal-circle--1"></div>
-        <div class="seal-circle seal-circle--2"></div>
+        <!-- Abstract geometric line loops in background -->
+        <div class="decor-line decor-line--1"></div>
+        <div class="decor-line decor-line--2"></div>
 
         <div class="hero-container">
             <div class="sys-badge-alert">
                 <span class="sys-badge-dot"></span>
-                <span>呪術師 JUJUTSU SORCERER · GRADE 1</span>
+                <span>SOFTWARE ENGINEER & AI DEVELOPER · VIT CHENNAI</span>
             </div>
 
             <!-- Glitched Shimmer Name -->
@@ -89,22 +90,29 @@
             </div>
 
             <div class="hero-role-typing">
-                <span class="hero-role-target" id="heroRole">SOFTWARE ENGINEER & AI DEVELOPER</span>
+                <span class="hero-role-target" id="heroRole">ARCHITECTING INTELLIGENT SYSTEMS</span>
             </div>
 
             <p class="hero-subtag">M.Tech Software Engineering · VIT Chennai · Class of 2027</p>
 
-            <div class="sorcerer-declaration-box">
-                <div class="declaration-kanji">「呪力は使い方次第だ」</div>
-                <div class="declaration-sub"><em>— It's all about how you use your cursed energy</em></div>
+            <div class="hero-terminal-declaration">
+                <div class="terminal-header">
+                    <span class="term-dot"></span>
+                    <span class="term-dot"></span>
+                    <span class="term-dot"></span>
+                </div>
+                <div class="terminal-body font-mono">
+                    <span class="term-cmd">> status check</span><br>
+                    <span class="term-res">SYSTEM STATUS: ACTIVE // PRE-FINAL YEAR // VIT CHENNAI</span>
+                </div>
             </div>
 
             <div class="hero-actions">
                 <a href="#projects" class="sys-btn sys-btn--primary">
-                    <span class="btn-text">EXPLORE MISSIONS →</span>
+                    <span class="btn-text">EXPLORE DEPLOYMENTS →</span>
                 </a>
                 <a href="#contact" class="sys-btn sys-btn--ghost">
-                    <span class="btn-text">SUMMON ME →</span>
+                    <span class="btn-text">ESTABLISH LINK →</span>
                 </a>
             </div>
         </div>
@@ -113,7 +121,7 @@
         <div class="hero-stats-hud">
             <div class="hud-stat-item">
                 <span class="hud-stat-num" data-target="4">0</span>
-                <span class="hud-stat-lbl">Missions Shipped</span>
+                <span class="hud-stat-lbl">Deployments</span>
             </div>
             <div class="hud-stat-divider">|</div>
             <div class="hud-stat-item">
@@ -128,55 +136,49 @@
             <div class="hud-stat-divider">|</div>
             <div class="hud-stat-item">
                 <span class="hud-stat-num" data-target="5">0</span>
-                <span class="hud-stat-lbl">Cloud Seals</span>
+                <span class="hud-stat-lbl">Cloud Services</span>
             </div>
         </div>
         
         <div class="scroll-down-hint">
-            <span>「下へ」 DOWNWARD</span>
+            <span>SCROLL DOWNWARD</span>
             <div class="scroll-arrow-icon"></div>
         </div>
     </section>
 
     <!-- ━━ ABOUT / PROFILE SECTION ━━ -->
-    <section class="sys-section scroll-reveal-node" id="about" data-section-name="SORCERER PROFILE">
-        <!-- 2D Animated Gojo Eyes mask overlay cover -->
-        <div class="gojo-eyemask-cover" id="eyemaskCover">
-            <div class="eyemask-half eyemask-half--top"></div>
-            <div class="eyemask-eyes-line">
-                <div class="six-eye-glow six-eye-glow--left"></div>
-                <div class="six-eye-glow six-eye-glow--right"></div>
-            </div>
-            <div class="eyemask-half eyemask-half--bottom"></div>
+    <section class="sys-section scroll-reveal-node" id="about" data-section-name="PROFILE">
+        <!-- 2D Malevolent Slash Split Cover -->
+        <div class="shrine-slash-cover" id="slashCover">
+            <div class="slash-half slash-half--left"></div>
+            <div class="slash-line-indicator" id="slashLine"></div>
+            <div class="slash-half slash-half--right"></div>
         </div>
 
-        <div class="kanji-watermark kanji-watermark--about">術</div>
         <div class="container">
             <div class="about-grid">
-                <!-- Left Column: Identity ID Card -->
-                <div class="sorcerer-id-card">
-                    <div class="id-card-photo-box">
-                        <div class="id-silhouette-aura"></div>
-                        <div class="id-silhouette"></div>
+                <!-- Left Column: Specs Card -->
+                <div class="developer-specs-card">
+                    <div class="specs-card-header">
+                        <span class="specs-badge">CORE DETAILS</span>
                     </div>
-                    <div class="id-card-details">
-                        <h3 class="id-name">AFNAAN AHMED P</h3>
-                        <div class="id-title">呪術師 / SORCERER</div>
-                        <div class="id-divider"><span class="id-divider-hex"></span></div>
-                        <span class="id-grade-badge">GRADE 1</span>
-                        <div class="id-meta-list">
-                            <div class="id-meta-row"><strong>CLASS:</strong> <span>Software Engineer & AI Developer</span></div>
-                            <div class="id-meta-row"><strong>AFFILIATION:</strong> <span>VIT Chennai (Jujutsu High)</span></div>
-                            <div class="id-meta-row"><strong>SPEC:</strong> <span>Cursed AI Techniques</span></div>
-                            <div class="id-meta-row"><strong>STATUS:</strong> <span>Active · Pre-Final Year</span></div>
+                    <div class="specs-details">
+                        <h3 class="specs-name">AFNAAN AHMED P</h3>
+                        <div class="specs-title">SOFTWARE ENGINEER & AI DEVELOPER</div>
+                        <div class="specs-divider"><span class="specs-divider-core"></span></div>
+                        <div class="specs-meta-list">
+                            <div class="specs-meta-row"><strong>AFFILIATION:</strong> <span>VIT Chennai</span></div>
+                            <div class="specs-meta-row"><strong>PROGRAM:</strong> <span>M.Tech Integrated</span></div>
+                            <div class="specs-meta-row"><strong>FOCUS AREA:</strong> <span>AI/ML & Cloud Infrastructures</span></div>
+                            <div class="specs-meta-row"><strong>STATUS:</strong> <span>Active · Pre-Final Year</span></div>
                         </div>
                     </div>
-                    <div class="id-card-footer-pulse"></div>
+                    <div class="specs-card-footer-glow"></div>
                 </div>
 
                 <!-- Right Column: Biography Copy -->
                 <div class="about-bio-text">
-                    <h2 class="section-heading">SORCERER PROFILE</h2>
+                    <h2 class="section-heading">SYSTEM ARCHITECT PROFILE</h2>
                     <blockquote class="bio-pull-quote">
                         "I don't just write code. I architect scalable systems."
                     </blockquote>
@@ -191,30 +193,29 @@
     <!-- TICKER BAR -->
     <div class="sys-ticker-bar">
         <div class="ticker-track">
-            <span class="ticker-node">⚔ 4 Completed Missions</span>
-            <span class="ticker-node">🛡 15+ Innate Techniques</span>
-            <span class="ticker-node">📜 66 Modules Cleared</span>
-            <span class="ticker-node">🏆 96% Peak AUC</span>
-            <span class="ticker-node">☁ 5 AWS Cloud Seals</span>
-            <span class="ticker-node">🔬 251 Patient Images Analyzed</span>
-            <span class="ticker-node">⚡ Sub-Second Latency Activated</span>
+            <span class="ticker-node">// 4 Completed Deployments</span>
+            <span class="ticker-node">// 15+ Core Techniques</span>
+            <span class="ticker-node">// 66 Modules Cleared</span>
+            <span class="ticker-node">// 96% Peak AUC</span>
+            <span class="ticker-node">// 5 AWS Cloud Services</span>
+            <span class="ticker-node">// 251 Patient Samples Processed</span>
+            <span class="ticker-node">// Sub-Second Latency Activated</span>
             <!-- Duplication for loop -->
-            <span class="ticker-node">⚔ 4 Completed Missions</span>
-            <span class="ticker-node">🛡 15+ Innate Techniques</span>
-            <span class="ticker-node">📜 66 Modules Cleared</span>
-            <span class="ticker-node">🏆 96% Peak AUC</span>
-            <span class="ticker-node">☁ 5 AWS Cloud Seals</span>
-            <span class="ticker-node">🔬 251 Patient Images Analyzed</span>
-            <span class="ticker-node">⚡ Sub-Second Latency Activated</span>
+            <span class="ticker-node">// 4 Completed Deployments</span>
+            <span class="ticker-node">// 15+ Core Techniques</span>
+            <span class="ticker-node">// 66 Modules Cleared</span>
+            <span class="ticker-node">// 96% Peak AUC</span>
+            <span class="ticker-node">// 5 AWS Cloud Services</span>
+            <span class="ticker-node">// 251 Patient Samples Processed</span>
+            <span class="ticker-node">// Sub-Second Latency Activated</span>
         </div>
     </div>
 
-    <!-- ━━ SKILLS / TECHNIQUE CORE SECTION ━━ -->
-    <section class="sys-section sys-section--alt scroll-reveal-node" id="skills" data-section-name="TECHNIQUE CORE">
-        <div class="kanji-watermark kanji-watermark--skills">無下限</div>
+    <!-- ━━ SKILLS / CORE TECH SECTION ━━ -->
+    <section class="sys-section sys-section--alt scroll-reveal-node" id="skills" data-section-name="CORE TECH">
         <div class="container">
-            <h2 class="section-heading">INNATE TECHNIQUE CORE</h2>
-            <p class="section-subheading">Hover node tags to inspect cursed telemetry rankings</p>
+            <h2 class="section-heading">TECHNICAL CORE</h2>
+            <p class="section-subheading">Hover node tags to inspect performance rankings</p>
 
             <div class="skill-constellation-container">
                 <!-- Constellation Network Line Canvas -->
@@ -226,8 +227,8 @@
                     <div class="core-ring core-ring--outer"></div>
                     <div class="core-ring core-ring--inner"></div>
                     <div class="core-text">
-                        <span class="core-lvl font-display">GRADE 1</span>
-                        <span class="core-name font-display">INNATE CORE</span>
+                        <span class="core-lvl font-display">STATUS_OK</span>
+                        <span class="core-name font-display">CORE HUB</span>
                     </div>
                 </div>
 
@@ -235,43 +236,43 @@
                 <div class="skills-orbit-layout">
                     <!-- Cluster 1: Languages -->
                     <div class="skill-group-cluster" data-category="Languages">
-                        <div class="cluster-title">言語呪術 / LANGUAGE CURSES</div>
+                        <div class="cluster-title">PROGRAMMING LANGUAGES</div>
                         <div class="cluster-nodes">
-                            <div class="hex-node" data-skill="Python" data-level="95%" data-desc="Master programming language for ML pipelines, deep learning algorithms, backend routing, and hardware serial scripting."><span class="node-icon">🐍</span><span class="node-name">Python</span></div>
-                            <div class="hex-node" data-skill="Java" data-level="85%" data-desc="Strong core object-oriented structures, multithreading control, and robust enterprise software implementations."><span class="node-icon">☕</span><span class="node-name">Java</span></div>
-                            <div class="hex-node" data-skill="SQL" data-level="90%" data-desc="Advanced query indexing, schema optimization, relational database structures, and transaction logic."><span class="node-icon">🗄️</span><span class="node-name">SQL</span></div>
-                            <div class="hex-node" data-skill="C" data-level="80%" data-desc="Low-level memory bindings, structures, hardware driver interfaces, and algorithmic foundations."><span class="node-icon">⚡</span><span class="node-name">C</span></div>
-                            <div class="hex-node" data-skill="JavaScript" data-level="92%" data-desc="Dynamic client behavior, custom interactive HTML5 canvas animations, and WebSocket client triggers."><span class="node-icon">🌐</span><span class="node-name">JS / Web</span></div>
+                            <div class="hex-node" data-skill="Python" data-level="95%" data-desc="Primary programming language used for ML modeling, deep learning networks, data engineering, REST APIs, and automation scripts."><span class="node-icon">🐍</span><span class="node-name">Python</span></div>
+                            <div class="hex-node" data-skill="Java" data-level="85%" data-desc="Object-oriented patterns, multithread logic, data structures, and enterprise architecture logic."><span class="node-icon">☕</span><span class="node-name">Java</span></div>
+                            <div class="hex-node" data-skill="SQL" data-level="90%" data-desc="Advanced query indexing, schema optimization, relational database structures, and transaction queries."><span class="node-icon">🗄️</span><span class="node-name">SQL</span></div>
+                            <div class="hex-node" data-skill="C" data-level="80%" data-desc="Low-level memory bindings, structures, hardware driver interfaces, and algorithm patterns."><span class="node-icon">⚡</span><span class="node-name">C</span></div>
+                            <div class="hex-node" data-skill="JavaScript" data-level="92%" data-desc="Dynamic client behavior, custom interactive HTML5 canvas layouts, and real-time frontend interfaces."><span class="node-icon">🌐</span><span class="node-name">JS / Web</span></div>
                         </div>
                     </div>
 
                     <!-- Cluster 2: AI & ML -->
                     <div class="skill-group-cluster" data-category="AI & ML">
-                        <div class="cluster-title">呪霊研究 / CURSED SPIRIT RESEARCH</div>
+                        <div class="cluster-title">INTELLIGENT SYSTEMS</div>
                         <div class="cluster-nodes">
-                            <div class="hex-node hex-node--cyan" data-skill="PyTorch & CNN" data-level="94%" data-desc="Inception architectures, deep neural network training, CNN medical image classifications, and model backpropagation templates."><span class="node-icon">🔥</span><span class="node-name">PyTorch</span></div>
+                            <div class="hex-node hex-node--cyan" data-skill="PyTorch & CNN" data-level="94%" data-desc="Inception architectures, deep neural network training, CNN image classification, and backpropagation models."><span class="node-icon">🔥</span><span class="node-name">PyTorch</span></div>
                             <div class="hex-node hex-node--cyan" data-skill="YOLOv8 & OpenCV" data-level="92%" data-desc="Real-time target bounding box classification overlays and camera frame feeds."><span class="node-icon">👁️</span><span class="node-name">YOLOv8</span></div>
                             <div class="hex-node hex-node--cyan" data-skill="XGBoost & Scikit" data-level="95%" data-desc="Supervised ensemble trees, clinical patient regression analysis, feature engineering, and cross-validation grids."><span class="node-icon">📊</span><span class="node-name">XGBoost</span></div>
-                            <div class="hex-node hex-node--cyan" data-skill="Pandas & NumPy" data-level="96%" data-desc="Data manipulation arrays, exploratory statistical matrices, clean sanitization pipelines, and math engines."><span class="node-icon">📈</span><span class="node-name">Pandas / NumPy</span></div>
+                            <div class="hex-node hex-node--cyan" data-skill="Pandas & NumPy" data-level="96%" data-desc="Data manipulation arrays, statistical matrices, clean sanitization pipelines, and math engines."><span class="node-icon">📈</span><span class="node-name">Pandas / NumPy</span></div>
                             <div class="hex-node hex-node--cyan" data-skill="Explainable AI" data-level="90%" data-desc="SHAP model validation, Grad-CAM diagnostic target heatmaps, and AI prediction reliability auditing."><span class="node-icon">💡</span><span class="node-name">SHAP / Grad-CAM</span></div>
                         </div>
                     </div>
 
                     <!-- Cluster 3: Software & Web -->
                     <div class="skill-group-cluster" data-category="Engineering">
-                        <div class="cluster-title">縛り / BINDING VOWS (ENGINEERING)</div>
+                        <div class="cluster-title">SOFTWARE ENGINEERING</div>
                         <div class="cluster-nodes">
-                            <div class="hex-node hex-node--purple" data-skill="FastAPI & REST" data-level="92%" data-desc="High-performance backend routes, pydantic request serialization schemas, and secure api access keys."><span class="node-icon">🚀</span><span class="node-name">FastAPI REST</span></div>
+                            <div class="hex-node hex-node--purple" data-skill="FastAPI & REST" data-level="92%" data-desc="High-performance backend routes, pydantic request serialization schemas, and secure API gateways."><span class="node-icon">🚀</span><span class="node-name">FastAPI REST</span></div>
                             <div class="hex-node hex-node--purple" data-skill="WebSocket Stream" data-level="88%" data-desc="Full-duplex real-time client communication channels, event-based JSON frames, and streaming server threads."><span class="node-icon">🔄</span><span class="node-name">WebSocket</span></div>
                             <div class="hex-node hex-node--purple" data-skill="OOP Design" data-level="95%" data-desc="Object-oriented design patterns, clean code architectural guidelines, modular packages, and testable interfaces."><span class="node-icon">🏗️</span><span class="node-name">OOP Design</span></div>
-                            <div class="hex-node hex-node--purple" data-skill="Testing & Agile" data-level="88%" data-desc="Pytest unit automation coverage, validation routines, Scrum planning methodology, and issue lifecycle logs."><span class="node-icon">🛡️</span><span class="node-name">Pytest & Agile</span></div>
+                            <div class="hex-node hex-node--purple" data-skill="Testing & Agile" data-level="88%" data-desc="Pytest unit automation coverage, validation routines, Scrum planning methodology, and sprint tracking."><span class="node-icon">🛡️</span><span class="node-name">Pytest & Agile</span></div>
                             <div class="hex-node hex-node--purple" data-skill="Git & MySQL" data-level="94%" data-desc="Version control tree branches, merge conflict resolutions, relational SQL schemas, and database backups."><span class="node-icon">𔖔</span><span class="node-name">Git & SQL DB</span></div>
                         </div>
                     </div>
 
                     <!-- Cluster 4: Cloud & IoT -->
                     <div class="skill-group-cluster" data-category="Cloud & IoT">
-                        <div class="cluster-title">雲印術 / CLOUD SEALS</div>
+                        <div class="cluster-title">CLOUD & EMBEDDED SYSTEMS</div>
                         <div class="cluster-nodes">
                             <div class="hex-node hex-node--gold" data-skill="AWS Cloud" data-level="90%" data-desc="Serverless Lambda deployment containers, DynamoDB cloud tables, and S3 file bucket archives."><span class="node-icon">☁️</span><span class="node-name">AWS Cloud</span></div>
                             <div class="hex-node hex-node--gold" data-skill="Arduino" data-level="90%" data-desc="Hardware signal integrations, analog and digital sensors read loops, and logic processing modules."><span class="node-icon">🤖</span><span class="node-name">Arduino IoT</span></div>
@@ -280,12 +281,12 @@
                     </div>
                 </div>
 
-                <!-- Telemetry Inspector scroll Panel (Updates on Node Hover) -->
+                <!-- Telemetry Inspector Scroll Panel -->
                 <div class="skill-telemetry-hud" id="skillTelemetry">
-                    <div class="telemetry-header">TECHNIQUE INSPECTOR SCROLL</div>
+                    <div class="telemetry-header">TECHNICAL SYSTEM INSPECTOR</div>
                     <div class="telemetry-body">
                         <div class="telemetry-skill-title" id="telemetryName">SELECT TECHNIQUE NODE</div>
-                        <div class="telemetry-desc-text" id="telemetryDesc">Hover over any technique node in the matrix above to retrieve detailed sorcerer parameters and cursed rankings.</div>
+                        <div class="telemetry-desc-text" id="telemetryDesc">Hover over any node in the grid above to load its detailed engineering specs, description, and telemetry metrics.</div>
                         <div class="telemetry-bar-wrap">
                             <div class="telemetry-bar-fill" id="telemetryFill"></div>
                         </div>
@@ -320,20 +321,19 @@
     </section>
 
     <!-- ━━ PROJECTS / "MISSIONS" SECTION ━━ -->
-    <section class="sys-section scroll-reveal-node" id="projects" data-section-name="MISSIONS">
-        <div class="kanji-watermark kanji-watermark--projects">呪</div>
+    <section class="sys-section scroll-reveal-node" id="projects" data-section-name="DEPLOYMENTS">
         <div class="container">
-            <h2 class="section-heading">COMPLETED MISSIONS</h2>
-            <p class="section-subheading">Jujutsu High official operations briefs & dynamic execution telemetry</p>
+            <h2 class="section-heading">SYSTEM DEPLOYMENTS</h2>
+            <p class="section-subheading">Operational hardware-software briefs & active telemetry simulations</p>
             
             <div class="project-list-feed">
-                <!-- Mission 1 (VPark) -->
+                <!-- Project 1 (VPark) -->
                 <article class="project-card project-card--featured scroll-reveal-node" data-project="vpark" style="--card-glow: var(--gojo-blue)">
                     <canvas class="project-card-canvas" data-sim="vpark"></canvas>
                     <div class="card-meta-bar">
                         <div class="card-badges">
-                            <span class="badge badge--featured">⭐ FEATURED MISSION</span>
-                            <span class="badge badge--code">MISSION NO. 01</span>
+                            <span class="badge badge--featured">⭐ FEATURED SYSTEM</span>
+                            <span class="badge badge--code">SYSTEM NO. 01</span>
                         </div>
                         <span class="badge badge--status">COMPLETED ✓</span>
                     </div>
@@ -353,12 +353,12 @@
                     <span class="card-year-stamp">2026</span>
                 </article>
 
-                <!-- Mission 2 (Anemia) -->
+                <!-- Project 2 (Anemia) -->
                 <article class="project-card scroll-reveal-node" data-project="anemia" style="--card-glow: var(--hollow-purple)">
                     <canvas class="project-card-canvas" data-sim="anemia"></canvas>
                     <div class="card-meta-bar">
                         <div class="card-badges">
-                            <span class="badge badge--code">MISSION NO. 02</span>
+                            <span class="badge badge--code">SYSTEM NO. 02</span>
                         </div>
                         <span class="badge badge--status">COMPLETED ✓</span>
                     </div>
@@ -378,16 +378,16 @@
                     <span class="card-year-stamp">2025</span>
                 </article>
 
-                <!-- Mission 3 (LexCloud) -->
+                <!-- Project 3 (LexCloud) -->
                 <article class="project-card scroll-reveal-node" data-project="lexcloud" style="--card-glow: var(--domain-indigo)">
                     <canvas class="project-card-canvas" data-sim="lexcloud"></canvas>
                     <div class="card-meta-bar">
                         <div class="card-badges">
-                            <span class="badge badge--code">MISSION NO. 03</span>
+                            <span class="badge badge--code">SYSTEM NO. 03</span>
                         </div>
                         <span class="badge badge--status">COMPLETED ✓</span>
                     </div>
-                    <div class="project-stamp" style="--c: var(--domain-indigo)">CLOUD SEALS</div>
+                    <div class="project-stamp" style="--c: var(--domain-indigo)">CLOUD ENGINE</div>
                     <h3 class="card-title">LexCloud</h3>
                     <p class="card-sub-type">Cloud-Native API + AI Integration</p>
                     <p class="card-description">Serverless REST API on AWS — DynamoDB + S3 storage. LLaMA-3 + ChromaDB RAG pipeline for intelligent document retrieval. Clean OOP, pytest, CI-ready architecture.</p>
@@ -403,16 +403,16 @@
                     <span class="card-year-stamp">2024</span>
                 </article>
 
-                <!-- Mission 4 (Sepsis ICU) -->
+                <!-- Project 4 (Sepsis ICU) -->
                 <article class="project-card scroll-reveal-node" data-project="sepsis" style="--card-glow: var(--sukuna-pink)">
                     <canvas class="project-card-canvas" data-sim="sepsis"></canvas>
                     <div class="card-meta-bar">
                         <div class="card-badges">
-                            <span class="badge badge--code">MISSION NO. 04</span>
+                            <span class="badge badge--code">SYSTEM NO. 04</span>
                         </div>
                         <span class="badge badge--status">COMPLETED ✓</span>
                     </div>
-                    <div class="project-stamp" style="--c: var(--sukuna-pink)">CURSED STATISTICS</div>
+                    <div class="project-stamp" style="--c: var(--sukuna-pink)">DATA ANALYSIS</div>
                     <h3 class="card-title">Predicting ICU Patient Mortality</h3>
                     <p class="card-sub-type">Machine Learning on Clinical Data</p>
                     <p class="card-description">Built ML model to predict sepsis survival for ICU kidney disease patients (MIMIC-IV). Engineered 172 features from 43 clinical measurements. XGBoost achieved 0.96 AUC-ROC and 93.4% accuracy, outperforming 4 published models by 10-16%. Applied SHAP for medical interpretability.</p>
@@ -432,10 +432,10 @@
     </section>
 
     <!-- ━━ EXPERIENCE / "RECORDS" SECTION ━━ -->
-    <section class="sys-section sys-section--alt scroll-reveal-node" id="experience" data-section-name="RECORDS">
+    <section class="sys-section sys-section--alt scroll-reveal-node" id="experience" data-section-name="TIMELINE">
         <div class="container">
-            <h2 class="section-heading">SORCERER'S RECORDS</h2>
-            <p class="section-subheading">Chronological mission logs & verification seals</p>
+            <h2 class="section-heading">PROFESSIONAL TIMELINE</h2>
+            <p class="section-subheading">Chronological development milestones & certifications</p>
             
             <div class="timeline-container">
                 <div class="timeline-line"></div>
@@ -467,7 +467,7 @@
                 </div>
             </div>
 
-            <h3 class="subsection-label scroll-reveal-node">Academic Chronicles</h3>
+            <h3 class="subsection-label scroll-reveal-node">Academic Records</h3>
             <div class="education-grid">
                 <div class="edu-card scroll-reveal-node">
                     <div class="edu-date">2022 – 2027</div>
@@ -482,7 +482,7 @@
                 </div>
             </div>
 
-            <h3 class="subsection-label scroll-reveal-node">Guild Roles</h3>
+            <h3 class="subsection-label scroll-reveal-node">Organization Roles</h3>
             <div class="guild-grid">
                 <div class="guild-card scroll-reveal-node">
                     <span class="guild-icon">⚔</span>
@@ -508,33 +508,30 @@
 
     <!-- ━━ CONTACT / "SUMMON" SECTION ━━ -->
     <section class="sys-section scroll-reveal-node" id="contact" data-section-name="CONTACT">
-        <div class="kanji-watermark kanji-watermark--contact">魂</div>
         <div class="container">
             <div class="sys-window-panel">
                 <div class="window-panel-header">
                     <span class="panel-dot"></span>
-                    <span class="panel-title font-display">SUMMON TECHNIQUE</span>
+                    <span class="panel-title font-display">LINK ESTABLISHMENT</span>
                     <span class="panel-dot"></span>
                 </div>
                 <div class="window-panel-body">
                     <h2 class="contact-heading">Ready to build something <span class="text-neon-cyan">extraordinary?</span></h2>
                     
-                    <!-- Decorative Summoning Circle Centerpiece -->
+                    <!-- Decorative Portal Archway Centerpiece (Malevolent Shrine inspired geometric torus) -->
                     <div class="summoning-circle-wrap">
                         <svg class="summoning-circle-svg" viewBox="0 0 200 200">
                             <circle class="circle-outer" cx="100" cy="100" r="90" />
                             <circle class="circle-middle" cx="100" cy="100" r="70" stroke-dasharray="5,5" />
                             <circle class="circle-inner" cx="100" cy="100" r="50" />
-                            <!-- 12 runic/geometric ticks -->
+                            <!-- Torii arch outline within circle -->
+                            <path d="M 75 140 L 75 80 Q 75 60 100 60 Q 125 60 125 80 L 125 140" fill="none" stroke="var(--hollow-purple)" stroke-width="1" opacity="0.3"/>
+                            <!-- Runic ticks -->
                             <g class="circle-ticks">
                                 <line x1="100" y1="10" x2="100" y2="15" />
                                 <line x1="100" y1="185" x2="100" y2="190" />
                                 <line x1="10" y1="100" x2="15" y2="100" />
                                 <line x1="185" y1="100" x2="190" y2="100" />
-                                <line x1="36.4" y1="63.4" x2="39.9" y2="66.9" />
-                                <line x1="163.6" y1="136.6" x2="160.1" y2="133.1" />
-                                <line x1="36.4" y1="136.6" x2="39.9" y2="133.1" />
-                                <line x1="163.6" y1="63.4" x2="160.1" y2="66.9" />
                             </g>
                         </svg>
                     </div>
@@ -562,8 +559,8 @@
 
             <!-- Closing Declaration -->
             <div class="closing-declaration">
-                <div class="closing-sorcerer">— Afnaan Ahmed P —</div>
-                <div class="closing-quote">「 Architecting intelligent systems, one technique at a time. 」</div>
+                <div class="closing-sorcerer">— AFNAAN AHMED P —</div>
+                <div class="closing-quote">「 Architecting intelligent systems, one deployment at a time. 」</div>
                 <div class="closing-vit">VIT Chennai · 2026</div>
             </div>
         </div>
@@ -572,7 +569,7 @@
     <!-- ━━ FOOTER ━━ -->
     <footer class="sys-footer">
         <p>Designed & Engineered by <strong>Afnaan Ahmed P</strong> · 2026</p>
-        <p class="footer-note">呪術師 — Powered by Cursed Energy & Python</p>
+        <p class="footer-note">SYSTEM ENGINE — Powered by Python & AWS Cloud Services</p>
         <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to Top">↑</button>
     </footer>
 

@@ -1,8 +1,8 @@
 /* ═══════════════════════════════════════════════════
    JJK ANIME PORTFOLIO — SYSTEM ENGINE (script.js)
-   Domain Expansion Loader, Cursed Energy Particle Canvas,
+   Malevolent Archway Loader, Cursed Energy Particle Canvas,
    Skills Constellation Webs, Project Telemetries, and
-   Gojo Six Eyes Split Mask Scroll Trigger.
+   Malevolent Cleave/Dismantle Split Cover Trigger.
    ═══════════════════════════════════════════════════ */
 
 (function() {
@@ -11,9 +11,6 @@
     // DOM Selectors
     const $ = s => document.querySelector(s);
     const $$ = s => document.querySelectorAll(s);
-
-    // Telemetry Configs
-    let activeCategory = 'Languages';
 
     /* ═══════════════════════════
        1. GLOBAL SESSION STATE & MEDIA CHECK
@@ -68,7 +65,7 @@
         // Initialize particles
         for (let i = 0; i < maxParticles; i++) {
             // Colors matching our JJK palette
-            const colors = ['rgba(125, 211, 252, ', 'rgba(192, 132, 252, ', 'rgba(252, 211, 77, '];
+            const colors = ['rgba(56, 189, 248, ', 'rgba(167, 139, 250, ', 'rgba(236, 72, 153, '];
             const randColor = colors[Math.floor(Math.random() * colors.length)];
             particles.push({
                 x: Math.random() * canvas.width,
@@ -92,7 +89,6 @@
             if (skillsSec) {
                 const sRect = skillsSec.getBoundingClientRect();
                 if (sRect.top < window.innerHeight && sRect.bottom > 0) {
-                    // Skills section is on screen, attract particles to central hub node
                     const coreNode = $('.skill-core-center');
                     if (coreNode) {
                         const cRect = coreNode.getBoundingClientRect();
@@ -112,7 +108,7 @@
                 // Wave oscillation
                 p.x += Math.sin(p.osc) * 0.15;
 
-                // Attraction force to skills core (Hollow Purple charge effect)
+                // Attraction force to skills core
                 if (attractCore) {
                     const dx = attractCore.x - p.x;
                     const dy = attractCore.y - p.y;
@@ -157,10 +153,10 @@
 
 
     /* ═══════════════════════════
-       4. HTML5 CANVAS: DOMAIN EXPANSION ENTRY SEQUENCE
+       4. HTML5 CANVAS: MALEVOLENT ARCHWAY ENTRY SEQUENCE
        ═══════════════════════════ */
-    function runDomainLoader() {
-        const loader = $('#domainLoader');
+    function runShrineLoader() {
+        const loader = $('#shrineLoader');
         const lCanvas = $('#loaderCanvas');
         if (!loader || !lCanvas) return;
 
@@ -199,7 +195,7 @@
                 progress: 0,
                 speed: 0.008 + Math.random() * 0.015,
                 delay: Math.random() * 60,
-                color: Math.random() > 0.4 ? 'rgba(125, 211, 252, ' : 'rgba(192, 132, 252, '
+                color: Math.random() > 0.4 ? 'rgba(56, 189, 248, ' : 'rgba(236, 72, 153, '
             });
         }
 
@@ -208,20 +204,20 @@
             lCtx.clearRect(0, 0, lCanvas.width, lCanvas.height);
             frame++;
 
-            // Draw central cursed point (Phase 1)
+            // Draw central point
             if (frame < 120) {
                 pulseRadius = 4 + Math.sin(frame * 0.1) * 2;
                 lCtx.beginPath();
                 const rad = lCtx.createRadialGradient(cx(), cy(), 0, cx(), cy(), pulseRadius * 2);
                 rad.addColorStop(0, '#ffffff');
-                rad.addColorStop(0.3, 'rgba(125, 211, 252, 0.8)');
-                rad.addColorStop(1, 'rgba(192, 132, 252, 0)');
+                rad.addColorStop(0.3, 'rgba(56, 189, 248, 0.8)');
+                rad.addColorStop(1, 'rgba(124, 58, 237, 0)');
                 lCtx.fillStyle = rad;
                 lCtx.arc(cx(), cy(), pulseRadius * 2, 0, Math.PI * 2);
                 lCtx.fill();
             }
 
-            // Draw expanding lines (Phase 2)
+            // Draw expanding lines
             if (frame > 40 && frame < 200) {
                 lines.forEach(l => {
                     if (frame - 40 < l.delay) return;
@@ -255,16 +251,17 @@
 
         // Step 1: Draw lines & pulse center
         loaderTL.to({}, { duration: 1.2 }) // Initial pause
-                .to('#loaderSeal', { opacity: 0.8, scale: 1, duration: 0.8, ease: 'back.out(1.5)' })
-                .to('#loaderSeal', { rotation: 360, duration: 1.5, ease: 'power2.inOut' }, '-=0.4')
-                // Step 2: Kanji "Ryōiki Tenkai" materials
-                .to('#loaderKanji', { opacity: 0.05, scale: 1.05, duration: 0.6, ease: 'power3.out' }, '-=0.8')
+                .to('#loaderArch', { opacity: 0.85, scale: 1, duration: 0.8, ease: 'back.out(1.5)' })
+                .to('#loaderArch', { rotation: 10, duration: 0.5, ease: 'power2.out' })
+                .to('#loaderArch', { rotation: -10, duration: 0.5, ease: 'power2.out' })
+                // Step 2: Dismantle Cleave Slash impact
+                .to('#loaderSlash', { opacity: 1, scaleX: 1, duration: 0.25, ease: 'power4.inOut' }, '-=0.4')
                 // Step 3: Void Blast Flash
-                .to('#loaderFlash', { opacity: 0.8, duration: 0.15 })
+                .to('#loaderFlash', { opacity: 0.85, duration: 0.15 })
                 .to('#loaderFlash', { opacity: 0, duration: 0.4 })
                 .add(() => {
-                    if ($('#loaderSeal')) $('#loaderSeal').style.display = 'none';
-                    if ($('#loaderKanji')) $('#loaderKanji').style.display = 'none';
+                    if ($('#loaderArch')) $('#loaderArch').style.display = 'none';
+                    if ($('#loaderSlash')) $('#loaderSlash').style.display = 'none';
                 }, '-=0.4')
                 // Step 4: Name reveals
                 .to('#loaderNameWrap', { opacity: 1, duration: 0.3 }, '-=0.2')
@@ -278,7 +275,7 @@
                 }, '-=0.1')
                 .to('#loaderSub', { opacity: 1, y: 0, duration: 0.4 }, '+=0.1')
                 .to('#loaderType', {
-                    text: "GRADE 1 SORCERER OF ENGINEERING",
+                    text: "INTELLIGENT SYSTEMS ENGINEER // 2026",
                     duration: 1.2,
                     ease: "none"
                 })
@@ -290,33 +287,33 @@
                     ease: 'power4.inOut'
                 });
     }
-    runDomainLoader();
+    runShrineLoader();
 
 
     /* ═══════════════════════════
-       5. INTERSECTION OBSERVER: GOJO EYEMASK SPLIT (ABOUT)
+       5. INTERSECTION OBSERVER: MALEVOLENT SLASH SPLIT (ABOUT)
        ═══════════════════════════ */
-    function initGojoEyesSplit() {
-        const cover = $('#eyemaskCover');
+    function initMalevolentSlashSplit() {
+        const cover = $('#slashCover');
         const triggerSec = $('#about');
         if (!cover || !triggerSec) return;
 
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Start eyes flash
-                    const eyesLine = $('.eyemask-eyes-line');
-                    if (eyesLine) {
-                        eyesLine.style.opacity = '1';
+                    const slashLine = $('#slashLine');
+                    if (slashLine) {
+                        // 1. Draw crimson dismantle cut line down the center
+                        slashLine.style.transform = 'translateX(-50%) scaleY(1)';
                         
                         setTimeout(() => {
-                            // Split open cover halves
-                            const halves = $$('.eyemask-half');
-                            if (halves[0]) halves[0].style.transform = 'translateY(-100%)';
-                            if (halves[1]) halves[1].style.transform = 'translateY(100%)';
-                            eyesLine.style.opacity = '0';
+                            // 2. Split left/right halves
+                            const halves = $$('.slash-half');
+                            if (halves[0]) halves[0].style.transform = 'translateX(-100%)';
+                            if (halves[1]) halves[1].style.transform = 'translateX(100%)';
+                            slashLine.style.opacity = '0';
 
-                            // Clean up DOM node to optimize layers
+                            // Clean up DOM nodes
                             setTimeout(() => {
                                 cover.style.display = 'none';
                                 cover.remove();
@@ -330,11 +327,11 @@
 
         observer.observe(triggerSec);
     }
-    initGojoEyesSplit();
+    initMalevolentSlashSplit();
 
 
     /* ═══════════════════════════
-       6. SKILLS CONSTELLATION WEB PACKET sparks
+       6. SKILLS CONSTELLATION WEB PACKETS
        ═══════════════════════════ */
     const sCanvas = $('#skillsWebCanvas');
     if (sCanvas) {
@@ -375,9 +372,9 @@
                 ty: dy,
                 progress: 0,
                 speed: 0.015 + Math.random() * 0.015,
-                color: destNode.classList.contains('hex-node--cyan') ? '#A5F3FC' :
-                       destNode.classList.contains('hex-node--purple') ? '#C084FC' :
-                       destNode.classList.contains('hex-node--gold') ? '#FCD34D' : '#7DD3FC'
+                color: destNode.classList.contains('hex-node--cyan') ? '#38BDF8' :
+                       destNode.classList.contains('hex-node--purple') ? '#A78BFA' :
+                       destNode.classList.contains('hex-node--gold') ? '#F59E0B' : '#0099FF'
             });
         }, 300);
 
@@ -394,7 +391,7 @@
 
                 // Draw connector lines
                 sCtx.beginPath();
-                sCtx.strokeStyle = 'rgba(139, 92, 246, 0.06)';
+                sCtx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
                 sCtx.lineWidth = 1;
                 nodes.forEach(node => {
                     const dRect = node.getBoundingClientRect();
@@ -454,7 +451,7 @@
 
 
     /* ═══════════════════════════
-     * 8. PROJECT CANVASES DIAGNOSTIC LOOP
+       8. PROJECT CANVASES DIAGNOSTIC LOOP
        ═══════════════════════════ */
     $$('.project-card-canvas').forEach(canvas => {
         const c = canvas.getContext('2d');
@@ -470,24 +467,21 @@
 
         function drawVpark() {
             c.clearRect(0, 0, w, h);
-            // Grid lines
-            c.strokeStyle = 'rgba(125, 211, 252, 0.05)';
+            c.strokeStyle = 'rgba(56, 189, 248, 0.05)';
             c.lineWidth = 1;
             for (let i = 0; i < w; i += 20) {
                 c.beginPath(); c.moveTo(i, 0); c.lineTo(i, h); c.stroke();
             }
 
-            // Radar sweeping line
             const sweepY = (frame * 2.5) % h;
-            c.fillStyle = 'rgba(125, 211, 252, 0.08)';
+            c.fillStyle = 'rgba(56, 189, 248, 0.08)';
             c.fillRect(0, sweepY - 20, w, 20);
             c.beginPath();
             c.moveTo(0, sweepY); c.lineTo(w, sweepY);
-            c.strokeStyle = 'rgba(125, 211, 252, 0.6)';
+            c.strokeStyle = 'rgba(56, 189, 248, 0.6)';
             c.lineWidth = 1.5;
             c.stroke();
 
-            // Detected vehicle bounding boxes
             const objects = [
                 { y: 60, detected: sweepY > 60 },
                 { y: 150, detected: sweepY > 150 },
@@ -495,45 +489,42 @@
             ];
 
             objects.forEach((obj, idx) => {
-                c.strokeStyle = obj.detected ? '#10b981' : 'rgba(139, 92, 246, 0.2)';
+                c.strokeStyle = obj.detected ? '#10b981' : 'rgba(124, 58, 237, 0.2)';
                 c.strokeRect(30, obj.y, w - 60, 36);
-                c.fillStyle = obj.detected ? 'rgba(16, 185, 129, 0.7)' : 'rgba(139, 92, 246, 0.5)';
+                c.fillStyle = obj.detected ? 'rgba(16, 185, 129, 0.7)' : 'rgba(124, 58, 237, 0.5)';
                 c.font = '8px monospace';
                 c.fillText(obj.detected ? `BOUNDING_BOX [V${idx+1}]` : `SCANNING AREA L${idx+1}...`, 35, obj.y + 14);
-                c.fillStyle = 'rgba(91, 33, 182, 0.6)';
+                c.fillStyle = 'rgba(167, 139, 250, 0.6)';
                 c.fillText(obj.detected ? 'CONFIDENCE: 98.4%' : 'STATUS: CHECKING', 35, obj.y + 26);
             });
         }
 
         function drawAnemia() {
             c.clearRect(0, 0, w, h);
-            // Draw schematic nail outline
             const cx = w/2, cy = h/2, rx = 24, ry = 40;
             c.beginPath();
             c.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-            c.strokeStyle = 'rgba(192, 132, 252, 0.2)';
+            c.strokeStyle = 'rgba(167, 139, 250, 0.2)';
             c.stroke();
 
-            // Telemetry scanner line
             const scanY = cy - ry + ((frame * 1.5) % (ry * 2));
             c.beginPath();
             c.moveTo(cx - rx, scanY);
             c.lineTo(cx + rx, scanY);
-            c.strokeStyle = 'rgba(192, 132, 252, 0.8)';
+            c.strokeStyle = 'rgba(167, 139, 250, 0.8)';
             c.lineWidth = 1.5;
             c.stroke();
 
-            // Grad-CAM color heatmap simulation inside fingernail
             const completed = scanY > cy + 10;
             c.beginPath();
             c.ellipse(cx, cy, rx - 3, ry - 3, 0, 0, Math.PI * 2);
             const grad = c.createRadialGradient(cx, cy + 15, 0, cx, cy + 15, rx);
-            grad.addColorStop(0, completed ? 'rgba(249, 168, 212, 0.5)' : 'rgba(125, 211, 252, 0.3)');
+            grad.addColorStop(0, completed ? 'rgba(236, 72, 153, 0.5)' : 'rgba(56, 189, 248, 0.3)');
             grad.addColorStop(1, 'transparent');
             c.fillStyle = grad;
             c.fill();
 
-            c.fillStyle = 'rgba(91, 33, 182, 0.6)';
+            c.fillStyle = 'rgba(167, 139, 250, 0.6)';
             c.font = '8px monospace';
             c.fillText('EXPLAINABLE AI CLASSIFIER', 10, 16);
             c.fillText(completed ? 'AUC: 0.98' : 'DIAGNOSING...', 10, 26);
@@ -556,7 +547,6 @@
                 c.strokeStyle = 'rgba(99, 102, 241, 0.1)';
                 c.stroke();
 
-                // Spark traveling
                 const pct = (frame * 0.01 + a * 0.25) % 1;
                 const px = nodes[a].x + (nodes[b].x - nodes[a].x) * pct;
                 const py = nodes[a].y + (nodes[b].y - nodes[a].y) * pct;
@@ -568,11 +558,11 @@
             nodes.forEach(n => {
                 c.beginPath();
                 c.arc(n.x, n.y, 10, 0, Math.PI * 2);
-                c.fillStyle = '#EDE9FE';
+                c.fillStyle = '#111827';
                 c.fill();
                 c.strokeStyle = 'rgba(99, 102, 241, 0.4)';
                 c.stroke();
-                c.fillStyle = 'rgba(91, 33, 182, 0.8)';
+                c.fillStyle = 'rgba(167, 139, 250, 0.8)';
                 c.font = 'bold 5.5px monospace';
                 c.textAlign = 'center';
                 c.fillText(n.name, n.x, n.y + 2);
@@ -583,7 +573,7 @@
         function drawSepsis() {
             c.clearRect(0, 0, w, h);
             c.beginPath();
-            c.strokeStyle = 'rgba(249, 168, 212, 0.6)';
+            c.strokeStyle = 'rgba(236, 72, 153, 0.6)';
             c.lineWidth = 1.5;
             
             const midY = h / 2;
@@ -600,7 +590,7 @@
             }
             c.stroke();
 
-            c.fillStyle = 'rgba(91, 33, 182, 0.6)';
+            c.fillStyle = 'rgba(167, 139, 250, 0.6)';
             c.font = '8px monospace';
             c.fillText('ICU SEPSIS MONITOR', 10, 16);
             c.fillText(`STABILITY: ${(92.5 + Math.sin(frame * 0.03) * 1.5).toFixed(1)}%`, 10, 26);
@@ -636,7 +626,7 @@
 
                     function updateCount(now) {
                         const progress = Math.min((now - startTime) / duration, 1);
-                        const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+                        const ease = 1 - Math.pow(1 - progress, 3);
                         el.textContent = Math.round(ease * targetVal) + suffix;
                         if (progress < 1) requestAnimationFrame(updateCount);
                     }
@@ -691,11 +681,11 @@
                 navLinks.style.top = '60px';
                 navLinks.style.left = '0';
                 navLinks.style.width = '100%';
-                navLinks.style.background = 'rgba(245, 243, 255, 0.96)';
+                navLinks.style.background = 'rgba(11, 15, 25, 0.98)';
                 navLinks.style.padding = '30px';
                 navLinks.style.gap = '16px';
                 navLinks.style.alignItems = 'center';
-                navLinks.style.borderBottom = '1px solid var(--border-dim)';
+                navLinks.style.borderBottom = '1px solid var(--gray-soft)';
                 
                 // Animate drawer links in
                 gsap.from(navLinks.children, {
