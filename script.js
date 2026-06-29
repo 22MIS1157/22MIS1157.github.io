@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════
    SOLO LEVELING PORTFOLIO — ADVANCED ANIMATION ENGINE
-   Malevolent Shrine Slash Engine, Dynamic Scroll Title Tracker,
+   Malevolent Shrine Slash Engine, Live Location HUD Tracker,
    Upgraded Skills Telemetry, Custom Canvas Simulators
    ═══════════════════════════════════════════════════ */
 
@@ -19,51 +19,47 @@
     let letterTargets = [];
 
     function triggerNameSummon() {
+        const nameWrapper = $('#heroNameWrap');
+        if (nameWrapper) {
+            nameWrapper.classList.add('shrine-active');
+            triggerSlashDischarge();
+        }
+
         if (!nameCanvas) return;
         nameCtx = nameCanvas.getContext('2d');
         
         nameCanvas.width = nameCanvas.offsetWidth || 800;
         nameCanvas.height = nameCanvas.offsetHeight || 240;
 
-        const nameWrapper = $('#heroNameWrap');
         const chars = $$('.sl-char');
-        
-        const wrapRect = nameWrapper.getBoundingClientRect();
-        letterTargets = Array.from(chars).map(el => {
-            const rect = el.getBoundingClientRect();
-            return {
-                element: el,
-                x: (rect.left + rect.width / 2) - wrapRect.left,
-                y: (rect.top + rect.height / 2) - wrapRect.top,
-                assembled: false
-            };
-        });
-
-        // Trigger Malevolent Shrine Slash Slashes CSS animation
-        if (nameWrapper) {
-            nameWrapper.classList.add('shrine-active');
-            triggerSlashDischarge();
+        if (chars.length > 0 && nameWrapper) {
+            const wrapRect = nameWrapper.getBoundingClientRect();
+            letterTargets = Array.from(chars).map(el => {
+                const rect = el.getBoundingClientRect();
+                return {
+                    element: el,
+                    x: (rect.left + rect.width / 2) - wrapRect.left,
+                    y: (rect.top + rect.height / 2) - wrapRect.top
+                };
+            });
         }
 
-        // Initialize particles exploding from central shadow portal
-        const pCount = 220;
+        const pCount = 180;
         for (let i = 0; i < pCount; i++) {
-            const tIdx = i % letterTargets.length;
-            const target = letterTargets[tIdx];
+            const tIdx = letterTargets.length > 0 ? i % letterTargets.length : 0;
+            const target = letterTargets[tIdx] || { x: nameCanvas.width/2, y: nameCanvas.height/2 };
             
             nameParticles.push({
                 x: nameCanvas.width / 2 + (Math.random() - 0.5) * 80,
                 y: nameCanvas.height / 2 + (Math.random() - 0.5) * 50,
                 tx: target.x,
                 ty: target.y,
-                el: target.element,
                 size: Math.random() * 2.8 + 1.2,
                 vx: (Math.random() - 0.5) * 16,
                 vy: (Math.random() - 0.5) * 12 - 4,
                 color: `hsla(${195 + Math.random() * 45}, 95%, ${65 + Math.random() * 20}%, `,
                 life: Math.random() * 50 + 30,
-                age: 0,
-                locked: false
+                age: 0
             });
         }
 
@@ -92,10 +88,6 @@
                     completed = false;
                 } else {
                     p.x = p.tx; p.y = p.ty;
-                    if (!p.locked) {
-                        p.locked = true;
-                        p.el.classList.add('assembled');
-                    }
                 }
             }
 
@@ -118,7 +110,7 @@
         nameCtx.clearRect(0, 0, nameCanvas.width, nameCanvas.height);
 
         if (Math.random() < 0.4 && nameParticles.length < 70) {
-            const target = letterTargets[Math.floor(Math.random() * letterTargets.length)];
+            const target = letterTargets.length > 0 ? letterTargets[Math.floor(Math.random() * letterTargets.length)] : { x: nameCanvas.width/2, y: nameCanvas.height/2 };
             nameParticles.push({
                 x: target.x + (Math.random() - 0.5) * 26,
                 y: target.y + 14,
@@ -163,7 +155,6 @@
         slashCanvas.width = window.innerWidth;
         slashCanvas.height = window.innerHeight;
 
-        // Generate spark particle burst along diagonal cut trajectories
         for (let i = 0; i < 60; i++) {
             sparkParticles.push({
                 x: window.innerWidth / 2 + (Math.random() - 0.5) * 300,
@@ -204,40 +195,29 @@
 
 
     /* ═══════════════════════════
-       3. DYNAMIC SCROLL TITLE TRACKER (APPEARS & DISAPPEARS)
+       3. LIVE SECTION INDICATOR TRACKER IN NAV
     ═══════════════════════════ */
-    function updateScrollTitles() {
+    const navLocation = $('#navLocation');
+    function updateActiveSection() {
         const viewHeight = window.innerHeight;
+        let currentSection = 'SYSTEM ONLINE';
 
         $$('.sys-section').forEach(sec => {
-            const titleEl = sec.querySelector('.dynamic-scroll-title');
-            if (!titleEl) return;
-
             const rect = sec.getBoundingClientRect();
-            // Distance of section top relative to middle of screen
-            const distFromCenter = Math.abs((rect.top + rect.height / 2) - (viewHeight / 2));
-            const threshold = viewHeight * 0.6;
-
-            if (rect.top < viewHeight && rect.bottom > 0) {
-                // Approaching or visible
-                if (distFromCenter < threshold) {
-                    // Normalize opacity: Peak opacity when entering, fades out as it centers
-                    let opacity = (distFromCenter / threshold);
-                    opacity = Math.min(0.85, Math.max(0, opacity));
-                    titleEl.style.opacity = opacity;
-                    titleEl.style.transform = `translate(-50%, -50%) scale(${1.2 - opacity * 0.3})`;
-                } else {
-                    titleEl.style.opacity = 0;
-                }
-            } else {
-                titleEl.style.opacity = 0;
+            if (rect.top <= viewHeight * 0.4 && rect.bottom >= viewHeight * 0.2) {
+                const name = sec.dataset.sectionName;
+                if (name) currentSection = `LOCATION: ${name}`;
             }
         });
+
+        if (navLocation && navLocation.textContent !== currentSection) {
+            navLocation.textContent = currentSection;
+        }
     }
 
 
     /* ═══════════════════════════
-       4. GLOBAL CANVAS & ATMOSPHERE
+       4. GLOBAL CANVAS & LIGHTNING ATMOSPHERE
     ═══════════════════════════ */
     const globalCanvas = $('#globalCanvas');
     if (globalCanvas) {
@@ -360,7 +340,7 @@
 
 
     /* ═══════════════════════════
-       6. HIGH-FIDELITY PROJECT CUSTOM SIMULATORS
+       6. PROJECT CANVAS SIMULATORS
     ═══════════════════════════ */
     $$('.project-card-canvas').forEach(canvas => {
         const c = canvas.getContext('2d');
@@ -491,7 +471,7 @@
             nav.style.background = top > 80 ? 'rgba(4, 7, 18, 0.95)' : 'rgba(4, 7, 18, 0.85)';
         }
 
-        updateScrollTitles();
+        updateActiveSection();
     }
 
     const revealObserver = new IntersectionObserver((entries) => {
@@ -502,11 +482,15 @@
                     const fill = e.target.querySelector('.stat-progress-fill');
                     if (fill) fill.style.width = fill.style.getPropertyValue('--w');
                 }
+                if (e.target.classList.contains('domain-card')) {
+                    const fills = e.querySelectorAll('.skill-meter-fill');
+                    fills.forEach(f => f.style.width = f.style.getPropertyValue('--w'));
+                }
             }
         });
     }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
 
-    $$('.scroll-reveal-node').forEach(el => revealObserver.observe(el));
+    $$('.scroll-reveal-node, .domain-card').forEach(el => revealObserver.observe(el));
 
 
     /* ═══════════════════════════

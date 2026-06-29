@@ -4,21 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afnaan Ahmed P — Software Engineer & AI Developer</title>
-    <meta name="description" content="Portfolio of Afnaan Ahmed P — M.Tech Software Engineering, VIT Chennai. Solo Leveling & Domain Expansion Aesthetics.">
+    <meta name="description" content="Portfolio of Afnaan Ahmed P — M.Tech Software Engineering, VIT Chennai. Solo Leveling & Domain Expansion System Aesthetic.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Teko:wght@500;600;700&family=Rajdhani:wght@600;700&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500;700&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700;800&family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Background Domain Summoning Portal Rings -->
+    <!-- System Awakening Quick Alert Banner -->
+    <div class="sys-boot-banner" id="bootBanner">
+        <div class="boot-banner-content">
+            <span class="boot-spinner"></span>
+            <span class="boot-text" id="bootText">SYSTEM INITIALIZING... AWAKENING PLAYER PROFILE</span>
+        </div>
+    </div>
+
+    <!-- Background Summoning Portal Rings -->
     <div class="portal-bg" id="portalBg">
         <div class="portal-ring portal-ring--1"></div>
         <div class="portal-ring portal-ring--2"></div>
         <div class="portal-ring portal-ring--3"></div>
     </div>
 
-    <!-- Global Energy & Slash Canvas -->
+    <!-- Global Canvas for Energy Dust & Lightning Sparks -->
     <canvas id="globalCanvas" class="global-canvas"></canvas>
     <canvas id="slashCanvas" class="slash-canvas"></canvas>
 
@@ -31,9 +39,10 @@
             <span class="nav-rank-icon">S</span>
             <span class="nav-brand-text">AFNAAN</span>
         </a>
+        <div class="nav-location-indicator" id="navLocation">SYSTEM ONLINE</div>
         <div class="nav-links">
             <a href="#about" class="nav-item">Profile</a>
-            <a href="#skills" class="nav-item">Skills Arsenal</a>
+            <a href="#skills" class="nav-item">Arsenal</a>
             <a href="#projects" class="nav-item">Projects</a>
             <a href="#experience" class="nav-item">Records</a>
             <a href="#contact" class="nav-item">Contact</a>
@@ -52,18 +61,16 @@
             <!-- Malevolent Shrine / Shadow Extraction Name Arrival -->
             <div class="hero-name-wrapper" id="heroNameWrap">
                 <canvas id="nameCanvas" class="name-canvas"></canvas>
-                <!-- Slash overlays for shrine cuts -->
                 <div class="shrine-slash shrine-slash--1"></div>
                 <div class="shrine-slash shrine-slash--2"></div>
                 <div class="shrine-slash shrine-slash--3"></div>
                 <h1 class="hero-title" id="heroTitle">
-                    <span class="sl-char" data-char="A">A</span><span class="sl-char" data-char="F">F</span><span class="sl-char" data-char="N">N</span><span class="sl-char" data-char="A">A</span><span class="sl-char" data-char="A">A</span><span class="sl-char" data-char="N">N</span>
-                    <br>
-                    <span class="sl-char sl-char--sub" data-char="A">A</span><span class="sl-char sl-char--sub" data-char="H">H</span><span class="sl-char sl-char--sub" data-char="M">M</span><span class="sl-char sl-char--sub" data-char="E">E</span><span class="sl-char sl-char--sub" data-char="D">D</span><span class="sl-char sl-char--sub sl-char--space">&nbsp;</span><span class="sl-char sl-char--sub" data-char="P">P</span>
+                    <span class="name-line name-line--main">AFNAAN</span>
+                    <span class="name-line name-line--sub">AHMED P</span>
                 </h1>
             </div>
 
-            <!-- Rank Card HUD -->
+            <!-- Character Rank HUD -->
             <div class="sys-hud-card">
                 <div class="hud-card-header">CHARACTER STATUS HUD</div>
                 <div class="hud-card-body">
@@ -72,7 +79,7 @@
                         <span class="hud-val hud-val--gold">S-RANK (MAX)</span>
                     </div>
                     <div class="hud-row">
-                        <span class="hud-label">CLASS:</span>
+                        <span class="hud-label">CLASS DESIGNATION:</span>
                         <span class="hud-val hud-val--blue">SOFTWARE ENGINEER & AI DEVELOPER</span>
                     </div>
                 </div>
@@ -86,7 +93,6 @@
 
             <div class="hero-actions">
                 <a href="#projects" class="sys-btn sys-btn--primary">
-                    <span class="sys-btn-glitch"></span>
                     <span>EXPLORE PROJECTS</span>
                 </a>
                 <a href="#contact" class="sys-btn sys-btn--ghost">
@@ -102,10 +108,7 @@
     </section>
 
     <!-- ═══ ABOUT SECTION ═══ -->
-    <section class="sys-section scroll-reveal-node" id="about" data-section-title="SYSTEM STATUS">
-        <!-- Floating Scroll Title (Appears & Disappears on Scroll) -->
-        <div class="dynamic-scroll-title">SYSTEM STATUS</div>
-
+    <section class="sys-section scroll-reveal-node" id="about" data-section-name="PLAYER PROFILE">
         <div class="container">
             <div class="sys-window-panel">
                 <div class="window-panel-header">
@@ -160,7 +163,7 @@
             <span class="ticker-node">🔬 251 Patient Samples</span>
             <span class="ticker-node">⚡ Sub-Second Latency</span>
             <span class="ticker-node">☕ Infinite Coffee</span>
-            <!-- Duplicate for infinite loop -->
+            <!-- Duplicate for infinite scroll -->
             <span class="ticker-node">⚔ 4 Shipped Projects</span>
             <span class="ticker-node">🛡 15+ Core Technologies</span>
             <span class="ticker-node">📜 66 Modules Cleared</span>
@@ -173,10 +176,7 @@
     </div>
 
     <!-- ═══ UPGRADED SKILLS SECTION ═══ -->
-    <section class="sys-section sys-section--alt scroll-reveal-node" id="skills">
-        <!-- Floating Scroll Title -->
-        <div class="dynamic-scroll-title">SKILLS ARSENAL</div>
-
+    <section class="sys-section sys-section--alt scroll-reveal-node" id="skills" data-section-name="SKILLS ARSENAL">
         <div class="container">
             <h2 class="section-heading">Technical <span class="text-neon-cyan">Arsenal</span></h2>
             <p class="section-subheading">Domain mastery & interactive skill telemetry</p>
@@ -190,11 +190,11 @@
                         <h3 class="domain-title">Programming Languages</h3>
                     </div>
                     <div class="domain-skills-list">
-                        <div class="skill-item"><span class="skill-name">Python</span><span class="skill-level">95%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 95%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">Java</span><span class="skill-level">85%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 85%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">SQL</span><span class="skill-level">90%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 90%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">C</span><span class="skill-level">80%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 80%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">JavaScript / HTML / CSS</span><span class="skill-level">92%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 92%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">Python <span class="skill-level">95%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 95%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">Java <span class="skill-level">85%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 85%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">SQL <span class="skill-level">90%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 90%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">C <span class="skill-level">80%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 80%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">JavaScript / HTML / CSS <span class="skill-level">92%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 92%"></div></div></div>
                     </div>
                 </div>
 
@@ -202,14 +202,14 @@
                 <div class="domain-card scroll-reveal-node">
                     <div class="domain-header">
                         <span class="domain-icon">🧠</span>
-                        <h3 class="domain-title">Machine Learning & Deep Learning</h3>
+                        <h3 class="domain-title">Machine Learning & AI</h3>
                     </div>
                     <div class="domain-skills-list">
-                        <div class="skill-item"><span class="skill-name">PyTorch & CNN</span><span class="skill-level">94%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 94%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">YOLOv8 & OpenCV</span><span class="skill-level">92%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 92%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">XGBoost & Scikit-Learn</span><span class="skill-level">95%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 95%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">Pandas / NumPy / Matplotlib</span><span class="skill-level">96%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 96%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">Explainable AI (SHAP & Grad-CAM)</span><span class="skill-level">90%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 90%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">PyTorch & CNN <span class="skill-level">94%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 94%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">YOLOv8 & OpenCV <span class="skill-level">92%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 92%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">XGBoost & Scikit-Learn <span class="skill-level">95%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 95%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">Pandas / NumPy / Matplotlib <span class="skill-level">96%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 96%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">Explainable AI (SHAP & Grad-CAM) <span class="skill-level">90%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 90%"></div></div></div>
                     </div>
                 </div>
 
@@ -217,47 +217,48 @@
                 <div class="domain-card scroll-reveal-node">
                     <div class="domain-header">
                         <span class="domain-icon">🛠️</span>
-                        <h3 class="domain-title">Software & Backend Engineering</h3>
+                        <h3 class="domain-title">Software Engineering & Backend</h3>
                     </div>
                     <div class="domain-skills-list">
-                        <div class="skill-item"><span class="skill-name">FastAPI & REST APIs</span><span class="skill-level">92%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 92%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">WebSocket Real-Time Streaming</span><span class="skill-level">88%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 88%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">Object-Oriented Programming (OOP)</span><span class="skill-level">95%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 95%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">Unit Testing & Agile/Scrum</span><span class="skill-level">88%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 88%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">Git, GitHub & MySQL</span><span class="skill-level">94%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 94%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">FastAPI & REST APIs <span class="skill-level">92%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 92%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">WebSocket Streaming <span class="skill-level">88%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 88%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">Object-Oriented Programming <span class="skill-level">95%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 95%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">Unit Testing & Agile <span class="skill-level">88%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 88%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">Git, GitHub & MySQL <span class="skill-level">94%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 94%"></div></div></div>
                     </div>
                 </div>
 
-                <!-- Domain 4: IoT & Embedded Systems -->
+                <!-- Domain 4: IoT & Cloud -->
                 <div class="domain-card scroll-reveal-node">
                     <div class="domain-header">
                         <span class="domain-icon">🔌</span>
-                        <h3 class="domain-title">IoT & Embedded Systems</h3>
+                        <h3 class="domain-title">Cloud & Embedded Systems</h3>
                     </div>
                     <div class="domain-skills-list">
-                        <div class="skill-item"><span class="skill-name">Arduino Nano & Sensor Integration</span><span class="skill-level">90%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 90%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">PySerial & Servo Control</span><span class="skill-level">92%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 92%"></div></div></div>
-                        <div class="skill-item"><span class="skill-name">I2C LCD & Hardware-Software Integration</span><span class="skill-level">89%</span><div class="skill-meter"><div class="skill-meter-fill" style="width: 89%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">AWS (Lambda, S3, DynamoDB) <span class="skill-level">90%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 90%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">Arduino & Sensor Integration <span class="skill-level">90%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 90%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">PySerial & Servo Control <span class="skill-level">92%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 92%"></div></div></div>
+                        <div class="skill-item"><span class="skill-name">Hardware-Software Integration <span class="skill-level">89%</span></span><div class="skill-meter"><div class="skill-meter-fill" style="--w: 89%"></div></div></div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Dynamic Continuous Marquee Stack -->
-        <div class="marquee-stack">
-            <div class="marquee-row scroll-reveal-node" data-direction="right">
-                <div class="marquee-track">
-                    <div class="marquee-content">
-                        <span class="skill-pill pill--lang">Python</span><span class="skill-pill pill--lang">Java</span><span class="skill-pill pill--lang">C</span><span class="skill-pill pill--lang">SQL</span><span class="skill-pill pill--lang">HTML</span><span class="skill-pill pill--lang">CSS</span><span class="skill-pill pill--lang">JavaScript</span>
-                        <span class="skill-pill pill--lang">Python</span><span class="skill-pill pill--lang">Java</span><span class="skill-pill pill--lang">C</span><span class="skill-pill pill--lang">SQL</span><span class="skill-pill pill--lang">HTML</span><span class="skill-pill pill--lang">CSS</span><span class="skill-pill pill--lang">JavaScript</span>
+            <!-- Dynamic Marquee Stack -->
+            <div class="marquee-stack">
+                <div class="marquee-row scroll-reveal-node" data-direction="right">
+                    <div class="marquee-track">
+                        <div class="marquee-content">
+                            <span class="skill-pill pill--lang">Python</span><span class="skill-pill pill--lang">Java</span><span class="skill-pill pill--lang">C</span><span class="skill-pill pill--lang">SQL</span><span class="skill-pill pill--lang">HTML</span><span class="skill-pill pill--lang">CSS</span><span class="skill-pill pill--lang">JavaScript</span>
+                            <span class="skill-pill pill--lang">Python</span><span class="skill-pill pill--lang">Java</span><span class="skill-pill pill--lang">C</span><span class="skill-pill pill--lang">SQL</span><span class="skill-pill pill--lang">HTML</span><span class="skill-pill pill--lang">CSS</span><span class="skill-pill pill--lang">JavaScript</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="marquee-row scroll-reveal-node" data-direction="left">
-                <div class="marquee-track">
-                    <div class="marquee-content">
-                        <span class="skill-pill pill--backend">FastAPI</span><span class="skill-pill pill--backend">REST API</span><span class="skill-pill pill--backend">WebSocket</span><span class="skill-pill pill--backend">OOP</span><span class="skill-pill pill--backend">Software Testing</span><span class="skill-pill pill--backend">Agile</span><span class="skill-pill pill--backend">Git</span><span class="skill-pill pill--backend">MySQL</span>
-                        <span class="skill-pill pill--backend">FastAPI</span><span class="skill-pill pill--backend">REST API</span><span class="skill-pill pill--backend">WebSocket</span><span class="skill-pill pill--backend">OOP</span><span class="skill-pill pill--backend">Software Testing</span><span class="skill-pill pill--backend">Agile</span><span class="skill-pill pill--backend">Git</span><span class="skill-pill pill--backend">MySQL</span>
+                <div class="marquee-row scroll-reveal-node" data-direction="left">
+                    <div class="marquee-track">
+                        <div class="marquee-content">
+                            <span class="skill-pill pill--backend">FastAPI</span><span class="skill-pill pill--backend">REST API</span><span class="skill-pill pill--backend">WebSocket</span><span class="skill-pill pill--backend">OOP</span><span class="skill-pill pill--backend">Software Testing</span><span class="skill-pill pill--backend">Agile</span><span class="skill-pill pill--backend">Git</span><span class="skill-pill pill--backend">MySQL</span>
+                            <span class="skill-pill pill--backend">FastAPI</span><span class="skill-pill pill--backend">REST API</span><span class="skill-pill pill--backend">WebSocket</span><span class="skill-pill pill--backend">OOP</span><span class="skill-pill pill--backend">Software Testing</span><span class="skill-pill pill--backend">Agile</span><span class="skill-pill pill--backend">Git</span><span class="skill-pill pill--backend">MySQL</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -265,10 +266,7 @@
     </section>
 
     <!-- ═══ PROJECTS SECTION ═══ -->
-    <section class="sys-section scroll-reveal-node" id="projects">
-        <!-- Floating Scroll Title -->
-        <div class="dynamic-scroll-title">PRODUCTION LOGS</div>
-
+    <section class="sys-section scroll-reveal-node" id="projects" data-section-name="DEPLOYMENTS">
         <div class="container">
             <h2 class="section-heading">Production <span class="text-neon-cyan">Deployments</span></h2>
             <p class="section-subheading">Full-stack, machine learning, and hardware engineering projects</p>
@@ -375,10 +373,7 @@
     </section>
 
     <!-- ═══ EXPERIENCE SECTION ═══ -->
-    <section class="sys-section sys-section--alt scroll-reveal-node" id="experience">
-        <!-- Floating Scroll Title -->
-        <div class="dynamic-scroll-title">CAREER RECORDS</div>
-
+    <section class="sys-section sys-section--alt scroll-reveal-node" id="experience" data-section-name="CAREER RECORDS">
         <div class="container">
             <h2 class="section-heading">Career <span class="text-neon-cyan">Records</span></h2>
             
@@ -459,10 +454,7 @@
     </section>
 
     <!-- ═══ CONTACT SECTION ═══ -->
-    <section class="sys-section scroll-reveal-node" id="contact">
-        <!-- Floating Scroll Title -->
-        <div class="dynamic-scroll-title">ESTABLISH LINK</div>
-
+    <section class="sys-section scroll-reveal-node" id="contact" data-section-name="ESTABLISH LINK">
         <div class="container">
             <div class="sys-window-panel">
                 <div class="window-panel-header">
