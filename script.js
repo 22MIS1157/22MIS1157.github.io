@@ -1,15 +1,67 @@
 /* ═══════════════════════════════════════════════════
-   SOLO LEVELING PORTFOLIO — PREMIUM ANIMATION ENGINE
-   Instant Loader Mount, Particle Text Summon Portal,
-   Custom Canvas Simulation Visualizers
+   SOLO LEVELING PORTFOLIO — ADVANCED ANIMATION ENGINE
+   System Awakening Intro, Particle Extraction Name Engine,
+   Custom Canvas Simulators, 3D Scroll & Tilt System
    ═══════════════════════════════════════════════════ */
+
 (function () {
     'use strict';
     const $ = s => document.querySelector(s);
     const $$ = s => document.querySelectorAll(s);
 
     /* ═══════════════════════════
-       1. CANVAS NAME AWAKENING (Blue Flame Assembly)
+       1. SYSTEM AWAKENING INTRO
+    ═══════════════════════════ */
+    const introOverlay = $('#introOverlay');
+    const introFill = $('#introFill');
+    const introLog = $('#introLog');
+
+    const bootLogs = [
+        'INITIALIZING HUNTER PROFILE...',
+        'AUTHENTICATING SYSTEM ACCESS...',
+        'HUNTER DETECTED: AFNAAN AHMED P',
+        'AWAKENING COMPLETE · S-RANK'
+    ];
+
+    let logIndex = 0;
+    let progressVal = 0;
+
+    function runIntroSequence() {
+        if (!introOverlay) return;
+
+        const progressInterval = setInterval(() => {
+            progressVal += 4;
+            if (introFill) introFill.style.width = Math.min(progressVal, 100) + '%';
+
+            if (progressVal % 25 === 0 && logIndex < bootLogs.length) {
+                if (introLog) introLog.textContent = bootLogs[logIndex];
+                logIndex++;
+            }
+
+            if (progressVal >= 100) {
+                clearInterval(progressInterval);
+                setTimeout(() => {
+                    introOverlay.classList.add('unlocked');
+                    // Trigger Hero Name Particle Summoning
+                    triggerNameSummon();
+                }, 300);
+            }
+        }, 30);
+    }
+
+    // Fast boot failsafe
+    setTimeout(() => {
+        if (introOverlay && !introOverlay.classList.contains('unlocked')) {
+            introOverlay.classList.add('unlocked');
+            triggerNameSummon();
+        }
+    }, 2500);
+
+    runIntroSequence();
+
+
+    /* ═══════════════════════════
+       2. HERO NAME PARTICLE SUMMONING ENGINE
     ═══════════════════════════ */
     const nameCanvas = $('#nameCanvas');
     let nameCtx = null;
@@ -21,15 +73,14 @@
         if (!nameCanvas) return;
         nameCtx = nameCanvas.getContext('2d');
         
-        // Match bounds
         nameCanvas.width = nameCanvas.offsetWidth || 800;
         nameCanvas.height = nameCanvas.offsetHeight || 240;
 
-        const nameWrapper = $('.hero__name-container');
-        const spans = $$('.summon-letter');
+        const nameWrapper = $('#heroNameWrap');
+        const chars = $$('.sl-char');
         
         const wrapRect = nameWrapper.getBoundingClientRect();
-        letterTargets = Array.from(spans).map(el => {
+        letterTargets = Array.from(chars).map(el => {
             const rect = el.getBoundingClientRect();
             return {
                 element: el,
@@ -39,23 +90,23 @@
             };
         });
 
-        // Initialize particles exploding from center portal
-        const pCount = 180;
+        // Initialize particles exploding from central shadow portal
+        const pCount = 220;
         for (let i = 0; i < pCount; i++) {
             const tIdx = i % letterTargets.length;
             const target = letterTargets[tIdx];
             
             nameParticles.push({
-                x: nameCanvas.width / 2 + (Math.random() - 0.5) * 60,
-                y: nameCanvas.height / 2 + (Math.random() - 0.5) * 40,
+                x: nameCanvas.width / 2 + (Math.random() - 0.5) * 80,
+                y: nameCanvas.height / 2 + (Math.random() - 0.5) * 50,
                 tx: target.x,
                 ty: target.y,
                 el: target.element,
-                size: Math.random() * 2.5 + 1.2,
+                size: Math.random() * 2.8 + 1.2,
                 vx: (Math.random() - 0.5) * 16,
                 vy: (Math.random() - 0.5) * 12 - 4,
-                color: `hsla(${200 + Math.random() * 40}, 95%, ${65 + Math.random() * 15}%, `,
-                life: Math.random() * 55 + 25,
+                color: `hsla(${195 + Math.random() * 45}, 95%, ${65 + Math.random() * 20}%, `,
+                life: Math.random() * 50 + 30,
                 age: 0,
                 locked: false
             });
@@ -72,7 +123,7 @@
 
         nameParticles.forEach(p => {
             p.age++;
-            if (p.age < 18) {
+            if (p.age < 20) {
                 p.x += p.vx; p.y += p.vy;
                 p.vx *= 0.93; p.vy *= 0.93;
                 completed = false;
@@ -93,35 +144,39 @@
                 }
             }
 
-            const alpha = Math.max(0, 1 - p.age / 80);
+            const alpha = Math.max(0, 1 - p.age / 90);
             nameCtx.beginPath();
             nameCtx.arc(p.x, p.y, p.size * (1 + alpha), 0, Math.PI * 2);
             nameCtx.fillStyle = p.color + alpha + ')';
+            nameCtx.fill();
+
+            nameCtx.beginPath();
+            nameCtx.arc(p.x, p.y, p.size * 3 * alpha, 0, Math.PI * 2);
+            nameCtx.fillStyle = p.color + (alpha * 0.15) + ')';
             nameCtx.fill();
         });
 
         if (!completed) {
             requestAnimationFrame(animateNameSummon);
         } else {
-            animateAmbientFlames();
+            animateAmbientNameFlames();
         }
     }
 
-    function animateAmbientFlames() {
+    function animateAmbientNameFlames() {
         if (!nameCtx) return;
         nameCtx.clearRect(0, 0, nameCanvas.width, nameCanvas.height);
 
-        // Continuous atmospheric blue fire trail
-        if (Math.random() < 0.4 && nameParticles.length < 60) {
+        if (Math.random() < 0.4 && nameParticles.length < 70) {
             const target = letterTargets[Math.floor(Math.random() * letterTargets.length)];
             nameParticles.push({
-                x: target.x + (Math.random() - 0.5) * 24,
-                y: target.y + 12,
+                x: target.x + (Math.random() - 0.5) * 26,
+                y: target.y + 14,
                 vy: -Math.random() * 0.8 - 0.4,
-                vx: (Math.random() - 0.5) * 0.25,
+                vx: (Math.random() - 0.5) * 0.3,
                 size: Math.random() * 2 + 1,
-                color: `hsla(${205 + Math.random() * 30}, 90%, 75%, `,
-                life: Math.random() * 25 + 15,
+                color: `hsla(${200 + Math.random() * 40}, 90%, 75%, `,
+                life: Math.random() * 30 + 15,
                 age: 0,
                 ambient: true
             });
@@ -134,19 +189,19 @@
                 const alpha = 1 - p.age / p.life;
                 nameCtx.beginPath();
                 nameCtx.arc(p.x, p.y, p.size * alpha, 0, Math.PI * 2);
-                nameCtx.fillStyle = p.color + (alpha * 0.4) + ')';
+                nameCtx.fillStyle = p.color + (alpha * 0.45) + ')';
                 nameCtx.fill();
                 return true;
             }
             return false;
         });
 
-        requestAnimationFrame(animateAmbientFlames);
+        requestAnimationFrame(animateAmbientNameFlames);
     }
 
 
     /* ═══════════════════════════
-       2. GLOBAL LIGHTNING STRIKES & PARTICLES
+       3. GLOBAL CANVAS & LIGHTNING DISCHARGE
     ═══════════════════════════ */
     const globalCanvas = $('#globalCanvas');
     if (globalCanvas) {
@@ -161,15 +216,14 @@
         resizeGlobal();
         window.addEventListener('resize', resizeGlobal);
 
-        // Ambient cyber dust
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 40; i++) {
             particles.push({
                 x: Math.random() * globalCanvas.width,
                 y: Math.random() * globalCanvas.height,
-                size: Math.random() * 1.5 + 0.5,
-                speedY: -Math.random() * 0.3 - 0.1,
-                speedX: (Math.random() - 0.5) * 0.15,
-                opacity: Math.random() * 0.2 + 0.05
+                size: Math.random() * 1.6 + 0.4,
+                speedY: -Math.random() * 0.35 - 0.1,
+                speedX: (Math.random() - 0.5) * 0.2,
+                opacity: Math.random() * 0.25 + 0.05
             });
         }
 
@@ -179,23 +233,22 @@
             let currY = 0;
             let currX = startX;
             while (currY < globalCanvas.height) {
-                const nextY = currY + Math.random() * 50 + 20;
-                const nextX = currX + (Math.random() - 0.5) * 25;
+                const nextY = currY + Math.random() * 40 + 20;
+                const nextX = currX + (Math.random() - 0.5) * 30;
                 segments.push({ x1: currX, y1: currY, x2: nextX, y2: nextY });
                 currY = nextY;
                 currX = nextX;
             }
-            lightning = { segments, opacity: 0.85 };
+            lightning = { segments, opacity: 0.9 };
         }
 
         setInterval(() => {
-            if (Math.random() < 0.1) triggerLightning();
-        }, 3000);
+            if (Math.random() < 0.15) triggerLightning();
+        }, 2500);
 
         function drawGlobal() {
             ctx.clearRect(0, 0, globalCanvas.width, globalCanvas.height);
             
-            // Draw dust
             particles.forEach(p => {
                 p.y += p.speedY; p.x += p.speedX;
                 if (p.y < -10) { p.y = globalCanvas.height + 10; p.x = Math.random() * globalCanvas.width; }
@@ -203,12 +256,11 @@
                 ctx.fillStyle = `rgba(0, 212, 255, ${p.opacity})`; ctx.fill();
             });
 
-            // Draw lightning
             if (lightning && lightning.opacity > 0) {
                 ctx.strokeStyle = `rgba(0, 212, 255, ${lightning.opacity})`;
                 ctx.lineWidth = 2;
-                ctx.shadowColor = 'rgba(0, 212, 255, 0.7)';
-                ctx.shadowBlur = 10;
+                ctx.shadowColor = 'rgba(0, 212, 255, 0.8)';
+                ctx.shadowBlur = 12;
                 ctx.beginPath();
                 lightning.segments.forEach(seg => {
                     ctx.moveTo(seg.x1, seg.y1);
@@ -216,7 +268,7 @@
                 });
                 ctx.stroke();
                 ctx.shadowBlur = 0;
-                lightning.opacity -= 0.08;
+                lightning.opacity -= 0.07;
             }
 
             requestAnimationFrame(drawGlobal);
@@ -226,7 +278,7 @@
 
 
     /* ═══════════════════════════
-       3. HERO CANVAS BACKGROUND
+       4. HERO ENERGY ATMOSPHERE
     ═══════════════════════════ */
     const heroCanvas = $('#heroCanvas');
     if (heroCanvas) {
@@ -240,15 +292,15 @@
         resizeHero();
         window.addEventListener('resize', resizeHero);
 
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 35; i++) {
             hParts.push({
                 x: Math.random() * heroCanvas.width,
                 y: heroCanvas.height + 20,
                 size: Math.random() * 1.5 + 0.3,
-                vy: -Math.random() * 1.1 - 0.3,
-                vx: (Math.random() - 0.5) * 0.25,
-                op: Math.random() * 0.35 + 0.1,
-                life: Math.random() * 130 + 50,
+                vy: -Math.random() * 1.2 - 0.4,
+                vx: (Math.random() - 0.5) * 0.3,
+                op: Math.random() * 0.4 + 0.15,
+                life: Math.random() * 140 + 60,
                 age: 0
             });
         }
@@ -259,7 +311,7 @@
                 p.x += p.vx; p.y += p.vy; p.age++;
                 if (p.age > p.life) {
                     p.x = Math.random() * heroCanvas.width; p.y = heroCanvas.height + 20;
-                    p.age = 0; p.op = Math.random() * 0.35 + 0.1;
+                    p.age = 0; p.op = Math.random() * 0.4 + 0.15;
                 }
                 const alpha = Math.max(0, p.op * (1 - p.age / p.life));
                 hCtx.beginPath(); hCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
@@ -272,11 +324,11 @@
 
 
     /* ═══════════════════════════
-       4. HIGH-FIDELITY PROJECT CUSTOM SIMULATORS
+       5. HIGH-FIDELITY PROJECT CUSTOM SIMULATORS
     ═══════════════════════════ */
-    $$('.quest__canvas').forEach(canvas => {
+    $$('.project-card-canvas').forEach(canvas => {
         const c = canvas.getContext('2d');
-        const anim = canvas.dataset.anim;
+        const sim = canvas.dataset.sim;
         let w = 220, h = 300, frame = 0;
 
         function resize() {
@@ -286,53 +338,53 @@
         resize();
         window.addEventListener('resize', resize);
 
-        // VPark
+        // VPark Simulator
         function runVpark() {
             c.clearRect(0, 0, w, h);
-            c.strokeStyle = 'rgba(0, 212, 255, 0.06)'; c.lineWidth = 1;
+            c.strokeStyle = 'rgba(0, 212, 255, 0.08)'; c.lineWidth = 1;
             for (let i = 0; i < w; i += 25) {
                 c.beginPath(); c.moveTo(i, 0); c.lineTo(i, h); c.stroke();
             }
             const scanY = (frame * 2.8) % h;
-            c.fillStyle = 'rgba(0, 212, 255, 0.08)'; c.fillRect(0, scanY - 18, w, 18);
+            c.fillStyle = 'rgba(0, 212, 255, 0.08)'; c.fillRect(0, scanY - 20, w, 20);
             c.beginPath(); c.moveTo(0, scanY); c.lineTo(w, scanY);
             c.strokeStyle = 'rgba(0, 212, 255, 0.6)'; c.lineWidth = 2; c.stroke();
 
-            const slots = [70, 150, 230];
-            slots.forEach((y, idx) => {
-                const detected = scanY > y - 10;
-                c.strokeStyle = detected ? '#10b981' : 'rgba(255, 190, 11, 0.35)';
+            const objY = [60, 140, 220];
+            objY.forEach((y, i) => {
+                const detected = scanY > y - 20;
+                c.strokeStyle = detected ? '#10b981' : 'rgba(255, 190, 11, 0.4)';
                 c.strokeRect(30, y, w - 60, 36);
                 c.fillStyle = detected ? 'rgba(16, 185, 129, 0.9)' : 'rgba(255, 190, 11, 0.8)';
                 c.font = '8px monospace';
-                c.fillText(detected ? `CAR LOCATED [L0${idx+1}]` : `SCANNING SLOT L0${idx+1}...`, 38, y + 14);
+                c.fillText(detected ? `CAR DETECTED [L${i+1}]` : `SCANNING L${i+1}...`, 38, y + 15);
                 c.fillStyle = 'rgba(0, 212, 255, 0.6)';
-                c.fillText(detected ? 'STATUS: ALLOCATED' : 'STATUS: VACANT', 38, y + 26);
+                c.fillText(detected ? 'STATE: ALLOCATED' : 'STATE: VACANT', 38, y + 27);
             });
         }
 
-        // Anemia
+        // Anemia Simulator
         function runAnemia() {
             c.clearRect(0, 0, w, h);
-            const cx = w/2, cy = h/2 - 20, rx = 28, ry = 48;
+            const cx = w/2, cy = h/2 - 20, rx = 30, ry = 50;
             c.beginPath(); c.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
             c.strokeStyle = 'rgba(0, 212, 255, 0.25)'; c.stroke();
             
-            const scanY = cy - ry + ((frame * 1.8) % (ry * 2));
+            const scanY = cy - ry + ((frame * 2) % (ry * 2));
             c.beginPath(); c.moveTo(cx - rx, scanY); c.lineTo(cx + rx, scanY);
-            c.strokeStyle = 'rgba(0, 212, 255, 0.7)'; c.lineWidth = 1.5; c.stroke();
+            c.strokeStyle = 'rgba(0, 212, 255, 0.75)'; c.lineWidth = 1.5; c.stroke();
 
             c.strokeStyle = '#10b981'; c.strokeRect(cx - rx - 6, cy - ry - 6, rx*2+12, ry*2+12);
             c.fillStyle = 'rgba(0, 212, 255, 0.6)'; c.font = '8px monospace';
-            c.fillText('NAIL BIO-SEGMENTATION', 12, 20);
+            c.fillText('NAIL SEGMENTATION', 12, 20);
             
-            const classified = scanY > cy + 8;
+            const classified = scanY > cy + 10;
             c.fillStyle = classified ? '#10b981' : '#ffbe0b';
             c.font = 'bold 9px monospace';
-            c.fillText(classified ? 'NORMAL (96% ACC)' : 'DIAGNOSING MASK...', cx - 45, cy + ry + 25);
+            c.fillText(classified ? 'HEALTHY (96% ACC)' : 'DIAGNOSING NAIL...', cx - 45, cy + ry + 25);
         }
 
-        // LexCloud
+        // LexCloud Simulator
         const nodes = [
             { x: w/2, y: 40, label: 'GW' },
             { x: 35, y: 110, label: 'LAMBDA' },
@@ -345,78 +397,82 @@
             const paths = [[0,1],[0,2],[1,3],[2,3],[3,4]];
             paths.forEach(([a,b]) => {
                 c.beginPath(); c.moveTo(nodes[a].x, nodes[a].y); c.lineTo(nodes[b].x, nodes[b].y);
-                c.strokeStyle = 'rgba(157, 78, 221, 0.25)'; c.stroke();
-                const progress = (frame * 0.016 + a * 0.2) % 1;
+                c.strokeStyle = 'rgba(157, 78, 221, 0.3)'; c.stroke();
+                const progress = (frame * 0.015 + a * 0.2) % 1;
                 const px = nodes[a].x + (nodes[b].x - nodes[a].x) * progress;
                 const py = nodes[a].y + (nodes[b].y - nodes[a].y) * progress;
                 c.beginPath(); c.arc(px, py, 2.5, 0, Math.PI * 2);
                 c.fillStyle = 'rgba(0, 212, 255, 0.85)'; c.fill();
             });
             nodes.forEach(node => {
-                c.beginPath(); c.arc(node.x, node.y, 11, 0, Math.PI * 2);
+                c.beginPath(); c.arc(node.x, node.y, 12, 0, Math.PI * 2);
                 c.fillStyle = '#0c1122'; c.fill();
-                c.strokeStyle = 'rgba(157, 78, 221, 0.7)'; c.stroke();
+                c.strokeStyle = 'rgba(157, 78, 221, 0.8)'; c.stroke();
                 c.fillStyle = 'rgba(0, 212, 255, 0.7)'; c.font = 'bold 6px monospace';
                 c.textAlign = 'center'; c.fillText(node.label, node.x, node.y + 2);
                 c.textAlign = 'left';
             });
         }
 
-        // Sepsis
+        // Sepsis Simulator
         function runSepsis() {
             c.clearRect(0, 0, w, h);
             c.beginPath();
-            c.strokeStyle = 'rgba(0, 212, 255, 0.55)'; c.lineWidth = 1.5;
+            c.strokeStyle = 'rgba(0, 212, 255, 0.6)'; c.lineWidth = 1.5;
             const midY = h/2;
             for(let x=0; x<w; x++){
-                const step = (x + frame * 2.3) % w;
+                const step = (x + frame * 2.5) % w;
                 let y = midY;
                 const cyc = step % 80;
-                if (cyc > 20 && cyc < 25) y = midY - 22;
-                else if (cyc >= 25 && cyc < 28) y = midY + 32;
-                else if (cyc >= 28 && cyc < 32) y = midY - 12;
+                if (cyc > 20 && cyc < 25) y = midY - 20;
+                else if (cyc >= 25 && cyc < 28) y = midY + 30;
+                else if (cyc >= 28 && cyc < 32) y = midY - 10;
                 else y = midY + Math.sin(x*0.1)*1;
                 if(x===0)c.moveTo(x,y); else c.lineTo(x,y);
             }
             c.stroke();
             c.fillStyle = 'rgba(0, 212, 255, 0.5)'; c.font = 'bold 8px monospace';
-            c.fillText('ECG PATIENT VITAL', 12, 20);
-            c.fillText(`PREDICTED SURVIVAL: ${(89.4 + Math.sin(frame*0.035)*3.5).toFixed(1)}%`, 12, 32);
+            c.fillText('ECG HEARTBEAT', 12, 20);
+            c.fillText(`SURVIVAL RATE: ${(89 + Math.sin(frame*0.03)*3).toFixed(1)}%`, 12, 32);
         }
 
-        const map = { vpark: runVpark, anemia: runAnemia, lexcloud: runLexcloud, sepsis: runSepsis };
-        const run = map[anim];
-        function loop() { frame++; if (run) run(); requestAnimationFrame(loop); }
+        const simMap = { vpark: runVpark, anemia: runAnemia, lexcloud: runLexcloud, sepsis: runSepsis };
+        const runFn = simMap[sim];
+        function loop() { frame++; if (runFn) runFn(); requestAnimationFrame(loop); }
         loop();
     });
 
+
     /* ═══════════════════════════
-       5. SCROLL PROGRESS
+       6. SCROLL REVEALS & PROGRESS BAR
     ═══════════════════════════ */
-    const sp = $('#scrollProgress');
-    function updateProgress() {
+    const progressBar = $('#scrollProgress');
+    function handleScroll() {
         const top = window.scrollY;
         const total = document.documentElement.scrollHeight - window.innerHeight;
-        if (sp && total > 0) sp.style.width = (top / total * 100) + '%';
+        if (progressBar && total > 0) {
+            progressBar.style.width = (top / total * 100) + '%';
+        }
+
+        const nav = $('#sysNav');
+        if (nav) {
+            nav.style.background = top > 80 ? 'rgba(4, 7, 18, 0.95)' : 'rgba(4, 7, 18, 0.85)';
+        }
     }
 
-
-    /* ═══════════════════════════
-       6. SCROLL REVEAL OBSERVER & STAT FILL
-    ═══════════════════════════ */
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) {
                 e.target.classList.add('revealed');
-                if (e.target.classList.contains('stat')) {
-                    const fill = e.target.querySelector('.stat__fill');
+                if (e.target.classList.contains('stat-hud-box')) {
+                    const fill = e.target.querySelector('.stat-progress-fill');
                     if (fill) fill.style.width = fill.style.getPropertyValue('--w');
                 }
             }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
 
-    $$('.scroll-reveal').forEach(el => revealObserver.observe(el));
+    $$('.scroll-reveal-node').forEach(el => revealObserver.observe(el));
 
 
     /* ═══════════════════════════
@@ -446,11 +502,11 @@
         });
     }, { threshold: 0.5 });
 
-    $$('.stat__number').forEach(el => counterObserver.observe(el));
+    $$('.stat-num').forEach(el => counterObserver.observe(el));
 
 
     /* ═══════════════════════════
-       8. HERO TYPING ROLE
+       8. HERO ROLE TYPING LOOPER
     ═══════════════════════════ */
     const heroRole = $('#heroRole');
     if (heroRole) {
@@ -475,21 +531,7 @@
 
 
     /* ═══════════════════════════
-       9. NAV SCROLL TRANSITIONS & BG PARALLAX
-    ═══════════════════════════ */
-    const nav = $('#nav');
-    function scrollTick() {
-        if (nav) nav.style.background = window.scrollY > 80 ? 'rgba(4, 7, 18, 0.95)' : 'rgba(4, 7, 18, 0.85)';
-        
-        $$('.section__bg-text').forEach(el => {
-            const top = el.parentElement.getBoundingClientRect().top;
-            el.style.transform = `translate(-50%, calc(-50% + ${top * 0.04}px))`;
-        });
-    }
-
-
-    /* ═══════════════════════════
-       10. SMOOTH SCROLLS
+       9. SMOOTH SCROLL ACTIONS
     ═══════════════════════════ */
     const scrollTop = $('#scrollTopBtn');
     if (scrollTop) scrollTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
@@ -505,23 +547,15 @@
         });
     });
 
-
-    /* ═══════════════════════════
-       11. INITIALIZATION & LISTENERS
-    ═══════════════════════════ */
     let ticking = false;
     window.addEventListener('scroll', () => {
         if (!ticking) {
             requestAnimationFrame(() => {
-                updateProgress();
-                scrollTick();
+                handleScroll();
                 ticking = false;
             });
             ticking = true;
         }
     });
-
-    // Instant name summoning execution on load
-    triggerNameSummon();
 
 })();
