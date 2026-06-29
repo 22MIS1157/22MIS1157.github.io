@@ -47,9 +47,13 @@
         }
 
         if (isMobile) {
-            // Simplified Mobile Entrance
-            const entName = $('#entName');
-            if (entName) entName.innerHTML = `<span class="ent-char ent-char-glow">AFNAAN AHMED P</span>`;
+            // Simplified Mobile Entrance (2 Lines)
+            const entLine1 = $('#entNameLine1');
+            const entLine2 = $('#entNameLine2');
+            if (entLine1 && entLine2) {
+                entLine1.innerHTML = `<span class="ent-char ent-char-glow">AFNAAN</span>`;
+                entLine2.innerHTML = `<span class="ent-char ent-char-glow">AHMED P</span>`;
+            }
             
             const mobileTL = gsap.timeline({
                 onComplete: () => {
@@ -60,7 +64,6 @@
             });
 
             mobileTL.to('#entranceNameWrap', { opacity: 1, duration: 0.6 })
-                    .to('#entKanjiSub', { opacity: 1, duration: 0.4 })
                     .to(overlay, { opacity: 0, duration: 0.3, ease: 'power2.inOut' }, '+=0.8');
             return;
         }
@@ -131,13 +134,20 @@
             });
         }
 
-        // Setup Name Char Nodes for Phase 5
-        const nameText = "AFNAAN AHMED P";
-        const entName = $('#entName');
-        entName.innerHTML = nameText.split('').map(char => {
-            if (char === ' ') return '&nbsp;';
-            return `<span class="ent-char">${char}<span class="ent-underline"></span></span>`;
-        }).join('');
+        // Setup Name Char Nodes for Phase 5 (2 Lines)
+        const entLine1 = $('#entNameLine1');
+        const entLine2 = $('#entNameLine2');
+        if (entLine1 && entLine2) {
+            const splitEntName = (el) => {
+                const text = el.textContent.trim();
+                el.innerHTML = text.split('').map(char => {
+                    if (char === ' ') return '&nbsp;';
+                    return `<span class="ent-char">${char}<span class="ent-underline"></span></span>`;
+                }).join('');
+            };
+            splitEntName(entLine1);
+            splitEntName(entLine2);
+        }
         const nameChars = $$('.ent-char');
 
         // GSAP orchestrated Entrance Sequence
@@ -209,13 +219,6 @@
             ease: 'power4.out' // matches cubic-bezier(.16,1,.3,1)
         }, '-=0.3');
 
-        // Staggered reveal of massive Japanese characters
-        const kanjiChars = $$('.ent-kanji-char');
-        entranceTL.to('#entranceKanji', { opacity: 1, duration: 0.1 }, '-=0.6');
-        kanjiChars.forEach((kc, idx) => {
-            entranceTL.to(kc, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.2)' }, `-=${0.45 - idx * 0.15}`);
-        });
-
         // Phase 4: Impact frame 40ms flash
         entranceTL.add(() => {
             generateImpactLines();
@@ -229,7 +232,7 @@
         });
         
         // Hide initial overlay elements during flash
-        entranceTL.to(['#cursedMarkWrap', '#perspectiveGridWrap', '#entranceKanji'], { opacity: 0, duration: 0.2 }, '-=0.04');
+        entranceTL.to(['#cursedMarkWrap', '#perspectiveGridWrap'], { opacity: 0, duration: 0.2 }, '-=0.04');
 
         // Phase 5: Name burns in character-by-character
         entranceTL.to('#entranceNameWrap', { opacity: 1, duration: 0.1 });
@@ -247,14 +250,6 @@
             }
             entranceTL.add(letterTL, `-=${0.24 - idx * 0.06}`);
         });
-
-        // Trace in the 「呪術師」 SVG paths
-        entranceTL.to('#entKanjiSub', { opacity: 1, duration: 0.4 }, '+=0.2');
-        entranceTL.fromTo('.jujutsushi-text', 
-            { strokeDasharray: 200, strokeDashoffset: 200, fill: 'rgba(251, 191, 36, 0)' },
-            { strokeDashoffset: 0, fill: 'rgba(251, 191, 36, 1)', duration: 1.2, ease: 'power2.out' },
-            '-=0.2'
-        );
 
         // Subtitle word-by-word reveal
         const subWords = ["SOFTWARE", "ENGINEER", "&", "AI", "DEVELOPER"];
@@ -465,17 +460,25 @@
        5. HERO COMPONENT INTERACTION
        ═══════════════════════════ */
     function initHeroInteractions() {
-        // Render name blocks
-        const heroTitle = $('#heroTitle');
-        if (heroTitle) {
-            const text = "AFNAAN AHMED P";
-            heroTitle.innerHTML = text.split('').map(char => {
-                if (char === ' ') return '&nbsp;';
-                return `<span class="hero-letter">${char}</span>`;
-            }).join('');
+        // Render name blocks (2 Lines)
+        const heroLine1 = $('#heroNameLine1');
+        const heroLine2 = $('#heroNameLine2');
+        if (heroLine1 && heroLine2) {
+            const splitHeroName = (el) => {
+                const text = el.textContent.trim();
+                el.innerHTML = text.split('').map(char => {
+                    if (char === ' ') return '&nbsp;';
+                    return `<span class="hero-letter">${char}</span>`;
+                }).join('');
+            };
+            splitHeroName(heroLine1);
+            splitHeroName(heroLine2);
+        }
+        const heroLetters = $$('.hero-letter');
 
+        if (heroLetters.length > 0) {
             // Hover elastic repelling effect (Gojo Infinity simulation)
-            $$('.hero-letter').forEach(l => {
+            heroLetters.forEach(l => {
                 l.addEventListener('mouseenter', () => {
                     gsap.to(l, {
                         x: (Math.random() - 0.5) * 16,

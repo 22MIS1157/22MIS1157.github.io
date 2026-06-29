@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Afnaan Ahmed P 「呪術師」— Software Engineer & AI Developer</title>
-    <meta name="description" content="Portfolio of Afnaan Ahmed P — Special Grade Sorcerer of Software Engineering & AI">
+    <title>Afnaan Ahmed P — Software Engineer & AI Developer</title>
+    <meta name="description" content="Portfolio of Afnaan Ahmed P — Systems Engineer & AI Developer">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Noto+Serif+JP:wght@300;400;900&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     
     <!-- SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,15 90,38 90,82 50,95 10,82 10,38' fill='%237C3AED'/%3E%3C/svg%3E">
@@ -18,14 +18,14 @@
 </head>
 <body>
 
-    <!-- ━━ ENTRANCE ANIMATION: SUKUNA ARRIVAL SEQUENCE ━━ -->
-    <div class="sukuna-entrance-overlay" id="entranceLoader">
+    <!-- ━━ ENTRANCE ANIMATION: SYSTEM ARRIVAL SEQUENCE ━━ -->
+    <div class="tech-entrance-overlay" id="entranceLoader">
         <!-- Phase 1: Center Pulse Canvas -->
         <canvas class="pulse-canvas" id="pulseCanvas"></canvas>
         
-        <!-- Phase 2: Calligraphic Cursed Mark -->
+        <!-- Phase 2: Calligraphic Brand Mark -->
         <div class="cursed-mark-container" id="cursedMarkWrap">
-            <svg class="sukuna-mark-svg" viewBox="0 0 100 100" id="sukunaMarkSvg">
+            <svg class="brand-mark-svg" viewBox="0 0 100 100" id="brandMarkSvg">
                 <path class="mark-path" d="M 20 25 L 80 25" />
                 <path class="mark-path" d="M 50 25 L 50 75" />
                 <path class="mark-path" d="M 30 45 L 70 45" />
@@ -44,29 +44,16 @@
         <div class="domain-perspective-grid-container" id="perspectiveGridWrap">
             <div class="domain-grid-plane"></div>
         </div>
-        
-        <!-- Phase 3 Kanji watermarks -->
-        <div class="entrance-kanji-wrap" id="entranceKanji">
-            <span class="ent-kanji-char">無</span>
-            <span class="ent-kanji-char">為</span>
-            <span class="ent-kanji-char">転</span>
-            <span class="ent-kanji-char">変</span>
-        </div>
 
         <!-- Phase 4: Impact Frame Burst Canvas -->
         <canvas class="impact-canvas" id="impactCanvas"></canvas>
 
-        <!-- Phase 5: Name & Oath Burn In -->
+        <!-- Phase 5: Name Burn In (2 Lines) -->
         <div class="entrance-name-container" id="entranceNameWrap">
             <h1 class="entrance-name-title" id="entName">
-                <!-- Spans injected via JS for staggered burn -->
+                <span class="ent-name-line" id="entNameLine1">AFNAAN</span>
+                <span class="ent-name-line" id="entNameLine2">AHMED P</span>
             </h1>
-            <div class="entrance-kanji-sub" id="entKanjiSub">
-                <!-- SVG Tracing path for 「呪術師」 -->
-                <svg class="jujutsushi-svg" viewBox="0 0 120 40">
-                    <text x="50%" y="28" text-anchor="middle" class="jujutsushi-text">呪術師</text>
-                </svg>
-            </div>
             <div class="entrance-role-type" id="entRoleType"></div>
         </div>
     </div>
@@ -76,7 +63,7 @@
     <div class="css-fallback-particles"></div>
     <div class="domain-grid-bg" id="parallaxGridBg"></div>
     
-    <!-- Cursed Energy Vein cracks in reality -->
+    <!-- Geometric cracks / vein lines -->
     <svg class="cursed-veins-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
         <path d="M 500,500 L 480,420 L 410,380 L 390,320 M 410,380 L 440,350 M 480,420 L 520,380 L 530,310 M 520,380 L 560,390" class="vein-path" />
         <path d="M 500,500 L 520,580 L 590,620 L 610,680 M 590,620 L 560,650 M 520,580 L 480,620 L 470,690 M 480,620 L 440,610" class="vein-path" />
@@ -98,29 +85,24 @@
         
         <div class="nav-links" id="navLinks">
             <a href="#profile" class="nav-item">
-                <span class="nav-kanji">プロフィール</span>
                 <span class="nav-txt">Profile</span>
             </a>
             <a href="#technique-core" class="nav-item">
-                <span class="nav-kanji">技術</span>
                 <span class="nav-txt">Technique Core</span>
             </a>
             <a href="#missions" class="nav-item">
-                <span class="nav-kanji">任務</span>
                 <span class="nav-txt">Missions</span>
             </a>
             <a href="#records" class="nav-item">
-                <span class="nav-kanji">記録</span>
                 <span class="nav-txt">Records</span>
             </a>
             <a href="#contact" class="nav-item">
-                <span class="nav-kanji">連絡</span>
                 <span class="nav-txt">Contact</span>
             </a>
         </div>
 
         <div class="sys-right-wrap">
-            <div class="special-grade-badge">SPECIAL GRADE</div>
+            <div class="special-grade-badge">SENIOR GRADE</div>
             <!-- Hamburger button for mobile devices -->
             <button class="hamburger-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
@@ -132,7 +114,6 @@
 
     <!-- ━━ HERO MAIN INTERIOR ━━ -->
     <section class="hero-section" id="hero">
-        <div class="kanji-watermark hero-kanji-bg" data-depth="0.40">力</div>
         
         <!-- Interactive seals rotating in background -->
         <svg class="decorative-seal-circle seal--purple" viewBox="0 0 200 200" data-depth="0.65">
@@ -148,12 +129,13 @@
 
         <div class="hero-container">
             <div class="hero-badge-pill scroll-reveal-node">
-                <span>呪術師 · SPECIAL GRADE SORCERER</span>
+                <span>INTELLIGENT SYSTEMS ENGINEER</span>
             </div>
             
             <div class="hero-name-wrapper">
                 <h1 class="hero-title" id="heroTitle">
-                    <!-- Spans injected via JS for Gojo Infinity Hover elastic effect -->
+                    <span class="hero-name-line" id="heroNameLine1">AFNAAN</span>
+                    <span class="hero-name-line" id="heroNameLine2">AHMED P</span>
                 </h1>
             </div>
 
@@ -163,14 +145,9 @@
 
             <p class="hero-subtitle scroll-reveal-node">M.Tech Integrated Software Engineering · VIT Chennai · Class of 2027</p>
 
-            <div class="sorcerer-oath-block scroll-reveal-node">
-                <div class="oath-jp">「呪力は技術に宿る」</div>
-                <div class="oath-en">"Cursed energy lives in technique"</div>
-            </div>
-
             <div class="hero-actions scroll-reveal-node">
                 <a href="#missions" class="sys-btn sys-btn--missions" id="btnViewMissions">
-                    <span class="btn-text">VIEW MISSIONS</span>
+                    <span class="btn-text">VIEW PROJECTS</span>
                 </a>
                 <a href="#contact" class="sys-btn sys-btn--contact" id="btnContactMe">
                     <span class="btn-text">CONTACT ME</span>
@@ -181,12 +158,12 @@
             <div class="hero-stats-hud scroll-reveal-node">
                 <div class="hud-stat-item">
                     <span class="hud-stat-num" data-target="4">0</span>
-                    <span class="hud-stat-lbl">Missions</span>
+                    <span class="hud-stat-lbl">Projects</span>
                 </div>
                 <div class="hud-stat-divider"></div>
                 <div class="hud-stat-item">
                     <span class="hud-stat-num" data-target="15">0</span>
-                    <span class="hud-stat-lbl">Techniques</span>
+                    <span class="hud-stat-lbl">Core Techs</span>
                 </div>
                 <div class="hud-stat-divider"></div>
                 <div class="hud-stat-item">
@@ -196,23 +173,22 @@
                 <div class="hud-stat-divider"></div>
                 <div class="hud-stat-item">
                     <span class="hud-stat-num" data-target="5">0</span>
-                    <span class="hud-stat-lbl">Cloud Seals</span>
+                    <span class="hud-stat-lbl">Cloud Services</span>
                 </div>
             </div>
         </div>
 
         <div class="scroll-down-hint">
-            <span class="hint-kanji">下へ</span>
+            <span class="hint-kanji">SCROLL</span>
             <div class="hint-pulse-line"></div>
         </div>
     </section>
 
     <!-- ━━ ABOUT / PROFILE SECTION ━━ -->
     <section class="sys-section scroll-reveal-node" id="profile" data-section-name="PROFILE">
-        <div class="kanji-watermark section-kanji-bg" data-depth="0.40">術</div>
         
         <div class="container">
-            <h2 class="section-heading">SORCERER SPECS</h2>
+            <h2 class="section-heading">ENGINEER SPECIFICATIONS</h2>
             <p class="section-subheading">Innate attributes & background coordinates</p>
             
             <div class="about-grid">
@@ -228,8 +204,6 @@
                             <line x1="20" y1="60" x2="80" y2="60" stroke="var(--text-muted)" stroke-width="0.3" stroke-dasharray="2,2"/>
                             <!-- Head structure -->
                             <polygon points="50,22 35,42 38,58 50,66 62,58 65,42" fill="none" stroke="var(--blue-technique)" stroke-width="1"/>
-                            <!-- Eyes alignment lines -->
-                            <line x1="38" y1="46" x2="62" y2="46" stroke="var(--sukuna-crimson)" stroke-width="0.5"/>
                             <!-- Collar & neck draft -->
                             <path d="M 44,62 L 40,75 L 28,82 L 32,105 L 68,105 L 72,82 L 60,75 L 56,62" fill="none" stroke="var(--blue-technique)" stroke-width="0.8"/>
                             <path d="M 36,87 L 50,72 L 64,87" fill="none" stroke="var(--hollow-purple)" stroke-width="0.6"/>
@@ -240,8 +214,8 @@
                     <div class="id-card-details">
                         <h3 class="id-name">AFNAAN AHMED P</h3>
                         <div class="id-badge-row">
-                            <span class="id-jujutsu">呪術師 / SORCERER</span>
-                            <span class="id-grade-tag">GRADE 1</span>
+                            <span class="id-jujutsu">SYSTEMS ENGINEER</span>
+                            <span class="id-grade-tag">SENIOR GRADE</span>
                         </div>
                         <div class="id-divider-ornament">
                             <span class="divider-line"></span>
@@ -250,8 +224,8 @@
                         </div>
                         <div class="id-attribute-list">
                             <div class="id-attr-row"><span class="id-lbl">CLASS:</span><span class="id-val">Software Engineer & AI Developer</span></div>
-                            <div class="id-attr-row"><span class="id-lbl">AFFIL:</span><span class="id-val">VIT Chennai (Jujutsu High equivalent)</span></div>
-                            <div class="id-attr-row"><span class="id-lbl">SPEC:</span><span class="id-val">Cursed AI Techniques</span></div>
+                            <div class="id-attr-row"><span class="id-lbl">AFFIL:</span><span class="id-val">VIT Chennai</span></div>
+                            <div class="id-attr-row"><span class="id-lbl">SPEC:</span><span class="id-val">Applied AI Systems</span></div>
                             <div class="id-attr-row"><span class="id-lbl">STATUS:</span><span class="id-val">Active · Pre-Final Year</span></div>
                         </div>
                     </div>
@@ -280,11 +254,10 @@
 
     <!-- ━━ SKILLS / TECHNIQUE CORE SECTION ━━ -->
     <section class="sys-section sys-section--alt scroll-reveal-node" id="technique-core" data-section-name="TECH CORE">
-        <div class="kanji-watermark section-kanji-bg vertical-watermark" data-depth="0.40">無下限</div>
         
         <div class="container">
-            <h2 class="section-heading">INNATE TECHNIQUE CORE</h2>
-            <p class="section-subheading">Active domains & binding vow alignments</p>
+            <h2 class="section-heading">CORE TECHNICAL CAPABILITIES</h2>
+            <p class="section-subheading">Active tech domains & engineering bindings</p>
             
             <div class="skills-grid">
                 <!-- CARD 1 — PROGRAMMING DOMAIN -->
@@ -292,7 +265,7 @@
                     <div class="card-top-strip"></div>
                     <div class="card-header-row">
                         <h3 class="domain-title">PROGRAMMING DOMAIN</h3>
-                        <span class="domain-kanji">言語呪術 / Language Curses</span>
+                        <span class="domain-kanji">Core Programming Languages</span>
                     </div>
                     <div class="card-skills-nodes">
                         <span class="skill-pill-node" data-skill="Python" data-level="95%" data-desc="Primary programming language used for ML modeling, deep learning networks, data engineering, REST APIs, and automation scripts.">Python</span>
@@ -312,7 +285,7 @@
                     <div class="card-top-strip"></div>
                     <div class="card-header-row">
                         <h3 class="domain-title">AI RESEARCH DOMAIN</h3>
-                        <span class="domain-kanji">呪霊研究 / Cursed Research</span>
+                        <span class="domain-kanji">Applied AI Research</span>
                     </div>
                     <div class="card-skills-nodes">
                         <span class="skill-pill-node" data-skill="PyTorch & CNN" data-level="94%" data-desc="Inception architectures, deep neural network training, CNN image classification, and backpropagation models.">PyTorch & CNN</span>
@@ -332,7 +305,7 @@
                     <div class="card-top-strip"></div>
                     <div class="card-header-row">
                         <h3 class="domain-title">ENGINEERING BINDINGS</h3>
-                        <span class="domain-kanji">縛り / Binding Vows</span>
+                        <span class="domain-kanji">Software Engineering Bindings</span>
                     </div>
                     <div class="card-skills-nodes">
                         <span class="skill-pill-node" data-skill="FastAPI & REST" data-level="92%" data-desc="High-performance backend routes, request serialization schemas, and secure API gateways.">FastAPI & REST</span>
@@ -347,12 +320,12 @@
                     </div>
                 </div>
 
-                <!-- CARD 4 — CLOUD SEALS -->
-                <div class="domain-card card--gold scroll-reveal-node" data-category="Cloud Seals">
+                <!-- CARD 4 — CLOUD INTEGRATION -->
+                <div class="domain-card card--gold scroll-reveal-node" data-category="Cloud Integration">
                     <div class="card-top-strip"></div>
                     <div class="card-header-row">
-                        <h3 class="domain-title">CLOUD SEALS</h3>
-                        <span class="domain-kanji">雲印術 / Cloud Seals</span>
+                        <h3 class="domain-title">CLOUD INTEGRATION</h3>
+                        <span class="domain-kanji">Cloud Architecture & Integration</span>
                     </div>
                     <div class="card-skills-nodes">
                         <span class="skill-pill-node" data-skill="AWS Lambda" data-level="90%" data-desc="Serverless Lambda deployment containers, API Gateway routes, and serverless compute bindings.">AWS Lambda</span>
@@ -410,11 +383,10 @@
 
     <!-- ━━ PROJECTS / MISSIONS SECTION ━━ -->
     <section class="sys-section scroll-reveal-node" id="missions" data-section-name="MISSIONS">
-        <div class="kanji-watermark section-kanji-bg" data-depth="0.40">呪</div>
         
         <div class="container">
-            <h2 class="section-heading">COMPLETED MISSIONS</h2>
-            <p class="section-subheading">Operational database entries & field deployments</p>
+            <h2 class="section-heading">COMPLETED DEPLOYMENTS</h2>
+            <p class="section-subheading">Production systems & database integrations</p>
             
             <div class="missions-grid">
                 
@@ -424,7 +396,7 @@
                     <canvas class="telemetry-sim-canvas" data-sim="vpark"></canvas>
                     
                     <div class="mission-card-header">
-                        <span class="mission-code">MISSION 01</span>
+                        <span class="mission-code">PROJECT 01</span>
                         <span class="mission-status-stamp">[COMPLETED ✓]</span>
                     </div>
 
@@ -470,7 +442,7 @@
                     <canvas class="telemetry-sim-canvas" data-sim="anemia"></canvas>
                     
                     <div class="mission-card-header">
-                        <span class="mission-code">MISSION 02</span>
+                        <span class="mission-code">PROJECT 02</span>
                         <span class="mission-status-stamp">[COMPLETED ✓]</span>
                     </div>
 
@@ -516,7 +488,7 @@
                     <canvas class="telemetry-sim-canvas" data-sim="lexcloud"></canvas>
                     
                     <div class="mission-card-header">
-                        <span class="mission-code">MISSION 03</span>
+                        <span class="mission-code">PROJECT 03</span>
                         <span class="mission-status-stamp">[COMPLETED ✓]</span>
                     </div>
 
@@ -562,7 +534,7 @@
                     <canvas class="telemetry-sim-canvas" data-sim="sepsis"></canvas>
                     
                     <div class="mission-card-header">
-                        <span class="mission-code">MISSION 04</span>
+                        <span class="mission-code">PROJECT 04</span>
                         <span class="mission-status-stamp">[COMPLETED ✓]</span>
                     </div>
 
@@ -609,10 +581,9 @@
 
     <!-- ━━ EXPERIENCE / RECORDS SECTION ━━ -->
     <section class="sys-section sys-section--alt scroll-reveal-node" id="records" data-section-name="RECORDS">
-        <div class="kanji-watermark section-kanji-bg" data-depth="0.40">記録</div>
         
         <div class="container">
-            <h2 class="section-heading">SORCERER'S RECORDS</h2>
+            <h2 class="section-heading">PROFESSIONAL TIMELINE</h2>
             <p class="section-subheading">Academic Chronicles, Guild Roles, & Professional milestones</p>
             
             <div class="timeline-wrapper">
@@ -710,28 +681,25 @@
 
     <!-- ━━ CONTACT / "SUMMON" SECTION ━━ -->
     <section class="sys-section scroll-reveal-node" id="contact" data-section-name="CONTACT">
-        <div class="kanji-watermark section-kanji-bg" data-depth="0.40">魂</div>
         
         <div class="container">
-            <h2 class="section-heading">SUMMON THE SORCERER</h2>
+            <h2 class="section-heading">ESTABLISH INTERFACE LINK</h2>
             <p class="section-subheading">Establish interface connections & signal hooks</p>
             
-            <!-- Summoning circle central graphic -->
+            <!-- Summoning circle replaced with clean tech radar circle -->
             <div class="summoning-circle-wrap">
                 <svg class="summoning-circle-svg" viewBox="0 0 200 200">
-                    <circle class="circle-outer" cx="100" cy="100" r="90" />
-                    <circle class="circle-middle" cx="100" cy="100" r="70" />
-                    <circle class="circle-inner" cx="100" cy="100" r="50" />
-                    <!-- Geometric 6-pointed star pattern -->
-                    <polygon points="100,50 143,125 57,125" fill="none" stroke="var(--hollow-purple)" stroke-width="0.6" opacity="0.3"/>
-                    <polygon points="100,150 143,75 57,75" fill="none" stroke="var(--hollow-purple)" stroke-width="0.6" opacity="0.3"/>
-                    <!-- Equidistant diamond ticks -->
-                    <g class="circle-ticks">
-                        <polygon points="100,12 103,18 100,24 97,18" fill="var(--hollow-purple)" opacity="0.6" />
-                        <polygon points="100,176 103,182 100,188 97,182" fill="var(--hollow-purple)" opacity="0.6" />
-                        <polygon points="12,100 18,97 24,100 18,103" fill="var(--hollow-purple)" opacity="0.6" />
-                        <polygon points="176,100 182,97 188,100 182,103" fill="var(--hollow-purple)" opacity="0.6" />
-                    </g>
+                    <circle class="circle-outer" cx="100" cy="100" r="90" fill="none" stroke="var(--blue-technique)" stroke-width="1" opacity="0.15"/>
+                    <circle class="circle-middle" cx="100" cy="100" r="70" fill="none" stroke="var(--blue-technique)" stroke-width="1" opacity="0.25" stroke-dasharray="5,5"/>
+                    <circle class="circle-inner" cx="100" cy="100" r="50" fill="none" stroke="var(--blue-technique)" stroke-width="1.5" opacity="0.4"/>
+                    <!-- Radar Crosshairs -->
+                    <line x1="100" y1="20" x2="100" y2="180" stroke="var(--hollow-purple)" stroke-width="0.8" opacity="0.3" stroke-dasharray="4,4"/>
+                    <line x1="20" y1="100" x2="180" y2="100" stroke="var(--hollow-purple)" stroke-width="0.8" opacity="0.3" stroke-dasharray="4,4"/>
+                    <!-- Ticks -->
+                    <circle cx="100" cy="50" r="2.5" fill="var(--hollow-purple)" opacity="0.6"/>
+                    <circle cx="100" cy="150" r="2.5" fill="var(--hollow-purple)" opacity="0.6"/>
+                    <circle cx="50" cy="100" r="2.5" fill="var(--hollow-purple)" opacity="0.6"/>
+                    <circle cx="150" cy="100" r="2.5" fill="var(--hollow-purple)" opacity="0.6"/>
                 </svg>
             </div>
 
@@ -772,7 +740,7 @@
 
             <div class="closing-declaration scroll-reveal-node">
                 <div class="closing-sorcerer">— Afnaan Ahmed P —</div>
-                <p class="closing-quote">「 Architecting intelligent systems, one technique at a time. 」</p>
+                <p class="closing-quote">Architecting intelligent systems, one system at a time.</p>
                 <div class="closing-vit">VIT Chennai · 2026</div>
             </div>
         </div>
@@ -781,7 +749,7 @@
     <!-- ━━ FOOTER ━━ -->
     <footer class="sys-footer">
         <p>Designed & Engineered by <strong>Afnaan Ahmed P</strong> · 2026</p>
-        <p class="footer-note">「呪術師 — Powered by Cursed Energy & Python」</p>
+        <p class="footer-note">SYSTEM ENGINE — Powered by Python & AWS Cloud Services</p>
         
         <!-- Hexagonal back-to-top button -->
         <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to Top">
@@ -796,23 +764,18 @@
     <div class="mobile-nav-overlay" id="mobileNavOverlay">
         <div class="mobile-nav-links">
             <a href="#profile" class="mob-nav-item">
-                <span class="mob-kanji">プロフィール</span>
                 <span class="mob-text">Profile</span>
             </a>
             <a href="#technique-core" class="mob-nav-item">
-                <span class="mob-kanji">技術</span>
                 <span class="mob-text">Technique Core</span>
             </a>
             <a href="#missions" class="mob-nav-item">
-                <span class="mob-kanji">任務</span>
                 <span class="mob-text">Missions</span>
             </a>
             <a href="#records" class="mob-nav-item">
-                <span class="mob-kanji">記録</span>
                 <span class="mob-text">Records</span>
             </a>
             <a href="#contact" class="mob-nav-item">
-                <span class="mob-kanji">連絡</span>
                 <span class="mob-text">Contact</span>
             </a>
         </div>

@@ -225,6 +225,9 @@ button {
     align-items: center;
 }
 .entrance-name-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: var(--font-name);
     font-size: clamp(3.5rem, 7vw, 7.5rem);
     font-weight: 900;
@@ -232,6 +235,10 @@ button {
     letter-spacing: 0.05em;
     line-height: 1.1;
     margin-bottom: 12px;
+}
+.ent-name-line {
+    display: block;
+    white-space: nowrap;
 }
 .ent-char {
     display: inline-block;
@@ -576,15 +583,22 @@ button {
     justify-content: center;
 }
 .hero-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: var(--font-name);
     font-size: clamp(3.5rem, 7vw, 7.5rem);
     font-weight: 900;
     color: var(--infinity-white);
-    line-height: 1;
+    line-height: 1.1;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 12px;
     text-shadow: 0 0 40px var(--glow-blue), 0 0 80px var(--glow-purple);
+}
+.hero-name-line {
+    display: block;
+    white-space: nowrap;
 }
 .hero-letter {
     display: inline-block;
