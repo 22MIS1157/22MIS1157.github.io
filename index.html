@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afnaan Ahmed P — Software Engineer & AI Developer</title>
-    <meta name="description" content="Portfolio of Afnaan Ahmed P — M.Tech Software Engineering, VIT Chennai. Solo Leveling inspired.">
+    <meta name="description" content="Portfolio of Afnaan Ahmed P — M.Tech Software Engineering, VIT Chennai.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,13 +19,17 @@
             <div class="loader__ring"></div>
             <div class="loader__ring loader__ring--2"></div>
             <div class="loader__ring loader__ring--3"></div>
+            <div class="loader__runes" id="loaderRunes"></div>
             <div class="loader__sys-text">
                 <p class="loader__msg" id="loaderMsg">SYSTEM INITIALIZING...</p>
                 <div class="loader__bar"><div class="loader__fill" id="loaderFill"></div></div>
-                <p class="loader__sub" id="loaderSub">HUNTER PROFILE DETECTED</p>
+                <p class="loader__sub" id="loaderSub">PROFILE DETECTED</p>
             </div>
         </div>
     </div>
+
+    <!-- ═══ ARISE FLASH OVERLAY ═══ -->
+    <div class="arise-flash" id="ariseFlash"></div>
 
     <!-- ═══ SHADOW PARTICLES CANVAS ═══ -->
     <canvas id="shadowCanvas" class="shadow-canvas"></canvas>
@@ -40,10 +44,10 @@
             <span class="nav__name">AFNAAN</span>
         </a>
         <div class="nav__links">
-            <a href="#about" class="nav__link">Status</a>
-            <a href="#skills" class="nav__link">Arsenal</a>
-            <a href="#projects" class="nav__link">Quests</a>
-            <a href="#experience" class="nav__link">Records</a>
+            <a href="#about" class="nav__link">About</a>
+            <a href="#skills" class="nav__link">Skills</a>
+            <a href="#projects" class="nav__link">Projects</a>
+            <a href="#experience" class="nav__link">Experience</a>
             <a href="#contact" class="nav__link">Contact</a>
         </div>
     </nav>
@@ -58,18 +62,25 @@
             <div class="hero__grid"></div>
             <canvas class="hero__particles" id="heroParticles"></canvas>
         </div>
+        <!-- Arise ground effect -->
+        <div class="arise-ground" id="ariseGround">
+            <div class="arise-ground__circle"></div>
+            <div class="arise-ground__circle arise-ground__circle--2"></div>
+            <div class="arise-ground__circle arise-ground__circle--3"></div>
+        </div>
         <div class="hero__content">
-            <!-- System notification -->
             <div class="sys-notify" id="sysNotify">
                 <span class="sys-notify__icon">!</span>
-                <span class="sys-notify__text">A NEW HUNTER HAS BEEN DETECTED</span>
+                <span class="sys-notify__text">A NEW DEVELOPER HAS ARRIVED</span>
             </div>
+            <!-- NAME with letter-by-letter ARISE effect -->
             <h1 class="hero__name" id="heroName">
-                <span class="hero__name-line">AFNAAN</span>
-                <span class="hero__name-line hero__name-line--sub">AHMED P</span>
+                <span class="arise-letter" style="--i:0">A</span><span class="arise-letter" style="--i:1">F</span><span class="arise-letter" style="--i:2">N</span><span class="arise-letter" style="--i:3">A</span><span class="arise-letter" style="--i:4">A</span><span class="arise-letter" style="--i:5">N</span>
+                <br>
+                <span class="arise-letter arise-letter--sub" style="--i:7">A</span><span class="arise-letter arise-letter--sub" style="--i:8">H</span><span class="arise-letter arise-letter--sub" style="--i:9">M</span><span class="arise-letter arise-letter--sub" style="--i:10">E</span><span class="arise-letter arise-letter--sub" style="--i:11">D</span><span class="arise-letter arise-letter--sub arise-letter--space" style="--i:12">&nbsp;</span><span class="arise-letter arise-letter--sub" style="--i:13">P</span>
             </h1>
             <div class="hero__rank-badge">
-                <span class="rank-badge__label">HUNTER RANK</span>
+                <span class="rank-badge__label">DEVELOPER RANK</span>
                 <span class="rank-badge__rank">S</span>
                 <span class="rank-badge__class">SOFTWARE ENGINEER</span>
             </div>
@@ -82,11 +93,11 @@
             <div class="hero__cta">
                 <a href="#projects" class="btn btn--primary">
                     <span class="btn__icon">⚔</span>
-                    <span>VIEW QUESTS</span>
+                    <span>VIEW PROJECTS</span>
                 </a>
                 <a href="#contact" class="btn btn--ghost">
                     <span class="btn__icon">✉</span>
-                    <span>SEND MESSAGE</span>
+                    <span>CONTACT ME</span>
                 </a>
             </div>
         </div>
@@ -97,15 +108,17 @@
     </section>
 
     <!-- ═══════════════════════════════════
-         ABOUT — PLAYER STATUS WINDOW
+         ABOUT — STATUS WINDOW
     ═══════════════════════════════════ -->
     <section id="about" class="section">
-        <div class="section__bg-text">STATUS</div>
+        <div class="section__bg-text">ABOUT</div>
+        <!-- Dungeon enter overlay -->
+        <div class="dungeon-enter" data-section="about"></div>
         <div class="container">
             <div class="sys-window sys-window--about">
                 <div class="sys-window__header">
                     <span class="sys-window__dot"></span>
-                    <span class="sys-window__title">PLAYER STATUS</span>
+                    <span class="sys-window__title">ABOUT ME</span>
                     <span class="sys-window__dot"></span>
                 </div>
                 <div class="sys-window__body">
@@ -120,12 +133,12 @@
                         <div class="about__stats">
                             <div class="stat scroll-reveal">
                                 <span class="stat__number" data-target="4">0</span>
-                                <span class="stat__label">Quests Cleared</span>
+                                <span class="stat__label">Shipped Projects</span>
                                 <div class="stat__bar"><div class="stat__fill" style="--w:80%"></div></div>
                             </div>
                             <div class="stat scroll-reveal">
                                 <span class="stat__number" data-target="2">0</span>
-                                <span class="stat__label">Raid Experience</span>
+                                <span class="stat__label">Internships</span>
                                 <div class="stat__bar"><div class="stat__fill" style="--w:40%"></div></div>
                             </div>
                             <div class="stat scroll-reveal">
@@ -148,19 +161,20 @@
     <!-- ═══ ACHIEVEMENT TICKER ═══ -->
     <div class="ticker">
         <div class="ticker__track">
-            <span class="ticker__item">⚔ 4 Quests Cleared</span><span class="ticker__item">🛡 15+ Weapons Mastered</span><span class="ticker__item">📜 66 Subjects Cleared</span><span class="ticker__item">🏆 96% Best AUC</span><span class="ticker__item">☁ 5 AWS Services</span><span class="ticker__item">🔬 251 Patient Samples</span><span class="ticker__item">⚡ Sub-Second Latency</span><span class="ticker__item">☕ ∞ Coffee</span>
-            <span class="ticker__item">⚔ 4 Quests Cleared</span><span class="ticker__item">🛡 15+ Weapons Mastered</span><span class="ticker__item">📜 66 Subjects Cleared</span><span class="ticker__item">🏆 96% Best AUC</span><span class="ticker__item">☁ 5 AWS Services</span><span class="ticker__item">🔬 251 Patient Samples</span><span class="ticker__item">⚡ Sub-Second Latency</span><span class="ticker__item">☕ ∞ Coffee</span>
+            <span class="ticker__item">⚔ 4 Shipped Projects</span><span class="ticker__item">🛡 15+ Technologies</span><span class="ticker__item">📜 66 Subjects Cleared</span><span class="ticker__item">🏆 96% Best AUC</span><span class="ticker__item">☁ 5 AWS Services</span><span class="ticker__item">🔬 251 Patient Samples</span><span class="ticker__item">⚡ Sub-Second Latency</span><span class="ticker__item">☕ ∞ Coffee</span>
+            <span class="ticker__item">⚔ 4 Shipped Projects</span><span class="ticker__item">🛡 15+ Technologies</span><span class="ticker__item">📜 66 Subjects Cleared</span><span class="ticker__item">🏆 96% Best AUC</span><span class="ticker__item">☁ 5 AWS Services</span><span class="ticker__item">🔬 251 Patient Samples</span><span class="ticker__item">⚡ Sub-Second Latency</span><span class="ticker__item">☕ ∞ Coffee</span>
         </div>
     </div>
 
     <!-- ═══════════════════════════════════
-         SKILLS — HUNTER ARSENAL
+         SKILLS — TECHNICAL SKILLS
     ═══════════════════════════════════ -->
     <section class="section section--alt" id="skills">
-        <div class="section__bg-text">ARSENAL</div>
+        <div class="section__bg-text">SKILLS</div>
+        <div class="dungeon-enter" data-section="skills"></div>
         <div class="container">
-            <h2 class="section__title scroll-reveal">Hunter <span class="text-glow">Arsenal</span></h2>
-            <p class="section__subtitle scroll-reveal">Weapons and tools I wield in battle</p>
+            <h2 class="section__title scroll-reveal">Technical <span class="text-glow">Skills</span></h2>
+            <p class="section__subtitle scroll-reveal">Tools and technologies I work with</p>
         </div>
         <div class="marquee-wrapper">
             <div class="marquee-row scroll-reveal" data-direction="right"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML</span><span class="marquee-item mi--lang">CSS</span><span class="marquee-item mi--lang">JavaScript</span><span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML</span><span class="marquee-item mi--lang">CSS</span><span class="marquee-item mi--lang">JavaScript</span></div></div></div>
@@ -172,20 +186,22 @@
     </section>
 
     <!-- ═══════════════════════════════════
-         PROJECTS — QUEST LOG / CLEARED DUNGEONS
+         PROJECTS
     ═══════════════════════════════════ -->
     <section class="section" id="projects">
-        <div class="section__bg-text">QUESTS</div>
+        <div class="section__bg-text">PROJECTS</div>
+        <div class="dungeon-enter" data-section="projects"></div>
         <div class="container">
-            <h2 class="section__title scroll-reveal">Cleared <span class="text-glow">Dungeons</span></h2>
-            <p class="section__subtitle scroll-reveal">Quest log of completed operations</p>
+            <h2 class="section__title scroll-reveal">Deployed <span class="text-glow">Systems</span></h2>
+            <p class="section__subtitle scroll-reveal">End-to-end projects I've built and shipped</p>
             <div class="quest-feed">
-                <!-- QUEST 01 — FEATURED -->
-                <article class="quest quest--featured scroll-reveal" data-rank="S">
-                    <div class="quest__rank-tag">S-RANK QUEST</div>
+                <!-- PROJECT 01 — FEATURED -->
+                <article class="quest quest--featured scroll-reveal" data-rank="S" data-project="vpark">
+                    <canvas class="quest__canvas" data-anim="vpark"></canvas>
+                    <div class="quest__rank-tag">⭐ FEATURED</div>
                     <div class="quest__header">
-                        <span class="quest__num">QUEST 01</span>
-                        <span class="quest__status">✓ CLEARED</span>
+                        <span class="quest__num">PROJECT 01</span>
+                        <span class="quest__status">✓ SHIPPED</span>
                     </div>
                     <h3 class="quest__name">ATCC VPark</h3>
                     <p class="quest__type">AI + IoT Smart Parking with Live Web Dashboard</p>
@@ -200,11 +216,12 @@
                     <span class="quest__year">Apr 2026</span>
                 </article>
 
-                <!-- QUEST 02 -->
-                <article class="quest scroll-reveal" data-rank="A">
+                <!-- PROJECT 02 -->
+                <article class="quest scroll-reveal" data-rank="A" data-project="anemia">
+                    <canvas class="quest__canvas" data-anim="anemia"></canvas>
                     <div class="quest__header">
-                        <span class="quest__num">QUEST 02</span>
-                        <span class="quest__status">✓ CLEARED</span>
+                        <span class="quest__num">PROJECT 02</span>
+                        <span class="quest__status">✓ SHIPPED</span>
                     </div>
                     <h3 class="quest__name">Non-Invasive Anemia Detection</h3>
                     <p class="quest__type">AI System from Fingernail Photos</p>
@@ -219,11 +236,12 @@
                     <span class="quest__year">2025</span>
                 </article>
 
-                <!-- QUEST 03 -->
-                <article class="quest scroll-reveal" data-rank="A">
+                <!-- PROJECT 03 -->
+                <article class="quest scroll-reveal" data-rank="A" data-project="lexcloud">
+                    <canvas class="quest__canvas" data-anim="lexcloud"></canvas>
                     <div class="quest__header">
-                        <span class="quest__num">QUEST 03</span>
-                        <span class="quest__status">✓ CLEARED</span>
+                        <span class="quest__num">PROJECT 03</span>
+                        <span class="quest__status">✓ SHIPPED</span>
                     </div>
                     <h3 class="quest__name">LexCloud</h3>
                     <p class="quest__type">Cloud-Native API + AI Integration</p>
@@ -238,11 +256,12 @@
                     <span class="quest__year">2024</span>
                 </article>
 
-                <!-- QUEST 04 -->
-                <article class="quest scroll-reveal" data-rank="S">
+                <!-- PROJECT 04 -->
+                <article class="quest scroll-reveal" data-rank="S" data-project="sepsis">
+                    <canvas class="quest__canvas" data-anim="sepsis"></canvas>
                     <div class="quest__header">
-                        <span class="quest__num">QUEST 04</span>
-                        <span class="quest__status">✓ CLEARED</span>
+                        <span class="quest__num">PROJECT 04</span>
+                        <span class="quest__status">✓ SHIPPED</span>
                     </div>
                     <h3 class="quest__name">Predicting ICU Patient Mortality</h3>
                     <p class="quest__type">Machine Learning on Clinical Data</p>
@@ -261,14 +280,13 @@
     </section>
 
     <!-- ═══════════════════════════════════
-         EXPERIENCE — HUNTER RECORDS
+         EXPERIENCE
     ═══════════════════════════════════ -->
     <section class="section section--alt" id="experience">
-        <div class="section__bg-text">RECORDS</div>
+        <div class="section__bg-text">EXPERIENCE</div>
+        <div class="dungeon-enter" data-section="experience"></div>
         <div class="container">
-            <h2 class="section__title scroll-reveal">Hunter <span class="text-glow">Records</span></h2>
-
-            <!-- WORK EXPERIENCE -->
+            <h2 class="section__title scroll-reveal">Work <span class="text-glow">Experience</span></h2>
             <div class="timeline">
                 <div class="timeline__line"></div>
                 <div class="timeline__item scroll-reveal">
@@ -296,7 +314,6 @@
                 </div>
             </div>
 
-            <!-- EDUCATION -->
             <h3 class="section__label scroll-reveal">Education</h3>
             <div class="timeline">
                 <div class="timeline__line"></div>
@@ -322,8 +339,7 @@
                 </div>
             </div>
 
-            <!-- LEADERSHIP -->
-            <h3 class="section__label scroll-reveal">Guild Memberships</h3>
+            <h3 class="section__label scroll-reveal">Leadership</h3>
             <div class="guild-row">
                 <div class="guild-card scroll-reveal">
                     <span class="guild-card__icon">🛡️</span>
@@ -348,7 +364,7 @@
     </section>
 
     <!-- ═══════════════════════════════════
-         CONTACT — PARTY INVITE
+         CONTACT
     ═══════════════════════════════════ -->
     <section class="section" id="contact">
         <div class="section__bg-text">CONTACT</div>
@@ -356,28 +372,16 @@
             <div class="sys-window sys-window--contact">
                 <div class="sys-window__header">
                     <span class="sys-window__dot"></span>
-                    <span class="sys-window__title">SEND MESSAGE</span>
+                    <span class="sys-window__title">GET IN TOUCH</span>
                     <span class="sys-window__dot"></span>
                 </div>
                 <div class="sys-window__body">
-                    <h2 class="contact__title scroll-reveal">Let's build something<br><span class="text-glow">legendary.</span></h2>
+                    <h2 class="contact__title scroll-reveal">Let's build something<br><span class="text-glow">extraordinary.</span></h2>
                     <div class="contact__links">
-                        <a href="mailto:Afnaanahmed.k391@gmail.com" class="contact__item scroll-reveal">
-                            <span class="contact__icon">✉</span>
-                            <span class="contact__text">Afnaanahmed.k391@gmail.com</span>
-                        </a>
-                        <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" class="contact__item scroll-reveal">
-                            <span class="contact__icon">in</span>
-                            <span class="contact__text">linkedin.com/in/afnaan22mis1157</span>
-                        </a>
-                        <a href="https://github.com/22MIS1157" target="_blank" class="contact__item scroll-reveal">
-                            <span class="contact__icon">⌘</span>
-                            <span class="contact__text">github.com/22MIS1157</span>
-                        </a>
-                        <a href="tel:+919150713929" class="contact__item scroll-reveal">
-                            <span class="contact__icon">☎</span>
-                            <span class="contact__text">+91 9150713929</span>
-                        </a>
+                        <a href="mailto:Afnaanahmed.k391@gmail.com" class="contact__item scroll-reveal"><span class="contact__icon">✉</span><span class="contact__text">Afnaanahmed.k391@gmail.com</span></a>
+                        <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" class="contact__item scroll-reveal"><span class="contact__icon">in</span><span class="contact__text">linkedin.com/in/afnaan22mis1157</span></a>
+                        <a href="https://github.com/22MIS1157" target="_blank" class="contact__item scroll-reveal"><span class="contact__icon">⌘</span><span class="contact__text">github.com/22MIS1157</span></a>
+                        <a href="tel:+919150713929" class="contact__item scroll-reveal"><span class="contact__icon">☎</span><span class="contact__text">+91 9150713929</span></a>
                     </div>
                 </div>
             </div>
