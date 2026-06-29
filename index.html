@@ -7,45 +7,19 @@
     <meta name="description" content="Portfolio of Afnaan Ahmed P — M.Tech Software Engineering, VIT Chennai.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Teko:wght@500;700&family=Rajdhani:wght@600;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@500;700&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;700&family=Rajdhani:wght@600;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@500;700&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script>
-        // HARD FAILSAFE: Ensure the page ALWAYS opens even if JS encounters a loading issue
-        setTimeout(function() {
-            var loader = document.getElementById('intro');
-            if (loader && !loader.classList.contains('hidden')) {
-                loader.classList.add('hidden');
-                setTimeout(function() { loader.style.display = 'none'; }, 1500);
-            }
-        }, 5500);
-    </script>
 </head>
 <body>
-    <!-- ═══ SYSTEM BOOT INTRO ═══ -->
-    <div class="intro" id="intro">
-        <canvas id="introCanvas" class="intro__canvas"></canvas>
-        <div class="intro__overlay">
-            <div class="intro__glitch-lines"></div>
-            <div class="intro__system-ui">
-                <div class="intro__line" id="iLine1"></div>
-                <div class="intro__line" id="iLine2"></div>
-                <div class="intro__line" id="iLine3"></div>
-                <div class="intro__line" id="iLine4"></div>
-                <div class="intro__arise" id="introArise">ARISE</div>
-            </div>
-        </div>
-        <div class="intro__gate intro__gate--left"></div>
-        <div class="intro__gate intro__gate--right"></div>
-    </div>
 
-    <!-- Interactive Magic Circle Portal Behind Hero -->
+    <!-- Magic Circle Portal Background -->
     <div class="portal-container">
         <div class="magic-circle"></div>
         <div class="magic-circle magic-circle--outer"></div>
         <div class="magic-circle magic-circle--runes"></div>
     </div>
 
-    <!-- Global Energy & Lightning Canvas -->
+    <!-- Global Energy Canvas -->
     <canvas id="globalCanvas" class="global-canvas"></canvas>
 
     <!-- Scroll Progress -->
@@ -67,45 +41,41 @@
     <section class="hero" id="hero">
         <canvas class="hero__canvas" id="heroCanvas"></canvas>
         <div class="hero__content">
-            <div class="sys-tag"><span class="sys-tag__dot"></span><span id="sysGreeting">SYSTEM DETECTING...</span></div>
+            <div class="sys-tag"><span class="sys-tag__dot"></span><span>SYSTEM STATUS: ACTIVE</span></div>
             
-            <!-- Summoning Wrapper -->
+            <!-- Summoning Name Wrapper -->
             <div class="hero__name-container">
                 <canvas id="nameCanvas" class="name-canvas"></canvas>
                 <h1 class="hero__name" id="heroName">
-                    <span class="summon-letter" style="--d:0">A</span><span class="summon-letter" style="--d:1">F</span><span class="summon-letter" style="--d:2">N</span><span class="summon-letter" style="--d:3">A</span><span class="summon-letter" style="--d:4">A</span><span class="summon-letter" style="--d:5">N</span>
-                    <br>
-                    <span class="summon-letter summon-letter--sub" style="--d:6">A</span><span class="summon-letter summon-letter--sub" style="--d:7">H</span><span class="summon-letter summon-letter--sub" style="--d:8">M</span><span class="summon-letter summon-letter--sub" style="--d:9">E</span><span class="summon-letter summon-letter--sub" style="--d:10">D</span><span class="summon-letter summon-letter--sub summon-letter--space" style="--d:11">&nbsp;</span><span class="summon-letter summon-letter--sub" style="--d:12">P</span>
+                    <span class="glitch-name" data-text="AFNAAN AHMED P">AFNAAN AHMED P</span>
                 </h1>
             </div>
 
             <div class="hero__rank-card">
-                <div class="rank-card__header">SYSTEM STATUS</div>
+                <div class="rank-card__header">ACCESS AUTHORIZATION</div>
                 <div class="rank-card__body">
-                    <div class="rank-card__row"><span>HUNTER LEVEL:</span><span class="text-glow">S-RANK</span></div>
-                    <div class="rank-card__row"><span>DESIGNATION:</span><span>SOFTWARE ENGINEER</span></div>
+                    <div class="rank-card__row"><span>SYSTEM LEVEL:</span><span class="text-glow">S-CLASS</span></div>
+                    <div class="rank-card__row"><span>ROLE:</span><span>SOFTWARE ENGINEER</span></div>
                 </div>
             </div>
 
             <div class="hero__role-line"><span>I build </span><span class="hero__role" id="heroRole">intelligent systems</span><span class="hero__cursor">|</span></div>
             
             <div class="hero__cta">
-                <a href="#projects" class="btn btn--primary"><span>ENTER DUNGEON</span></a>
-                <a href="#contact" class="btn btn--ghost"><span>INITIATE CHAT</span></a>
+                <a href="#projects" class="btn btn--primary"><span>EXPLORE PROJECTS</span></a>
+                <a href="#contact" class="btn btn--ghost"><span>GET IN TOUCH</span></a>
             </div>
         </div>
-        <div class="hero__scroll-hint"><span>SCROLL TO AWAKEN</span><div class="hero__scroll-arrow"></div></div>
+        <div class="hero__scroll-hint"><span>SCROLL TO EXPLORE</span><div class="hero__scroll-arrow"></div></div>
     </section>
 
     <!-- ═══ ABOUT SECTION ═══ -->
-    <section id="about" class="section section-gate">
-        <!-- Floating Foreground Title Overlay -->
-        <div class="section__overlay-text" id="aboutOverlayText">ABOUT</div>
+    <section id="about" class="section scroll-reveal">
         <div class="container">
             <div class="sys-window">
                 <div class="sys-window__header">
                     <span class="sys-window__dot"></span>
-                    <span class="sys-window__title">HUNTER PROFILE</span>
+                    <span class="sys-window__title">CORE PROFILE</span>
                     <span class="sys-window__dot"></span>
                 </div>
                 <div class="sys-window__body">
@@ -117,10 +87,10 @@
                             <p class="about__philosophy">"The best code is the one that doesn't just work — it communicates intent."</p>
                         </div>
                         <div class="about__stats">
-                            <div class="stat scroll-reveal"><span class="stat__number" data-target="4">0</span><span class="stat__label">Shipped Projects</span><div class="stat__bar"><div class="stat__fill" style="--w:80%"></div></div></div>
-                            <div class="stat scroll-reveal"><span class="stat__number" data-target="2">0</span><span class="stat__label">Internships</span><div class="stat__bar"><div class="stat__fill" style="--w:40%"></div></div></div>
-                            <div class="stat scroll-reveal"><span class="stat__number" data-target="96" data-suffix="%">0</span><span class="stat__label">Best Model AUC</span><div class="stat__bar"><div class="stat__fill" style="--w:96%"></div></div></div>
-                            <div class="stat scroll-reveal"><span class="stat__number" data-target="792" data-divide="100">0</span><span class="stat__label">CGPA / 10</span><div class="stat__bar"><div class="stat__fill" style="--w:79%"></div></div></div>
+                            <div class="stat"><span class="stat__number" data-target="4">0</span><span class="stat__label">Shipped Projects</span><div class="stat__bar"><div class="stat__fill" style="--w:80%"></div></div></div>
+                            <div class="stat"><span class="stat__number" data-target="2">0</span><span class="stat__label">Internships</span><div class="stat__bar"><div class="stat__fill" style="--w:40%"></div></div></div>
+                            <div class="stat"><span class="stat__number" data-target="96" data-suffix="%">0</span><span class="stat__label">Best Model AUC</span><div class="stat__bar"><div class="stat__fill" style="--w:96%"></div></div></div>
+                            <div class="stat"><span class="stat__number" data-target="792" data-divide="100">0</span><span class="stat__label">CGPA / 10</span><div class="stat__bar"><div class="stat__fill" style="--w:79%"></div></div></div>
                         </div>
                     </div>
                 </div>
@@ -135,28 +105,24 @@
     </div></div>
 
     <!-- ═══ SKILLS SECTION ═══ -->
-    <section class="section section--alt section-gate" id="skills">
-        <!-- Floating Foreground Title Overlay -->
-        <div class="section__overlay-text" id="skillsOverlayText">SKILLS</div>
+    <section class="section section--alt scroll-reveal" id="skills">
         <div class="container">
-            <h2 class="section__title">Technical <span class="text-glow">Arsenal</span></h2>
+            <h2 class="section__title">Technical <span class="text-glow">Skills</span></h2>
             <p class="section__subtitle">Weapons and tools deployed in production</p>
         </div>
         <div class="marquee-wrapper">
-            <div class="marquee-row scroll-reveal" data-direction="right"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML</span><span class="marquee-item mi--lang">CSS</span><span class="marquee-item mi--lang">JavaScript</span><span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML</span><span class="marquee-item mi--lang">CSS</span><span class="marquee-item mi--lang">JavaScript</span></div></div></div>
-            <div class="marquee-row scroll-reveal" data-direction="left"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--backend">FastAPI</span><span class="marquee-item mi--backend">REST API</span><span class="marquee-item mi--backend">WebSocket</span><span class="marquee-item mi--backend">OOP</span><span class="marquee-item mi--backend">Software Testing</span><span class="marquee-item mi--backend">Agile</span><span class="marquee-item mi--backend">Git</span><span class="marquee-item mi--backend">MySQL</span><span class="marquee-item mi--backend">FastAPI</span><span class="marquee-item mi--backend">REST API</span><span class="marquee-item mi--backend">WebSocket</span><span class="marquee-item mi--backend">OOP</span><span class="marquee-item mi--backend">Software Testing</span><span class="marquee-item mi--backend">Agile</span><span class="marquee-item mi--backend">Git</span><span class="marquee-item mi--backend">MySQL</span></div></div></div>
-            <div class="marquee-row scroll-reveal" data-direction="right"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--cloud">AWS Lambda</span><span class="marquee-item mi--cloud">S3</span><span class="marquee-item mi--cloud">DynamoDB</span><span class="marquee-item mi--cloud">API Gateway</span><span class="marquee-item mi--cloud">Docker</span><span class="marquee-item mi--cloud">Git</span><span class="marquee-item mi--cloud">Linux</span><span class="marquee-item mi--cloud">AWS Lambda</span><span class="marquee-item mi--cloud">S3</span><span class="marquee-item mi--cloud">DynamoDB</span><span class="marquee-item mi--cloud">API Gateway</span><span class="marquee-item mi--cloud">Docker</span><span class="marquee-item mi--cloud">Git</span><span class="marquee-item mi--cloud">Linux</span></div></div></div>
-            <div class="marquee-row scroll-reveal" data-direction="left"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--ai">PyTorch</span><span class="marquee-item mi--ai">YOLOv8</span><span class="marquee-item mi--ai">OpenCV</span><span class="marquee-item mi--ai">Scikit-learn</span><span class="marquee-item mi--ai">XGBoost</span><span class="marquee-item mi--ai">Pandas</span><span class="marquee-item mi--ai">NumPy</span><span class="marquee-item mi--ai">SHAP</span><span class="marquee-item mi--ai">CNN</span><span class="marquee-item mi--ai">PyTorch</span><span class="marquee-item mi--ai">YOLOv8</span><span class="marquee-item mi--ai">OpenCV</span><span class="marquee-item mi--ai">Scikit-learn</span><span class="marquee-item mi--ai">XGBoost</span><span class="marquee-item mi--ai">Pandas</span><span class="marquee-item mi--ai">NumPy</span><span class="marquee-item mi--ai">SHAP</span><span class="marquee-item mi--ai">CNN</span></div></div></div>
-            <div class="marquee-row scroll-reveal" data-direction="right"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--eng">Arduino</span><span class="marquee-item mi--eng">PySerial</span><span class="marquee-item mi--eng">I2C LCD</span><span class="marquee-item mi--eng">Sensors</span><span class="marquee-item mi--eng">Problem Solving</span><span class="marquee-item mi--eng">Teamwork</span><span class="marquee-item mi--eng">Communication</span><span class="marquee-item mi--eng">Arduino</span><span class="marquee-item mi--eng">PySerial</span><span class="marquee-item mi--eng">I2C LCD</span><span class="marquee-item mi--eng">Sensors</span><span class="marquee-item mi--eng">Problem Solving</span><span class="marquee-item mi--eng">Teamwork</span><span class="marquee-item mi--eng">Communication</span></div></div></div>
+            <div class="marquee-row" data-direction="right"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML</span><span class="marquee-item mi--lang">CSS</span><span class="marquee-item mi--lang">JavaScript</span><span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML</span><span class="marquee-item mi--lang">CSS</span><span class="marquee-item mi--lang">JavaScript</span></div></div></div>
+            <div class="marquee-row" data-direction="left"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--backend">FastAPI</span><span class="marquee-item mi--backend">REST API</span><span class="marquee-item mi--backend">WebSocket</span><span class="marquee-item mi--backend">OOP</span><span class="marquee-item mi--backend">Software Testing</span><span class="marquee-item mi--backend">Agile</span><span class="marquee-item mi--backend">Git</span><span class="marquee-item mi--backend">MySQL</span><span class="marquee-item mi--backend">FastAPI</span><span class="marquee-item mi--backend">REST API</span><span class="marquee-item mi--backend">WebSocket</span><span class="marquee-item mi--backend">OOP</span><span class="marquee-item mi--backend">Software Testing</span><span class="marquee-item mi--backend">Agile</span><span class="marquee-item mi--backend">Git</span><span class="marquee-item mi--backend">MySQL</span></div></div></div>
+            <div class="marquee-row" data-direction="right"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--cloud">AWS Lambda</span><span class="marquee-item mi--cloud">S3</span><span class="marquee-item mi--cloud">DynamoDB</span><span class="marquee-item mi--cloud">API Gateway</span><span class="marquee-item mi--cloud">Docker</span><span class="marquee-item mi--cloud">Git</span><span class="marquee-item mi--cloud">Linux</span><span class="marquee-item mi--cloud">AWS Lambda</span><span class="marquee-item mi--cloud">S3</span><span class="marquee-item mi--cloud">DynamoDB</span><span class="marquee-item mi--cloud">API Gateway</span><span class="marquee-item mi--cloud">Docker</span><span class="marquee-item mi--cloud">Git</span><span class="marquee-item mi--cloud">Linux</span></div></div></div>
+            <div class="marquee-row" data-direction="left"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--ai">PyTorch</span><span class="marquee-item mi--ai">YOLOv8</span><span class="marquee-item mi--ai">OpenCV</span><span class="marquee-item mi--ai">Scikit-learn</span><span class="marquee-item mi--ai">XGBoost</span><span class="marquee-item mi--ai">Pandas</span><span class="marquee-item mi--ai">NumPy</span><span class="marquee-item mi--ai">SHAP</span><span class="marquee-item mi--ai">CNN</span><span class="marquee-item mi--ai">PyTorch</span><span class="marquee-item mi--ai">YOLOv8</span><span class="marquee-item mi--ai">OpenCV</span><span class="marquee-item mi--ai">Scikit-learn</span><span class="marquee-item mi--ai">XGBoost</span><span class="marquee-item mi--ai">Pandas</span><span class="marquee-item mi--ai">NumPy</span><span class="marquee-item mi--ai">SHAP</span><span class="marquee-item mi--ai">CNN</span></div></div></div>
+            <div class="marquee-row" data-direction="right"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--eng">Arduino</span><span class="marquee-item mi--eng">PySerial</span><span class="marquee-item mi--eng">I2C LCD</span><span class="marquee-item mi--eng">Sensors</span><span class="marquee-item mi--eng">Problem Solving</span><span class="marquee-item mi--eng">Teamwork</span><span class="marquee-item mi--eng">Communication</span><span class="marquee-item mi--eng">Arduino</span><span class="marquee-item mi--eng">PySerial</span><span class="marquee-item mi--eng">I2C LCD</span><span class="marquee-item mi--eng">Sensors</span><span class="marquee-item mi--eng">Problem Solving</span><span class="marquee-item mi--eng">Teamwork</span><span class="marquee-item mi--eng">Communication</span></div></div></div>
         </div>
     </section>
 
     <!-- ═══ PROJECTS SECTION ═══ -->
-    <section class="section section-gate" id="projects">
-        <!-- Floating Foreground Title Overlay -->
-        <div class="section__overlay-text" id="projectsOverlayText">PROJECTS</div>
+    <section class="section scroll-reveal" id="projects">
         <div class="container">
-            <h2 class="section__title">Active <span class="text-glow">Dungeons</span></h2>
+            <h2 class="section__title">Projects</h2>
             <p class="section__subtitle">Production deployments and engineering records</p>
             <div class="quest-feed">
                 <!-- VPark -->
@@ -164,10 +130,10 @@
                     <canvas class="quest__canvas" data-anim="vpark"></canvas>
                     <div class="quest__meta-header">
                         <div class="quest__badge-group">
-                            <span class="quest__rank-badge">S-RANK</span>
                             <span class="quest__feat-badge">⭐ FEATURED</span>
+                            <span class="quest__rank-badge">PROJECT 01</span>
                         </div>
-                        <span class="quest__status-badge">✓ ACTIVE</span>
+                        <span class="quest__status-badge">✓ SHIPPED</span>
                     </div>
                     <h3 class="quest__name">ATCC VPark</h3>
                     <p class="quest__type">AI + IoT Smart Parking System with Real-time Dashboard</p>
@@ -187,9 +153,9 @@
                     <canvas class="quest__canvas" data-anim="anemia"></canvas>
                     <div class="quest__meta-header">
                         <div class="quest__badge-group">
-                            <span class="quest__rank-badge quest__rank-badge--a">A-RANK</span>
+                            <span class="quest__rank-badge">PROJECT 02</span>
                         </div>
-                        <span class="quest__status-badge">✓ ACTIVE</span>
+                        <span class="quest__status-badge">✓ SHIPPED</span>
                     </div>
                     <h3 class="quest__name">Non-Invasive Anemia Detection</h3>
                     <p class="quest__type">AI System from Fingernail Photos</p>
@@ -209,9 +175,9 @@
                     <canvas class="quest__canvas" data-anim="lexcloud"></canvas>
                     <div class="quest__meta-header">
                         <div class="quest__badge-group">
-                            <span class="quest__rank-badge quest__rank-badge--a">A-RANK</span>
+                            <span class="quest__rank-badge">PROJECT 03</span>
                         </div>
-                        <span class="quest__status-badge">✓ ACTIVE</span>
+                        <span class="quest__status-badge">✓ SHIPPED</span>
                     </div>
                     <h3 class="quest__name">LexCloud</h3>
                     <p class="quest__type">Cloud-Native API + AI Integration</p>
@@ -231,9 +197,9 @@
                     <canvas class="quest__canvas" data-anim="sepsis"></canvas>
                     <div class="quest__meta-header">
                         <div class="quest__badge-group">
-                            <span class="quest__rank-badge">S-RANK</span>
+                            <span class="quest__rank-badge">PROJECT 04</span>
                         </div>
-                        <span class="quest__status-badge">✓ ACTIVE</span>
+                        <span class="quest__status-badge">✓ SHIPPED</span>
                     </div>
                     <h3 class="quest__name">Predicting ICU Patient Mortality</h3>
                     <p class="quest__type">Machine Learning on Clinical Data</p>
@@ -252,43 +218,39 @@
     </section>
 
     <!-- ═══ EXPERIENCE SECTION ═══ -->
-    <section class="section section--alt section-gate" id="experience">
-        <!-- Floating Foreground Title Overlay -->
-        <div class="section__overlay-text" id="experienceOverlayText">RECORDS</div>
+    <section class="section section--alt scroll-reveal" id="experience">
         <div class="container">
-            <h2 class="section__title">Hunter <span class="text-glow">Logs</span></h2>
+            <h2 class="section__title">Work <span class="text-glow">Experience</span></h2>
             <div class="timeline"><div class="timeline__line"></div>
-                <div class="timeline__item scroll-reveal"><div class="timeline__dot"></div><div class="timeline__card"><div class="timeline__head"><h3>Research Intern — Smart Healthcare</h3><span class="timeline__date">May – Aug 2025</span></div><p class="timeline__org">CHAIR, VIT Chennai</p><p class="timeline__desc">Led independent DL research. 4,260 images, PyTorch CNN. 96% accuracy & AUC 0.98.</p><a href="https://vitchennaievents.com/certificates/generate.php?c=VDJPc09rRXRJbDgoSUJrK1Fqc2xnVXFWQWcybS9ZT01KOGcyV3ZPSmNORGFjM2Zuakxaall1bVVoME00ZHFxUllhQmh5S1dLbjZqcVpxSXVIMDhXQjZVS3g1UUxkeENkRml1RmVmTXZqVUJSdWtXMGVoWXNTUEpSc0VSZVdSNUF2ejBqYVk0ajE4Zm82Wmxkbm9HaCt6MW9GS0ZFS1AyOVBwVlltQTJtTEdRPQ==" target="_blank" class="timeline__cert">📄 View Certificate</a></div></div>
-                <div class="timeline__item scroll-reveal"><div class="timeline__dot"></div><div class="timeline__card"><div class="timeline__head"><h3>Python Training Intern</h3><span class="timeline__date">Jun – Jul 2024</span></div><p class="timeline__org">Colan Infotech Pvt Ltd (On-site)</p><p class="timeline__desc">SDLC practices, code reviews, Git, agile norms. Outstanding (S) grade.</p></div></div>
+                <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__card"><div class="timeline__head"><h3>Research Intern — Smart Healthcare</h3><span class="timeline__date">May – Aug 2025</span></div><p class="timeline__org">CHAIR, VIT Chennai</p><p class="timeline__desc">Led independent DL research. 4,260 images, PyTorch CNN. 96% accuracy & AUC 0.98.</p><a href="https://vitchennaievents.com/certificates/generate.php?c=VDJPc09rRXRJbDgoSUJrK1Fqc2xnVXFWQWcybS9ZT01KOGcyV3ZPSmNORGFjM2Zuakxaall1bVVoME00ZHFxUllhQmh5S1dLbjZqcVpxSXVIMDhXQjZVS3g1UUxkeENkRml1RmVmTXZqVUJSdWtXMGVoWXNTUEpSc0VSZVdSNUF2ejBqYVk0ajE4Zm82Wmxkbm9HaCt6MW9GS0ZFS1AyOVBwVlltQTJtTEdRPQ==" target="_blank" class="timeline__cert">📄 View Certificate</a></div></div>
+                <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__card"><div class="timeline__head"><h3>Python Training Intern</h3><span class="timeline__date">Jun – Jul 2024</span></div><p class="timeline__org">Colan Infotech Pvt Ltd (On-site)</p><p class="timeline__desc">SDLC practices, code reviews, Git, agile norms. Outstanding (S) grade.</p></div></div>
             </div>
-            <h3 class="section__label scroll-reveal">Education</h3>
+            <h3 class="section__label">Education</h3>
             <div class="timeline"><div class="timeline__line"></div>
-                <div class="timeline__item scroll-reveal"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__card"><div class="timeline__head"><h3>M.Tech Integrated — Software Engineering</h3><span class="timeline__date">2022 – 2027</span></div><p class="timeline__org">VIT Chennai · CGPA: 7.92</p></div></div>
-                <div class="timeline__item scroll-reveal"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__card"><div class="timeline__head"><h3>Class XII — PCBM · 85.20%</h3><span class="timeline__date">2021</span></div><p class="timeline__org">Mazharul Uloom HSS, Ambur</p></div></div>
+                <div class="timeline__item"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__card"><div class="timeline__head"><h3>M.Tech Integrated — Software Engineering</h3><span class="timeline__date">2022 – 2027</span></div><p class="timeline__org">VIT Chennai · CGPA: 7.92</p></div></div>
+                <div class="timeline__item"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__card"><div class="timeline__head"><h3>Class XII — PCBM · 85.20%</h3><span class="timeline__date">2021</span></div><p class="timeline__org">Mazharul Uloom HSS, Ambur</p></div></div>
             </div>
-            <h3 class="section__label scroll-reveal">Guild Achievements</h3>
+            <h3 class="section__label">Guild Achievements</h3>
             <div class="guild-row">
-                <div class="guild-card scroll-reveal"><span class="guild-card__icon">🛡️</span><h4 class="guild-card__title">Cybersecurity Division</h4><p class="guild-card__org">Microsoft Innovations Club</p><p class="guild-card__detail">CTF · 500+ participants</p></div>
-                <div class="guild-card scroll-reveal"><span class="guild-card__icon">🥽</span><h4 class="guild-card__title">Marketing Lead</h4><p class="guild-card__org">AR/VR Club</p><p class="guild-card__detail">30% registration growth</p></div>
-                <div class="guild-card scroll-reveal"><span class="guild-card__icon">💡</span><h4 class="guild-card__title">Operations</h4><p class="guild-card__org">Young Innovators</p><p class="guild-card__detail">Innovation events</p></div>
+                <div class="guild-card"><span class="guild-card__icon">🛡️</span><h4 class="guild-card__title">Cybersecurity Division</h4><p class="guild-card__org">Microsoft Innovations Club</p><p class="guild-card__detail">CTF · 500+ participants</p></div>
+                <div class="guild-card"><span class="guild-card__icon">🥽</span><h4 class="guild-card__title">Marketing Lead</h4><p class="guild-card__org">AR/VR Club</p><p class="guild-card__detail">30% registration growth</p></div>
+                <div class="guild-card"><span class="guild-card__icon">💡</span><h4 class="guild-card__title">Operations</h4><p class="guild-card__org">Young Innovators</p><p class="guild-card__detail">Innovation events</p></div>
             </div>
         </div>
     </section>
 
     <!-- ═══ CONTACT SECTION ═══ -->
-    <section class="section section-gate" id="contact">
-        <!-- Floating Foreground Title Overlay -->
-        <div class="section__overlay-text" id="contactOverlayText">CONTACT</div>
+    <section class="section scroll-reveal" id="contact">
         <div class="container">
             <div class="sys-window">
-                <div class="sys-window__header"><span class="sys-window__dot"></span><span class="sys-window__title">ESTABLISH LINK</span><span class="sys-window__dot"></span></div>
+                <div class="sys-window__header"><span class="sys-window__dot"></span><span class="sys-window__title">GET IN TOUCH</span><span class="sys-window__dot"></span></div>
                 <div class="sys-window__body">
-                    <h2 class="contact__title scroll-reveal">Ready to build something <span class="text-glow">extraordinary?</span></h2>
+                    <h2 class="contact__title">Ready to build something <span class="text-glow">extraordinary?</span></h2>
                     <div class="contact__links">
-                        <a href="mailto:Afnaanahmed.k391@gmail.com" class="contact__item scroll-reveal"><span class="contact__icon">✉</span><span class="contact__text">Afnaanahmed.k391@gmail.com</span></a>
-                        <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" class="contact__item scroll-reveal"><span class="contact__icon">in</span><span class="contact__text">linkedin.com/in/afnaan22mis1157</span></a>
-                        <a href="https://github.com/22MIS1157" target="_blank" class="contact__item scroll-reveal"><span class="contact__icon">⌘</span><span class="contact__text">github.com/22MIS1157</span></a>
-                        <a href="tel:+919150713929" class="contact__item scroll-reveal"><span class="contact__icon">☎</span><span class="contact__text">+91 9150713929</span></a>
+                        <a href="mailto:Afnaanahmed.k391@gmail.com" class="contact__item"><span class="contact__icon">✉</span><span class="contact__text">Afnaanahmed.k391@gmail.com</span></a>
+                        <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" class="contact__item"><span class="contact__icon">in</span><span class="contact__text">linkedin.com/in/afnaan22mis1157</span></a>
+                        <a href="https://github.com/22MIS1157" target="_blank" class="contact__item"><span class="contact__icon">⌘</span><span class="contact__text">github.com/22MIS1157</span></a>
+                        <a href="tel:+919150713929" class="contact__item"><span class="contact__icon">☎</span><span class="contact__text">+91 9150713929</span></a>
                     </div>
                 </div>
             </div>
