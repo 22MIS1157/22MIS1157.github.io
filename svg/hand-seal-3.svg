@@ -1,0 +1,15 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Diamond border -->
+  <rect x="22" y="22" width="56" height="56" rx="3" transform="rotate(45 50 50)" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  <!-- Concentric circles -->
+  <circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="50" cy="50" r="12" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <!-- Center dot -->
+  <circle cx="50" cy="50" r="4" fill="currentColor"/>
+  <!-- Radiating lines -->
+  <line x1="50" y1="22" x2="50" y2="10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="50" y1="78" x2="50" y2="90" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="22" y1="50" x2="10" y2="50" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="78" y1="50" x2="90" y2="50" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

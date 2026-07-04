@@ -1,0 +1,19 @@
+<svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Scroll body (parchment) -->
+  <rect x="18" y="18" width="64" height="44" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+  <!-- Top roller -->
+  <ellipse cx="50" cy="18" rx="38" ry="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <!-- Top roller caps -->
+  <circle cx="12" cy="18" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <circle cx="88" cy="18" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <!-- Bottom roller -->
+  <ellipse cx="50" cy="62" rx="38" ry="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <!-- Bottom roller caps -->
+  <circle cx="12" cy="62" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <circle cx="88" cy="62" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <!-- Text lines on scroll -->
+  <line x1="28" y1="30" x2="72" y2="30" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+  <line x1="28" y1="37" x2="72" y2="37" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+  <line x1="28" y1="44" x2="60" y2="44" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+  <line x1="28" y1="51" x2="68" y2="51" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+</svg>

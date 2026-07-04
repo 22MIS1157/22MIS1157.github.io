@@ -1,0 +1,17 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Diamond border -->
+  <rect x="22" y="22" width="56" height="56" rx="3" transform="rotate(45 50 50)" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  <!-- Hexagon -->
+  <polygon points="50,18 76,34 76,66 50,82 24,66 24,34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Inner hexagon -->
+  <polygon points="50,32 64,40 64,60 50,68 36,60 36,40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Connecting lines from inner to outer vertices -->
+  <line x1="50" y1="18" x2="50" y2="32" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="76" y1="34" x2="64" y2="40" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="76" y1="66" x2="64" y2="60" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="50" y1="82" x2="50" y2="68" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="24" y1="66" x2="36" y2="60" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="24" y1="34" x2="36" y2="40" stroke="currentColor" stroke-width="1.5"/>
+  <!-- Center dot -->
+  <circle cx="50" cy="50" r="3" fill="currentColor"/>
+</svg>

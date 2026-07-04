@@ -1,0 +1,25 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Official Konoha Leaf Village Symbol -->
+  <path
+    d="M 52,48
+       C 50,43 44,44 44,49
+       C 44,54 51,55 54,50
+       C 57,42 47,38 41,42
+       C 34,47 38,60 48,61
+       C 59,62 67,50 64,39
+       C 61,28 46,24 35,30
+       C 24,37 21,55 31,67
+       C 42,78 63,78 73,65
+       C 80,56 81,42 75,32
+       L 80,26 L 82,36 L 75,32 Z"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <!-- Leaf Stem Triangle on bottom-right -->
+  <polygon points="73,65 79,72 70,74" fill="currentColor" />
+  <!-- Diagonal Slash pointer on left -->
+  <polygon points="31,67 22,70 26,60" fill="currentColor" />
+</svg>
