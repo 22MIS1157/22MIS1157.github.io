@@ -83,6 +83,10 @@ export default function MissionScroll() {
               <span className="rank-letter">{project.rank}</span>
             </div>
 
+            {/* Scroll Rollers */}
+            <div className="scroll-roller scroll-roller--top" aria-hidden="true" />
+            <div className="scroll-roller scroll-roller--bottom" aria-hidden="true" />
+
             {/* Scroll paper texture overlay */}
             <div className="mission-paper-texture" aria-hidden="true" />
 

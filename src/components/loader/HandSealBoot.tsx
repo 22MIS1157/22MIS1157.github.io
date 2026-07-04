@@ -108,10 +108,29 @@ export default function HandSealBoot() {
       <div className="loader-center">
         {phase === "seals" && (
           <div
-            className="seal-glyph"
+            className="flex flex-col items-center justify-center animate-pulse"
             key={currentSeal}
           >
-            {SEAL_SYMBOLS[currentSeal]}
+            <img
+              src={`/svg/hand-seal-${currentSeal + 1}.svg`}
+              alt={`Hand Seal ${currentSeal + 1}`}
+              style={{
+                width: "90px",
+                height: "90px",
+                filter: "drop-shadow(0 0 12px var(--sharingan-red, #D62828))",
+                color: "var(--sharingan-red, #D62828)",
+              }}
+            />
+            <div
+              className="seal-glyph"
+              style={{
+                fontSize: "1.8rem",
+                marginTop: "12px",
+                color: "var(--sharingan-red, #D62828)",
+              }}
+            >
+              {SEAL_SYMBOLS[currentSeal]}
+            </div>
           </div>
         )}
         {phase === "gate" && (

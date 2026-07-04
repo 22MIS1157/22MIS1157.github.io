@@ -27,7 +27,7 @@ export default function AwakeningEye() {
         },
       });
 
-      // Eye opens
+      // Eye lid opens, iris fills red, pupil appears, tomoe appears
       tl.fromTo(eye.querySelector(".eye-lid-top"), { attr: { d: "M20,50 Q50,50 80,50" } }, { attr: { d: "M20,50 Q50,20 80,50" }, duration: 0.3 })
         .fromTo(eye.querySelector(".eye-lid-bottom"), { attr: { d: "M20,50 Q50,50 80,50" } }, { attr: { d: "M20,50 Q50,80 80,50" }, duration: 0.3 }, "<")
         // Iris fills red
@@ -35,7 +35,10 @@ export default function AwakeningEye() {
         // Pupil appears
         .fromTo(eye.querySelector(".eye-pupil"), { scale: 0, transformOrigin: "center" }, { scale: 1, duration: 0.2 })
         // Tomoe appear one by one
-        .fromTo(eye.querySelectorAll(".eye-tomoe"), { scale: 0, opacity: 0, transformOrigin: "center" }, { scale: 1, opacity: 1, duration: 0.2, stagger: 0.15 });
+        .fromTo(eye.querySelectorAll(".eye-tomoe"), { scale: 0, opacity: 0, transformOrigin: "center" }, { scale: 1, opacity: 1, duration: 0.2, stagger: 0.15 })
+        // Morph to Itachi's Mangekyou Sharingan (tomoe fade out, pinwheel blades rotate and fade in)
+        .to(eye.querySelectorAll(".eye-tomoe"), { opacity: 0, scale: 0.3, duration: 0.2 })
+        .to(eye.querySelector(".eye-mangekyou"), { opacity: 1, scale: 1, rotation: 360, transformOrigin: "center", duration: 0.4 }, "<");
 
       // Fade in about content
       gsap.fromTo(
@@ -86,6 +89,12 @@ export default function AwakeningEye() {
             </g>
             <g className="eye-tomoe" transform="translate(37,57) rotate(240 0 0)">
               <path d="M0,0 Q4,6 0,12 Q-2,6 0,0Z" fill="var(--sharingan-glow, #FF1E1E)" />
+            </g>
+            {/* Itachi's Mangekyou blades (hidden by default) */}
+            <g className="eye-mangekyou" style={{ opacity: 0, transform: "scale(0.5)" }}>
+              <path d="M50 50 Q35 15 50 8 Q55 25 65 35 Z" fill="#0B0B0F" />
+              <path d="M50 50 Q85 35 92 50 Q75 55 65 65 Z" fill="#0B0B0F" transform="rotate(120 50 50)" />
+              <path d="M50 50 Q65 85 50 92 Q45 75 35 65 Z" fill="#0B0B0F" transform="rotate(240 50 50)" />
             </g>
             {/* Glow ring */}
             <circle cx="50" cy="50" r="22" fill="none" stroke="var(--sharingan-glow, #FF1E1E)" strokeWidth="0.5" opacity="0.3" />

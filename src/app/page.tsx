@@ -17,6 +17,9 @@ const VillageContributions = dynamic(() => import("@/components/sections/Village
 const SummonHawk = dynamic(() => import("@/components/contact/SummonHawk"), { ssr: false });
 const ChakraSeal = dynamic(() => import("@/components/fx/ChakraSeal"), { ssr: false });
 const ChakraCursor = dynamic(() => import("@/components/cursor/ChakraCursor"), { ssr: false });
+const CrowFeathers = dynamic(() => import("@/components/fx/CrowFeathers"), { ssr: false });
+const SusanooBackground = dynamic(() => import("@/components/fx/SusanooBackground"), { ssr: false });
+const AkatsukiClouds = dynamic(() => import("@/components/fx/AkatsukiClouds"), { ssr: false });
 
 export default function Home() {
   const loaderComplete = usePortfolioStore((s) => s.loaderComplete);
@@ -30,6 +33,9 @@ export default function Home() {
       {loaderComplete && (
         <>
           <ChakraCursor />
+          <CrowFeathers />
+          <SusanooBackground />
+          <AkatsukiClouds />
           <Navbar />
 
           <main>

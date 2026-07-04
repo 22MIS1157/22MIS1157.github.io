@@ -14,6 +14,8 @@
   <circle cx="112" cy="30" r="2.5" fill="currentColor" opacity="0.5"/>
   <!-- Engraved symbol (generic spiral) -->
   <path d="M70,30 Q70,22 78,22 Q86,22 86,30 Q86,38 78,38 Q66,38 66,26 Q66,16 78,16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <!-- Rogue Ninja horizontal slash -->
+  <line x1="58" y1="26" x2="88" y2="34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
   <!-- Cloth band (right tie) -->
   <path d="M120,22 Q132,20 140,25 L140,35 Q132,40 120,38" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
   <!-- Cloth fluttering right -->

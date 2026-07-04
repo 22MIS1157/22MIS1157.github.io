@@ -883,11 +883,47 @@ a:hover { color: var(--sharingan-glow); }
 .mission-scroll-card {
   background: var(--theme-panel);
   border: 1px solid var(--theme-border);
-  border-radius: 16px;
+  border-radius: 4px; /* Flatter edges for scroll look */
   padding: 40px;
   position: relative;
-  overflow: hidden;
   transition: all 0.4s ease;
+  margin: 10px 0;
+}
+
+.scroll-roller {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  height: 14px;
+  background: linear-gradient(90deg, #3a1a0b 0%, #7d4427 10%, #ab6743 50%, #7d4427 90%, #3a1a0b 100%);
+  border-radius: 7px;
+  z-index: 5;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: space-between;
+}
+
+.scroll-roller::before,
+.scroll-roller::after {
+  content: '';
+  width: 16px;
+  height: 20px;
+  background: #ab6743;
+  position: absolute;
+  top: -3px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.scroll-roller::before { left: -10px; }
+.scroll-roller::after { right: -10px; }
+
+.scroll-roller--top {
+  top: -7px;
+}
+
+.scroll-roller--bottom {
+  bottom: -7px;
 }
 
 .mission-scroll-card::before {

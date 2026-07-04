@@ -105,11 +105,22 @@ export default function RankTrail() {
         <div className="timeline-entries">
           {resumeData.experience.map((exp, index) => (
             <div key={index} className="timeline-entry">
-              <div className="rank-badge-container">
-                <div className="rank-badge" style={{ opacity: 0 }}>
-                  <span className="rank-badge-icon">{RANK_ICONS[exp.rank] ?? "⚔"}</span>
-                  <span className="rank-badge-label">{exp.rank}</span>
+              <div className="rank-badge-container flex flex-col items-center justify-center">
+                <div className="rank-badge" style={{ opacity: 0, width: "64px", height: "32px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <img
+                    src="/svg/headband.svg"
+                    alt="Headband"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      color: "var(--theme-accent, #C81E1E)",
+                      filter: "drop-shadow(0 0 4px var(--theme-accent, #C81E1E))"
+                    }}
+                  />
                 </div>
+                <span style={{ fontSize: "0.55rem", color: "var(--theme-muted)", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "4px" }}>
+                  {exp.rank}
+                </span>
               </div>
 
               <div className="rank-card" style={{ opacity: 0 }}>

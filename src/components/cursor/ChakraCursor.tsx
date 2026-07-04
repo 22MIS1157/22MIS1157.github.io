@@ -16,16 +16,15 @@ interface Particle {
 export default function ChakraCursor() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
-  const [isHovering, setIsHovering] = useState(false);
+  const [hoverType, setHoverType] = useState<"mangekyou" | "rinnegan" | null>(null);
   const [isHidden, setIsHidden] = useState(true);
-  const [hoverColor, setHoverColor] = useState("var(--rasengan, #3AA0FF)");
+  const [hoverColor, setHoverColor] = useState("var(--theme-accent, #C81E1E)");
 
   const themeMode = usePortfolioStore((s) => s.themeMode);
   const reducedMotion = usePortfolioStore((s) => s.reducedMotion);
   const lowFxMode = usePortfolioStore((s) => s.lowFxMode);
 
   useEffect(() => {
-    // Detect touch device or reduced motion / low FX mode
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
     if (isTouch || reducedMotion || lowFxMode) {
       setIsHidden(true);
@@ -41,7 +40,6 @@ export default function ChakraCursor() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Handle resize
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -49,7 +47,6 @@ export default function ChakraCursor() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Mouse tracking variables
     let mouseX = 0;
     let mouseY = 0;
     let cursorX = 0;
@@ -61,9 +58,8 @@ export default function ChakraCursor() {
       mouseY = e.clientY;
       setIsHidden(false);
 
-      // Create new chakra wisp particles
-      const particleColor = isHovering 
-        ? hoverColor 
+      const activeColor = hoverType
+        ? hoverColor
         : (themeMode === "konoha" ? "rgba(46, 83, 57, 0.6)" : "rgba(127, 219, 255, 0.6)");
       
       for (let i = 0; i < 2; i++) {
@@ -71,10 +67,10 @@ export default function ChakraCursor() {
           x: mouseX,
           y: mouseY,
           vx: (Math.random() - 0.5) * 1.5,
-          vy: (Math.random() - 0.5) * 1.5 - 0.5, // slightly drifting upwards
+          vy: (Math.random() - 0.5) * 1.5 - 0.5,
           alpha: 1,
           size: Math.random() * 4 + 2,
-          color: particleColor,
+          color: activeColor,
         });
       }
     };
@@ -91,17 +87,24 @@ export default function ChakraCursor() {
     document.addEventListener("mouseleave", handleMouseLeave);
     document.addEventListener("mouseenter", handleMouseEnter);
 
-    // Track hovered elements to trigger Rinnegan morph and color change
     const updateHoverState = () => {
       const hoverTargets = document.querySelectorAll(
         "a, button, input, textarea, [role='button'], .element-card, .mission-scroll-card, .rank-card, .academy-card, .cert-scroll, .village-card"
       );
 
       const onEnter = (e: Event) => {
-        setIsHovering(true);
         const target = e.currentTarget as HTMLElement;
+        const tagName = target.tagName.toLowerCase();
+
+        // Buttons, links, inputs trigger Mangekyou. Informational cards trigger Rinnegan.
+        if (tagName === "a" || tagName === "button" || target.classList.contains("form-submit")) {
+          setHoverType("mangekyou");
+        } else {
+          setHoverType("rinnegan");
+        }
+
         if (target.classList.contains("hero-cta--primary") || target.classList.contains("form-submit")) {
-          setHoverColor("var(--katon, #FF4E00)"); // Red-orange for primary CTAs
+          setHoverColor("var(--katon, #FF4E00)");
         } else if (target.classList.contains("element-card")) {
           const cardColor = target.style.getPropertyValue("--card-color");
           setHoverColor(cardColor || "var(--theme-accent)");
@@ -114,7 +117,7 @@ export default function ChakraCursor() {
       };
 
       const onLeave = () => {
-        setIsHovering(false);
+        setHoverType(null);
       };
 
       hoverTargets.forEach((target) => {
@@ -131,30 +134,25 @@ export default function ChakraCursor() {
     };
 
     const cleanupHovers = updateHoverState();
-
-    // Re-bind hover states if DOM changes
     const observer = new MutationObserver(updateHoverState);
     observer.observe(document.body, { childList: true, subtree: true });
 
-    // Animation Loop
     let animationFrameId: number;
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Smooth custom cursor follow (Lerp)
       const ease = 0.15;
       cursorX += (mouseX - cursorX) * ease;
       cursorY += (mouseY - cursorY) * ease;
       
       cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
 
-      // Render particles (Chakra Trail)
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.alpha -= 0.02; // Fading
-        p.size *= 0.98;  // Shrinking
+        p.alpha -= 0.02;
+        p.size *= 0.98;
 
         if (p.alpha <= 0 || p.size <= 0.2) {
           particles.splice(i, 1);
@@ -166,7 +164,6 @@ export default function ChakraCursor() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
-        // Subtle glow
         ctx.shadowBlur = 8;
         ctx.shadowColor = p.color;
         ctx.fill();
@@ -186,13 +183,12 @@ export default function ChakraCursor() {
       observer.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
-  }, [themeMode, reducedMotion, lowFxMode, isHovering, hoverColor]);
+  }, [themeMode, reducedMotion, lowFxMode, hoverType, hoverColor]);
 
   if (isHidden || reducedMotion || lowFxMode) return null;
 
   return (
     <>
-      {/* Canvas for Chakra wisp trail */}
       <canvas
         ref={canvasRef}
         style={{
@@ -203,15 +199,14 @@ export default function ChakraCursor() {
         }}
       />
 
-      {/* Floating custom cursor */}
       <div
         ref={cursorRef}
         style={{
           position: "fixed",
           top: 0,
           left: 0,
-          width: isHovering ? "36px" : "24px",
-          height: isHovering ? "36px" : "24px",
+          width: hoverType ? "38px" : "24px",
+          height: hoverType ? "38px" : "24px",
           pointerEvents: "none",
           zIndex: 9999,
           display: "flex",
@@ -220,21 +215,39 @@ export default function ChakraCursor() {
           transition: "width 0.2s ease, height 0.2s ease",
         }}
       >
-        {isHovering ? (
-          /* Rinnegan (concentric rings) on hover */
+        {hoverType === "mangekyou" ? (
+          /* Itachi Mangekyou Sharingan pinwheel on link hovers */
           <svg
             viewBox="0 0 100 100"
             style={{
               width: "100%",
               height: "100%",
+              animation: "sharinganRotate 4s linear infinite",
               filter: `drop-shadow(0 0 8px ${hoverColor})`,
             }}
           >
-            <circle cx="50" cy="50" r="45" fill="none" stroke={hoverColor} strokeWidth="2" />
-            <circle cx="50" cy="50" r="35" fill="none" stroke={hoverColor} strokeWidth="2" />
-            <circle cx="50" cy="50" r="25" fill="none" stroke={hoverColor} strokeWidth="2" />
-            <circle cx="50" cy="50" r="15" fill="none" stroke={hoverColor} strokeWidth="2" />
-            <circle cx="50" cy="50" r="5" fill={hoverColor} />
+            <circle cx="50" cy="50" r="48" fill="none" stroke="var(--sharingan-red)" strokeWidth="1.5" />
+            <circle cx="50" cy="50" r="44" fill="var(--sharingan-red, #D62828)" />
+            <path d="M50 50 Q35 15 50 8 Q55 25 65 35 Z" fill="#0B0B0F" />
+            <path d="M50 50 Q85 35 92 50 Q75 55 65 65 Z" fill="#0B0B0F" transform="rotate(120 50 50)" />
+            <path d="M50 50 Q65 85 50 92 Q45 75 35 65 Z" fill="#0B0B0F" transform="rotate(240 50 50)" />
+            <circle cx="50" cy="50" r="6" fill="#0B0B0F" />
+          </svg>
+        ) : hoverType === "rinnegan" ? (
+          /* Rinnegan concentric purple rings on card hovers */
+          <svg
+            viewBox="0 0 100 100"
+            style={{
+              width: "100%",
+              height: "100%",
+              filter: "drop-shadow(0 0 8px var(--rinnegan-lilac, #A78BFA))",
+            }}
+          >
+            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--rinnegan-lilac, #A78BFA)" strokeWidth="2.5" />
+            <circle cx="50" cy="50" r="35" fill="none" stroke="var(--rinnegan-lilac, #A78BFA)" strokeWidth="2" />
+            <circle cx="50" cy="50" r="25" fill="none" stroke="var(--rinnegan-lilac, #A78BFA)" strokeWidth="2" />
+            <circle cx="50" cy="50" r="15" fill="none" stroke="var(--rinnegan-lilac, #A78BFA)" strokeWidth="2" />
+            <circle cx="50" cy="50" r="5" fill="var(--rinnegan-lilac, #A78BFA)" />
           </svg>
         ) : (
           /* Sharingan (3-tomoe) standard cursor */
@@ -247,14 +260,10 @@ export default function ChakraCursor() {
               filter: "drop-shadow(0 0 6px var(--sharingan-red))",
             }}
           >
-            {/* Outer Ring */}
             <circle cx="50" cy="50" r="45" fill="none" stroke="var(--sharingan-red)" strokeWidth="3" />
-            {/* Iris Inner track */}
             <circle cx="50" cy="50" r="26" fill="none" stroke="var(--sharingan-red)" strokeWidth="1" strokeDasharray="4 4" opacity="0.6" />
-            {/* Central Pupil */}
             <circle cx="50" cy="50" r="8" fill="var(--sharingan-red)" />
             
-            {/* 3 Tomoe arranged at 120 degree angles */}
             <g transform="translate(50, 24)">
               <path d="M0,0 Q3,4 0,9 Q-2,4 0,0Z" fill="var(--sharingan-red)" />
               <circle cx="-1" cy="4" r="2" fill="var(--sharingan-red)" />
@@ -272,7 +281,6 @@ export default function ChakraCursor() {
       </div>
 
       <style jsx global>{`
-        /* Hide standard cursor when custom cursor is active */
         body:not(.touch-device) {
           cursor: none !important;
         }
