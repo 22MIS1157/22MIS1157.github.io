@@ -97,6 +97,27 @@ export default function HandSealBoot() {
       {/* Background grid */}
       <div className="loader-grid" />
 
+      {/* Official Naruto Shippuden Logo */}
+      <div
+        style={{
+          position: "absolute",
+          top: "40px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          maxWidth: "180px",
+          width: "40vw",
+          opacity: 0.85,
+          zIndex: 10,
+          filter: "drop-shadow(0 0 10px rgba(255,255,255,0.15))",
+        }}
+      >
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Logo_Naruto_Shipp%C5%ABden.svg"
+          alt="Naruto Shippuden"
+          style={{ width: "100%" }}
+        />
+      </div>
+
       {/* Concentric seal rings */}
       <div className="loader-rings">
         <div className="seal-ring seal-ring--outer" />

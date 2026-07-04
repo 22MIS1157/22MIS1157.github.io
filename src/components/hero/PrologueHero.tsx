@@ -71,6 +71,24 @@ export default function PrologueHero() {
       </div>
 
       <div className="hero-content">
+        {/* Official Naruto Shippuden logo render */}
+        <div
+          className="hero-logo"
+          style={{
+            maxWidth: "200px",
+            width: "50vw",
+            margin: "0 auto 24px",
+            opacity: 0.85,
+            filter: "drop-shadow(0 0 10px var(--theme-accent, #C81E1E))",
+            animation: "pulse 3s infinite alternate",
+          }}
+        >
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Logo_Naruto_Shipp%C5%ABden.svg"
+            alt="Naruto Shippuden Logo"
+            style={{ width: "100%" }}
+          />
+        </div>
         <h1 className="hero-name" style={{ opacity: 0 }}>
           <span className="hero-name-line">{resumeData.personal.name.split(" ").slice(0, 2).join(" ")}</span>
           <span className="hero-name-line hero-name-line--surname">{resumeData.personal.name.split(" ").slice(2).join(" ")}</span>

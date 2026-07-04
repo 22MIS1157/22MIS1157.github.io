@@ -144,6 +144,24 @@ export default function AwakeningEye() {
             </div>
           </div>
         </div>
+
+        {/* Itachi Uchiha transparent render background */}
+        <div
+          className="absolute right-0 bottom-0 pointer-events-none opacity-[0.09] select-none hidden lg:block"
+          style={{
+            maxWidth: "280px",
+            zIndex: 0,
+            transform: "translate(20px, 40px)",
+            mixBlendMode: "luminosity",
+            filter: "contrast(1.2) brightness(0.85)",
+          }}
+        >
+          <img
+            src="https://pngimg.com/uploads/naruto/naruto_PNG65.png"
+            alt="Itachi Uchiha"
+            style={{ width: "100%" }}
+          />
+        </div>
       </div>
     </section>
   );

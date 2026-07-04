@@ -88,7 +88,24 @@ export default function RankTrail() {
         <p className="section-subtitle">Mission Trail & Experience</p>
       </div>
 
-      <div className="timeline-container">
+      <div className="timeline-container relative">
+        {/* Madara Uchiha transparent render background */}
+        <div
+          className="absolute left-0 bottom-0 pointer-events-none opacity-[0.06] select-none hidden lg:block"
+          style={{
+            maxWidth: "260px",
+            zIndex: 0,
+            transform: "translate(-40px, 20px)",
+            mixBlendMode: "luminosity",
+            filter: "contrast(1.25) brightness(0.85)",
+          }}
+        >
+          <img
+            src="https://pngimg.com/uploads/naruto/naruto_PNG49.png"
+            alt="Madara Uchiha"
+            style={{ width: "100%" }}
+          />
+        </div>
         {/* SVG trail path */}
         <svg className="timeline-path-svg" viewBox="0 0 40 400" preserveAspectRatio="none">
           <path

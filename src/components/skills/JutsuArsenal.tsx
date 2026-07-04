@@ -110,7 +110,24 @@ export default function JutsuArsenal() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="jutsu-arsenal" className="portfolio-section">
+    <section ref={sectionRef} id="jutsu-arsenal" className="portfolio-section relative">
+      {/* Kurama Nine-Tails transparent render background */}
+      <div
+        className="absolute right-0 bottom-0 pointer-events-none opacity-[0.05] select-none hidden lg:block"
+        style={{
+          maxWidth: "250px",
+          zIndex: 0,
+          transform: "translate(40px, 20px)",
+          mixBlendMode: "screen",
+          filter: "contrast(1.2) brightness(0.9) drop-shadow(0 0 12px var(--kurama, #FFB000))",
+        }}
+      >
+        <img
+          src="https://pngimg.com/uploads/naruto/naruto_PNG9.png"
+          alt="Kurama Nine-Tails"
+          style={{ width: "100%" }}
+        />
+      </div>
       <div className="section-header">
         <span className="section-kanji" aria-hidden="true">二</span>
         <h2 className="section-title">Jutsu Arsenal</h2>
