@@ -20,6 +20,7 @@ const ChakraCursor = dynamic(() => import("@/components/cursor/ChakraCursor"), {
 const CrowFeathers = dynamic(() => import("@/components/fx/CrowFeathers"), { ssr: false });
 const SusanooBackground = dynamic(() => import("@/components/fx/SusanooBackground"), { ssr: false });
 const AkatsukiClouds = dynamic(() => import("@/components/fx/AkatsukiClouds"), { ssr: false });
+const ShurikenTarget = dynamic(() => import("@/components/fx/ShurikenTarget"), { ssr: false });
 
 export default function Home() {
   const loaderComplete = usePortfolioStore((s) => s.loaderComplete);
@@ -58,6 +59,7 @@ export default function Home() {
               </a>{" "}
               · {new Date().getFullYear()}
             </p>
+            <ShurikenTarget />
           </footer>
 
           {/* Scroll progress indicator */}

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 type ThemeMode = "konoha" | "akatsuki";
 
@@ -27,30 +28,41 @@ interface PortfolioState {
   setSageModeActive: (v: boolean) => void;
 }
 
-export const usePortfolioStore = create<PortfolioState>((set) => ({
-  // Theme — default to Akatsuki (dark) for impact
-  themeMode: "akatsuki",
-  toggleTheme: () =>
-    set((s) => ({
-      themeMode: s.themeMode === "konoha" ? "akatsuki" : "konoha",
-    })),
-  setTheme: (mode) => set({ themeMode: mode }),
+export const usePortfolioStore = create<PortfolioState>()(
+  persist(
+    (set) => ({
+      // Theme — default to Akatsuki (dark) for impact
+      themeMode: "akatsuki",
+      toggleTheme: () =>
+        set((s) => ({
+          themeMode: s.themeMode === "konoha" ? "akatsuki" : "konoha",
+        })),
+      setTheme: (mode) => set({ themeMode: mode }),
 
-  // FX
-  reducedMotion: false,
-  lowFxMode: false,
-  setReducedMotion: (v) => set({ reducedMotion: v }),
-  setLowFxMode: (v) => set({ lowFxMode: v }),
+      // FX
+      reducedMotion: false,
+      lowFxMode: false,
+      setReducedMotion: (v) => set({ reducedMotion: v }),
+      setLowFxMode: (v) => set({ lowFxMode: v }),
 
-  // Loader
-  loaderComplete: false,
-  setLoaderComplete: (v) => set({ loaderComplete: v }),
+      // Loader
+      loaderComplete: false,
+      setLoaderComplete: (v) => set({ loaderComplete: v }),
 
-  // Scroll
-  scrollProgress: 0,
-  setScrollProgress: (v) => set({ scrollProgress: v }),
+      // Scroll
+      scrollProgress: 0,
+      setScrollProgress: (v) => set({ scrollProgress: v }),
 
-  // Easter eggs
-  sageModeActive: false,
-  setSageModeActive: (v) => set({ sageModeActive: v }),
-}));
+      // Easter eggs
+      sageModeActive: false,
+      setSageModeActive: (v) => set({ sageModeActive: v }),
+    }),
+    {
+      name: "shinobi-portfolio-store",
+      partialize: (state) => ({
+        themeMode: state.themeMode,
+        lowFxMode: state.lowFxMode,
+      }),
+    }
+  )
+);

@@ -86,19 +86,21 @@ export default function PrologueHero() {
 
         <div className="hero-cta-group">
           <a
-            href="#summon-hawk"
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="hero-cta hero-cta--primary"
             style={{ opacity: 0 }}
           >
             <span className="cta-orb" aria-hidden="true" />
-            Contact Me
+            Download Resume
           </a>
           <a
-            href="#mission-log"
+            href="#summon-hawk"
             className="hero-cta hero-cta--secondary"
             style={{ opacity: 0 }}
           >
-            View Missions
+            Contact Me
           </a>
         </div>
 
