@@ -16,14 +16,24 @@ export default function VillageToggle() {
       <div className={`toggle-track ${themeMode === "akatsuki" ? "toggle-track--dark" : ""}`}>
         <div className="toggle-thumb">
           {themeMode === "konoha" ? (
-            <svg viewBox="0 0 24 24" className="toggle-icon" aria-hidden="true">
-              <circle cx="12" cy="12" r="5" fill="currentColor" />
-              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-            </svg>
+            <img
+              src="/svg/leaf-spiral.svg"
+              alt="Konoha"
+              style={{
+                width: "14px",
+                height: "14px",
+                filter: "brightness(0) saturate(100%) invert(20%) sepia(20%) saturate(1000%) hue-rotate(90deg)", // dark green for Konoha mode
+              }}
+            />
           ) : (
-            <svg viewBox="0 0 24 24" className="toggle-icon" aria-hidden="true">
-              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor" />
-            </svg>
+            <img
+              src="/svg/cloud-pattern.svg"
+              alt="Akatsuki"
+              style={{
+                width: "18px",
+                height: "10px",
+              }}
+            />
           )}
         </div>
       </div>

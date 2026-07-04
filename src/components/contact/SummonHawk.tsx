@@ -49,6 +49,17 @@ export default function SummonHawk() {
       <div className="contact-layout">
         {/* Contact info */}
         <div className="contact-info contact-animate">
+          <div className="contact-hawk-container mb-6" style={{ display: "flex", justifyContent: "flex-start", opacity: 0.85, marginBottom: "20px" }}>
+            <img
+              src="/svg/hawk.svg"
+              alt="Messenger Hawk"
+              style={{
+                width: "80px",
+                height: "80px",
+                filter: "drop-shadow(0 0 10px var(--theme-accent, #C81E1E))",
+              }}
+            />
+          </div>
           <div className="contact-card">
             <span className="contact-icon">📧</span>
             <a href={`mailto:${resumeData.personal.email}`} className="contact-link">

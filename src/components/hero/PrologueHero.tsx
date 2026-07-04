@@ -106,11 +106,34 @@ export default function PrologueHero() {
 
       {/* Decorative seal in background */}
       <div className="hero-seal" aria-hidden="true">
-        <svg viewBox="0 0 200 200" className="hero-seal-svg">
-          <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.1" />
-          <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="0.3" opacity="0.08" />
-          <circle cx="100" cy="100" r="50" fill="none" stroke="currentColor" strokeWidth="0.3" opacity="0.06" />
-          <circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" strokeWidth="0.3" opacity="0.04" />
+        <svg viewBox="0 0 100 100" className="hero-seal-svg">
+          {/* Inner rings */}
+          <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.12" />
+          <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" strokeWidth="0.3" opacity="0.08" />
+          <circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" strokeWidth="0.4" opacity="0.08" />
+          <circle cx="50" cy="50" r="18" fill="none" stroke="currentColor" strokeWidth="0.3" opacity="0.06" />
+          
+          {/* 8 radiating lines */}
+          <line x1="50" y1="8" x2="50" y2="18" stroke="currentColor" strokeWidth="0.4" opacity="0.1" />
+          <line x1="50" y1="82" x2="50" y2="92" stroke="currentColor" strokeWidth="0.4" opacity="0.1" />
+          <line x1="8" y1="50" x2="18" y2="50" stroke="currentColor" strokeWidth="0.4" opacity="0.1" />
+          <line x1="82" y1="50" x2="92" y2="50" stroke="currentColor" strokeWidth="0.4" opacity="0.1" />
+          
+          {/* Diagonal lines */}
+          <line x1="20.3" y1="20.3" x2="27" y2="27" stroke="currentColor" strokeWidth="0.3" opacity="0.08" />
+          <line x1="79.7" y1="20.3" x2="73" y2="27" stroke="currentColor" strokeWidth="0.3" opacity="0.08" />
+          <line x1="20.3" y1="79.7" x2="27" y2="73" stroke="currentColor" strokeWidth="0.3" opacity="0.08" />
+          <line x1="79.7" y1="79.7" x2="73" y2="73" stroke="currentColor" strokeWidth="0.3" opacity="0.08" />
+          
+          {/* Triangles between rings */}
+          <polygon points="50,22 44,32 56,32" fill="none" stroke="currentColor" strokeWidth="0.3" opacity="0.06" />
+          <polygon points="78,50 68,44 68,56" fill="none" stroke="currentColor" strokeWidth="0.3" opacity="0.06" />
+          <polygon points="50,78 56,68 44,68" fill="none" stroke="currentColor" strokeWidth="0.3" opacity="0.06" />
+          <polygon points="22,50 32,56 32,44" fill="none" stroke="currentColor" strokeWidth="0.3" opacity="0.06" />
+          
+          {/* Center design */}
+          <circle cx="50" cy="50" r="6" fill="none" stroke="currentColor" strokeWidth="0.4" opacity="0.08" />
+          <circle cx="50" cy="50" r="2" fill="currentColor" opacity="0.08" />
         </svg>
       </div>
     </section>

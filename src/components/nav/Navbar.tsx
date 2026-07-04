@@ -22,6 +22,8 @@ export default function Navbar() {
   const lowFxMode = usePortfolioStore((s) => s.lowFxMode);
   const setLowFxMode = usePortfolioStore((s) => s.setLowFxMode);
 
+  const themeMode = usePortfolioStore((s) => s.themeMode);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 60);
@@ -49,9 +51,28 @@ export default function Navbar() {
   return (
     <nav className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
       <div className="navbar-inner">
-        <a href="#prologue" className="navbar-logo">
-          <span className="logo-text">A</span>
-          <span className="logo-dot">.</span>
+        <a href="#prologue" className="navbar-logo" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          {themeMode === "konoha" ? (
+            <img
+              src="/svg/leaf-spiral.svg"
+              alt="Konoha"
+              style={{
+                width: "24px",
+                height: "24px",
+                filter: "brightness(0) saturate(100%) invert(20%) sepia(20%) saturate(1000%) hue-rotate(90deg)", // dark green matching leaf theme
+              }}
+            />
+          ) : (
+            <img
+              src="/svg/cloud-pattern.svg"
+              alt="Akatsuki"
+              style={{
+                width: "34px",
+                height: "18px",
+              }}
+            />
+          )}
+          <span className="logo-text">Afnaan</span>
         </a>
 
         {/* Desktop nav */}
