@@ -1,0 +1,14 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Diamond border -->
+  <rect x="22" y="22" width="56" height="56" rx="3" transform="rotate(45 50 50)" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  <!-- Cross pattern -->
+  <line x1="50" y1="20" x2="50" y2="80" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <!-- Center circle -->
+  <circle cx="50" cy="50" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <!-- Corner dots -->
+  <circle cx="50" cy="12" r="2.5" fill="currentColor"/>
+  <circle cx="88" cy="50" r="2.5" fill="currentColor"/>
+  <circle cx="50" cy="88" r="2.5" fill="currentColor"/>
+  <circle cx="12" cy="50" r="2.5" fill="currentColor"/>
+</svg>

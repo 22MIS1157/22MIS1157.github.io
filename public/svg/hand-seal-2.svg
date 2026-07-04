@@ -1,0 +1,10 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Diamond border -->
+  <rect x="22" y="22" width="56" height="56" rx="3" transform="rotate(45 50 50)" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  <!-- Upward triangle -->
+  <polygon points="50,20 75,65 25,65" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Downward triangle (overlapping = Star of David feel) -->
+  <polygon points="50,80 75,35 25,35" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Center dot -->
+  <circle cx="50" cy="50" r="3" fill="currentColor"/>
+</svg>

@@ -1,0 +1,1552 @@
+/* ═══════════════════════════════════════════════════════════════
+   SHINOBI OF DATA — Portfolio Design System
+   Naruto Shippuden-Inspired Theme · MAPPA Season 3 Grade
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── CSS Custom Properties ─── */
+:root {
+  /* Konoha Mode (Light) */
+  --konoha-bg: #F5E6C8;
+  --konoha-ink: #1A1A1A;
+  --konoha-leaf: #2E5339;
+  --konoha-orange: #FF7A00;
+  --konoha-panel: #EAD9B5;
+  --konoha-muted: #8B7D6B;
+  --konoha-border: #D4C4A8;
+
+  /* Akatsuki Mode (Dark) */
+  --akatsuki-bg: #0B0B0F;
+  --akatsuki-panel: #16161C;
+  --akatsuki-red: #C81E1E;
+  --akatsuki-cloud: #8B0000;
+  --akatsuki-ash: #2A2A2E;
+  --akatsuki-text: #E8E0D0;
+  --akatsuki-muted: #6B6B7B;
+  --akatsuki-border: #2A2A2E;
+
+  /* Doujutsu accents */
+  --sharingan-red: #D62828;
+  --sharingan-glow: #FF1E1E;
+  --mangekyou-crimson: #7A0C0C;
+  --rinnegan-lilac: #A78BFA;
+  --rinnegan-ring: #E5E5E5;
+  --byakugan-pale: #EDEBFF;
+
+  /* Elemental jutsu accents */
+  --katon: #FF4E00;
+  --suiton: #2EC4B6;
+  --raiton: #7FDBFF;
+  --doton: #8D6748;
+  --rasengan: #3AA0FF;
+  --kurama: #FFB000;
+
+  /* Active theme tokens (default: Akatsuki) */
+  --theme-bg: var(--akatsuki-bg);
+  --theme-panel: var(--akatsuki-panel);
+  --theme-text: var(--akatsuki-text);
+  --theme-muted: var(--akatsuki-muted);
+  --theme-border: var(--akatsuki-border);
+  --theme-accent: var(--akatsuki-red);
+  --theme-accent-secondary: var(--akatsuki-cloud);
+}
+
+/* Theme switching via data attribute */
+[data-theme="konoha"] {
+  --theme-bg: var(--konoha-bg);
+  --theme-panel: var(--konoha-panel);
+  --theme-text: var(--konoha-ink);
+  --theme-muted: var(--konoha-muted);
+  --theme-border: var(--konoha-border);
+  --theme-accent: var(--konoha-orange);
+  --theme-accent-secondary: var(--konoha-leaf);
+}
+
+/* ─── Base Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  background: var(--theme-bg);
+  color: var(--theme-text);
+  line-height: 1.6;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
+}
+
+a { color: var(--theme-accent); text-decoration: none; transition: color 0.3s ease; }
+a:hover { color: var(--sharingan-glow); }
+
+::selection {
+  background: var(--sharingan-red);
+  color: #fff;
+}
+
+/* ─── LOADER ─── */
+.loader-grid {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--theme-border) 1px, transparent 1px),
+    linear-gradient(var(--theme-border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.08;
+  animation: gridScroll 4s linear infinite;
+}
+
+@keyframes gridScroll {
+  to { background-position: 60px 60px; }
+}
+
+.loader-rings {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seal-ring {
+  position: absolute;
+  border: 1.5px solid var(--sharingan-red);
+  border-radius: 50%;
+  opacity: 0.4;
+}
+
+.seal-ring--outer {
+  width: 280px; height: 280px;
+  animation: spinCW 8s linear infinite;
+  border-style: dashed;
+}
+
+.seal-ring--middle {
+  width: 200px; height: 200px;
+  animation: spinCCW 6s linear infinite;
+  border-color: var(--rinnegan-lilac);
+}
+
+.seal-ring--inner {
+  width: 120px; height: 120px;
+  animation: spinCW 4s linear infinite;
+  border-color: var(--kurama);
+  border-style: dotted;
+}
+
+@keyframes spinCW { to { transform: rotate(360deg); } }
+@keyframes spinCCW { to { transform: rotate(-360deg); } }
+
+.loader-center {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seal-glyph {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 4rem;
+  color: var(--sharingan-red);
+  text-shadow: 0 0 30px var(--sharingan-glow), 0 0 60px var(--sharingan-red);
+  animation: sealPulse 0.14s ease-in-out;
+}
+
+@keyframes sealPulse {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.gate-reveal {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+
+.gate-left, .gate-right {
+  width: 50%;
+  height: 100%;
+  background: var(--theme-panel);
+  border: 1px solid var(--theme-border);
+  animation: gateSlide 0.5s ease-out forwards;
+}
+
+.gate-left { animation-name: gateLeft; }
+.gate-right { animation-name: gateRight; }
+
+@keyframes gateLeft { to { transform: translateX(-120%); } }
+@keyframes gateRight { to { transform: translateX(120%); } }
+
+/* Telemetry streams */
+.loader-telemetry {
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  width: 260px;
+  overflow: hidden;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.loader-telemetry--left { left: 20px; }
+.loader-telemetry--right { right: 20px; text-align: right; }
+
+.telemetry-line {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.65rem;
+  color: var(--theme-muted);
+  padding: 3px 0;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.telemetry-prefix { color: var(--raiton); }
+.telemetry-check { color: var(--suiton); }
+
+/* Progress bar */
+.loader-progress {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(400px, 70vw);
+  height: 3px;
+  background: var(--theme-border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loader-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sharingan-red), var(--kurama));
+  border-radius: 2px;
+  transition: width 0.05s linear;
+  box-shadow: 0 0 10px var(--sharingan-glow);
+}
+
+.loader-progress-text {
+  position: absolute;
+  top: -24px;
+  right: 0;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.75rem;
+  color: var(--theme-muted);
+  letter-spacing: 0.1em;
+}
+
+/* ─── NAVBAR ─── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 16px 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navbar--scrolled {
+  background: color-mix(in srgb, var(--theme-bg) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--theme-border);
+}
+
+.navbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--theme-text);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.logo-dot { color: var(--theme-accent); }
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 8px;
+}
+
+.navbar-link {
+  font-size: 0.85rem;
+  color: var(--theme-muted);
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.navbar-link:hover {
+  color: var(--theme-text);
+  background: color-mix(in srgb, var(--theme-accent) 10%, transparent);
+}
+
+.navbar-link--active {
+  color: var(--theme-accent);
+  background: color-mix(in srgb, var(--theme-accent) 10%, transparent);
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Hamburger */
+.navbar-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 1001;
+}
+
+.navbar-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--theme-text);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.navbar-hamburger--open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.navbar-hamburger--open span:nth-child(2) { opacity: 0; }
+.navbar-hamburger--open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.navbar-mobile {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: color-mix(in srgb, var(--theme-bg) 97%, transparent);
+  backdrop-filter: blur(20px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  z-index: 999;
+}
+
+.navbar-mobile--open { display: flex; }
+
+.navbar-mobile-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar-mobile-link {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.5rem;
+  color: var(--theme-muted);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar-mobile-link--active,
+.navbar-mobile-link:hover { color: var(--theme-accent); }
+
+.navbar-mobile-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ─── THEME TOGGLE ─── */
+.village-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--theme-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.toggle-track {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--konoha-leaf);
+  position: relative;
+  transition: background 0.4s ease;
+}
+
+.toggle-track--dark { background: var(--akatsuki-red); }
+
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--theme-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toggle-track--dark .toggle-thumb { transform: translateX(20px); }
+
+.toggle-icon { width: 12px; height: 12px; color: var(--theme-text); }
+
+.toggle-label { display: none; }
+
+/* Low FX toggle */
+.low-fx-toggle {
+  font-size: 0.7rem;
+  color: var(--theme-muted);
+  background: color-mix(in srgb, var(--theme-panel) 80%, transparent);
+  border: 1px solid var(--theme-border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+
+.low-fx-toggle:hover {
+  color: var(--theme-text);
+  border-color: var(--theme-accent);
+}
+
+/* ─── SECTION LAYOUT ─── */
+.portfolio-section {
+  padding: 100px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.section-kanji {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 5rem;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.04;
+  color: var(--theme-accent);
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.section-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--theme-text);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.section-subtitle {
+  font-size: 0.85rem;
+  color: var(--theme-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ─── HERO ─── */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 120px 24px;
+  overflow: hidden;
+}
+
+.hero-bg-particles,
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-bg-grid {
+  background:
+    linear-gradient(90deg, var(--theme-border) 1px, transparent 1px),
+    linear-gradient(var(--theme-border) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.04;
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+.hero-name {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+  color: var(--theme-text);
+}
+
+.hero-name-line {
+  display: block;
+}
+
+.hero-name-line--surname {
+  color: var(--theme-accent);
+}
+
+.hero-tagline {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  color: var(--theme-muted);
+  max-width: 600px;
+  margin: 0 auto 12px;
+  font-style: italic;
+}
+
+.hero-title {
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  color: var(--theme-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 80px;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-cta--primary {
+  background: var(--theme-accent);
+  color: #fff;
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--theme-accent) 30%, transparent);
+}
+
+.hero-cta--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--theme-accent) 40%, transparent);
+  color: #fff;
+}
+
+.hero-cta--secondary {
+  background: transparent;
+  color: var(--theme-text);
+  border: 1px solid var(--theme-border);
+}
+
+.hero-cta--secondary:hover {
+  border-color: var(--theme-accent);
+  color: var(--theme-accent);
+  transform: translateY(-2px);
+}
+
+.cta-orb {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff, var(--rasengan));
+  animation: orbSpin 2s linear infinite;
+  box-shadow: 0 0 8px var(--rasengan);
+}
+
+@keyframes orbSpin {
+  to { transform: rotate(360deg); }
+}
+
+.hero-scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--theme-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.scroll-chevron {
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid var(--theme-muted);
+  border-bottom: 2px solid var(--theme-muted);
+  transform: rotate(45deg);
+  animation: chevronBounce 2s ease-in-out infinite;
+}
+
+@keyframes chevronBounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(6px); }
+}
+
+.hero-seal {
+  position: absolute;
+  width: min(600px, 90vw);
+  height: min(600px, 90vw);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.15;
+  animation: sealRotate 60s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes sealRotate { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* ─── ABOUT ─── */
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.about-eye-container {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.awakening-eye-svg {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 20px var(--sharingan-red));
+}
+
+.about-content { display: flex; flex-direction: column; gap: 32px; }
+
+.about-item h3 {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.2rem;
+  color: var(--theme-accent);
+  margin-bottom: 12px;
+  letter-spacing: 0.05em;
+}
+
+.about-item p {
+  color: var(--theme-text);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background: var(--theme-panel);
+  border: 1px solid var(--theme-border);
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.stat-card:hover {
+  border-color: var(--theme-accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--theme-accent) 10%, transparent);
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--theme-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  display: block;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--theme-accent);
+  margin-bottom: 4px;
+}
+
+.stat-desc {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--theme-muted);
+}
+
+.strength-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.strength-tag {
+  padding: 6px 16px;
+  border: 1px solid var(--theme-border);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: var(--theme-text);
+  transition: all 0.3s ease;
+}
+
+.strength-tag:hover {
+  border-color: var(--theme-accent);
+  color: var(--theme-accent);
+  background: color-mix(in srgb, var(--theme-accent) 5%, transparent);
+}
+
+/* ─── SKILLS / JUTSU ARSENAL ─── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.element-card {
+  background: var(--theme-panel);
+  border: 1px solid var(--theme-border);
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.element-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--card-color), transparent);
+  opacity: 0.6;
+}
+
+.element-card:hover {
+  border-color: var(--card-color);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--card-color) 10%, transparent);
+  transform: translateY(-4px);
+}
+
+.element-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.element-icon { font-size: 1.8rem; }
+
+.element-card-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.1rem;
+  color: var(--theme-text);
+  letter-spacing: 0.03em;
+}
+
+.element-card-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.skill-chip {
+  padding: 8px 0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.skill-chip:hover {
+  transform: translateX(4px);
+}
+
+.skill-chip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.skill-chip-name {
+  font-size: 0.85rem;
+  color: var(--theme-text);
+  font-weight: 500;
+}
+
+.skill-chip-burst {
+  font-size: 0.9rem;
+  animation: burstIn 0.3s ease-out;
+}
+
+@keyframes burstIn {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.5); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Chakra meter */
+.chakra-meter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chakra-meter-track {
+  flex: 1;
+  height: 4px;
+  background: var(--theme-border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.chakra-meter-fill {
+  height: 100%;
+  border-radius: 2px;
+  position: relative;
+}
+
+.chakra-meter-value {
+  font-size: 0.7rem;
+  font-weight: 600;
+  min-width: 32px;
+  text-align: right;
+}
+
+/* ─── PROJECTS / MISSION LOG ─── */
+.missions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.mission-scroll-card {
+  background: var(--theme-panel);
+  border: 1px solid var(--theme-border);
+  border-radius: 16px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.mission-scroll-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--mission-color);
+  opacity: 0.6;
+}
+
+.mission-scroll-card:hover {
+  border-color: var(--mission-color);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--mission-color) 10%, transparent);
+}
+
+.mission-paper-texture {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.65' type='fractalNoise' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.mission-rank-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: color-mix(in srgb, var(--mission-color) 15%, transparent);
+  color: var(--mission-color);
+  border: 1px solid color-mix(in srgb, var(--mission-color) 30%, transparent);
+}
+
+.mission-content { position: relative; z-index: 1; }
+
+.mission-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.3rem;
+  color: var(--theme-text);
+  margin-bottom: 4px;
+  padding-right: 80px;
+}
+
+.mission-title-underline {
+  width: 100%;
+  height: 4px;
+  margin-bottom: 4px;
+}
+
+.mission-subtitle {
+  font-size: 0.8rem;
+  color: var(--theme-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.mission-description {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--theme-text);
+  margin-bottom: 20px;
+  max-width: 700px;
+}
+
+.mission-metrics {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.mission-metric {
+  text-align: center;
+}
+
+.metric-value {
+  display: block;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--mission-color);
+}
+
+.metric-label {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--theme-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.mission-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.tech-seal {
+  padding: 4px 10px;
+  border: 1px solid var(--theme-border);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: var(--theme-muted);
+  letter-spacing: 0.03em;
+  transition: all 0.3s ease;
+}
+
+.tech-seal:hover {
+  border-color: var(--mission-color);
+  color: var(--mission-color);
+}
+
+.mission-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mission-year {
+  font-size: 0.75rem;
+  color: var(--theme-muted);
+  letter-spacing: 0.1em;
+}
+
+.mission-link {
+  font-size: 0.8rem;
+  color: var(--theme-accent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.mission-link:hover { color: var(--sharingan-glow); }
+
+/* ─── EXPERIENCE / RANK TRAIL ─── */
+.timeline-container {
+  position: relative;
+  padding-left: 60px;
+}
+
+.timeline-path-svg {
+  position: absolute;
+  left: 18px;
+  top: 0;
+  width: 40px;
+  height: 100%;
+}
+
+.timeline-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.timeline-entry {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.rank-badge-container {
+  flex-shrink: 0;
+}
+
+.rank-badge {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--theme-panel);
+  border: 2px solid var(--theme-accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--theme-accent) 20%, transparent);
+}
+
+.rank-badge-icon { font-size: 1rem; }
+.rank-badge-label { font-size: 0.5rem; color: var(--theme-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+.rank-card {
+  flex: 1;
+  background: var(--theme-panel);
+  border: 1px solid var(--theme-border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.4s ease;
+}
+
+.rank-card:hover {
+  border-color: var(--theme-accent);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--theme-accent) 10%, transparent);
+}
+
+.rank-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rank-card-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.1rem;
+  color: var(--theme-text);
+}
+
+.rank-card-period {
+  font-size: 0.75rem;
+  color: var(--theme-muted);
+  letter-spacing: 0.05em;
+}
+
+.rank-card-org {
+  font-size: 0.85rem;
+  color: var(--theme-accent);
+  margin-bottom: 12px;
+}
+
+.rank-card-desc {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--theme-text);
+  margin-bottom: 12px;
+}
+
+.rank-card-cert {
+  font-size: 0.8rem;
+  color: var(--raiton);
+  text-decoration: none;
+}
+
+.rank-card-cert:hover { text-decoration: underline; color: var(--raiton); }
+
+.rank-card-grade {
+  font-size: 0.85rem;
+  color: var(--kurama);
+  margin-top: 8px;
+}
+
+/* ─── EDUCATION / ACADEMY ─── */
+.academy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.academy-card {
+  background: var(--theme-panel);
+  border: 1px solid var(--theme-border);
+  border-radius: 16px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.academy-card:hover {
+  border-color: var(--theme-accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--theme-accent) 10%, transparent);
+}
+
+.academy-card-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--theme-accent), var(--kurama));
+}
+
+.academy-card-degree {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1.1rem;
+  color: var(--theme-text);
+  margin-bottom: 8px;
+}
+
+.academy-card-institution {
+  font-size: 0.9rem;
+  color: var(--theme-accent);
+  margin-bottom: 12px;
+}
+
+.academy-card-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.academy-period, .academy-score {
+  font-size: 0.8rem;
+  color: var(--theme-muted);
+}
+
+.academy-score { font-weight: 600; color: var(--kurama); }
+
+.academy-card-desc {
+  font-size: 0.85rem;
+  color: var(--theme-muted);
+  line-height: 1.6;
+}
+
+/* ─── CERTIFICATIONS ─── */
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.cert-scroll {
+  background: var(--theme-panel);
+  border: 1px solid var(--theme-border);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.cert-scroll:hover {
+  border-color: var(--kurama);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--kurama) 10%, transparent);
+}
+
+.cert-seal { font-size: 2.5rem; margin-bottom: 16px; }
+
+.cert-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1rem;
+  color: var(--theme-text);
+  margin-bottom: 8px;
+}
+
+.cert-issuer {
+  font-size: 0.8rem;
+  color: var(--theme-muted);
+  margin-bottom: 4px;
+}
+
+.cert-year {
+  font-size: 0.75rem;
+  color: var(--kurama);
+  font-weight: 600;
+}
+
+/* ─── ACTIVITIES / VILLAGE CONTRIBUTIONS ─── */
+.village-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.village-card {
+  background: var(--theme-panel);
+  border: 1px solid var(--theme-border);
+  border-radius: 12px;
+  padding: 28px;
+  transition: all 0.4s ease;
+}
+
+.village-card:hover {
+  border-color: var(--theme-accent);
+  transform: translateY(-4px);
+}
+
+.village-card-icon { font-size: 2rem; margin-bottom: 12px; }
+
+.village-card-role {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 1rem;
+  color: var(--theme-text);
+  margin-bottom: 4px;
+}
+
+.village-card-org {
+  font-size: 0.8rem;
+  color: var(--theme-accent);
+  margin-bottom: 12px;
+}
+
+.village-card-desc {
+  font-size: 0.85rem;
+  color: var(--theme-muted);
+  line-height: 1.6;
+}
+
+/* ─── CONTACT / SUMMON A HAWK ─── */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 48px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--theme-border);
+}
+
+.contact-icon { font-size: 1.2rem; }
+
+.contact-link {
+  font-size: 0.9rem;
+  color: var(--theme-text);
+  text-decoration: none;
+}
+
+.contact-link:hover { color: var(--theme-accent); }
+
+.contact-text { font-size: 0.9rem; color: var(--theme-text); }
+
+.contact-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.social-link {
+  padding: 10px 24px;
+  border: 1px solid var(--theme-border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--theme-text);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  border-color: var(--theme-accent);
+  color: var(--theme-accent);
+  transform: translateY(-2px);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--theme-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--theme-panel);
+  border: 1px solid var(--theme-border);
+  border-radius: 8px;
+  color: var(--theme-text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--theme-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-accent) 15%, transparent);
+}
+
+.form-input::placeholder { color: var(--theme-muted); opacity: 0.6; }
+
+.form-textarea { resize: vertical; min-height: 120px; }
+
+.form-submit {
+  padding: 14px 32px;
+  background: var(--theme-accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--theme-accent) 30%, transparent);
+}
+
+.form-submit:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+}
+
+/* Chidori border effect */
+.chidori-border {
+  position: absolute;
+  inset: -2px;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: linear-gradient(90deg, var(--raiton), var(--rasengan), var(--raiton));
+  background-size: 200% 100%;
+  animation: chidoriFlow 1.5s linear infinite;
+  z-index: -1;
+}
+
+.form-submit:hover .chidori-border { opacity: 1; }
+.form-submit:focus .chidori-border { opacity: 1; }
+
+@keyframes chidoriFlow {
+  to { background-position: -200% 0; }
+}
+
+/* ─── CHAKRA SEAL SCROLL PROGRESS ─── */
+.chakra-seal {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.chakra-seal--complete {
+  filter: drop-shadow(0 0 12px var(--kurama));
+}
+
+.chakra-seal-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.chakra-seal-percent {
+  position: absolute;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: var(--theme-muted);
+  letter-spacing: -0.02em;
+}
+
+/* ─── FOOTER ─── */
+.site-footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--theme-border);
+  color: var(--theme-muted);
+  font-size: 0.8rem;
+}
+
+.site-footer a { color: var(--theme-accent); }
+
+/* ─── AKATSUKI MODE EXTRAS ─── */
+[data-theme="akatsuki"] .hero-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, color-mix(in srgb, var(--akatsuki-red) 5%, transparent));
+  pointer-events: none;
+}
+
+/* ─── REDUCED MOTION ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .about-layout { grid-template-columns: 1fr; }
+  .about-eye-container { max-width: 200px; }
+  .about-stats { grid-template-columns: repeat(2, 1fr); }
+  .skills-grid { grid-template-columns: 1fr; }
+  .contact-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .navbar-links { display: none; }
+  .navbar-actions { display: none; }
+  .navbar-hamburger { display: flex; }
+
+  .portfolio-section { padding: 60px 16px; }
+  .section-header { margin-bottom: 40px; }
+  .section-kanji { font-size: 3.5rem; }
+
+  .hero-name { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+  .hero-cta { padding: 12px 24px; font-size: 0.8rem; }
+
+  .about-stats { grid-template-columns: repeat(2, 1fr); }
+  .mission-scroll-card { padding: 24px; }
+  .mission-title { padding-right: 60px; font-size: 1.1rem; }
+  .mission-metrics { flex-wrap: wrap; gap: 16px; }
+
+  .timeline-container { padding-left: 0; }
+  .timeline-path-svg { display: none; }
+  .rank-badge-container { display: none; }
+  .timeline-entry { flex-direction: column; }
+
+  .loader-telemetry { display: none; }
+  .loader-rings { transform: scale(0.7); }
+}
+
+@media (max-width: 480px) {
+  .hero-section { padding: 80px 16px; }
+  .hero-name { font-size: 2rem; }
+  .hero-cta-group { flex-direction: column; align-items: center; }
+  .about-stats { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-card { padding: 14px 10px; }
+  .stat-value { font-size: 1.1rem; }
+  .contact-layout { gap: 32px; }
+}
+
+/* ─── SAGE MODE EASTER EGG ─── */
+.sage-mode-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99999;
+  border: 15px solid var(--kurama, #FFB000);
+  box-shadow: inset 0 0 100px rgba(255, 176, 0, 0.4);
+  mix-blend-mode: color-burn;
+  animation: borderPulse 2s infinite alternate;
+}
+
+body.sage-mode {
+  filter: saturate(0.5) contrast(1.15) brightness(0.95);
+  transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes borderPulse {
+  from {
+    border-color: rgba(255, 176, 0, 0.5);
+    box-shadow: inset 0 0 80px rgba(255, 176, 0, 0.3);
+  }
+  to {
+    border-color: rgba(255, 78, 0, 0.85);
+    box-shadow: inset 0 0 120px rgba(255, 78, 0, 0.5);
+  }
+}
+

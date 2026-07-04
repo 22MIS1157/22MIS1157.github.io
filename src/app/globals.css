@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* ─── Font assignments ─── */
+body {
+  font-family: var(--font-space), system-ui, -apple-system, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6,
+.hero-name,
+.section-title,
+.element-card-title,
+.mission-title,
+.rank-card-title,
+.academy-card-degree,
+.cert-title,
+.village-card-role,
+.seal-glyph,
+.section-kanji,
+.navbar-logo,
+.stat-value,
+.metric-value {
+  font-family: var(--font-shippori), serif;
+}
+
+/* Override Tailwind defaults with our theme */
+body {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}

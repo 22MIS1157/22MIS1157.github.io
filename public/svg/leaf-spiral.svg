@@ -1,0 +1,12 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Leaf shape -->
+  <path d="M50,8 Q80,20 88,50 Q80,85 50,95 Q20,85 12,50 Q20,20 50,8 Z"
+    fill="#1a6b2a" stroke="#0d4f1a" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Central vein -->
+  <line x1="50" y1="15" x2="50" y2="88" stroke="#0d4f1a" stroke-width="1.5" opacity="0.5"/>
+  <!-- Fibonacci spiral -->
+  <path d="M50,52 Q50,40 58,36 Q68,36 68,46 Q68,58 56,62 Q42,62 38,48 Q38,30 54,26 Q72,26 76,48 Q76,68 54,74 Q30,74 26,48"
+    fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Leaf tip highlight -->
+  <path d="M50,8 Q55,14 56,22" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
+</svg>

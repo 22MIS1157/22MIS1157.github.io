@@ -1,0 +1,8 @@
+<svg viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cloud shape: flat bottom, curvy top with multiple lobes -->
+  <path d="M10,50 Q10,35 22,30 Q18,15 35,12 Q42,2 55,8 Q62,0 75,6 Q85,2 92,14 Q108,16 108,32 Q115,38 110,50 Z"
+    fill="none" stroke="#8b1a1a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Inner outline for depth -->
+  <path d="M18,47 Q18,37 27,33 Q24,22 38,18 Q44,10 55,14 Q61,8 72,12 Q80,8 86,18 Q98,20 98,33 Q104,38 100,47 Z"
+    fill="none" stroke="#8b1a1a" stroke-width="1.2" stroke-linejoin="round" opacity="0.4"/>
+</svg>
