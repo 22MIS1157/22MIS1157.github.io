@@ -1,8 +1,11 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useRef, useEffect } from "react";
 import { resumeData } from "@/lib/resumeData";
 import { usePortfolioStore } from "@/lib/store";
+
+const RasenganOrb3D = dynamic(() => import("./RasenganOrb3D"), { ssr: false });
 
 export default function PrologueHero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -60,6 +63,7 @@ export default function PrologueHero() {
       {/* Decorative background elements */}
       <div className="hero-bg-particles" />
       <div className="hero-bg-grid" />
+      <RasenganOrb3D />
 
       {/* Kanji section numeral */}
       <div className="section-kanji" aria-hidden="true">

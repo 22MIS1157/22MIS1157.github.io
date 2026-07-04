@@ -2,12 +2,33 @@
 
 import { useEffect, ReactNode } from "react";
 import { usePortfolioStore } from "@/lib/store";
+import Lenis from "lenis";
 
 export default function ThemeProvider({ children }: { children: ReactNode }) {
   const themeMode = usePortfolioStore((s) => s.themeMode);
   const setReducedMotion = usePortfolioStore((s) => s.setReducedMotion);
   const sageModeActive = usePortfolioStore((s) => s.sageModeActive);
   const setSageModeActive = usePortfolioStore((s) => s.setSageModeActive);
+
+  // Initialize Lenis Smooth Scroll
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easeOutExpo
+    });
+
+    let rafId: number;
+    function raf(time: number) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+  }, []);
 
   useEffect(() => {
     // Sync theme to document
