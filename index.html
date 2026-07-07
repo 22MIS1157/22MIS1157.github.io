@@ -19,14 +19,16 @@
 </head>
 <body>
 
-    <!-- ADVANCED HOLOGRAPHIC CYBER-SPHERE LOADER -->
+    <!-- ADVANCED JARVIS-STYLE CYBER-HUD LOADER -->
     <div id="loader-wrapper">
         <div class="loader-content-cyber">
-            <svg class="holographic-sphere" viewBox="0 0 200 200">
-                <circle cx="100" cy="100" r="85" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="10 20" class="ring-outer"/>
-                <circle cx="100" cy="100" r="65" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="180 40" class="ring-inner"/>
-                <circle cx="100" cy="100" r="15" fill="none" stroke="var(--accent)" stroke-width="2"/>
-                <path d="M100,20 L100,180 M20,100 L180,100 M43,43 L157,157 M43,157 L157,43" stroke="var(--accent)" stroke-width="0.5" stroke-opacity="0.3"/>
+            <svg class="holographic-hud" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="90" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="10 30" class="hud-ring-1"/>
+                <circle cx="100" cy="100" r="80" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="100 20" class="hud-ring-2"/>
+                <circle cx="100" cy="100" r="70" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5 15" class="hud-ring-3"/>
+                <path d="M75,75 L65,75 L65,65 M125,75 L135,75 L135,65 M75,125 L65,125 L65,135 M125,125 L135,125 L135,135" fill="none" stroke="var(--accent)" stroke-width="2" class="hud-brackets"/>
+                <path d="M100,50 L100,75 M100,125 L100,150 M50,100 L75,100 M125,100 L150,100" stroke="var(--accent)" stroke-width="1" stroke-opacity="0.5"/>
+                <circle cx="100" cy="100" r="10" fill="var(--accent)" class="hud-core"/>
             </svg>
             <div class="loader-terminal-message">
                 <span id="loading-msg">LOADING AFNAAN AHMED'S ACADEMIC LIFE</span><span class="cursor">_</span>
@@ -135,8 +137,11 @@
                     <h2 class="magic-title" data-magic="skills">SKILLS</h2>
                 </div>
                 
-                <div class="content-container">
-                    <div class="glass-card fade-up">
+                <div class="content-container" style="position: relative;">
+                    <!-- Constellation Canvas Overlay -->
+                    <svg id="skills-connections-svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;"></svg>
+                    
+                    <div class="glass-card fade-up" style="position: relative; z-index: 1;">
                         <div class="skills-categories">
                             
                             <div class="skills-category-group">

@@ -50,12 +50,12 @@
     });
   };
 
-  // 4. ADVANCED CYBER-SPHERE PROGRESS LOADER
+  // 4. ADVANCED CYBER-HUD LOADER
   const initLoader = () => {
     const loaderPercent = document.getElementById('loader-percent');
     const progressBar = document.getElementById('progress-bar');
     const loaderWrapper = document.getElementById('loader-wrapper');
-    const sphere = document.querySelector('.holographic-sphere');
+    const hud = document.querySelector('.holographic-hud');
 
     let percent = 0;
     const duration = 2800; // 2.8s loader
@@ -72,9 +72,9 @@
       if (percent < 100) {
         setTimeout(updateLoader, intervalTime);
       } else {
-        // Holographic sphere collapse transition
+        // Core collapse transition
         gsap.timeline()
-          .to(sphere, { scale: 0.1, rotation: 360, opacity: 0, duration: 0.6, ease: "back.in(2)" })
+          .to(hud, { scale: 0.1, rotation: 360, opacity: 0, duration: 0.6, ease: "back.in(2)" })
           .to(loaderWrapper, { autoAlpha: 0, duration: 0.8, ease: "power2.out" }, "-=0.2")
           .call(() => {
             initHero();
@@ -126,7 +126,7 @@
       duration: 1.6,
       ease: 'power2.inOut'
     })
-    // Characters magnetically snap into place stagger-linked to the laser sweep
+    // Characters snap into place stagger-linked to the sweep
     .to(chars, {
       x: 0,
       y: 0,
@@ -243,31 +243,67 @@
     });
   };
 
-  // 7. HIGH-LEVEL INTERACTIVE MAGNETIC SKILL TAGS
+  // 7. HIGH-LEVEL INTERACTIVE CONSTELLATION SKILL GRID
   const initMagneticSkills = () => {
     const tags = document.querySelectorAll('.skill-tag');
-    if (prefersReducedMotion) return;
+    const svg = document.getElementById('skills-connections-svg');
+    if (!svg || prefersReducedMotion) return;
+
+    // Helper to calculate element center coordinates relative to Connection SVG canvas
+    const getCenter = (el) => {
+      const rect = el.getBoundingClientRect();
+      const svgRect = svg.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2 - svgRect.left,
+        y: rect.top + rect.height / 2 - svgRect.top
+      };
+    };
 
     tags.forEach(tag => {
       tag.addEventListener('mousemove', (e) => {
         const rect = tag.getBoundingClientRect();
-        // Calculate offsets relative to center
+        // Magnetic follow/tilt values
         const x = e.clientX - rect.left - (rect.width / 2);
         const y = e.clientY - rect.top - (rect.height / 2);
 
-        // Calculate rotation limits (up to 20 deg)
         const rotX = -(y / (rect.height / 2)) * 18;
         const rotY = (x / (rect.width / 2)) * 18;
 
-        // Apply magnetic card translation
         gsap.to(tag, {
           rotationX: rotX,
           rotationY: rotY,
           x: x * 0.45,
           y: y * 0.45,
           z: 25,
-          duration: 0.35,
-          ease: "power2.out"
+          duration: 0.2,
+          ease: "power1.out"
+        });
+
+        // 3D Constellation algorithm: Find nearest neighbors
+        const activeCenter = getCenter(tag);
+        const neighbors = [];
+
+        tags.forEach(other => {
+          if (other === tag) return;
+          const otherCenter = getCenter(other);
+          const dist = Math.hypot(otherCenter.x - activeCenter.x, otherCenter.y - activeCenter.y);
+          neighbors.push({ el: other, center: otherCenter, dist: dist });
+        });
+
+        // Sort by distance and extract top 3 neighbors
+        neighbors.sort((a, b) => a.dist - b.dist);
+        const nearest = neighbors.slice(0, 3);
+
+        // Clear and redraw vector connections
+        svg.innerHTML = '';
+        nearest.forEach(n => {
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d', `M ${activeCenter.x} ${activeCenter.y} L ${n.center.x} ${n.center.y}`);
+          path.style.stroke = 'var(--accent)';
+          path.style.strokeWidth = '1.5px';
+          path.style.fill = 'none';
+          path.style.opacity = '0.35';
+          svg.appendChild(path);
         });
       });
 
@@ -281,6 +317,7 @@
           duration: 0.5,
           ease: "power2.out"
         });
+        svg.innerHTML = ''; // Clear constellation connections
       });
     });
   };
