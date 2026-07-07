@@ -50,101 +50,110 @@
     });
   };
 
-  // 4. TERMINAL BOOT LOADER
+  // 4. ADVANCED CYBER-SPHERE PROGRESS LOADER
   const initLoader = () => {
-    const logsContainer = document.getElementById('terminal-logs');
+    const loaderPercent = document.getElementById('loader-percent');
     const progressBar = document.getElementById('progress-bar');
     const loaderWrapper = document.getElementById('loader-wrapper');
+    const sphere = document.querySelector('.holographic-sphere');
 
-    const bootLogs = [
-      "[SYS] INITIALIZING NEURAL FRAMEWORKS...",
-      "[SYS] DETECTING INTEGRATED CV ENGINE...",
-      "[SYS] LOADED: PyTorch (v2.3.0) & OpenCV (v4.9.0)",
-      "[SYS] LOADED: YOLOv8 Object Detection Node (mAP: 93.5%)",
-      "[SYS] LOADED: CNN Fingernail Classifier (Acc: 96%)",
-      "[SYS] LOADED: XGBoost ICU Mortality Predictor (AUC: 0.96)",
-      "[SYS] INTERFACING WITH ARDUINO NANO & SERVO SERVICES...",
-      "[SYS] RESOLVING AWS API GATEWAY & DYNAMODB PIPELINES...",
-      "[SYS] CONFIGURATION CHECKS VALIDATED. DECODING PORTFOLIO_OS...",
-      "[SYS] BOOT COMPLETED // WELCOME TO AFNAAN AHMED PORTFOLIO"
-    ];
+    let percent = 0;
+    const duration = 2800; // 2.8s loader
+    const intervalTime = 30;
+    const steps = duration / intervalTime;
+    const increment = 100 / steps;
 
-    let logIndex = 0;
-    const progressLimit = 100;
-    let currentProgress = 0;
+    const updateLoader = () => {
+      percent = Math.min(100, percent + increment);
+      const roundedPercent = Math.floor(percent);
+      loaderPercent.innerText = roundedPercent;
+      progressBar.style.width = roundedPercent + '%';
 
-    const typeLog = () => {
-      if (logIndex < bootLogs.length) {
-        const line = document.createElement('div');
-        line.style.marginBottom = '6px';
-        line.innerHTML = bootLogs[logIndex];
-        logsContainer.appendChild(line);
-        logsContainer.scrollTop = logsContainer.scrollHeight;
-        
-        logIndex++;
-        currentProgress = Math.min(100, Math.round((logIndex / bootLogs.length) * 100));
-        progressBar.style.width = currentProgress + '%';
-
-        setTimeout(typeLog, 250);
+      if (percent < 100) {
+        setTimeout(updateLoader, intervalTime);
       } else {
-        // Boot completed -> Slide reveal
-        setTimeout(() => {
-          gsap.timeline()
-            .to(loaderWrapper, { autoAlpha: 0, duration: 0.8, ease: "power2.out" })
-            .call(() => {
-              // Trigger Hero entrance
-              initHero();
-              initMagicScroll();
-              initCinematicScenes();
-            });
-        }, 500);
+        // Holographic sphere collapse transition
+        gsap.timeline()
+          .to(sphere, { scale: 0.1, rotation: 360, opacity: 0, duration: 0.6, ease: "back.in(2)" })
+          .to(loaderWrapper, { autoAlpha: 0, duration: 0.8, ease: "power2.out" }, "-=0.2")
+          .call(() => {
+            initHero();
+            initMagicScroll();
+            initCinematicScenes();
+            initMagneticSkills();
+          });
       }
     };
 
-    typeLog();
+    updateLoader();
   };
 
-  // 5. HERO ENTRANCE (REVEAL FROM NEON BEAM)
+  // 5. HERO ENTRANCE (MAGNETIC MATRIX SHATTER REVEAL)
   const initHero = () => {
     splitText('.split-hero');
     splitText('.split-name');
 
-    gsap.set('.split-name .char', {
-      scaleY: 0,
-      opacity: 0,
-      y: 10
+    const chars = document.querySelectorAll('.split-name .char');
+
+    // Scatter characters randomly in 3D Space
+    chars.forEach((char, index) => {
+      const scatterX = (Math.random() - 0.5) * 800;
+      const scatterY = (Math.random() - 0.5) * 500;
+      const scatterZ = -500 - Math.random() * 500;
+      const scatterRot = (Math.random() - 0.5) * 360;
+      const scatterSkew = (Math.random() - 0.5) * 90;
+
+      gsap.set(char, {
+        x: scatterX,
+        y: scatterY,
+        z: scatterZ,
+        rotationX: scatterRot,
+        rotationY: scatterRot,
+        skewX: scatterSkew,
+        opacity: 0,
+        filter: "blur(20px)"
+      });
     });
-    gsap.set('.split-hero .char', {
-      opacity: 0,
-      y: 30
-    });
+
+    gsap.set('.split-hero .char', { opacity: 0, y: 30 });
+    gsap.set('.hero-neon-beam', { xPercent: -100, width: '100%', opacity: 1 });
 
     const tl = gsap.timeline();
 
+    // Laser bar sweeps across name container
     tl.to('.hero-neon-beam', {
-      width: '100%',
-      duration: 1,
-      ease: 'power3.inOut'
+      xPercent: 100,
+      duration: 1.6,
+      ease: 'power2.inOut'
     })
-    .to('.split-name .char', {
-      scaleY: 1,
-      opacity: 1,
+    // Characters magnetically snap into place stagger-linked to the laser sweep
+    .to(chars, {
+      x: 0,
       y: 0,
-      duration: 1.2,
-      stagger: { amount: 0.6, from: 'center' },
-      ease: 'back.out(1.7)'
-    }, "-=0.3")
+      z: 0,
+      rotationX: 0,
+      rotationY: 0,
+      skewX: 0,
+      opacity: 1,
+      filter: "blur(0px)",
+      duration: 1.5,
+      stagger: {
+        amount: 1.1,
+        from: 'left'
+      },
+      ease: 'elastic.out(1, 0.75)'
+    }, "-=1.4")
     .to('.hero-neon-beam', {
       opacity: 0,
-      duration: 0.5
-    }, "-=0.5")
+      duration: 0.4
+    }, "-=0.4")
     .to('.split-hero .char', {
       opacity: 1,
       y: 0,
       duration: 1.2,
       stagger: { amount: 0.4, from: 'center' },
       ease: 'power3.out'
-    }, "-=1")
+    }, "-=0.8")
     .to('.hero-glow', {
       opacity: 0.6,
       scale: 1.8,
@@ -234,7 +243,49 @@
     });
   };
 
-  // 7. HYPER-DETAILED CINEMATIC SCENES (SVGs)
+  // 7. HIGH-LEVEL INTERACTIVE MAGNETIC SKILL TAGS
+  const initMagneticSkills = () => {
+    const tags = document.querySelectorAll('.skill-tag');
+    if (prefersReducedMotion) return;
+
+    tags.forEach(tag => {
+      tag.addEventListener('mousemove', (e) => {
+        const rect = tag.getBoundingClientRect();
+        // Calculate offsets relative to center
+        const x = e.clientX - rect.left - (rect.width / 2);
+        const y = e.clientY - rect.top - (rect.height / 2);
+
+        // Calculate rotation limits (up to 20 deg)
+        const rotX = -(y / (rect.height / 2)) * 18;
+        const rotY = (x / (rect.width / 2)) * 18;
+
+        // Apply magnetic card translation
+        gsap.to(tag, {
+          rotationX: rotX,
+          rotationY: rotY,
+          x: x * 0.45,
+          y: y * 0.45,
+          z: 25,
+          duration: 0.35,
+          ease: "power2.out"
+        });
+      });
+
+      tag.addEventListener('mouseleave', () => {
+        gsap.to(tag, {
+          rotationX: 0,
+          rotationY: 0,
+          x: 0,
+          y: 0,
+          z: 0,
+          duration: 0.5,
+          ease: "power2.out"
+        });
+      });
+    });
+  };
+
+  // 8. HYPER-DETAILED CINEMATIC SCENES (SVGs)
   const initCinematicScenes = () => {
     if (prefersReducedMotion) return;
 
@@ -244,35 +295,29 @@
         repeat: -1, repeatDelay: 2
     });
 
+    // Setup initial state
+    gsap.set('#nailbed', { fill: '#FFB6C1' });
+    gsap.set('#laser-glow-group', { y: 80, opacity: 0 });
+    gsap.set('#anemia-zoom-view', { opacity: 0 });
+    gsap.set('#anemia-hud', { opacity: 0 });
+    gsap.set(['#an-log-1', '#an-log-2', '#an-log-3', '#an-log-4', '#an-log-result'], { opacity: 0 });
+
     anemiaTl
-      // 1. Zoom into the Scanner chamber
       .to('#anemia-scene', { scale: 1.5, x: -150, y: -50, duration: 1.5, ease: "power2.inOut" })
       .to('#anemia-zoom-view', { opacity: 1, duration: 0.8 }, "-=0.5")
       .to('#anemia-hud', { opacity: 1, duration: 0.5 }, "-=0.3")
-      
-      // 2. Logging and crosshair rotation
       .to('#an-log-1', { opacity: 1, duration: 0.2 })
       .to('#anemia-reticle', { rotation: 180, duration: 1.5, ease: "power1.inOut" }, "-=0.2")
-      
-      // 3. Laser scanner activates & sweeps
       .to('#laser-glow-group', { opacity: 1, duration: 0.2 })
       .to('#an-log-2', { opacity: 1, duration: 0.2 })
       .to('#laser-glow-group', { y: 420, duration: 2, ease: "none" })
-      
-      // 4. Color shifting fingernail bed from pink to pale beige
       .to('#nailbed', { fill: '#F5F5DC', duration: 1.5, ease: "power1.inOut" }, "-=1.8")
       .to('#an-log-3', { opacity: 1, duration: 0.2 }, "-=0.5")
-      
-      // 5. Diagnostics processing
       .to('#laser-glow-group', { opacity: 0, duration: 0.3 })
       .to('#an-log-4', { opacity: 1, duration: 0.2 })
       .to('#an-log-result', { opacity: 1, duration: 0.4 })
-      
-      // 6. Alert blinking
       .to('#an-log-result', { opacity: 0.2, duration: 0.2, repeat: 5, yoyo: true })
-      .to({}, { duration: 3.5 }) // hold view
-      
-      // 7. Reset and zoom back out
+      .to({}, { duration: 3.5 })
       .to(['#anemia-zoom-view', '#anemia-hud'], { opacity: 0, duration: 1 })
       .to('#anemia-scene', { scale: 1, x: 0, y: 0, duration: 1.2, ease: "power2.inOut" })
       .set('#nailbed', { fill: '#FFB6C1' })
@@ -306,63 +351,47 @@
     gsap.to('#lex-ring', { rotation: 360, duration: 10, ease: "none", repeat: -1, transformOrigin: "500px 200px" });
 
     lexTl
-      // 1. Doc Upload User -> API
       .to('#lex-packet-doc', { opacity: 1, duration: 0.1 })
       .to('#lex-packet-doc', { x: 380, y: 200, duration: 1, ease: "power1.inOut" })
       .to('#lex-packet-doc', { opacity: 0, duration: 0.1 })
-      // 2. Forward to Lambda
       .set('#lex-packet-doc', { x: 380, y: 200, opacity: 1 })
       .to('#lex-packet-doc', { y: 400, duration: 0.8, ease: "power1.inOut" })
       .to('#lex-packet-doc', { opacity: 0, duration: 0.1 })
-      // 3. Lambda -> DB chunking
       .to('#lex-packet-db', { opacity: 1, duration: 0.1 })
       .to('#lex-packet-db', { x: 620, duration: 1, ease: "power1.inOut" })
       .to('#lex-packet-db', { opacity: 0, duration: 0.1 })
       .set('#lex-packet-db', { x: 380 })
-      // 4. Lambda -> LLaMA-3 trigger
       .to('#lex-packet-llama', { opacity: 1, duration: 0.1 })
       .to('#lex-packet-llama', { x: 620, y: 200, duration: 1, ease: "power1.inOut" })
       .to('#lex-packet-llama', { opacity: 0, duration: 0.1 })
       .set('#lex-packet-llama', { x: 380, y: 400 })
-      // 5. LLaMA processes (RAG)
       .to('#lex-llama-pulse', { opacity: 0.8, scale: 1.5, duration: 0.5, ease: "power1.out" })
       .to('#lex-llama-pulse', { opacity: 0, scale: 2.2, duration: 0.5, ease: "power1.in" }, "-=0.2")
       .to('#lex-overlay', { opacity: 1, duration: 0.5 })
-      // 6. Response LLaMA-3 -> User
       .to('#lex-packet-resp', { opacity: 1, duration: 0.1 })
       .to('#lex-packet-resp', { x: 150, y: 300, duration: 1.5, ease: "power1.inOut" })
       .to('#lex-packet-resp', { opacity: 0, duration: 0.1 })
       .set('#lex-packet-resp', { x: 620, y: 200 })
-      // 7. Hold & Reset
       .to({}, { duration: 3 })
       .to('#lex-overlay', { opacity: 0, duration: 0.5 });
 
-    // D. SEPSIS PREDICTION (Patient bed -> Decision Tree paths)
+    // D. SEPSIS PREDICTION
     const sepsisTl = gsap.timeline({
         scrollTrigger: { trigger: '#scene-sepsis', start: 'top 70%', toggleActions: 'play pause resume reverse' },
         repeat: -1, repeatDelay: 2
     });
-    // Animate patient ECG monitor
     gsap.to('#sepsis-pulse-line', { strokeDashoffset: -120, duration: 2, ease: "none", repeat: -1 });
 
     sepsisTl
-      // 1. Draw ECG and fade in dashboard clinical parameters
       .to('#sepsis-features', { opacity: 1, y: -20, duration: 0.8 })
-      // 2. Fade in decision tree on right
       .to('#sepsis-tree-node', { opacity: 1, duration: 0.8 })
-      
-      // 3. Highlight decision path (Root -> Left -> Leaf)
       .to('#tree-root', { scale: 1.15, stroke: 'var(--accent)', duration: 0.5 })
       .to('#tree-root', { scale: 1, duration: 0.2 })
       .to('#tree-left', { scale: 1.15, stroke: 'var(--accent)', duration: 0.5 })
       .to('#tree-left', { scale: 1, duration: 0.2 })
       .to('#tree-leaf-1', { scale: 1.15, stroke: '#EF4444', duration: 0.5 })
       .to('#tree-leaf-1', { scale: 1, duration: 0.2 })
-      
-      // 4. Output SHAP classification probability HUD
       .to('#sepsis-shap', { opacity: 1, y: -10, duration: 0.5 })
-      
-      // 5. Hold and reset
       .to({}, { duration: 4.5 })
       .to(['#sepsis-features', '#sepsis-tree-node', '#sepsis-shap'], { opacity: 0, duration: 0.8 })
       .set(['#tree-root', '#tree-left', '#tree-leaf-1'], { scale: 1, stroke: '' });
@@ -371,6 +400,6 @@
   // INIT
   window.addEventListener("DOMContentLoaded", () => {
     window.scrollTo(0, 0);
-    initLoader(); // Runs loader first -> then triggers Hero and scenes
+    initLoader(); // Run loader -> hero -> animations sequentially
   });
 })();

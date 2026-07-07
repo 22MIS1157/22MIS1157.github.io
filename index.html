@@ -19,17 +19,20 @@
 </head>
 <body>
 
-    <!-- ADVANCED TERMINAL BOOT LOADER -->
+    <!-- ADVANCED HOLOGRAPHIC CYBER-SPHERE LOADER -->
     <div id="loader-wrapper">
-        <div class="loader-terminal">
-            <div class="terminal-header">
-                <span class="terminal-dot red"></span>
-                <span class="terminal-dot yellow"></span>
-                <span class="terminal-dot green"></span>
-                <span class="terminal-title">SYS_BOOT_SEQUENCE // PORTFOLIO_OS</span>
+        <div class="loader-content-cyber">
+            <svg class="holographic-sphere" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="85" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="10 20" class="ring-outer"/>
+                <circle cx="100" cy="100" r="65" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="180 40" class="ring-inner"/>
+                <circle cx="100" cy="100" r="15" fill="none" stroke="var(--accent)" stroke-width="2"/>
+                <path d="M100,20 L100,180 M20,100 L180,100 M43,43 L157,157 M43,157 L157,43" stroke="var(--accent)" stroke-width="0.5" stroke-opacity="0.3"/>
+            </svg>
+            <div class="loader-terminal-message">
+                <span id="loading-msg">LOADING AFNAAN AHMED'S ACADEMIC LIFE</span><span class="cursor">_</span>
             </div>
-            <div class="terminal-body" id="terminal-logs">
-                <!-- Log entries will be dynamically appended here by script.js -->
+            <div class="loader-percent-container">
+                <span id="loader-percent">0</span>%
             </div>
             <div class="terminal-progress-container">
                 <div class="terminal-progress-bar" id="progress-bar"></div>
@@ -85,7 +88,8 @@
     <nav class="navbar" id="navbar">
         <a href="#hero" class="nav-brand">AA</a>
         <div class="nav-links">
-            <a href="#about">Summary</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
             <a href="#education">Education</a>
             <a href="#projects">Projects</a>
             <a href="#experience">Experience</a>
@@ -112,18 +116,29 @@
                 </div>
             </section>
 
-            <!-- PROFESSIONAL SUMMARY -->
+            <!-- ABOUT -->
             <section class="content-section" id="about">
                 <div class="magic-title-container">
-                    <h2 class="magic-title" data-magic="about">SUMMARY</h2>
+                    <h2 class="magic-title" data-magic="about">ABOUT</h2>
                 </div>
                 
                 <div class="content-container">
                     <div class="glass-card fade-up">
-                        <p class="body-text large">Final-year M.Tech Software Engineering student at VIT Chennai with a solid grasp of <strong>data structures and programming fundamentals</strong> in Python, Java, JavaScript, and SQL. Experienced in <strong>Full-Stack Development</strong>, building custom <strong>web applications (frontend + backend)</strong>, and creating <strong>APIs and data services</strong>. Proven ability to analyze and work with <strong>real-world datasets</strong> to support the development of <strong>AI/ML models</strong> and interactive <strong>dashboards or visualizations</strong>. Skilled in writing automated tests to <strong>debug, test, and enhance existing systems</strong>. Eager to bring my <strong>strong problem-solving skills</strong> and passion for <strong>data analysis</strong> to the Smart Factory Solutions team at Magna Powertrain.</p>
-                        
-                        <h3 class="sub-heading mt-4">Technical Skills</h3>
+                        <p class="body-text large">Final-year M.Tech Software Engineering student at VIT Chennai with a solid grasp of data structures and programming fundamentals in Python, Java, JavaScript, and SQL. Experienced in Full-Stack Web Development, building robust web applications, designing APIs, and training machine learning models. Skilled in software testing and IoT integrations, looking to apply structured data analysis to Smart Factory Solutions.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TECHNICAL SKILLS -->
+            <section class="content-section" id="skills">
+                <div class="magic-title-container">
+                    <h2 class="magic-title" data-magic="skills">SKILLS</h2>
+                </div>
+                
+                <div class="content-container">
+                    <div class="glass-card fade-up">
                         <div class="skills-categories">
+                            
                             <div class="skills-category-group">
                                 <h5>Programming Languages</h5>
                                 <div class="skills-grid">
@@ -142,7 +157,7 @@
                             <div class="skills-category-group">
                                 <h5>Full-Stack Web Development</h5>
                                 <div class="skills-grid">
-                                    <span class="skill-tag">Web Applications (Frontend + Backend)</span>
+                                    <span class="skill-tag">Web Applications</span>
                                     <span class="skill-tag">React</span>
                                     <span class="skill-tag">Node.js</span>
                                     <span class="skill-tag">APIs and Data Services</span>
@@ -158,7 +173,7 @@
                                     <span class="skill-tag">Databases</span>
                                     <span class="skill-tag">Real-World Datasets</span>
                                     <span class="skill-tag">Data Analysis</span>
-                                    <span class="skill-tag">Dashboards or Visualizations</span>
+                                    <span class="skill-tag">Dashboards & Visualizations</span>
                                 </div>
                             </div>
 
@@ -180,7 +195,7 @@
                                 <div class="skills-grid">
                                     <span class="skill-tag">Data Structures</span>
                                     <span class="skill-tag">Programming Fundamentals</span>
-                                    <span class="skill-tag">Debug, Test, & Enhance Existing Systems</span>
+                                    <span class="skill-tag">Debug, Test, & Enhance</span>
                                     <span class="skill-tag">Git</span>
                                     <span class="skill-tag">Agile/Scrum</span>
                                 </div>
@@ -205,6 +220,7 @@
                                     <span class="skill-tag">Sensor Integration</span>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -567,7 +583,6 @@
                         <div class="social-links-container mt-4">
                             <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" class="social-btn">LinkedIn</a>
                             <a href="https://github.com/22MIS1157" target="_blank" class="social-btn">GitHub</a>
-                            <a href="https://22mis1157.github.io/" target="_blank" class="social-btn">Portfolio</a>
                         </div>
                     </div>
                 </div>
