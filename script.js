@@ -50,180 +50,598 @@
     });
   };
 
-  // 4. ADVANCED CYBER-HUD LOADER
+  // 4. CINEMATIC RANDOMIZED LOADER
   const initLoader = () => {
-    const loaderPercent = document.getElementById('loader-percent');
-    const progressBar = document.getElementById('progress-bar');
+    const loaderContainer = document.getElementById('loader-content-container');
     const loaderWrapper = document.getElementById('loader-wrapper');
-    const hud = document.querySelector('.holographic-hud');
 
-    let percent = 0;
-    const duration = 2800; // 2.8s loader
-    const intervalTime = 30;
-    const steps = duration / intervalTime;
-    const increment = 100 / steps;
+    // Create 3 advanced loaders
+    const loaders = [
+      {
+        id: 'marvel',
+        html: `
+          <div class="marvel-loader">
+            <div class="marvel-logo-box" id="marvel-box">
+              <span class="marvel-logo-text projecting" id="marvel-text">AFNAAN AHMED</span>
+            </div>
+            <div class="marvel-sub" id="marvel-sub">ACADEMIC LIFE PORTFOLIO</div>
+          </div>
+        `,
+        run: (htmlCode, onComplete) => {
+          loaderContainer.innerHTML = htmlCode;
+          const box = document.getElementById('marvel-box');
+          const sub = document.getElementById('marvel-sub');
+          const text = document.getElementById('marvel-text');
 
-    const updateLoader = () => {
-      percent = Math.min(100, percent + increment);
-      const roundedPercent = Math.floor(percent);
-      loaderPercent.innerText = roundedPercent;
-      progressBar.style.width = roundedPercent + '%';
+          const tl = gsap.timeline({ onComplete });
 
-      if (percent < 100) {
-        setTimeout(updateLoader, intervalTime);
-      } else {
-        // Core collapse transition
-        gsap.timeline()
-          .to(hud, { scale: 0.1, rotation: 360, opacity: 0, duration: 0.6, ease: "back.in(2)" })
-          .to(loaderWrapper, { autoAlpha: 0, duration: 0.8, ease: "power2.out" }, "-=0.2")
+          // Screen rumble/shake helper
+          const triggerRumble = () => {
+            document.body.classList.add('rumble');
+            setTimeout(() => document.body.classList.remove('rumble'), 300);
+          };
+
+          // Scale down from giant zoom
+          tl.fromTo(box, 
+            { scale: 12, opacity: 0, rotationX: 45, filter: 'blur(20px)' },
+            { scale: 1, opacity: 1, rotationX: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power4.out', onComplete: triggerRumble }
+          )
+          .to(sub, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+          .to({}, { duration: 1.2 }) // Keep showing
           .call(() => {
-            initHero();
-            initMagicScroll();
-            initCinematicScenes();
-            initMagneticSkills();
-          });
-      }
-    };
+            // Remove projection gradient for a solid white flash
+            text.classList.remove('projecting');
+            text.style.color = '#FFFFFF';
+            box.style.background = '#FFFFFF';
+            box.style.borderColor = '#E50914';
+            triggerRumble();
+          })
+          .to(box, { scale: 18, opacity: 0, duration: 0.8, ease: 'power3.in' })
+          .to(loaderWrapper, { autoAlpha: 0, duration: 0.4 }, '-=0.4');
+        }
+      },
+      {
+        id: 'matrix-glitch',
+        html: `
+          <div class="glitch-loader-container">
+            <div class="matrix-scanline"></div>
+            <div class="glitch-base" id="glitch-text">INITIALIZING_SYS_</div>
+            <div class="glitch-layer layer-1" id="glitch-l1">INITIALIZING_SYS_</div>
+            <div class="glitch-layer layer-2" id="glitch-l2">INITIALIZING_SYS_</div>
+            <div class="marvel-sub" id="glitch-sub" style="opacity: 1; transform: none; margin-top: 20px;">ESTABLISHING HIGH-SECURE PORT...</div>
+          </div>
+        `,
+        run: (htmlCode, onComplete) => {
+          loaderContainer.innerHTML = htmlCode;
+          const textEl = document.getElementById('glitch-text');
+          const l1 = document.getElementById('glitch-l1');
+          const l2 = document.getElementById('glitch-l2');
+          const sub = document.getElementById('glitch-sub');
+          
+          const targetWord = "AFNAAN AHMED";
+          const glyphs = "0123456789ABCDEF@#$%-+=_?";
 
-    updateLoader();
+          const tl = gsap.timeline({ onComplete });
+
+          // Glitch text chromatic aberration loop
+          const glitchInterval = setInterval(() => {
+            const dx = (Math.random() - 0.5) * 12;
+            const dy = (Math.random() - 0.5) * 6;
+            gsap.set(l1, { x: dx, y: dy, opacity: 0.6, color: '#FF0055' });
+            gsap.set(l2, { x: -dx, y: -dy, opacity: 0.6, color: '#00F0FF' });
+          }, 60);
+
+          // Typing/Decrypting text
+          let currentStep = 0;
+          const decryptInterval = setInterval(() => {
+            let result = "";
+            for (let i = 0; i < targetWord.length; i++) {
+              if (i < currentStep) {
+                result += targetWord[i];
+              } else {
+                result += glyphs[Math.floor(Math.random() * glyphs.length)];
+              }
+            }
+            textEl.innerText = result;
+            l1.innerText = result;
+            l2.innerText = result;
+
+            if (currentStep >= targetWord.length) {
+              clearInterval(decryptInterval);
+              clearInterval(glitchInterval);
+              // Resolve to clean cyber accent
+              gsap.set([l1, l2], { opacity: 0 });
+              textEl.style.color = '#FFFFFF';
+              textEl.style.textShadow = '0 0 20px var(--accent)';
+              sub.innerText = "ACCESS GRANTED. DECAPPED ENVIRONMENT READY.";
+              
+              // Collapse animation
+              tl.to('.glitch-loader-container', { scaleY: 0.005, duration: 0.3, ease: 'power3.inOut', delay: 0.5 })
+                .to('.glitch-loader-container', { scaleX: 0, duration: 0.3, ease: 'power3.in' })
+                .to(loaderWrapper, { autoAlpha: 0, duration: 0.3 }, '-=0.2');
+            }
+            currentStep += 0.5; // Decrypt speeds
+          }, 45);
+        }
+      },
+      {
+        id: 'cosmic-swarm',
+        html: `
+          <div class="cosmic-loader-container" style="position:relative; width:100%; height:100%; display:flex; justify-content:center; align-items:center;">
+            <canvas id="cosmic-canvas" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></canvas>
+            <div class="cosmic-text" style="z-index:2; font-family:'Outfit',sans-serif; font-weight:800; font-size:clamp(1.8rem,5vw,3.5rem); color:#FFF; letter-spacing:4px; text-align:center;">
+               <div id="cosmic-percent" style="font-size:1.8rem; font-family:'JetBrains Mono',monospace; opacity:0.8; margin-bottom:15px; color:var(--accent);">0%</div>
+               <div id="cosmic-status">LOADING AFNAAN'S ACADEMIC LIFE...</div>
+            </div>
+          </div>
+        `,
+        run: (htmlCode, onComplete) => {
+          loaderContainer.innerHTML = htmlCode;
+          const canvas = document.getElementById('cosmic-canvas');
+          const ctx = canvas.getContext('2d');
+          const percentEl = document.getElementById('cosmic-percent');
+          const statusEl = document.getElementById('cosmic-status');
+
+          const resize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+          };
+          window.addEventListener('resize', resize);
+          resize();
+
+          // Particle structure
+          const particles = [];
+          const particleCount = 180;
+          for (let i = 0; i < particleCount; i++) {
+            particles.push({
+              angle: Math.random() * Math.PI * 2,
+              radius: Math.random() * Math.max(canvas.width, canvas.height) * 0.6 + 50,
+              speed: Math.random() * 0.02 + 0.005,
+              size: Math.random() * 2 + 1,
+              color: `rgba(0, 240, 255, ${Math.random() * 0.6 + 0.3})`
+            });
+          }
+
+          let loadingProgress = 0;
+          let flareSize = 0;
+          let isComplete = false;
+
+          const animateParticles = () => {
+            ctx.fillStyle = 'rgba(2, 2, 5, 0.2)'; // trail effect
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Swirl speeds adapt to progress
+            const speedMultiplier = 1 + (loadingProgress / 100) * 3;
+            const contraction = 1 - (loadingProgress / 100) * 0.9; // spiral inwards
+
+            particles.forEach(p => {
+              p.angle += p.speed * speedMultiplier;
+              const r = p.radius * contraction;
+              const x = centerX + Math.cos(p.angle) * r;
+              const y = centerY + Math.sin(p.angle) * r;
+
+              ctx.beginPath();
+              ctx.arc(x, y, p.size, 0, Math.PI * 2);
+              ctx.fillStyle = p.color;
+              ctx.fill();
+            });
+
+            // Accretion disk glow
+            const glowRad = 40 + (loadingProgress / 100) * 120;
+            const grad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, glowRad);
+            grad.addColorStop(0, 'rgba(0, 240, 255, 0.4)');
+            grad.addColorStop(0.5, 'rgba(0, 240, 255, 0.1)');
+            grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, glowRad, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (isComplete) {
+              // Draw final flash burst
+              ctx.fillStyle = `rgba(255, 255, 255, ${flareSize})`;
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              flareSize += 0.05;
+              if (flareSize >= 1.2) {
+                // Done
+                window.removeEventListener('resize', resize);
+                gsap.to(loaderWrapper, { autoAlpha: 0, duration: 0.4, onComplete });
+                return;
+              }
+            }
+
+            requestAnimationFrame(animateParticles);
+          };
+
+          // Trigger particle animation loop
+          animateParticles();
+
+          // Increment percentage loader
+          const progressInterval = setInterval(() => {
+            loadingProgress += Math.floor(Math.random() * 4) + 1;
+            if (loadingProgress >= 100) {
+              loadingProgress = 100;
+              clearInterval(progressInterval);
+              statusEl.innerText = "ORBIT STABILIZED. WELCOME.";
+              setTimeout(() => {
+                isComplete = true;
+              }, 400);
+            }
+            percentEl.innerText = `${loadingProgress}%`;
+          }, 45);
+        }
+      }
+    ];
+
+    const chosenLoader = loaders[Math.floor(Math.random() * loaders.length)];
+    chosenLoader.run(chosenLoader.html, () => {
+      initHero();
+      initMagicScroll();
+      initBentoHover();
+      initCinematicScenes();
+    });
   };
 
-  // 5. HERO ENTRANCE (MAGNETIC MATRIX SHATTER REVEAL)
+  // 5. CINEMATIC RANDOMIZED HERO
   const initHero = () => {
-    splitText('.split-hero');
-    splitText('.split-name');
+    const heroContainer = document.getElementById('hero-dynamic-container');
+    const heroes = [
+      {
+        id: 'leo-movie',
+        html: `
+          <div class="leo-hero-container">
+            <div class="leo-flash-screen" id="leo-flash-screen"></div>
+            <div class="leo-slash" id="leo-slash"></div>
+            <div class="leo-logo-box" id="hero-logo-box">
+              <div class="leo-line-1" id="hero-line-1"></div>
+              <div class="leo-line-2" id="hero-line-2"></div>
+            </div>
+          </div>
+        `,
+        run: (htmlCode) => {
+          heroContainer.innerHTML = htmlCode;
+          const line1 = document.getElementById('hero-line-1');
+          const line2 = document.getElementById('hero-line-2');
+          const slash = document.getElementById('leo-slash');
+          const flashScreen = document.getElementById('leo-flash-screen');
 
-    const chars = document.querySelectorAll('.split-name .char');
+          line1.innerHTML = '';
+          line2.innerHTML = '';
 
-    // Scatter characters randomly in 3D Space
-    chars.forEach((char, index) => {
-      const scatterX = (Math.random() - 0.5) * 800;
-      const scatterY = (Math.random() - 0.5) * 500;
-      const scatterZ = -500 - Math.random() * 500;
-      const scatterRot = (Math.random() - 0.5) * 360;
-      const scatterSkew = (Math.random() - 0.5) * 90;
+          // Split "AFNAAN" into line 1
+          "AFNAAN".split('').forEach(c => {
+            const span = document.createElement('span');
+            span.className = 'leo-char-1';
+            span.innerText = c;
+            line1.appendChild(span);
+          });
 
-      gsap.set(char, {
-        x: scatterX,
-        y: scatterY,
-        z: scatterZ,
-        rotationX: scatterRot,
-        rotationY: scatterRot,
-        skewX: scatterSkew,
-        opacity: 0,
-        filter: "blur(20px)"
-      });
-    });
+          // Split "AHMED P" into line 2
+          "AHMED P".split('').forEach(c => {
+            const span = document.createElement('span');
+            span.className = 'leo-char-2';
+            span.innerText = c === ' ' ? '\u00A0' : c;
+            line2.appendChild(span);
+          });
 
-    gsap.set('.split-hero .char', { opacity: 0, y: 30 });
-    gsap.set('.hero-neon-beam', { xPercent: -100, width: '100%', opacity: 1 });
+          const chars1 = line1.querySelectorAll('.leo-char-1');
+          const chars2 = line2.querySelectorAll('.leo-char-2');
+          const allChars = [...chars1, ...chars2];
 
-    const tl = gsap.timeline();
+          // Initialize states
+          allChars.forEach(span => {
+            if (span.innerText === '\u00A0') return;
+            gsap.set(span, {
+              scale: 8,
+              opacity: 0,
+              filter: 'blur(20px)',
+              rotationY: -45,
+              rotationZ: -10,
+              y: -50,
+              transformOrigin: "50% 50% -100px"
+            });
+          });
 
-    // Laser bar sweeps across name container
-    tl.to('.hero-neon-beam', {
-      xPercent: 100,
-      duration: 1.6,
-      ease: 'power2.inOut'
-    })
-    // Characters snap into place stagger-linked to the sweep
-    .to(chars, {
-      x: 0,
-      y: 0,
-      z: 0,
-      rotationX: 0,
-      rotationY: 0,
-      skewX: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      duration: 1.5,
-      stagger: {
-        amount: 1.1,
-        from: 'left'
+          const triggerRumble = () => {
+            document.body.classList.add('rumble');
+            setTimeout(() => document.body.classList.remove('rumble'), 250);
+          };
+
+          const spawnSparks = (charEl) => {
+            const container = document.querySelector('.leo-hero-container');
+            if (!container || !charEl) return;
+            const containerRect = container.getBoundingClientRect();
+            const rect = charEl.getBoundingClientRect();
+
+            // Center of slamming letter relative to container
+            const cx = rect.left - containerRect.left + rect.width / 2;
+            const cy = rect.top - containerRect.top + rect.height / 2;
+
+            for (let i = 0; i < 10; i++) {
+              const spark = document.createElement('div');
+              spark.className = 'leo-spark';
+              container.appendChild(spark);
+
+              const angle = Math.random() * Math.PI * 2;
+              const distance = 40 + Math.random() * 120;
+              const tx = cx + Math.cos(angle) * distance;
+              const ty = cy + Math.sin(angle) * distance;
+
+              gsap.set(spark, {
+                x: cx + (Math.random() - 0.5) * 15,
+                y: cy + (Math.random() - 0.5) * 15,
+                scale: Math.random() * 1.4 + 0.6
+              });
+
+              gsap.to(spark, {
+                x: tx,
+                y: ty,
+                opacity: 0,
+                scale: 0.1,
+                duration: 0.4 + Math.random() * 0.4,
+                ease: 'power2.out',
+                onComplete: () => spark.remove()
+              });
+            }
+          };
+
+          const tl = gsap.timeline();
+
+          // A. Cinematic screen flashes before the main cut
+          tl.to(flashScreen, { opacity: 0.7, duration: 0.05 })
+            .to(flashScreen, { opacity: 0, duration: 0.05 })
+            .to(flashScreen, { opacity: 0.5, duration: 0.05, delay: 0.1 })
+            .to(flashScreen, { opacity: 0, duration: 0.05 })
+            
+            // B. Slash transition
+            .set(slash, { opacity: 1 })
+            .fromTo(slash, 
+              { left: '-120%' }, 
+              { left: '120%', duration: 0.7, ease: 'power3.inOut', onStart: triggerRumble }
+            )
+            .to(slash, { opacity: 0, duration: 0.1 }, '-=0.05')
+
+            // C. Letters slam down with localized sparks
+            .to(allChars, {
+              scale: 1,
+              opacity: 1,
+              filter: 'blur(0px)',
+              rotationY: 0,
+              rotationZ: 0,
+              y: 0,
+              duration: 0.7,
+              stagger: {
+                amount: 0.6,
+                from: 'start',
+                onStart: function() {
+                  const targetChar = this.targets()[0];
+                  if (targetChar && targetChar.innerText !== '\u00A0') {
+                    triggerRumble();
+                    spawnSparks(targetChar);
+                  }
+                }
+              },
+              ease: 'back.out(1.8)'
+            }, '-=0.35')
+
+            // D. Reveal aura, shockwave, scroll down indicator
+            .call(() => {
+              const wave = document.createElement('div');
+              wave.className = 'shockwave';
+              heroContainer.appendChild(wave);
+              gsap.to(wave, { scale: 8, opacity: 0, duration: 0.7, ease: 'power2.out', onComplete: () => wave.remove() });
+              triggerRumble();
+            })
+            .to('.hero-glow', { opacity: 0.95, scale: 2.2, duration: 1.2, ease: 'power2.out' }, '-=0.2')
+            .to('.scroll-down-indicator', { opacity: 1, y: 0, duration: 0.8 }, '-=0.6');
+        }
       },
-      ease: 'elastic.out(1, 0.75)'
-    }, "-=1.4")
-    .to('.hero-neon-beam', {
-      opacity: 0,
-      duration: 0.4
-    }, "-=0.4")
-    .to('.split-hero .char', {
+      {
+        id: 'cyber-decrypt',
+        html: `
+          <div class="decoder-hero-container" id="hero-decoder-text" style="position:relative;">
+            <div class="cyber-scanner-line" id="hero-scanner"></div>
+            <!-- Character spans will be injected dynamically -->
+          </div>
+        `,
+        run: (htmlCode) => {
+          heroContainer.innerHTML = htmlCode;
+          const textEl = document.getElementById('hero-decoder-text');
+          const scanner = document.getElementById('hero-scanner');
+          const originalText = "AFNAAN AHMED P";
+          
+          textEl.innerHTML = '';
+          textEl.appendChild(scanner);
+
+          // Build character cards
+          const spans = [];
+          originalText.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.className = 'decoder-char';
+            span.style.opacity = '0';
+            span.innerText = char === ' ' ? '\u00A0' : '#';
+            textEl.appendChild(span);
+            spans.push({ el: span, final: char });
+          });
+
+          // Scanner sweep animation
+          gsap.set(scanner, { left: '0%', opacity: 1 });
+          const tl = gsap.timeline();
+          tl.to(scanner, {
+            left: '100%',
+            duration: 2.0,
+            ease: 'power2.inOut',
+            onUpdate: function() {
+              const progress = this.progress();
+              const activeIndex = Math.floor(progress * spans.length);
+              
+              spans.forEach((s, idx) => {
+                if (idx <= activeIndex) {
+                  s.el.innerText = s.final === ' ' ? '\u00A0' : s.final;
+                  s.el.style.opacity = '1';
+                  s.el.style.color = 'var(--fg)';
+                  s.el.style.textShadow = '0 0 15px var(--accent)';
+                } else if (s.final !== ' ') {
+                  s.el.innerText = String.fromCharCode(33 + Math.floor(Math.random() * 93));
+                  s.el.style.opacity = '0.5';
+                  s.el.style.color = 'var(--accent)';
+                }
+              });
+            }
+          })
+          .to(scanner, { opacity: 0, duration: 0.3 })
+          .to('.hero-glow', { opacity: 0.6, scale: 1.6, duration: 1.0 }, '-=0.5')
+          .to('.scroll-down-indicator', { opacity: 1, y: 0, duration: 0.8 }, '-=0.5');
+        }
+      },
+      {
+        id: '3d-shatter',
+        html: `
+          <div class="shatter-hero-container" id="hero-shatter-text" style="perspective:1000px; transform-style:preserve-3d;">
+            <!-- Letters split and styled for 3D snap -->
+          </div>
+        `,
+        run: (htmlCode) => {
+          heroContainer.innerHTML = htmlCode;
+          const textEl = document.getElementById('hero-shatter-text');
+          const originalText = "AFNAAN AHMED P";
+
+          textEl.innerHTML = '';
+          const chars = originalText.split('');
+          chars.forEach(c => {
+            const span = document.createElement('span');
+            span.className = 'shatter-char';
+            span.style.display = 'inline-block';
+            span.style.transformStyle = 'preserve-3d';
+            span.innerText = c === ' ' ? '\u00A0' : c;
+            textEl.appendChild(span);
+          });
+
+          const spanEls = textEl.querySelectorAll('.shatter-char');
+
+          // Scatter characters in deep Z space
+          spanEls.forEach(span => {
+            if (span.innerText === '\u00A0') return;
+            const rx = (Math.random() - 0.5) * 600;
+            const ry = (Math.random() - 0.5) * 600;
+            const rz = -1200 - Math.random() * 800;
+            const rotX = (Math.random() - 0.5) * 720;
+            const rotY = (Math.random() - 0.5) * 720;
+
+            gsap.set(span, {
+              x: rx,
+              y: ry,
+              z: rz,
+              rotationX: rotX,
+              rotationY: rotY,
+              opacity: 0,
+              filter: 'blur(20px)'
+            });
+          });
+
+          const triggerRumble = () => {
+            document.body.classList.add('rumble');
+            setTimeout(() => document.body.classList.remove('rumble'), 250);
+          };
+
+          const tl = gsap.timeline();
+          tl.to(spanEls, {
+            x: 0,
+            y: 0,
+            z: 0,
+            rotationX: 0,
+            rotationY: 0,
+            opacity: 1,
+            filter: 'blur(0px)',
+            duration: 1.8,
+            stagger: {
+              amount: 0.8,
+              from: 'random'
+            },
+            ease: 'elastic.out(1.0, 0.75)',
+            onComplete: () => {
+              triggerRumble();
+              // Create dynamic shockwave circle
+              const wave = document.createElement('div');
+              wave.className = 'shockwave';
+              heroContainer.appendChild(wave);
+              gsap.to(wave, { scale: 8, opacity: 0, duration: 0.7, ease: 'power2.out', onComplete: () => wave.remove() });
+            }
+          })
+          .to('.hero-glow', { opacity: 0.7, scale: 2.0, duration: 1.0 }, '-=0.5')
+          .to('.scroll-down-indicator', { opacity: 1, y: 0, duration: 0.8 }, '-=0.6');
+        }
+      }
+    ];
+
+    splitText('.split-hero');
+    gsap.set('.split-hero .char', { opacity: 0, y: 30 });
+    
+    // Subtitle reveal
+    gsap.to('.split-hero .char', {
       opacity: 1,
       y: 0,
-      duration: 1.2,
+      duration: 1.0,
       stagger: { amount: 0.4, from: 'center' },
       ease: 'power3.out'
-    }, "-=0.8")
-    .to('.hero-glow', {
-      opacity: 0.6,
-      scale: 1.8,
-      duration: 2,
-      ease: 'power2.out'
-    }, "-=1.5")
-    .to('.scroll-down-indicator', {
-      opacity: 1,
-      y: 0,
-      duration: 1
-    }, "-=1");
+    });
+
+    const chosenHero = heroes.find(h => h.id === 'leo-movie') || heroes[0];
+    chosenHero.run(chosenHero.html);
   };
 
-  // 6. MAGIC SCROLL TITLE INTERACTION
+  // 6. MAGIC SCROLL TITLE INTERACTION (BUG-FREE & NO OVERLAPS)
   const initMagicScroll = () => {
-    gsap.utils.toArray('.magic-title-container').forEach(container => {
-      const title = container.querySelector('.magic-title');
-      
-      // Title fades in when section enters
-      gsap.fromTo(title, { opacity: 0, scale: 0.85, filter: 'blur(15px)' }, {
-        scrollTrigger: { 
-          trigger: container, 
-          start: 'top 85%', 
-          end: 'top 45%', 
-          scrub: true 
-        },
-        opacity: 0.15, 
-        scale: 1, 
-        filter: 'blur(0px)'
+    // Single robust ScrollTrigger for each section to handle the sticky section title card reveal
+    gsap.utils.toArray('.content-section').forEach(section => {
+      const title = section.querySelector('.magic-title');
+      if (!title) return;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 90%', // Starts fading in when section top enters viewport
+          end: 'top 0%',   // Fully vanishes when section top hits the viewport top
+          scrub: true
+        }
       });
 
-      // Title dissolves completely before content overlaps it
-      gsap.to(title, {
-        scrollTrigger: {
-            trigger: container.nextElementSibling, 
-            start: 'top 85%', 
-            end: 'top 55%',   
-            scrub: true
-        },
-        opacity: 0, 
-        filter: 'blur(20px)', 
-        scale: 1.1,
-        y: -100
+      tl.fromTo(title,
+        { opacity: 0, scale: 0.85, filter: 'blur(12px)', y: 40 },
+        { opacity: 0.95, scale: 1, filter: 'blur(0px)', y: 0, duration: 0.35, ease: 'power2.out' }
+      )
+      .to({}, { duration: 0.25 }) // Keep it completely visible and static in the center
+      .to(title, {
+        opacity: 0,
+        scale: 1.12,
+        filter: 'blur(20px)',
+        y: -90,
+        duration: 0.4,
+        ease: 'power2.in'
       });
     });
 
-    // 3D Stagger Entrance for Skill Tags
-    gsap.utils.toArray('.skills-category-group').forEach(group => {
-      const tags = group.querySelectorAll('.skill-tag');
-      gsap.fromTo(tags, 
-        { 
-          opacity: 0, 
-          rotationY: 90, 
-          scale: 0.3, 
-          y: 40,
-          transformOrigin: "center center -50px"
-        }, 
-        {
-          scrollTrigger: {
-            trigger: group,
-            start: 'top 92%'
-          },
-          opacity: 1,
-          rotationY: 0,
-          scale: 1,
-          y: 0,
-          duration: 1.2,
-          stagger: 0.05,
-          ease: "back.out(1.5)"
-        }
+    // Stagger Entrance for Bento Cards and inner tags
+    gsap.utils.toArray('.bento-grid').forEach(grid => {
+      const cards = grid.querySelectorAll('.bento-card');
+      
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: grid, start: 'top 85%' }
+      });
+      
+      tl.fromTo(cards, 
+        { opacity: 0, y: 50, scale: 0.95, rotationX: 10 }, 
+        { opacity: 1, y: 0, scale: 1, rotationX: 0, duration: 0.8, stagger: 0.12, ease: "power3.out" }
+      );
+      
+      const tags = grid.querySelectorAll('.bento-tag');
+      tl.fromTo(tags,
+        { opacity: 0, scale: 0.8, y: 15 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.02, ease: "back.out(1.5)" },
+        '-=0.4'
       );
     });
 
@@ -235,7 +653,30 @@
       });
     });
 
-    gsap.utils.toArray('.fade-up').forEach(el => {
+    // 3D slide-up transitions for project blocks
+    gsap.utils.toArray('.project-block').forEach(block => {
+      gsap.fromTo(block, 
+        { opacity: 0, y: 70, rotationX: 8, transformPerspective: 1000 }, 
+        {
+          scrollTrigger: { trigger: block, start: 'top 85%', toggleActions: 'play none none none' },
+          opacity: 1, y: 0, rotationX: 0, duration: 1.0, ease: 'power2.out'
+        }
+      );
+    });
+
+    // 3D slide-up transitions for glass cards
+    gsap.utils.toArray('.glass-card').forEach(card => {
+      gsap.fromTo(card, 
+        { opacity: 0, y: 60, rotationX: 8, transformPerspective: 1000 }, 
+        {
+          scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none none' },
+          opacity: 1, y: 0, rotationX: 0, duration: 1.0, ease: 'power2.out'
+        }
+      );
+    });
+
+    // General fade-up for other elements
+    gsap.utils.toArray('.fade-up:not(.glass-card):not(.project-block)').forEach(el => {
       gsap.fromTo(el, { opacity: 0, y: 50 }, {
         scrollTrigger: { trigger: el, start: 'top 88%' },
         opacity: 1, y: 0, duration: 1.2, ease: 'power3.out'
@@ -243,82 +684,79 @@
     });
   };
 
-  // 7. HIGH-LEVEL INTERACTIVE CONSTELLATION SKILL GRID
-  const initMagneticSkills = () => {
-    const tags = document.querySelectorAll('.skill-tag');
-    const svg = document.getElementById('skills-connections-svg');
-    if (!svg || prefersReducedMotion) return;
+  // 7. HIGH-LEVEL INTERACTIVE BENTO GRID (3D TILT & GLOW CURSOR TETHER)
+  const initBentoHover = () => {
+    const cards = document.querySelectorAll('.bento-card');
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-    // Helper to calculate element center coordinates relative to Connection SVG canvas
-    const getCenter = (el) => {
-      const rect = el.getBoundingClientRect();
-      const svgRect = svg.getBoundingClientRect();
-      return {
-        x: rect.left + rect.width / 2 - svgRect.left,
-        y: rect.top + rect.height / 2 - svgRect.top
-      };
-    };
+        // Pass coordinates to CSS custom properties
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
 
-    tags.forEach(tag => {
-      tag.addEventListener('mousemove', (e) => {
-        const rect = tag.getBoundingClientRect();
-        // Magnetic follow/tilt values
-        const x = e.clientX - rect.left - (rect.width / 2);
-        const y = e.clientY - rect.top - (rect.height / 2);
+        // Calculate rotation angles based on cursor offset from card center
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = -(y - centerY) / (rect.height / 12); // subtle rotation
+        const rotateY = (x - centerX) / (rect.width / 12);
 
-        const rotX = -(y / (rect.height / 2)) * 18;
-        const rotY = (x / (rect.width / 2)) * 18;
-
-        gsap.to(tag, {
-          rotationX: rotX,
-          rotationY: rotY,
-          x: x * 0.45,
-          y: y * 0.45,
-          z: 25,
-          duration: 0.2,
-          ease: "power1.out"
+        gsap.to(card, {
+          rotationX: rotateX,
+          rotationY: rotateY,
+          transformPerspective: 1000,
+          scale: 1.02,
+          y: -8,
+          duration: 0.25,
+          ease: 'power1.out'
         });
 
-        // 3D Constellation algorithm: Find nearest neighbors
-        const activeCenter = getCenter(tag);
-        const neighbors = [];
-
-        tags.forEach(other => {
-          if (other === tag) return;
-          const otherCenter = getCenter(other);
-          const dist = Math.hypot(otherCenter.x - activeCenter.x, otherCenter.y - activeCenter.y);
-          neighbors.push({ el: other, center: otherCenter, dist: dist });
-        });
-
-        // Sort by distance and extract top 3 neighbors
-        neighbors.sort((a, b) => a.dist - b.dist);
-        const nearest = neighbors.slice(0, 3);
-
-        // Clear and redraw vector connections
-        svg.innerHTML = '';
-        nearest.forEach(n => {
-          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          path.setAttribute('d', `M ${activeCenter.x} ${activeCenter.y} L ${n.center.x} ${n.center.y}`);
-          path.style.stroke = 'var(--accent)';
-          path.style.strokeWidth = '1.5px';
-          path.style.fill = 'none';
-          path.style.opacity = '0.35';
-          svg.appendChild(path);
+        // Magnetic Parallax pull for the tags inside this card
+        const tags = card.querySelectorAll('.bento-tag');
+        tags.forEach(tag => {
+          const depthX = (x - centerX) * 0.08;
+          const depthY = (y - centerY) * 0.08;
+          gsap.to(tag, {
+            x: depthX,
+            y: depthY,
+            duration: 0.3,
+            ease: 'power1.out'
+          });
         });
       });
 
-      tag.addEventListener('mouseleave', () => {
-        gsap.to(tag, {
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
           rotationX: 0,
           rotationY: 0,
-          x: 0,
+          scale: 1,
           y: 0,
-          z: 0,
           duration: 0.5,
-          ease: "power2.out"
+          ease: 'power2.out'
         });
-        svg.innerHTML = ''; // Clear constellation connections
+
+        // Reset magnetic offsets
+        const tags = card.querySelectorAll('.bento-tag');
+        tags.forEach(tag => {
+          gsap.to(tag, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: 'power2.out'
+          });
+        });
       });
+    });
+
+    // Scroll Progress bar updater
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const bar = document.getElementById("scroll-progress");
+      if (bar) bar.style.width = scrolled + "%";
     });
   };
 

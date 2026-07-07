@@ -18,27 +18,13 @@
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 </head>
 <body>
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-progress"></div>
 
-    <!-- ADVANCED JARVIS-STYLE CYBER-HUD LOADER -->
+    <!-- CINEMATIC RANDOMIZED LOADER -->
     <div id="loader-wrapper">
-        <div class="loader-content-cyber">
-            <svg class="holographic-hud" viewBox="0 0 200 200">
-                <circle cx="100" cy="100" r="90" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="10 30" class="hud-ring-1"/>
-                <circle cx="100" cy="100" r="80" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="100 20" class="hud-ring-2"/>
-                <circle cx="100" cy="100" r="70" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5 15" class="hud-ring-3"/>
-                <path d="M75,75 L65,75 L65,65 M125,75 L135,75 L135,65 M75,125 L65,125 L65,135 M125,125 L135,125 L135,135" fill="none" stroke="var(--accent)" stroke-width="2" class="hud-brackets"/>
-                <path d="M100,50 L100,75 M100,125 L100,150 M50,100 L75,100 M125,100 L150,100" stroke="var(--accent)" stroke-width="1" stroke-opacity="0.5"/>
-                <circle cx="100" cy="100" r="10" fill="var(--accent)" class="hud-core"/>
-            </svg>
-            <div class="loader-terminal-message">
-                <span id="loading-msg">LOADING AFNAAN AHMED'S ACADEMIC LIFE</span><span class="cursor">_</span>
-            </div>
-            <div class="loader-percent-container">
-                <span id="loader-percent">0</span>%
-            </div>
-            <div class="terminal-progress-container">
-                <div class="terminal-progress-bar" id="progress-bar"></div>
-            </div>
+        <div id="loader-content-container">
+            <!-- JS will dynamically inject the chosen loader markup here -->
         </div>
     </div>
 
@@ -86,18 +72,7 @@
         </label>
     </div>
 
-    <!-- NAVIGATION -->
-    <nav class="navbar" id="navbar">
-        <a href="#hero" class="nav-brand">AA</a>
-        <div class="nav-links">
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#education">Education</a>
-            <a href="#projects">Projects</a>
-            <a href="#experience">Experience</a>
-            <a href="#contact">Contact</a>
-        </div>
-    </nav>
+    <!-- NAVIGATION (Removed for cinematic flow) -->
 
     <main id="smooth-wrapper">
         <div id="smooth-content">
@@ -106,9 +81,8 @@
             <section class="cinematic-hero" id="hero">
                 <div class="hero-center">
                     <p class="hero-subtitle split-hero">Software Engineer / AI Developer</p>
-                    <div class="hero-beam-container">
-                        <div class="hero-neon-beam"></div>
-                        <h1 class="hero-name split-name">AFNAAN AHMED P</h1>
+                    <div class="hero-beam-container" id="hero-dynamic-container">
+                        <!-- JS will dynamically inject the chosen hero name animation markup here -->
                     </div>
                     <div class="hero-glow"></div>
                 </div>
@@ -137,96 +111,95 @@
                     <h2 class="magic-title" data-magic="skills">SKILLS</h2>
                 </div>
                 
-                <div class="content-container" style="position: relative;">
-                    <!-- Constellation Canvas Overlay -->
-                    <svg id="skills-connections-svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;"></svg>
-                    
-                    <div class="glass-card fade-up" style="position: relative; z-index: 1;">
-                        <div class="skills-categories">
-                            
-                            <div class="skills-category-group">
-                                <h5>Programming Languages</h5>
-                                <div class="skills-grid">
-                                    <span class="skill-tag">Python</span>
-                                    <span class="skill-tag">Java (Grade A)</span>
-                                    <span class="skill-tag">JavaScript</span>
-                                    <span class="skill-tag">C</span>
-                                    <span class="skill-tag">SQL</span>
-                                    <span class="skill-tag">HTML</span>
-                                    <span class="skill-tag">CSS</span>
-                                    <span class="skill-tag">PHP (basic)</span>
-                                    <span class="skill-tag">Perl (basic)</span>
-                                </div>
+                <div class="content-container bento-container">
+                    <div class="bento-grid fade-up">
+                        
+                        <!-- Core Card: Programming & CS -->
+                        <div class="bento-card bento-large group-hover-effect">
+                            <div class="bento-header">
+                                <span class="bento-icon">&lt;/&gt;</span>
+                                <h5>Core Languages</h5>
                             </div>
-                            
-                            <div class="skills-category-group">
-                                <h5>Full-Stack Web Development</h5>
-                                <div class="skills-grid">
-                                    <span class="skill-tag">Web Applications</span>
-                                    <span class="skill-tag">React</span>
-                                    <span class="skill-tag">Node.js</span>
-                                    <span class="skill-tag">APIs and Data Services</span>
-                                    <span class="skill-tag">FastAPI</span>
-                                    <span class="skill-tag">REST API</span>
-                                </div>
+                            <div class="bento-skills">
+                                <span class="bento-tag primary">Python</span>
+                                <span class="bento-tag primary">Java (Grade A)</span>
+                                <span class="bento-tag">JavaScript</span>
+                                <span class="bento-tag">C</span>
+                                <span class="bento-tag">SQL</span>
+                                <span class="bento-tag">HTML/CSS</span>
+                                <span class="bento-tag">PHP</span>
+                                <span class="bento-tag">Perl</span>
                             </div>
-
-                            <div class="skills-category-group">
-                                <h5>Data Analysis & Databases</h5>
-                                <div class="skills-grid">
-                                    <span class="skill-tag">SQL</span>
-                                    <span class="skill-tag">Databases</span>
-                                    <span class="skill-tag">Real-World Datasets</span>
-                                    <span class="skill-tag">Data Analysis</span>
-                                    <span class="skill-tag">Dashboards & Visualizations</span>
-                                </div>
-                            </div>
-
-                            <div class="skills-category-group">
-                                <h5>Artificial Intelligence & Machine Learning</h5>
-                                <div class="skills-grid">
-                                    <span class="skill-tag">AI/ML Models</span>
-                                    <span class="skill-tag">scikit-learn</span>
-                                    <span class="skill-tag">XGBoost</span>
-                                    <span class="skill-tag">PyTorch</span>
-                                    <span class="skill-tag">YOLOv8</span>
-                                    <span class="skill-tag">OpenCV</span>
-                                    <span class="skill-tag">Data-Driven Features</span>
-                                </div>
-                            </div>
-
-                            <div class="skills-category-group">
-                                <h5>Software Engineering</h5>
-                                <div class="skills-grid">
-                                    <span class="skill-tag">Data Structures</span>
-                                    <span class="skill-tag">Programming Fundamentals</span>
-                                    <span class="skill-tag">Debug, Test, & Enhance</span>
-                                    <span class="skill-tag">Git</span>
-                                    <span class="skill-tag">Agile/Scrum</span>
-                                </div>
-                            </div>
-
-                            <div class="skills-category-group">
-                                <h5>Software Testing</h5>
-                                <div class="skills-grid">
-                                    <span class="skill-tag">Selenium</span>
-                                    <span class="skill-tag">TestCafe</span>
-                                    <span class="skill-tag">Unit Testing</span>
-                                    <span class="skill-tag">Regression Testing</span>
-                                </div>
-                            </div>
-
-                            <div class="skills-category-group">
-                                <h5>IoT & Hardware</h5>
-                                <div class="skills-grid">
-                                    <span class="skill-tag">Arduino Nano</span>
-                                    <span class="skill-tag">PySerial</span>
-                                    <span class="skill-tag">Servo Motor Control</span>
-                                    <span class="skill-tag">Sensor Integration</span>
-                                </div>
-                            </div>
-
                         </div>
+
+                        <!-- Secondary Card: AI & ML -->
+                        <div class="bento-card bento-medium group-hover-effect">
+                            <div class="bento-header">
+                                <span class="bento-icon">🤖</span>
+                                <h5>AI & Machine Learning</h5>
+                            </div>
+                            <div class="bento-skills">
+                                <span class="bento-tag primary">PyTorch</span>
+                                <span class="bento-tag primary">YOLOv8</span>
+                                <span class="bento-tag">OpenCV</span>
+                                <span class="bento-tag">scikit-learn</span>
+                                <span class="bento-tag">XGBoost</span>
+                            </div>
+                        </div>
+
+                        <!-- Secondary Card: Full Stack -->
+                        <div class="bento-card bento-medium group-hover-effect">
+                            <div class="bento-header">
+                                <span class="bento-icon">🌐</span>
+                                <h5>Full-Stack & APIs</h5>
+                            </div>
+                            <div class="bento-skills">
+                                <span class="bento-tag primary">FastAPI</span>
+                                <span class="bento-tag primary">React</span>
+                                <span class="bento-tag">Node.js</span>
+                                <span class="bento-tag">REST API</span>
+                            </div>
+                        </div>
+
+                        <!-- Small Card: Data -->
+                        <div class="bento-card bento-small group-hover-effect">
+                            <div class="bento-header">
+                                <span class="bento-icon">📊</span>
+                                <h5>Data & DBs</h5>
+                            </div>
+                            <div class="bento-skills">
+                                <span class="bento-tag">SQL</span>
+                                <span class="bento-tag">Dashboards</span>
+                                <span class="bento-tag">Data Analysis</span>
+                            </div>
+                        </div>
+
+                        <!-- Small Card: Engineering -->
+                        <div class="bento-card bento-small group-hover-effect">
+                            <div class="bento-header">
+                                <span class="bento-icon">⚙️</span>
+                                <h5>Engineering</h5>
+                            </div>
+                            <div class="bento-skills">
+                                <span class="bento-tag">Data Structures</span>
+                                <span class="bento-tag">Git</span>
+                                <span class="bento-tag">Agile/Scrum</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Small Card: Testing & IoT -->
+                        <div class="bento-card bento-small group-hover-effect">
+                            <div class="bento-header">
+                                <span class="bento-icon">🧪</span>
+                                <h5>Testing & IoT</h5>
+                            </div>
+                            <div class="bento-skills">
+                                <span class="bento-tag">Selenium</span>
+                                <span class="bento-tag">Unit Testing</span>
+                                <span class="bento-tag">Arduino Nano</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>

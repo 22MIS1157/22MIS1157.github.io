@@ -2,10 +2,6 @@
    AFNAAN AHMED P — CINEMATIC PORTFOLIO 2026
    ============================================ */
 
-html[data-theme="dark"], html[data-theme="dark"] body {
-  background-color: #020205 !important; /* Pitch absolute void black */
-}
-
 :root[data-theme="dark"] {
   --bg: #020205;        
   --fg: #F8F9FA;        
@@ -13,7 +9,7 @@ html[data-theme="dark"], html[data-theme="dark"] body {
   --text-muted: #64748B;
   --glass-bg: rgba(255, 255, 255, 0.02);
   --glass-border: rgba(0, 240, 255, 0.15);
-  --magic-title-color: #080a14;
+  --magic-title-color: rgba(255, 255, 255, 0.85); /* Highly visible bright white */
 }
 
 :root[data-theme="light"] {
@@ -23,11 +19,11 @@ html[data-theme="dark"], html[data-theme="dark"] body {
   --text-muted: #718096;
   --glass-bg: rgba(0, 0, 0, 0.03);
   --glass-border: rgba(67, 56, 202, 0.15);
-  --magic-title-color: #E2E8F0;
+  --magic-title-color: rgba(0, 0, 0, 0.9); /* Highly visible dark black */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { background: var(--bg); color: var(--fg); font-family: 'Outfit', sans-serif; overflow-x: hidden; transition: background 0.5s ease, color 0.5s ease; }
+html, body { background-color: var(--bg); color: var(--fg); font-family: 'Outfit', sans-serif; overflow-x: hidden; transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1), color 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
 ::selection { background: var(--accent); color: var(--bg); }
 
 /* LENIS SMOOTH SCROLL */
@@ -37,7 +33,7 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-stopped { overflow: hidden; }
 
 /* ============================================
-   ADVANCED CYBER-HUD LOADER
+   CINEMATIC RANDOMIZED LOADER
    ============================================ */
 #loader-wrapper {
   position: fixed;
@@ -45,98 +41,119 @@ html.lenis, html.lenis body { height: auto; }
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #020205;
+  background: #020205; /* Always black for cinematic feel */
   z-index: 99999;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
-.loader-content-cyber {
-  text-align: center;
+#loader-content-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+/* Loader 1: Marvel Studios Logo Style */
+.marvel-loader {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
-  width: 90vw;
-  max-width: 500px;
+  justify-content: center;
+  perspective: 1000px;
 }
-.holographic-hud {
-  width: 180px;
-  height: 180px;
-  filter: drop-shadow(0 0 10px var(--accent));
+.marvel-logo-box {
+  background: #E50914; /* Solid cinematic red */
+  padding: 15px 50px;
+  border: 5px solid #FFFFFF;
+  box-shadow: 0 0 50px rgba(229, 9, 20, 0.5);
+  transform: skewX(-8deg) scale(0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
-
-/* Concentric spinner animations */
-.hud-ring-1 {
-  transform-origin: center;
-  animation: rotateClockwise 12s linear infinite;
-}
-.hud-ring-2 {
-  transform-origin: center;
-  animation: rotateCounterClockwise 8s linear infinite;
-}
-.hud-ring-3 {
-  transform-origin: center;
-  animation: rotateClockwise 5s linear infinite;
-}
-.hud-brackets {
-  transform-origin: center;
-  animation: bracketPulse 2.5s ease-in-out infinite alternate;
-}
-.hud-core {
-  animation: coreGlow 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes rotateClockwise {
-  to { transform: rotate(360deg); }
-}
-@keyframes rotateCounterClockwise {
-  to { transform: rotate(-360deg); }
-}
-@keyframes bracketPulse {
-  0% { transform: scale(0.95); opacity: 0.7; }
-  100% { transform: scale(1.05); opacity: 1; }
-}
-@keyframes coreGlow {
-  0% { fill-opacity: 0.5; filter: blur(2px); }
-  100% { fill-opacity: 1; filter: blur(0px); }
-}
-
-.loader-terminal-message {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
-  color: var(--accent);
-  letter-spacing: 2px;
-  margin-top: 10px;
-  text-transform: uppercase;
-}
-.loader-terminal-message .cursor {
-  animation: blink 0.8s infinite;
-}
-@keyframes blink {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
-}
-
-.loader-percent-container {
+.marvel-logo-text {
   font-family: 'Outfit', sans-serif;
-  font-size: 2.2rem;
+  font-weight: 900;
+  font-size: clamp(3.5rem, 11vw, 7.5rem);
+  color: #FFFFFF;
+  text-transform: uppercase;
+  letter-spacing: -6px;
+  line-height: 0.85;
+  display: block;
+}
+.marvel-logo-text.projecting {
+  background-image: linear-gradient(45deg, #ff0055, #00f0ff, #ffcc00, #ff00ff, #ff0055);
+  background-size: 300% 300%;
+  animation: marvel-bg-cycle 0.3s linear infinite;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.marvel-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  letter-spacing: 6px;
+  margin-top: 15px;
+  color: #FFFFFF;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes marvel-bg-cycle {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Loader 2: Neon Liquid */
+.neon-liquid-svg {
+  width: 85vw;
+  max-width: 650px;
+  overflow: visible;
+}
+.neon-liquid-text {
+  font-family: 'Outfit', sans-serif;
   font-weight: 800;
-  color: var(--fg);
+  font-size: 110px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  filter: drop-shadow(0 0 8px var(--accent));
 }
-.terminal-progress-container {
-  height: 2px;
-  background: rgba(255, 255, 255, 0.05);
+
+/* Loader 3: Cyber Glitch */
+.glitch-loader-container {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  color: var(--accent);
+  text-transform: uppercase;
+  position: relative;
+  text-shadow: 0 0 10px var(--accent);
+}
+.glitch-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.terminal-progress-bar {
   height: 100%;
-  width: 0%;
-  background: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
-  transition: width 0.1s ease;
+  opacity: 0;
+}
+.matrix-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
 }
 
 /* ============================================
@@ -698,15 +715,7 @@ html.lenis, html.lenis body { height: auto; }
   }
 }
 
-/* ============================================
-   NAVBAR
-   ============================================ */
-.navbar { position: fixed; top: 30px; left: 5vw; width: 90vw; display: flex; justify-content: space-between; align-items: center; z-index: 9000; mix-blend-mode: difference; }
-.nav-brand { font-weight: 800; font-size: 1.5rem; color: #fff; text-decoration: none; letter-spacing: 2px; }
-.nav-links { display: flex; gap: 40px; align-items: center; }
-.nav-links a { color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-.nav-links a:hover { opacity: 0.6; }
-@media(max-width: 768px) { .nav-links { display: none; } }
+/* Navbar removed */
 
 /* ============================================
    CINEMATIC HERO
@@ -734,8 +743,49 @@ html.lenis, html.lenis body { height: auto; }
   z-index: 3;
 }
 
+/* Split Text Basics */
 .split-hero, .split-name { overflow: visible; display: inline-block; }
 .char { display: inline-block; transform: translate3d(0, 110%, -500px) rotateX(-90deg); opacity: 0; transform-origin: 50% 100%; }
+
+/* Hero Randomizer Classes */
+.marvel-hero-name {
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -3px;
+  color: var(--fg);
+  text-transform: uppercase;
+  transform: scale(5);
+  opacity: 0;
+  filter: blur(20px);
+}
+
+.decoder-hero-container {
+  display: flex;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(3rem, 10vw, 8rem);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -2px;
+}
+.decoder-char {
+  display: inline-block;
+  min-width: 0.6em;
+  text-align: center;
+}
+
+.shatter-hero-container {
+  font-size: clamp(3.5rem, 11vw, 8.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  color: var(--fg);
+  text-transform: uppercase;
+}
+.shatter-char {
+  display: inline-block;
+}
 
 .scroll-down-indicator { position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; }
 .scroll-down-indicator p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
@@ -785,52 +835,117 @@ html.lenis, html.lenis body { height: auto; }
 .text-link { color: var(--accent); text-decoration: underline; transition: opacity 0.3s; }
 .text-link:hover { opacity: 0.7; }
 
-/* Constellation Connections SVG styling */
-#skills-connections-svg path {
-  stroke: var(--accent);
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  opacity: 0.35;
-  filter: drop-shadow(0 0 4px var(--accent));
-  transition: stroke-dasharray 0.3s;
+/* ============================================
+   BENTO BOX SKILLS GRID
+   ============================================ */
+.bento-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(180px, auto);
+  gap: 20px;
+}
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* Skills styling with floating physics */
-.skills-categories { display: flex; flex-direction: column; gap: 35px; }
-.skills-category-group h5 { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; border-left: 2px solid var(--accent); padding-left: 10px; }
-.skills-grid { display: flex; flex-wrap: wrap; gap: 12px; perspective: 1000px; }
-
-@keyframes floatTag {
-  0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-6px) rotate(1deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
+.bento-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 30px;
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
 
-.skill-tag { 
-  display: inline-block;
-  padding: 8px 18px; 
-  background: var(--glass-bg); 
-  border: 1px solid var(--glass-border); 
-  border-radius: 4px; 
-  font-family: 'JetBrains Mono', monospace; 
-  font-size: 0.8rem; 
-  color: var(--fg); 
-  transition: background 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s;
-  transform-style: preserve-3d;
-  cursor: default;
-  animation: floatTag 5s ease-in-out infinite;
+/* Hover Physics (Scale and translate handled by GSAP) */
+.bento-card:hover {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  border-color: var(--accent);
+  z-index: 10;
 }
 
-/* De-synchronize float states */
-.skill-tag:nth-child(2n) { animation-delay: 1.2s; animation-duration: 6s; }
-.skill-tag:nth-child(3n) { animation-delay: 0.6s; animation-duration: 4.5s; }
+/* Card Sizes */
+.bento-large { grid-column: span 2; grid-row: span 2; }
+.bento-medium { grid-column: span 2; grid-row: span 1; }
+.bento-small { grid-column: span 1; grid-row: span 1; }
 
-.skill-tag:hover { 
-  animation-play-state: paused !important; /* Stop floating on hover */
-  background: var(--accent) !important; 
-  color: #000 !important; 
-  border-color: var(--accent) !important;
-  box-shadow: 0 10px 25px rgba(0, 240, 255, 0.4) !important;
+@media (max-width: 1024px) {
+  .bento-large, .bento-medium { grid-column: span 2; }
+  .bento-small { grid-column: span 1; }
+}
+@media (max-width: 600px) {
+  .bento-large, .bento-medium, .bento-small { grid-column: span 1; }
+}
+
+.bento-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.bento-icon {
+  font-size: 2rem;
+  background: var(--glass-border);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  transition: 0.3s;
+}
+.bento-card:hover .bento-icon {
+  background: var(--accent);
+  color: #000;
+  transform: rotate(-10deg);
+}
+
+.bento-header h5 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: -0.5px;
+}
+
+.bento-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+.bento-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: var(--text-muted);
+  transition: 0.3s;
+}
+.bento-tag.primary {
+  color: var(--fg);
+  border-color: var(--glass-border);
+}
+.bento-card:hover .bento-tag.primary {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
 }
 
 /* ============================================
@@ -922,3 +1037,211 @@ html.lenis, html.lenis body { height: auto; }
 
 /* FOOTER */
 .footer { text-align: center; padding: 10vh 0 5vh 0; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+
+/* ============================================
+   CINEMATIC ADDITIONAL ANIMATION EFFECTS
+   ============================================ */
+
+/* Marvel Hero Style */
+.marvel-hero-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Cosmic Canvas Swarm */
+.cosmic-text {
+  animation: cosmic-glow-pulse 2s ease-in-out infinite alternate;
+}
+@keyframes cosmic-glow-pulse {
+  from { text-shadow: 0 0 10px rgba(0, 240, 255, 0.4); }
+  to { text-shadow: 0 0 30px rgba(0, 240, 255, 0.9), 0 0 50px rgba(0, 240, 255, 0.5); }
+}
+
+/* Decryptor scanner line */
+.cyber-scanner-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--accent);
+  box-shadow: 0 0 15px var(--accent);
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Screen rumble / shake effect */
+.rumble {
+  animation: camera-rumble 0.3s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes camera-rumble {
+  10%, 90% { transform: translate3d(-1px, 2px, 0); }
+  20%, 80% { transform: translate3d(2px, -2px, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 4px, 0); }
+  40%, 60% { transform: translate3d(4px, -4px, 0); }
+}
+
+/* Dynamic expanding shockwave */
+.shockwave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 30px var(--accent);
+  opacity: 1;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Scroll Progress Indicator */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), #FFFFFF);
+  box-shadow: 0 0 12px var(--accent), 0 0 20px var(--accent);
+  z-index: 100000;
+  pointer-events: none;
+  transition: width 0.1s ease-out;
+}
+
+/* Leo Movie Title Card Styles */
+.leo-hero-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.leo-logo-box {
+  background: transparent;
+  padding: 10px 30px;
+  border-radius: 4px;
+  display: block;
+  position: relative;
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+}
+.leo-line-1, .leo-line-2 {
+  display: block;
+  text-align: center;
+  transform-style: preserve-3d;
+}
+.leo-char-1, .leo-char-2 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  transform-style: preserve-3d;
+  display: inline-block;
+}
+.leo-char-1 {
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: #FFAA00;
+  text-shadow: 0 0 15px #FF5500, 0 0 30px #FF0000;
+  letter-spacing: -2px;
+  margin-bottom: 5px;
+}
+.leo-char-2 {
+  font-size: clamp(4rem, 11vw, 8rem);
+  color: #FF2B2B;
+  text-shadow: 0 0 20px #FF0000, 0 0 45px #FF5500, 0 0 75px #FFCC00;
+  letter-spacing: -4px;
+}
+.leo-flash-screen {
+  position: fixed;
+  inset: 0;
+  background: #FFFFFF;
+  opacity: 0;
+  z-index: 999999;
+  pointer-events: none;
+}
+.leo-slash {
+  position: absolute;
+  top: 50%;
+  left: -50%;
+  width: 200%;
+  height: 6px;
+  background: linear-gradient(90deg, transparent, #FF8800, #FFFFFF, #FF0000, transparent);
+  box-shadow: 0 0 30px #FF3300, 0 0 10px #FFFFFF;
+  transform: rotate(-15deg) translateY(-50%);
+  z-index: 6;
+  opacity: 0;
+  pointer-events: none;
+}
+.leo-spark {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FFCC00;
+  box-shadow: 0 0 10px #FF5500;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Interactive Bento Card Tilt & Glow Border styling */
+.bento-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+.bento-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(220px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(0, 240, 255, 0.06), transparent 50%);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.bento-card:hover::before {
+  opacity: 1;
+}
+/* Glowing Border Trace Mask */
+.bento-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 24px;
+  padding: 1px;
+  background: radial-gradient(200px circle at var(--mouse-x, 0) var(--mouse-y, 0), var(--accent), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+.bento-card:hover::after {
+  opacity: 1;
+}
+.bento-card h5, .bento-card .bento-skills, .bento-card .bento-icon {
+  transform: translateZ(25px); /* 3D layer float */
+  transition: transform 0.3s ease;
+}
+.bento-tag {
+  transform: translateZ(10px);
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+.bento-tag:hover {
+  background: var(--accent) !important;
+  color: var(--bg) !important;
+  box-shadow: 0 0 15px var(--accent);
+  transform: translateZ(35px) translateY(-3px) scale(1.1);
+  border-color: var(--accent);
+}
