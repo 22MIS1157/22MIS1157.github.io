@@ -1,356 +1,329 @@
 /* ============================================
-   AFNAAN AHMED P — DENSE ACADEMIC / SWE PORTFOLIO
-   Strict 3s Loader + Advanced Canvas Simulations
+   AFNAAN AHMED P — AWWWARDS MASTERPIECE
+   Ultimate GSAP Physics Engine
    ============================================ */
 
 (function () {
   "use strict";
-
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // 1. LENIS SMOOTH SCROLL SETUP
+  // 1. LENIS SMOOTH SCROLL (Awwwards Butter Smooth)
   let lenis;
   if (!prefersReducedMotion) {
-    lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true
-    });
-
+    lenis = new Lenis({ duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), direction: 'vertical', smooth: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
   }
 
-  // 2. STRICT 3-SECOND ADVANCED TERMINAL LOADER
-  const initLoader = () => {
-    if (prefersReducedMotion) {
-      document.getElementById("loader").style.display = "none";
-      return;
-    }
-
-    if(lenis) lenis.stop();
-    document.body.style.overflow = "hidden"; // Prevent native scroll
+  // 2. CUSTOM CURSOR
+  const initCursor = () => {
+    if(prefersReducedMotion || window.innerWidth < 1024) return;
+    const cursor = document.getElementById('cursor');
+    gsap.set(cursor, { xPercent: -50, yPercent: -50 });
     
-    const logsEl = document.getElementById('termLogs');
-    const progressEl = document.getElementById('termProgress');
-    const statusEl = document.getElementById('termStatus');
+    let mouseX = 0, mouseY = 0, posX = 0, posY = 0;
+    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
     
-    const logs = [
-      { t: 100, msg: "Initializing kernel... [OK]" },
-      { t: 300, msg: "Mounting virtual file systems... [OK]" },
-      { t: 600, msg: "Checking memory allocation... [OK]" },
-      { t: 800, msg: "Loading portfolio dependencies... [WARN: Heavy load]" },
-      { t: 1100, msg: "Establishing secure connection to LexCloud nodes..." },
-      { t: 1500, msg: "LexCloud handshake successful. [OK]" },
-      { t: 1800, msg: "Compiling V-Park computer vision models..." },
-      { t: 2200, msg: "Loading CNN weights for Anemia Detection... [OK]" },
-      { t: 2500, msg: "Starting XGBoost clinical decision engine..." },
-      { t: 2800, msg: "System fully operational. Launching UI..." }
-    ];
+    gsap.ticker.add(() => {
+      posX += (mouseX - posX) * 0.15;
+      posY += (mouseY - posY) * 0.15;
+      gsap.set(cursor, { x: posX, y: posY });
+    });
 
-    let start = Date.now();
-    let interval = setInterval(() => {
-      let elapsed = Date.now() - start;
-      let percent = Math.min(100, (elapsed / 3000) * 100);
-      progressEl.style.width = percent + "%";
-      statusEl.innerText = Math.floor(percent) + "%";
+    document.querySelectorAll('a, .magnetic-wrap, canvas').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+  };
 
-      if (elapsed >= 3000) {
-        clearInterval(interval);
-        // Loader Exit Animation
-        gsap.to('#loader', {
-          opacity: 0,
-          scale: 1.05,
-          duration: 0.5,
-          ease: 'power3.inOut',
-          onComplete: () => {
-            document.getElementById("loader").style.display = "none";
-            document.body.style.overflow = "";
-            if(lenis) lenis.start();
+  // 3. MAGNETIC BUTTONS
+  const initMagnetic = () => {
+    if(prefersReducedMotion || window.innerWidth < 1024) return;
+    document.querySelectorAll('.magnetic-wrap').forEach(wrap => {
+      const btn = wrap.querySelector('.magnetic-btn');
+      wrap.addEventListener('mousemove', e => {
+        const rect = wrap.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btn, { x: x * 0.4, y: y * 0.4, duration: 0.4, ease: 'power2.out' });
+      });
+      wrap.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
+      });
+    });
+  };
+
+  // 4. TEXT SPLITTING (Vanilla)
+  const splitText = (selector) => {
+    document.querySelectorAll(selector).forEach(el => {
+      const text = el.innerHTML; el.innerHTML = '';
+      text.split('<br>').forEach((line, i, arr) => {
+        const lineDiv = document.createElement('div');
+        lineDiv.style.overflow = 'hidden';
+        
+        // Handle nested span for accent
+        const temp = document.createElement('div'); temp.innerHTML = line;
+        
+        Array.from(temp.childNodes).forEach(node => {
+          if(node.nodeType === 3) {
+            node.textContent.split(' ').forEach(word => {
+              if(!word) return;
+              const wordDiv = document.createElement('div'); wordDiv.style.display = 'inline-block'; wordDiv.style.marginRight = '0.3em';
+              word.split('').forEach(char => {
+                const charSpan = document.createElement('span'); charSpan.className = 'char'; charSpan.style.display = 'inline-block'; charSpan.innerHTML = char;
+                wordDiv.appendChild(charSpan);
+              });
+              lineDiv.appendChild(wordDiv);
+            });
+          } else if(node.nodeType === 1) {
+             const styledSpan = document.createElement('span');
+             styledSpan.className = node.className;
+             node.textContent.split(' ').forEach(word => {
+               if(!word) return;
+               const wordDiv = document.createElement('div'); wordDiv.style.display = 'inline-block'; wordDiv.style.marginRight = '0.3em';
+               word.split('').forEach(char => {
+                 const charSpan = document.createElement('span'); charSpan.className = 'char'; charSpan.style.display = 'inline-block'; charSpan.innerHTML = char;
+                 wordDiv.appendChild(charSpan);
+               });
+               styledSpan.appendChild(wordDiv);
+             });
+             lineDiv.appendChild(styledSpan);
           }
         });
-      }
-    }, 30);
-
-    // Inject logs based on time
-    logs.forEach(log => {
-      setTimeout(() => {
-        const line = document.createElement('div');
-        line.className = 'log-line';
         
-        let statusHtml = '';
-        if (log.msg.includes('[OK]')) {
-          log.msg = log.msg.replace('[OK]', '');
-          statusHtml = '<span class="status ok">[OK]</span>';
-        } else if (log.msg.includes('[WARN')) {
-          let warnMsg = log.msg.substring(log.msg.indexOf('[WARN'));
-          log.msg = log.msg.replace(warnMsg, '');
-          statusHtml = `<span class="status warn">${warnMsg}</span>`;
+        el.appendChild(lineDiv);
+        if(i < arr.length - 1) el.appendChild(document.createElement('br'));
+      });
+    });
+  };
+
+  // 5. JAW-DROPPING LOADER
+  const initLoader = () => {
+    splitText('.split-lines');
+    gsap.set('.char', { y: '110%' });
+    gsap.set('.fade-up', { autoAlpha: 0, y: 30 });
+    gsap.set('#smooth-content', { autoAlpha: 0 }); // Hide until curtain drops
+
+    const counter = { val: 0 };
+    const counterEl = document.getElementById('counter');
+    const tl = gsap.timeline();
+
+    tl.to(counter, {
+      val: 100, duration: 2.5, ease: 'power4.inOut',
+      onUpdate: () => { counterEl.innerText = Math.round(counter.val); }
+    })
+    .to('.loader-brand', { autoAlpha: 1, duration: 0.5 }, "-=0.5")
+    .to('.loader-counter', { scale: 1.5, autoAlpha: 0, duration: 0.8, ease: 'power3.inOut' })
+    // Curtain Split
+    .set('#smooth-content', { autoAlpha: 1 })
+    .to('.loader-curtain-top', { yPercent: -100, duration: 1.2, ease: 'expo.inOut' }, "split")
+    .to('.loader-curtain-bottom', { yPercent: 100, duration: 1.2, ease: 'expo.inOut' }, "split")
+    // Brand flies to Nav
+    .to('.loader-brand', { 
+        top: '40px', left: '50px', scale: 1, duration: 1.2, ease: 'expo.inOut',
+        onComplete: () => { document.getElementById('navLogo').innerText = "AFNAAN AHMED P."; document.getElementById('loaderBrand').style.display = 'none'; }
+    }, "split")
+    .to('#loader-wrapper', { autoAlpha: 0, duration: 0.1 })
+    // Hero Text Reveal
+    .to('.char', { y: '0%', duration: 1.2, stagger: 0.02, ease: 'expo.out' }, "-=0.6")
+    .to('.fade-up', { autoAlpha: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power2.out' }, "-=0.8");
+  };
+
+  // 6. SCROLL PHYSICS (Parallax, Skew, Pinned Titles)
+  const initScrollPhysics = () => {
+    if(prefersReducedMotion) return;
+
+    // Skew Velocity
+    let proxy = { skew: 0 }, skewSetter = gsap.quickSetter(".skew-elem", "skewY", "deg"), clamp = gsap.utils.clamp(-8, 8);
+    ScrollTrigger.create({
+      onUpdate: (self) => {
+        let skew = clamp(self.getVelocity() / -200);
+        if (Math.abs(skew) > Math.abs(proxy.skew)) {
+          proxy.skew = skew;
+          gsap.to(proxy, { skew: 0, duration: 1, ease: "power3", overwrite: true, onUpdate: () => skewSetter(proxy.skew) });
         }
-
-        const date = new Date();
-        const timeStr = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.${date.getMilliseconds()}`;
-        
-        line.innerHTML = `<span class="time">[${timeStr}]</span>${log.msg}${statusHtml}`;
-        logsEl.appendChild(line);
-        logsEl.scrollTop = logsEl.scrollHeight; // Auto-scroll
-      }, log.t);
-    });
-  };
-
-  // 3. THEME TOGGLE LOGIC
-  const initTheme = () => {
-    const themeBtn = document.getElementById('themeToggle');
-    const currentTheme = localStorage.getItem('theme');
-
-    if (currentTheme === 'light') {
-      document.body.classList.add('light-theme');
-    }
-
-    themeBtn.addEventListener('click', () => {
-      document.body.classList.toggle('light-theme');
-      let theme = 'dark';
-      if (document.body.classList.contains('light-theme')) {
-        theme = 'light';
       }
-      localStorage.setItem('theme', theme);
     });
+
+    // Pinned Parallax Titles (Massive Awwwards Effect)
+    const titles = ['about', 'projects', 'skills'];
+    titles.forEach(id => {
+      const trigger = document.getElementById(`${id}-title-trigger`);
+      const title = document.getElementById(`${id}-title`);
+      if(trigger && title) {
+        ScrollTrigger.create({
+          trigger: `#${id}`,
+          start: 'top top',
+          end: 'bottom top',
+          pin: trigger,
+          pinSpacing: false
+        });
+        
+        // Dissolve when leaving
+        gsap.to(title, {
+          scrollTrigger: {
+            trigger: `#${id}`,
+            start: 'bottom 50%',
+            end: 'bottom top',
+            scrub: true
+          },
+          autoAlpha: 0,
+          scale: 1.2
+        });
+      }
+    });
+
+    // Image Parallax
+    gsap.utils.toArray('[data-speed]').forEach(el => {
+      gsap.to(el, {
+        y: () => (1 - parseFloat(el.getAttribute('data-speed'))) * (ScrollTrigger.maxScroll(window) - (ScrollTrigger.maxScroll(window) / 2)),
+        ease: 'none',
+        scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    });
+
+    // Marquee
+    gsap.to('#marquee-1', { xPercent: -20, ease: 'none', scrollTrigger: { trigger: '.skills-section', scrub: 1 } });
+    gsap.to('#marquee-2', { xPercent: 20, ease: 'none', scrollTrigger: { trigger: '.skills-section', scrub: 1 } });
   };
 
-  // 4. HIGHLY ADVANCED CANVAS ANIMATIONS
+  // 7. ELITE CANVAS SIMULATIONS
   const initCanvas = () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { entry.target.dataset.active = entry.isIntersecting ? 'true' : 'false'; });
+    }, { threshold: 0.1 });
+
     const setupCanvas = (id) => {
-      const cvs = document.getElementById(id);
-      if (!cvs) return null;
+      const cvs = document.getElementById(id); if (!cvs) return null;
+      observer.observe(cvs); 
       const ctx = cvs.getContext('2d');
-      const resize = () => {
-        cvs.width = cvs.parentElement.clientWidth;
-        cvs.height = cvs.parentElement.clientHeight;
-      };
-      window.addEventListener('resize', resize);
-      resize();
+      const resize = () => { cvs.width = cvs.parentElement.clientWidth; cvs.height = cvs.parentElement.clientHeight; };
+      window.addEventListener('resize', resize); resize();
       return { cvs, ctx, w: () => cvs.width, h: () => cvs.height };
     };
 
-    const isLight = () => document.body.classList.contains('light-theme');
+    const accent = '#D6FF00';
+    let mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
 
-    // 4A: V-PARK (Pathfinding & YOLO Box Simulation)
+    // A. VPark (Mouse Reactive Radar)
     const vpark = setupCanvas('vparkCanvas');
     if (vpark) {
-      let cars = Array.from({length: 5}, () => ({
-        x: Math.random() * vpark.w(), y: -20,
-        targetX: Math.random() * vpark.w(), targetY: vpark.h() * (0.2 + Math.random()*0.6),
-        speed: 1 + Math.random(),
-        parked: false, parkTime: 0
-      }));
-
+      let angle = 0;
       const drawVPark = () => {
-        vpark.ctx.fillStyle = isLight() ? '#f6f8fa' : '#0d1117';
-        vpark.ctx.fillRect(0, 0, vpark.w(), vpark.h());
+        if(vpark.cvs.dataset.active === 'true') {
+          vpark.ctx.fillStyle = '#050505'; vpark.ctx.fillRect(0, 0, vpark.w(), vpark.h());
+          
+          let cx = vpark.w()/2; let cy = vpark.h()/2; 
+          // Parallax center based on mouse
+          cx += (mouseX - window.innerWidth/2) * 0.05;
+          cy += (mouseY - window.innerHeight/2) * 0.05;
+          
+          let radius = Math.min(vpark.w(), vpark.h())/2 - 40;
 
-        // Draw Grid
-        vpark.ctx.strokeStyle = isLight() ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
-        vpark.ctx.lineWidth = 1;
-        for (let i=0; i<vpark.w(); i+=40) { vpark.ctx.beginPath(); vpark.ctx.moveTo(i,0); vpark.ctx.lineTo(i,vpark.h()); vpark.ctx.stroke(); }
-        for (let i=0; i<vpark.h(); i+=40) { vpark.ctx.beginPath(); vpark.ctx.moveTo(0,i); vpark.ctx.lineTo(vpark.w(),i); vpark.ctx.stroke(); }
+          vpark.ctx.strokeStyle = `rgba(255, 255, 255, 0.05)`; vpark.ctx.lineWidth = 1;
+          for(let i=0; i<vpark.w(); i+=40) { vpark.ctx.beginPath(); vpark.ctx.moveTo(i,0); vpark.ctx.lineTo(i,vpark.h()); vpark.ctx.stroke(); }
+          for(let i=0; i<vpark.h(); i+=40) { vpark.ctx.beginPath(); vpark.ctx.moveTo(0,i); vpark.ctx.lineTo(vpark.w(),i); vpark.ctx.stroke(); }
 
-        cars.forEach(car => {
-          if (!car.parked) {
-            let dx = car.targetX - car.x;
-            let dy = car.targetY - car.y;
-            let dist = Math.sqrt(dx*dx + dy*dy);
-            if (dist < 5) {
-              car.parked = true; car.parkTime = Date.now();
-            } else {
-              car.x += (dx/dist) * car.speed;
-              car.y += (dy/dist) * car.speed;
-            }
-          } else {
-            if (Date.now() - car.parkTime > 3000) {
-              car.parked = false; car.y = -20; car.x = Math.random() * vpark.w();
-              car.targetX = Math.random() * vpark.w(); car.targetY = vpark.h() * (0.2 + Math.random()*0.6);
-            }
-          }
-
-          // Draw Car
-          vpark.ctx.fillStyle = isLight() ? '#0969da' : '#58a6ff';
-          vpark.ctx.fillRect(car.x - 5, car.y - 10, 10, 20);
-
-          // Draw YOLO Box
-          if (car.parked) {
-            vpark.ctx.strokeStyle = '#7ee787'; // Green box
-            vpark.ctx.lineWidth = 1.5;
-            vpark.ctx.strokeRect(car.x - 15, car.y - 20, 30, 40);
-            vpark.ctx.fillStyle = '#7ee787';
-            vpark.ctx.font = '10px monospace';
-            vpark.ctx.fillText("SLOT_FULL: 98%", car.x - 15, car.y - 25);
-          } else {
-            vpark.ctx.strokeStyle = '#ff7b72'; // Red box tracking
-            vpark.ctx.lineWidth = 1;
-            vpark.ctx.strokeRect(car.x - 12, car.y - 15, 24, 30);
-          }
-        });
-        requestAnimationFrame(drawVPark);
-      };
-      drawVPark();
+          vpark.ctx.strokeStyle = accent; vpark.ctx.lineWidth = 1;
+          vpark.ctx.beginPath(); vpark.ctx.arc(cx, cy, radius, 0, Math.PI*2); vpark.ctx.stroke();
+          
+          angle += 0.04;
+          vpark.ctx.fillStyle = `rgba(214, 255, 0, 0.15)`;
+          vpark.ctx.beginPath(); vpark.ctx.moveTo(cx, cy); vpark.ctx.arc(cx, cy, radius, angle, angle + 0.8); vpark.ctx.fill();
+        } requestAnimationFrame(drawVPark);
+      }; drawVPark();
     }
 
-    // 4B: ANEMIA (Eye Scanning & CNN Feature Maps)
-    const anemia = setupCanvas('anemiaCanvas');
-    if (anemia) {
-      let scanLineY = 0;
-      const drawAnemia = () => {
-        anemia.ctx.fillStyle = isLight() ? '#f6f8fa' : '#0d1117';
-        anemia.ctx.fillRect(0, 0, anemia.w(), anemia.h());
-
-        const cx = anemia.w()/2;
-        const cy = anemia.h()/2;
-
-        // Draw Eye Wireframe
-        anemia.ctx.strokeStyle = isLight() ? '#24292f' : '#c9d1d9';
-        anemia.ctx.lineWidth = 2;
-        anemia.ctx.beginPath();
-        anemia.ctx.ellipse(cx, cy, 80, 40, 0, 0, 2*Math.PI);
-        anemia.ctx.stroke();
-        anemia.ctx.beginPath();
-        anemia.ctx.arc(cx, cy, 20, 0, 2*Math.PI);
-        anemia.ctx.stroke();
-
-        // Draw Scan Line
-        anemia.ctx.strokeStyle = 'rgba(88, 166, 255, 0.8)';
-        anemia.ctx.lineWidth = 2;
-        anemia.ctx.beginPath();
-        anemia.ctx.moveTo(cx - 100, scanLineY);
-        anemia.ctx.lineTo(cx + 100, scanLineY);
-        anemia.ctx.stroke();
-        
-        // Scan glow
-        anemia.ctx.fillStyle = 'rgba(88, 166, 255, 0.1)';
-        anemia.ctx.fillRect(cx - 100, 0, 200, scanLineY);
-
-        scanLineY += 2;
-        if (scanLineY > anemia.h()) scanLineY = 0;
-
-        // CNN Matrix overlay (fake)
-        anemia.ctx.fillStyle = isLight() ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)';
-        anemia.ctx.font = '8px monospace';
-        if (Math.random() > 0.8) {
-          anemia.ctx.fillText(`Conv2D [${Math.floor(Math.random()*255)}]`, cx + 90, scanLineY);
-        }
-
-        requestAnimationFrame(drawAnemia);
-      };
-      drawAnemia();
-    }
-
-    // 4C: LEXCLOUD (Decentralized Node Graph Encryption)
+    // B. LexCloud (Scroll Reactive Nodes)
     const lex = setupCanvas('lexcloudCanvas');
     if (lex) {
-      const nodes = Array.from({length: 15}, () => ({
-        x: Math.random() * lex.w(), y: Math.random() * lex.h(),
-        vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5
-      }));
-      let t = 0;
+      let packets = []; let scrollVel = 0;
+      if(!prefersReducedMotion) {
+        ScrollTrigger.create({ onUpdate: (self) => { scrollVel = Math.abs(self.getVelocity()); } });
+      }
 
       const drawLex = () => {
-        lex.ctx.fillStyle = isLight() ? '#f6f8fa' : '#0d1117';
-        lex.ctx.fillRect(0, 0, lex.w(), lex.h());
-
-        nodes.forEach(n => {
-          n.x += n.vx; n.y += n.vy;
-          if(n.x < 0 || n.x > lex.w()) n.vx *= -1;
-          if(n.y < 0 || n.y > lex.h()) n.vy *= -1;
+        if(lex.cvs.dataset.active === 'true') {
+          lex.ctx.fillStyle = '#050505'; lex.ctx.fillRect(0, 0, lex.w(), lex.h());
+          let nodes = [ {x: 80, y: lex.h()/2}, {x: lex.w()/2, y: 80}, {x: lex.w()-80, y: lex.h()/2} ];
           
-          lex.ctx.fillStyle = isLight() ? '#0969da' : '#58a6ff';
-          lex.ctx.beginPath(); lex.ctx.arc(n.x, n.y, 3, 0, 2*Math.PI); lex.ctx.fill();
-        });
+          lex.ctx.strokeStyle = `rgba(255, 255, 255, 0.1)`; lex.ctx.lineWidth = 1; lex.ctx.beginPath();
+          lex.ctx.moveTo(nodes[0].x, nodes[0].y); lex.ctx.lineTo(nodes[1].x, nodes[1].y); lex.ctx.lineTo(nodes[2].x, nodes[2].y); lex.ctx.stroke();
 
-        lex.ctx.strokeStyle = isLight() ? 'rgba(9, 105, 218, 0.15)' : 'rgba(88, 166, 255, 0.15)';
-        for(let i=0; i<nodes.length; i++) {
-          for(let j=i+1; j<nodes.length; j++) {
-            let dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
-            if (dist < 100) {
-              lex.ctx.lineWidth = 1 - (dist/100);
-              lex.ctx.beginPath(); lex.ctx.moveTo(nodes[i].x, nodes[i].y); lex.ctx.lineTo(nodes[j].x, nodes[j].y); lex.ctx.stroke();
-              
-              // Packets moving along lines
-              if (Math.random() > 0.95) {
-                let pPos = (t % 100) / 100;
-                let px = nodes[i].x + (nodes[j].x - nodes[i].x) * pPos;
-                let py = nodes[i].y + (nodes[j].y - nodes[i].y) * pPos;
-                lex.ctx.fillStyle = '#7ee787';
-                lex.ctx.beginPath(); lex.ctx.arc(px, py, 2, 0, 2*Math.PI); lex.ctx.fill();
-              }
-            }
+          let spawnRate = scrollVel > 500 ? 0.8 : 0.96;
+          let speedMulti = scrollVel > 500 ? 3 : 1;
+
+          if(Math.random() > spawnRate) packets.push({ p: 0, f: 0, t: 1 });
+          lex.ctx.fillStyle = accent;
+          for(let i=packets.length-1; i>=0; i--) {
+            let pk = packets[i]; pk.p += 0.015 * speedMulti;
+            if(pk.p >= 1) { if(pk.t === 1) { pk.f = 1; pk.t = 2; pk.p = 0; } else { packets.splice(i, 1); continue; } }
+            let start = nodes[pk.f]; let end = nodes[pk.t];
+            let px = start.x + (end.x - start.x) * pk.p; let py = start.y + (end.y - start.y) * pk.p;
+            lex.ctx.beginPath(); lex.ctx.arc(px, py, 3, 0, Math.PI*2); lex.ctx.fill();
           }
-        }
-        t++;
-        requestAnimationFrame(drawLex);
-      };
-      drawLex();
+
+          nodes.forEach(n => {
+            lex.ctx.strokeStyle = accent; lex.ctx.beginPath(); lex.ctx.arc(n.x, n.y, 8, 0, Math.PI*2); lex.ctx.stroke();
+          });
+        } requestAnimationFrame(drawLex);
+      }; drawLex();
     }
 
-    // 4D: SEPSIS (ECG Monitor + XGBoost Tree)
+    // C. Anemia (Scroll Sync Laser)
+    const anemia = setupCanvas('anemiaCanvas');
+    if (anemia) {
+      let scrollY = 0;
+      window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+      const drawAnemia = () => {
+        if(anemia.cvs.dataset.active === 'true') {
+          anemia.ctx.fillStyle = '#050505'; anemia.ctx.fillRect(0, 0, anemia.w(), anemia.h());
+          
+          anemia.ctx.strokeStyle = `rgba(255, 255, 255, 0.1)`; anemia.ctx.lineWidth = 1;
+          let cx = anemia.w()/2;
+          for(let i=0; i<15; i++) { anemia.ctx.beginPath(); anemia.ctx.arc(cx, anemia.h()/2, 10 + i*15, 0, Math.PI*2); anemia.ctx.stroke(); }
+
+          // Laser syncs with scroll
+          let scanY = (scrollY * 0.5) % anemia.h();
+          
+          anemia.ctx.fillStyle = `rgba(214, 255, 0, 0.1)`; anemia.ctx.fillRect(0, 0, anemia.w(), scanY);
+          anemia.ctx.strokeStyle = accent; anemia.ctx.lineWidth = 2;
+          anemia.ctx.beginPath(); anemia.ctx.moveTo(0, scanY); anemia.ctx.lineTo(anemia.w(), scanY); anemia.ctx.stroke();
+        } requestAnimationFrame(drawAnemia);
+      }; drawAnemia();
+    }
+
+    // D. Sepsis
     const sepsis = setupCanvas('sepsisCanvas');
     if (sepsis) {
-      let ecg = [];
-      let t = 0;
+      let cols = []; 
       const drawSepsis = () => {
-        sepsis.ctx.fillStyle = isLight() ? '#f6f8fa' : '#0d1117';
-        sepsis.ctx.fillRect(0, 0, sepsis.w(), sepsis.h());
-
-        // Background Decision Tree Nodes (Fake)
-        sepsis.ctx.strokeStyle = isLight() ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
-        sepsis.ctx.lineWidth = 1;
-        const drawTree = (x, y, level, spacing) => {
-          if (level === 0) return;
-          sepsis.ctx.beginPath(); sepsis.ctx.arc(x, y, 4, 0, 2*Math.PI); sepsis.ctx.stroke();
-          sepsis.ctx.beginPath(); sepsis.ctx.moveTo(x, y); sepsis.ctx.lineTo(x - spacing, y + 30); sepsis.ctx.stroke();
-          sepsis.ctx.beginPath(); sepsis.ctx.moveTo(x, y); sepsis.ctx.lineTo(x + spacing, y + 30); sepsis.ctx.stroke();
-          drawTree(x - spacing, y + 30, level - 1, spacing / 2);
-          drawTree(x + spacing, y + 30, level - 1, spacing / 2);
-        };
-        drawTree(sepsis.w()/2, 20, 4, 60);
-
-        // Active ECG Line
-        let ecgY = sepsis.h() / 2;
-        if (t % 100 < 10) ecgY -= 40;
-        else if (t % 100 < 20) ecgY += 20;
-        else ecgY += (Math.random() - 0.5) * 5;
-
-        ecg.push(ecgY);
-        if (ecg.length > sepsis.w() / 2) ecg.shift();
-
-        sepsis.ctx.strokeStyle = '#ff7b72'; // Red warning color
-        sepsis.ctx.lineWidth = 2;
-        sepsis.ctx.beginPath();
-        for(let i=0; i<ecg.length; i++) {
-          let px = i * 2;
-          if (i === 0) sepsis.ctx.moveTo(px, ecg[i]);
-          else sepsis.ctx.lineTo(px, ecg[i]);
-        }
-        sepsis.ctx.stroke();
-
-        // Readout text
-        sepsis.ctx.fillStyle = '#ff7b72';
-        sepsis.ctx.font = '12px monospace';
-        sepsis.ctx.fillText(`HR: ${Math.floor(80 + Math.random()*20)} | RISK: HIGH`, 10, sepsis.h() - 10);
-
-        t++;
-        requestAnimationFrame(drawSepsis);
-      };
-      drawSepsis();
+        if(sepsis.cvs.dataset.active === 'true') {
+          sepsis.ctx.fillStyle = 'rgba(5, 5, 5, 0.15)'; sepsis.ctx.fillRect(0, 0, sepsis.w(), sepsis.h());
+          
+          if(cols.length === 0) { for(let i=0; i<sepsis.w()/20; i++) cols.push({x: i*20, y: Math.random()*sepsis.h()}); }
+          
+          sepsis.ctx.font = "bold 12px monospace";
+          cols.forEach(c => {
+            let char = Math.random() > 0.5 ? '1' : '0';
+            sepsis.ctx.fillStyle = Math.random() > 0.98 ? accent : '#333';
+            sepsis.ctx.fillText(char, c.x, c.y);
+            c.y += 18; if(c.y > sepsis.h()) c.y = 0;
+          });
+        } requestAnimationFrame(drawSepsis);
+      }; drawSepsis();
     }
   };
 
-  // INIT ALL
+  // INIT
   window.addEventListener("DOMContentLoaded", () => {
-    initTheme();
+    window.scrollTo(0, 0);
+    initCursor();
+    initMagnetic();
+    initScrollPhysics();
     initCanvas();
-    initLoader(); 
+    initLoader(); // Run loader last
   });
-
 })();

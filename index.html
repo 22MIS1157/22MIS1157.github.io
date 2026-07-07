@@ -3,251 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Afnaan Ahmed P — Software Engineering & AI Research</title>
+    <title>AFNAAN AHMED P | Creative Developer</title>
     
-    <!-- Dense Academic Fonts -->
+    <!-- Elite Awwwards Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@100;400;700&display=swap" rel="stylesheet">
     
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- GSAP & Lenis -->
+    <!-- Ultimate Physics Engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 </head>
-<body class="academic-dark">
+<body>
 
-    <!-- Strictly 3-Second Advanced Terminal Loader -->
-    <div id="loader" class="term-loader">
-        <div class="term-loader__interface">
-            <div class="term-loader__header">
-                <span>SYS_INIT</span>
-                <span>AFNAAN_OS v2.0.26</span>
-            </div>
-            <div class="term-loader__body" id="termLogs">
-                <!-- Logs injected via JS -->
-            </div>
-            <div class="term-loader__footer">
-                <div class="progress-track">
-                    <div class="progress-bar" id="termProgress"></div>
-                </div>
-                <div class="progress-status" id="termStatus">0%</div>
-            </div>
+    <!-- CUSTOM CURSOR -->
+    <div id="cursor" class="cursor"></div>
+
+    <!-- MASSIVE LOADER -->
+    <div id="loader-wrapper">
+        <div class="loader-curtain loader-curtain-top"></div>
+        <div class="loader-curtain loader-curtain-bottom"></div>
+        <div class="loader-content">
+            <h1 class="loader-counter"><span id="counter">0</span>%</h1>
+            <div class="loader-brand" id="loaderBrand">AFNAAN AHMED P.</div>
         </div>
     </div>
 
-    <!-- Theme Switcher -->
-    <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
-        <i class="fas fa-sun light-icon"></i>
-        <i class="fas fa-moon dark-icon"></i>
-    </button>
+    <!-- MAIN NAV -->
+    <nav class="nav-bar">
+        <div class="nav-logo" id="navLogo"></div> <!-- Injected by GSAP from Loader -->
+        <div class="nav-links magnetic-wrap">
+            <a href="#about" class="magnetic-btn" data-text="ABOUT">ABOUT</a>
+            <a href="#projects" class="magnetic-btn" data-text="WORK">WORK</a>
+            <a href="#skills" class="magnetic-btn" data-text="SKILLS">SKILLS</a>
+            <a href="resume.pdf" class="magnetic-btn accent" target="_blank" data-text="RESUME">RESUME</a>
+        </div>
+    </nav>
 
-    <!-- Main Grid Dashboard -->
+    <!-- SCROLL WRAPPER -->
     <main id="smooth-wrapper">
-        <div id="smooth-content" class="dashboard-wrapper">
+        <div id="smooth-content">
 
-            <!-- Navbar -->
-            <nav class="dash-nav">
-                <div class="nav-brand">AFNAAN AHMED P. <span class="badge">SWE // AI</span></div>
-                <div class="nav-links">
-                    <a href="#about">[01] ABOUT</a>
-                    <a href="#experience">[02] EXP</a>
-                    <a href="#projects">[03] WORK</a>
-                    <a href="resume.pdf" class="btn-primary" target="_blank">[DL] RESUME</a>
-                </div>
-            </nav>
-
-            <!-- Hero Section (Dense Data View) -->
-            <header class="dash-hero" id="about">
-                <div class="hero-col bio-col">
-                    <h1 class="glitch-text" data-text="SOFTWARE_ENGINEER">SOFTWARE_ENGINEER</h1>
-                    <h2 class="sub-glitch">&_AI_DEVELOPER</h2>
-                    <p class="bio-text">
-                        Research-driven Software Engineer bridging the gap between scalable distributed architectures and advanced machine learning models. Specializing in computer vision, decentralized networks, and high-performance backend systems.
-                    </p>
-                    <div class="metrics-grid">
-                        <div class="metric">
-                            <span class="metric-label">SYS.UPTIME</span>
-                            <span class="metric-val">3+ YRS</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">DEPLOYMENTS</span>
-                            <span class="metric-val">15+ PROJ</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">HACKATHONS</span>
-                            <span class="metric-val">04 EVENTS</span>
-                        </div>
+            <!-- HERO -->
+            <section class="hero" id="hero">
+                <div class="hero-container">
+                    <p class="hero-sub fade-up">M.TECH SOFTWARE ENGINEERING · CLASS OF 2027</p>
+                    <h1 class="hero-main split-lines">I ENGINEER <br><span class="text-accent">INTELLIGENT</span> SYSTEMS.</h1>
+                    <div class="hero-footer fade-up">
+                        <div class="hero-location">BASED IN AMBUR, TN</div>
+                        <div class="hero-scroll">SCROLL TO EXPLORE ↓</div>
                     </div>
+                </div>
+            </section>
+
+            <!-- ABOUT -->
+            <section class="section about-section" id="about">
+                <!-- Massive Pinned Title -->
+                <div class="pinned-title-wrapper" id="about-title-trigger">
+                    <h2 class="massive-title" id="about-title">ABOUT</h2>
                 </div>
                 
-                <div class="hero-col tech-col">
-                    <div class="panel-header">STACK_TRACE.log</div>
-                    <div class="tech-list">
-                        <div class="tech-row"><span>LANGS</span> > Python, Java, C++, JS (ES6+)</div>
-                        <div class="tech-row"><span>FRONT</span> > HTML5, CSS3, React.js, GSAP</div>
-                        <div class="tech-row"><span>BACK</span>  > Node.js, Express, Django</div>
-                        <div class="tech-row"><span>DATA</span>  > MongoDB, MySQL, Redis</div>
-                        <div class="tech-row"><span>AI/ML</span> > TensorFlow, Keras, Scikit, XGBoost</div>
-                        <div class="tech-row"><span>CLOUD</span> > AWS, GCP, Docker, Firebase</div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Academic & Experience Timeline (Dense Grid) -->
-            <section id="experience" class="dash-section">
-                <div class="section-header">
-                    <h2>02. ACADEMICS_&_EXPERIENCE</h2>
-                    <div class="line"></div>
-                </div>
-                
-                <div class="timeline-grid">
-                    <!-- Experience Panel -->
-                    <div class="panel exp-panel">
-                        <div class="panel-title">[ WORK_HISTORY ]</div>
-                        <div class="timeline-item">
-                            <div class="tl-meta">May 2025 - Aug 2025 | CHAIR, VIT Chennai</div>
-                            <h3 class="tl-role">Research Intern — Smart Healthcare</h3>
-                            <p class="tl-desc">Led independent DL research project. Collected/cleaned 4,260 images, built PyTorch CNN. Delivered 96% accuracy & AUC 0.98. Hands-on experience in full R&D cycle.</p>
+                <div class="section-content">
+                    <div class="container about-grid">
+                        <div class="about-text-col skew-elem">
+                            <h3 class="about-headline">Bridging the gap between Machine Learning and Cloud Infrastructure.</h3>
+                            <p class="body-text">I am a pre-final year M.Tech Integrated student at VIT Chennai. I don't just write scripts—I architect end-to-end software solutions. From real-time WebSocket servers streaming live inference data, to building production-grade RAG pipelines on AWS, I care deeply about clean architecture, scalable code, and delivering undeniable results.</p>
                         </div>
-                        <div class="timeline-item">
-                            <div class="tl-meta">Jun 2024 - Jul 2024 | Colan Infotech Pvt Ltd</div>
-                            <h3 class="tl-role">Python Training Intern</h3>
-                            <p class="tl-desc">Structured Python training in professional environment. Observed SDLC practices, code review workflows, Git version control, and enterprise agile norms. Received Outstanding (S) grade.</p>
-                        </div>
-                    </div>
-
-                    <!-- Education Panel -->
-                    <div class="panel edu-panel">
-                        <div class="panel-title">[ EDUCATION ]</div>
-                        <div class="timeline-item">
-                            <div class="tl-meta">2022 - 2027 | CGPA: 7.92</div>
-                            <h3 class="tl-role">M.Tech Integrated — Software Engineering</h3>
-                            <p class="tl-desc">VIT Chennai. Focus on distributed systems, data structures, algorithm design, and applied machine learning architectures.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="tl-meta">2021 | 85.20%</div>
-                            <h3 class="tl-role">Class XII — PCBM</h3>
-                            <p class="tl-desc">Mazharul Uloom HSS, Ambur.</p>
-                        </div>
-                    </div>
-
-                    <!-- Leadership Panel -->
-                    <div class="panel lead-panel">
-                        <div class="panel-title">[ LEADERSHIP ]</div>
-                        <div class="timeline-item">
-                            <h3 class="tl-role">Cybersecurity Division <span class="tag">Microsoft Innovations</span></h3>
-                            <p class="tl-desc">Organized CTF events for 500+ participants.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <h3 class="tl-role">Marketing Lead <span class="tag">AR/VR Club</span></h3>
-                            <p class="tl-desc">Drove 30% registration growth via strategic outreach.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <h3 class="tl-role">Operations <span class="tag">Young Innovators</span></h3>
-                            <p class="tl-desc">Managed logistics for university-wide tech symposiums.</p>
+                        <div class="about-stats-col">
+                            <div class="stat-card skew-elem magnetic-wrap">
+                                <span class="stat-num">04</span>
+                                <span class="stat-label">SHIPPED PRODUCTS</span>
+                            </div>
+                            <div class="stat-card skew-elem magnetic-wrap">
+                                <span class="stat-num">96%</span>
+                                <span class="stat-label">BEST MODEL AUC</span>
+                            </div>
+                            <div class="stat-card skew-elem magnetic-wrap">
+                                <span class="stat-num">05</span>
+                                <span class="stat-label">AWS SERVICES</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Projects Grid (Highly Dense Data Panels) -->
-            <section id="projects" class="dash-section">
-                <div class="section-header">
-                    <h2>03. APPLIED_RESEARCH_&_SYSTEMS</h2>
-                    <div class="line"></div>
+            <!-- PROJECTS -->
+            <section class="section projects-section" id="projects">
+                <div class="pinned-title-wrapper" id="projects-title-trigger">
+                    <h2 class="massive-title" id="projects-title">WORK</h2>
                 </div>
 
-                <div class="projects-grid">
+                <div class="section-content projects-container">
                     
-                    <!-- V-Park -->
-                    <div class="proj-panel">
-                        <div class="proj-visual">
-                            <div class="visual-header">SIM: V-PARK_PATHFINDING</div>
-                            <canvas id="vparkCanvas"></canvas>
+                    <!-- ATCC VPark -->
+                    <article class="project-panel skew-elem">
+                        <div class="project-canvas-wrap" data-speed="0.8">
+                            <canvas id="vparkCanvas" data-canvas="true"></canvas>
                         </div>
-                        <div class="proj-data">
-                            <h3>V-Park: IoT Smart Parking</h3>
-                            <p>Automated IoT Smart Parking System leveraging computer vision and sensor fusion for real-time slot detection and automated billing logic.</p>
-                            <div class="proj-tech"><span>Python</span><span>OpenCV</span><span>IoT</span><span>Firebase</span></div>
-                            <a href="#" class="data-btn">[SRC] GITHUB</a>
+                        <div class="project-info" data-speed="1.2">
+                            <span class="project-year">2026</span>
+                            <h3 class="project-title">ATCC VPARK</h3>
+                            <p class="project-desc">Real-time IoT Smart Parking. Python backend serving REST/WebSockets. YOLOv8 object detection actuating hardware gates in &lt;1s.</p>
+                            <div class="tech-stack"><span>FastAPI</span><span>WebSocket</span><span>YOLOv8</span><span>Docker</span></div>
                         </div>
-                    </div>
-
-                    <!-- Anemia -->
-                    <div class="proj-panel">
-                        <div class="proj-visual">
-                            <div class="visual-header">SIM: CNN_FEATURE_EXTRACTION</div>
-                            <canvas id="anemiaCanvas"></canvas>
-                        </div>
-                        <div class="proj-data">
-                            <h3>Non-Invasive Anemia Detection</h3>
-                            <p>Machine learning application predicting anemia utilizing conjunctiva images via complex CNN architectures. Achieved 94% validation accuracy.</p>
-                            <div class="proj-tech"><span>TensorFlow</span><span>Keras</span><span>Flask</span></div>
-                            <a href="#" class="data-btn">[SRC] GITHUB</a>
-                        </div>
-                    </div>
+                    </article>
 
                     <!-- LexCloud -->
-                    <div class="proj-panel">
-                        <div class="proj-visual">
-                            <div class="visual-header">SIM: DECENTRALIZED_NODE_GRAPH</div>
-                            <canvas id="lexcloudCanvas"></canvas>
+                    <article class="project-panel reverse skew-elem">
+                        <div class="project-canvas-wrap" data-speed="0.8">
+                            <canvas id="lexcloudCanvas" data-canvas="true"></canvas>
                         </div>
-                        <div class="proj-data">
-                            <h3>LexCloud</h3>
-                            <p>Secure, scalable cloud storage platform with end-to-end encryption. Implements file sharding and decentralized packet routing algorithms.</p>
-                            <div class="proj-tech"><span>Node.js</span><span>AWS S3</span><span>React</span><span>CryptoJS</span></div>
-                            <a href="#" class="data-btn">[SRC] GITHUB</a>
-                            <a href="#" class="data-btn outline">[EXT] LIVE</a>
+                        <div class="project-info" data-speed="1.2">
+                            <span class="project-year">2024</span>
+                            <h3 class="project-title">LEXCLOUD AI</h3>
+                            <p class="project-desc">Serverless AWS Data Pipeline. Integrated LLaMA-3 + ChromaDB RAG for intelligent decentralized document retrieval via REST APIs.</p>
+                            <div class="tech-stack"><span>AWS Lambda</span><span>DynamoDB</span><span>LLaMA-3</span><span>RAG</span></div>
                         </div>
-                    </div>
+                    </article>
+
+                    <!-- Anemia -->
+                    <article class="project-panel skew-elem">
+                        <div class="project-canvas-wrap" data-speed="0.8">
+                            <canvas id="anemiaCanvas" data-canvas="true"></canvas>
+                        </div>
+                        <div class="project-info" data-speed="1.2">
+                            <span class="project-year">2025</span>
+                            <h3 class="project-title">DIAGNOSTICS CV</h3>
+                            <p class="project-desc">Two-stage medical image processing. Automatic fingernail detection (93.5% mAP) paired with CNN classification (96% Accuracy, 0.98 AUC).</p>
+                            <div class="tech-stack"><span>PyTorch</span><span>CNN</span><span>OpenCV</span><span>Grad-CAM</span></div>
+                        </div>
+                    </article>
 
                     <!-- Sepsis -->
-                    <div class="proj-panel">
-                        <div class="proj-visual">
-                            <div class="visual-header">SIM: XGBOOST_CLINICAL_DECISION</div>
-                            <canvas id="sepsisCanvas"></canvas>
+                    <article class="project-panel reverse skew-elem">
+                        <div class="project-canvas-wrap" data-speed="0.8">
+                            <canvas id="sepsisCanvas" data-canvas="true"></canvas>
                         </div>
-                        <div class="proj-data">
-                            <h3>Sepsis Survival Predictor</h3>
-                            <p>Clinical decision support tool using XGBoost and SHAP values to predict patient survival rates from EHR streaming data in real-time.</p>
-                            <div class="proj-tech"><span>Python</span><span>XGBoost</span><span>Pandas</span><span>Streamlit</span></div>
-                            <a href="#" class="data-btn">[SRC] GITHUB</a>
+                        <div class="project-info" data-speed="1.2">
+                            <span class="project-year">2026</span>
+                            <h3 class="project-title">SEPSIS PREDICT</h3>
+                            <p class="project-desc">ICU Mortality prediction via clinical time-series data. Extracted 172 features. Trained XGBoost model achieving 0.96 AUC-ROC (+16% vs baseline).</p>
+                            <div class="tech-stack"><span>XGBoost</span><span>Scikit-learn</span><span>Pandas</span><span>SHAP</span></div>
                         </div>
-                    </div>
+                    </article>
 
                 </div>
             </section>
 
-            <!-- Footer / Terminal Output -->
-            <footer class="dash-footer">
-                <div class="contact-terminal">
-                    <div class="term-head">user@afnaan:~/contact$ ./connect.sh</div>
-                    <div class="term-body">
-                        > Establishing secure connection... <span class="status-ok">[OK]</span><br>
-                        > Email: <a href="mailto:Afnaanahmed.k391@gmail.com">Afnaanahmed.k391@gmail.com</a><br>
-                        > GitHub: <a href="https://github.com/22MIS1157" target="_blank">github.com/22MIS1157</a><br>
-                        > LinkedIn: <a href="https://linkedin.com/in/afnaan22mis1157" target="_blank">linkedin.com/in/afnaan22mis1157</a><br>
-                        > Phone: <a href="tel:+919150713929">+91 9150713929</a><br>
-                        > Connection closed.
+            <!-- SKILLS -->
+            <section class="section skills-section" id="skills">
+                <div class="pinned-title-wrapper" id="skills-title-trigger">
+                    <h2 class="massive-title" id="skills-title">SKILLS</h2>
+                </div>
+
+                <div class="section-content">
+                    <div class="marquee-container">
+                        <div class="marquee" id="marquee-1">
+                            <span class="text-accent">PYTHON</span> • JAVASCRIPT • FASTAPI • AWS • DOCKER • <span class="text-accent">PYTHON</span> • JAVASCRIPT • FASTAPI • AWS • DOCKER • 
+                        </div>
+                        <div class="marquee" id="marquee-2">
+                            PYTORCH • XGBOOST • RAG • SYSTEM DESIGN • <span class="text-accent">PYTORCH</span> • XGBOOST • RAG • SYSTEM DESIGN • 
+                        </div>
                     </div>
                 </div>
-                <div class="footer-meta">
-                    SYSTEM DESIGN: DENSE ACADEMIC // RENDERED VIA GSAP // (C) 2026 AFNAAN AHMED P.
+            </section>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div class="footer-content fade-up">
+                    <h2 class="footer-title">LET'S BUILD.</h2>
+                    <div class="footer-links">
+                        <a href="mailto:Afnaanahmed.k391@gmail.com" class="magnetic-wrap"><span class="magnetic-btn" data-text="EMAIL">EMAIL</span></a>
+                        <a href="https://linkedin.com/in/afnaan22mis1157" target="_blank" class="magnetic-wrap"><span class="magnetic-btn" data-text="LINKEDIN">LINKEDIN</span></a>
+                        <a href="https://github.com/22MIS1157" target="_blank" class="magnetic-wrap"><span class="magnetic-btn" data-text="GITHUB">GITHUB</span></a>
+                    </div>
                 </div>
             </footer>
 
         </div>
     </main>
 
-    <!-- Scripts -->
     <script src="script.js"></script>
 </body>
 </html>
