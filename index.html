@@ -19,14 +19,47 @@
 </head>
 <body>
 
-    <!-- THEME TOGGLE -->
+    <!-- THEME TOGGLE (Uiverse.io by 00Kubi) -->
     <div class="theme-switch-wrapper">
-        <label class="theme-switch" for="checkbox">
-            <input type="checkbox" id="checkbox" />
-            <div class="slider round">
-                <span class="icon dark-icon">🌙</span>
-                <span class="icon light-icon">☀️</span>
+        <label class="theme-switch">
+          <input class="theme-switch__checkbox" type="checkbox" id="checkbox" />
+          <div class="theme-switch__container">
+            <div class="theme-switch__clouds"></div>
+            <div class="theme-switch__stars-container">
+              <svg fill="none" viewBox="0 0 144 55" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fill="currentColor"
+                  d="M135.831 3.00688C135.055 3.85027 134.111 4.29946 133 4.35447C134.111 4.40947 135.055 4.85867 135.831 5.71123C136.607 6.55462 136.996 7.56303 136.996 8.72727C136.996 7.95722 137.172 7.25134 137.525 6.59129C137.886 5.93124 138.372 5.39954 138.98 5.00535C139.598 4.60199 140.268 4.39114 141 4.35447C139.88 4.2903 138.936 3.85027 138.16 3.00688C137.384 2.16348 136.996 1.16425 136.996 0C136.996 1.16425 136.607 2.16348 135.831 3.00688ZM31 23.3545C32.1114 23.2995 33.0551 22.8503 33.8313 22.0069C34.6075 21.1635 34.9956 20.1642 34.9956 19C34.9956 20.1642 35.3837 21.1635 36.1599 22.0069C36.9361 22.8503 37.8798 23.2903 39 23.3545C38.2679 23.3911 37.5976 23.602 36.9802 24.0053C36.3716 24.3995 35.8864 24.9312 35.5248 25.5913C35.172 26.2513 34.9956 26.9572 34.9956 27.7273C34.9956 26.563 34.6075 25.5546 33.8313 24.7112C33.0551 23.8587 32.1114 23.4095 31 23.3545ZM0 36.3545C1.11136 36.2995 2.05513 35.8503 2.83131 35.0069C3.6075 34.1635 3.99559 33.1642 3.99559 32C3.99559 33.1642 4.38368 34.1635 5.15987 35.0069C5.93605 35.8503 6.87982 36.2903 8 36.3545C7.26792 36.3911 6.59757 36.602 5.98015 37.0053C5.37155 37.3995 4.88644 37.9312 4.52481 38.5913C4.172 39.2513 3.99559 39.9572 3.99559 40.7273C3.99559 39.563 3.6075 38.5546 2.83131 37.7112C2.05513 36.8587 1.11136 36.4095 0 36.3545ZM56.8313 24.0069C56.0551 24.8503 55.1114 25.2995 54 25.3545C55.1114 25.4095 56.0551 25.8587 56.8313 26.7112C57.6075 27.5546 57.9956 28.563 57.9956 29.7273C57.9956 28.9572 58.172 28.2513 58.5248 27.5913C58.8864 26.9312 59.3716 26.3995 59.9802 26.0053C60.5976 25.602 61.2679 25.3911 62 25.3545C60.8798 25.2903 59.9361 24.8503 59.1599 24.0069C58.3837 23.1635 57.9956 22.1642 57.9956 21C57.9956 22.1642 57.6075 23.1635 56.8313 24.0069ZM81 25.3545C82.1114 25.2995 83.0551 24.8503 83.8313 24.0069C84.6075 23.1635 84.9956 22.1642 84.9956 21C84.9956 22.1642 85.3837 23.1635 86.1599 24.0069C86.9361 24.8503 87.8798 25.2903 89 25.3545C88.2679 25.3911 87.5976 25.602 86.9802 26.0053C86.3716 26.3995 85.8864 26.9312 85.5248 27.5913C85.172 28.2513 84.9956 28.9572 84.9956 29.7273C84.9956 28.563 84.6075 27.5546 83.8313 26.7112C83.0551 25.8587 82.1114 25.4095 81 25.3545ZM136 36.3545C137.111 36.2995 138.055 35.8503 138.831 35.0069C139.607 34.1635 139.996 33.1642 139.996 32C139.996 33.1642 140.384 34.1635 141.16 35.0069C141.936 35.8503 142.88 36.2903 144 36.3545C143.268 36.3911 142.598 36.602 141.98 37.0053C141.372 37.3995 140.886 37.9312 140.525 38.5913C140.172 39.2513 139.996 39.9572 139.996 40.7273C139.996 39.563 139.607 38.5546 138.831 37.7112C138.055 36.8587 137.111 36.4095 136 36.3545ZM101.831 49.0069C101.055 49.8503 100.111 50.2995 99 50.3545C100.111 50.4095 101.055 50.8587 101.831 51.7112C102.607 52.5546 102.996 53.563 102.996 54.7273C102.996 53.9572 103.172 53.2513 103.525 52.5913C103.886 51.9312 104.372 51.3995 104.98 51.0053C105.598 50.602 106.268 50.3911 107 50.3545C105.88 50.2903 104.936 49.8503 104.16 49.0069C103.384 48.1635 102.996 47.1642 102.996 46C102.996 47.1642 102.607 48.1635 101.831 49.0069Z"
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
             </div>
+            <div class="theme-switch__circle-container">
+              <div class="theme-switch__sun-moon-container">
+                <div class="theme-switch__moon">
+                  <div class="theme-switch__spot"></div>
+                  <div class="theme-switch__spot"></div>
+                  <div class="theme-switch__spot"></div>
+                </div>
+              </div>
+            </div>
+            <div class="theme-switch__shooting-star"></div>
+            <div class="theme-switch__shooting-star-2"></div>
+            <div class="theme-switch__meteor"></div>
+            <div class="theme-switch__stars-cluster">
+              <div class="star"></div>
+              <div class="star"></div>
+              <div class="star"></div>
+              <div class="star"></div>
+              <div class="star"></div>
+            </div>
+            <div class="theme-switch__aurora"></div>
+            <div class="theme-switch__comets">
+              <div class="comet"></div>
+              <div class="comet"></div>
+            </div>
+          </div>
         </label>
     </div>
 
@@ -37,7 +70,6 @@
             <a href="#about">Summary</a>
             <a href="#projects">Projects</a>
             <a href="#experience">Experience</a>
-            <a href="resume.pdf" target="_blank" class="btn-primary">View Resume</a>
         </div>
     </nav>
 
@@ -81,10 +113,90 @@
                         </div>
 
                         <h3 class="sub-heading mt-4">Technical Skills</h3>
-                        <div class="skills-grid">
-                            <span class="skill-tag">Python</span><span class="skill-tag">JavaScript</span><span class="skill-tag">FastAPI</span>
-                            <span class="skill-tag">AWS (Lambda/S3)</span><span class="skill-tag">Docker</span><span class="skill-tag">Git</span>
-                            <span class="skill-tag">PyTorch</span><span class="skill-tag">XGBoost</span><span class="skill-tag">RAG Pipelines</span>
+                        <div class="skills-categories">
+                            
+                            <div class="skills-category-group">
+                                <h5>Programming Languages</h5>
+                                <div class="skills-grid">
+                                    <span class="skill-tag">Python</span>
+                                    <span class="skill-tag">Java (Grade A)</span>
+                                    <span class="skill-tag">JavaScript</span>
+                                    <span class="skill-tag">C</span>
+                                    <span class="skill-tag">SQL</span>
+                                    <span class="skill-tag">HTML</span>
+                                    <span class="skill-tag">CSS</span>
+                                    <span class="skill-tag">PHP (basic)</span>
+                                    <span class="skill-tag">Perl (basic)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="skills-category-group">
+                                <h5>Full-Stack Web Development</h5>
+                                <div class="skills-grid">
+                                    <span class="skill-tag">Web Applications (Frontend + Backend)</span>
+                                    <span class="skill-tag">React</span>
+                                    <span class="skill-tag">Node.js</span>
+                                    <span class="skill-tag">APIs and Data Services</span>
+                                    <span class="skill-tag">FastAPI</span>
+                                    <span class="skill-tag">REST API</span>
+                                </div>
+                            </div>
+
+                            <div class="skills-category-group">
+                                <h5>Data Analysis & Databases</h5>
+                                <div class="skills-grid">
+                                    <span class="skill-tag">SQL</span>
+                                    <span class="skill-tag">Databases</span>
+                                    <span class="skill-tag">Real-World Datasets</span>
+                                    <span class="skill-tag">Data Analysis</span>
+                                    <span class="skill-tag">Dashboards or Visualizations</span>
+                                </div>
+                            </div>
+
+                            <div class="skills-category-group">
+                                <h5>Artificial Intelligence & Machine Learning</h5>
+                                <div class="skills-grid">
+                                    <span class="skill-tag">AI/ML Models</span>
+                                    <span class="skill-tag">scikit-learn</span>
+                                    <span class="skill-tag">XGBoost</span>
+                                    <span class="skill-tag">PyTorch</span>
+                                    <span class="skill-tag">YOLOv8</span>
+                                    <span class="skill-tag">OpenCV</span>
+                                    <span class="skill-tag">Data-Driven Features</span>
+                                </div>
+                            </div>
+
+                            <div class="skills-category-group">
+                                <h5>Software Engineering</h5>
+                                <div class="skills-grid">
+                                    <span class="skill-tag">Data Structures</span>
+                                    <span class="skill-tag">Programming Fundamentals</span>
+                                    <span class="skill-tag">Debug, Test, & Enhance Existing Systems</span>
+                                    <span class="skill-tag">Git</span>
+                                    <span class="skill-tag">Agile/Scrum</span>
+                                </div>
+                            </div>
+
+                            <div class="skills-category-group">
+                                <h5>Software Testing</h5>
+                                <div class="skills-grid">
+                                    <span class="skill-tag">Selenium</span>
+                                    <span class="skill-tag">TestCafe</span>
+                                    <span class="skill-tag">Unit Testing</span>
+                                    <span class="skill-tag">Regression Testing</span>
+                                </div>
+                            </div>
+
+                            <div class="skills-category-group">
+                                <h5>IoT & Hardware</h5>
+                                <div class="skills-grid">
+                                    <span class="skill-tag">Arduino Nano</span>
+                                    <span class="skill-tag">PySerial</span>
+                                    <span class="skill-tag">Servo Motor Control</span>
+                                    <span class="skill-tag">Sensor Integration</span>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -108,33 +220,106 @@
                         </div>
                         
                         <div class="cinematic-canvas-wrapper" id="scene-anemia">
-                            <svg class="cinematic-svg" id="svg-anemia" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
-                                <!-- Group to scale/zoom -->
-                                <g id="anemia-camera" transform-origin="center">
-                                    <!-- Person Silhouette -->
-                                    <path d="M400,600 L400,300 C400,200 600,200 600,300 L600,600" fill="none" stroke="var(--fg)" stroke-width="8" stroke-linecap="round"/>
-                                    <!-- Head -->
-                                    <circle cx="500" cy="150" r="50" fill="none" stroke="var(--fg)" stroke-width="8"/>
-                                    <!-- Arm & Hand reaching out -->
-                                    <path d="M420,350 C300,400 200,400 200,500 L300,500" fill="none" stroke="var(--fg)" stroke-width="8" stroke-linecap="round"/>
-                                    <!-- Detailed Finger (Target for Zoom) -->
-                                    <g id="anemia-finger" transform="translate(180, 480)">
-                                        <path d="M20,20 L60,20 C80,20 80,40 60,40 L20,40" fill="none" stroke="var(--fg)" stroke-width="4"/>
-                                        <path d="M60,20 C70,20 70,30 60,30" fill="none" stroke="var(--accent)" stroke-width="2"/> <!-- Fingernail -->
-                                    </g>
-                                </g>
-                                <!-- The UI Overlay (Appears after zoom) -->
-                                <g id="anemia-ui" opacity="0">
-                                    <rect x="50" y="50" width="300" height="200" fill="var(--bg)" stroke="var(--accent)" stroke-width="2" rx="10"/>
-                                    <line x1="50" y1="90" x2="350" y2="90" stroke="var(--accent)" stroke-width="2"/>
-                                    <text x="70" y="75" fill="var(--fg)" font-family="JetBrains Mono" font-size="16">SCAN_DATA_LOG</text>
+                            <svg class="cinematic-svg" id="svg-anemia" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+                                <defs>
+                                    <!-- Scanning ring gradient pattern -->
+                                    <radialGradient id="scan-glow" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.3"/>
+                                        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
+                                    </radialGradient>
+                                    <clipPath id="zoom-clip">
+                                        <circle cx="500" cy="300" r="280"/>
+                                    </clipPath>
+                                </defs>
+
+                                <!-- Scene Container (Zoomed dynamically in script.js) -->
+                                <g id="anemia-scene" transform-origin="500 300">
                                     
-                                    <text id="ui-text-1" x="70" y="120" fill="var(--accent)" font-family="JetBrains Mono" font-size="14" opacity="0">> ANALYZING NAIL BED...</text>
-                                    <text id="ui-text-2" x="70" y="150" fill="var(--accent)" font-family="JetBrains Mono" font-size="14" opacity="0">> CNN CONFIDENCE: 96%</text>
-                                    <text id="ui-text-3" x="70" y="200" fill="var(--fg)" font-family="JetBrains Mono" font-size="20" font-weight="bold" opacity="0">STATUS: ANEMIA NEGATIVE</text>
+                                    <!-- Ambient Background Grid inside SVGs -->
+                                    <path d="M0,100 L1000,100 M0,200 L1000,200 M0,300 L1000,300 M0,400 L1000,400 M0,500 L1000,500" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                                    <path d="M200,0 L200,600 M400,0 L400,600 M600,0 L600,600 M800,0 L800,600" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+                                    <!-- Patient Console (Left side) -->
+                                    <g id="patient-console" transform="translate(100, 150)">
+                                        <!-- Table -->
+                                        <line x1="50" y1="350" x2="400" y2="350" stroke="var(--fg)" stroke-width="4"/>
+                                        <!-- Monitor -->
+                                        <rect x="80" y="150" width="160" height="110" fill="none" stroke="var(--fg)" stroke-width="3" rx="5"/>
+                                        <line x1="160" y1="260" x2="160" y2="310" stroke="var(--fg)" stroke-width="4"/>
+                                        <line x1="120" y1="310" x2="200" y2="310" stroke="var(--fg)" stroke-width="4"/>
+                                        <path d="M90,190 L120,170 L150,210 L190,180 L230,220" fill="none" stroke="var(--accent)" stroke-width="2"/>
+                                        
+                                        <!-- Patient Silhouette -->
+                                        <path d="M80,350 C80,310 100,280 120,280 C140,280 150,300 150,350" fill="none" stroke="var(--fg)" stroke-width="3"/>
+                                        <circle cx="120" cy="250" r="22" fill="none" stroke="var(--fg)" stroke-width="3"/>
+                                        
+                                        <!-- Hand Extending to Scanner -->
+                                        <path d="M150,310 C180,310 230,290 290,290" fill="none" stroke="var(--fg)" stroke-width="4" stroke-linecap="round"/>
+                                    </g>
+
+                                    <!-- Future Scan Chamber (Right side) -->
+                                    <g id="scanner-pod" transform="translate(480, 120)">
+                                        <!-- Scanner Housing -->
+                                        <rect x="50" y="120" width="350" height="280" fill="none" stroke="var(--fg)" stroke-width="4" rx="20"/>
+                                        <rect x="30" y="240" width="40" height="60" fill="none" stroke="var(--fg)" stroke-width="3" rx="5"/> <!-- Insertion Slot -->
+                                        <circle cx="225" cy="260" r="80" fill="none" stroke="var(--fg)" stroke-width="2" stroke-dasharray="10 10"/>
+                                        <circle cx="225" cy="260" r="10" fill="var(--accent)" opacity="0.6"/>
+                                    </g>
+
+                                    <!-- CLOSE-UP ZOOM CHAMBER (Initially hidden, scales up) -->
+                                    <g id="anemia-zoom-view" opacity="0" transform="translate(0, 0)">
+                                        <!-- Big circle crop -->
+                                        <circle cx="500" cy="300" r="280" fill="#000" stroke="var(--accent)" stroke-width="4"/>
+                                        
+                                        <g clip-path="url(#zoom-clip)">
+                                            <!-- Ambient radar background -->
+                                            <circle cx="500" cy="300" r="240" fill="url(#scan-glow)"/>
+                                            <circle cx="500" cy="300" r="200" fill="none" stroke="var(--accent)" stroke-width="1" stroke-opacity="0.2"/>
+                                            <circle cx="500" cy="300" r="150" fill="none" stroke="var(--accent)" stroke-width="1" stroke-opacity="0.2"/>
+                                            
+                                            <!-- Detailed finger layout -->
+                                            <g id="large-finger" transform="translate(500, 300)">
+                                                <!-- Finger outline -->
+                                                <path d="M-80,240 L-80,-60 C-80,-140 80,-140 80,-60 L80,240" fill="none" stroke="var(--fg)" stroke-width="8"/>
+                                                
+                                                <!-- Fingernail Bed (Changes color dynamically) -->
+                                                <path id="nailbed" d="M-50,-50 C-50,-110 50,-110 50,-50 L40,40 C40,45 -40,45 -40,40 Z" fill="#FFB6C1" stroke="none"/>
+                                                <path d="M-50,-50 C-50,-110 50,-110 50,-50 L40,40 C40,45 -40,45 -40,40 Z" fill="none" stroke="var(--fg)" stroke-width="4"/>
+                                            </g>
+
+                                            <!-- Crosshair indicators -->
+                                            <line x1="500" y1="50" x2="500" y2="550" stroke="var(--accent)" stroke-width="1" stroke-dasharray="5 5" opacity="0.4"/>
+                                            <line x1="200" y1="300" x2="800" y2="300" stroke="var(--accent)" stroke-width="1" stroke-dasharray="5 5" opacity="0.4"/>
+
+                                            <!-- Target scanner lines -->
+                                            <g id="anemia-reticle" transform="translate(500, 240)">
+                                                <circle cx="0" cy="0" r="110" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="15 5"/>
+                                                <circle cx="0" cy="0" r="120" fill="none" stroke="var(--accent)" stroke-width="1"/>
+                                            </g>
+
+                                            <!-- Scanning laser sweep -->
+                                            <g id="laser-glow-group" transform="translate(0, 80)">
+                                                <line x1="200" y1="0" x2="800" y2="0" stroke="var(--accent)" stroke-width="5"/>
+                                                <rect x="200" y="-15" width="600" height="15" fill="url(#scan-glow)"/>
+                                            </g>
+                                        </g>
+                                    </g>
+
                                 </g>
-                                <!-- Laser Scan Line -->
-                                <line id="anemia-laser" x1="150" y1="0" x2="350" y2="0" stroke="var(--accent)" stroke-width="4" opacity="0"/>
+
+                                <!-- Top HUD (Overlay outside zoom space) -->
+                                <g id="anemia-hud" opacity="0">
+                                    <!-- Technical log box -->
+                                    <rect x="40" y="40" width="320" height="240" fill="rgba(0,0,0,0.85)" stroke="var(--accent)" stroke-width="2" rx="8"/>
+                                    <path d="M40,80 L360,80" stroke="var(--accent)" stroke-width="1.5"/>
+                                    <text x="60" y="65" fill="var(--fg)" font-family="JetBrains Mono" font-size="14" font-weight="bold">SPECTRAL_BIOMETRIC_LOG</text>
+                                    
+                                    <text id="an-log-1" x="60" y="110" fill="var(--accent)" font-family="JetBrains Mono" font-size="12" opacity="0">> CAMERA ZOOM TO NAIL BED: 400%</text>
+                                    <text id="an-log-2" x="60" y="140" fill="var(--accent)" font-family="JetBrains Mono" font-size="12" opacity="0">> EXTRACTING YCbCr SPECTRUM...</text>
+                                    <text id="an-log-3" x="60" y="170" fill="var(--accent)" font-family="JetBrains Mono" font-size="12" opacity="0">> ESTIMATED Hb: 8.5 g/dL (LOW)</text>
+                                    <text id="an-log-4" x="60" y="200" fill="var(--accent)" font-family="JetBrains Mono" font-size="12" opacity="0">> CLASSIFYING... CNN OUT: 96%</text>
+                                    <text id="an-log-result" x="60" y="240" fill="#EF4444" font-family="JetBrains Mono" font-size="18" font-weight="bold" opacity="0">DIAGNOSIS: ANEMIA DETECTED</text>
+                                </g>
                             </svg>
                         </div>
                     </div>
@@ -149,7 +334,7 @@
                         </div>
                         
                         <div class="cinematic-canvas-wrapper" id="scene-vpark">
-                            <svg class="cinematic-svg" id="svg-vpark" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+                            <svg class="cinematic-svg" id="svg-vpark" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
                                 <!-- Parking Lot Lines -->
                                 <rect x="600" y="100" width="150" height="400" fill="none" stroke="var(--fg)" stroke-width="4" stroke-dasharray="20 20"/>
                                 <text x="650" y="90" fill="var(--text-muted)" font-family="JetBrains Mono" font-size="20">BAY 4</text>
@@ -192,7 +377,7 @@
                         </div>
                         
                         <div class="cinematic-canvas-wrapper" id="scene-lexcloud">
-                            <svg class="cinematic-svg" id="svg-lexcloud" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+                            <svg class="cinematic-svg" id="svg-lexcloud" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
                                 <!-- Nodes -->
                                 <circle cx="200" cy="300" r="40" fill="none" stroke="var(--fg)" stroke-width="4"/>
                                 <text x="175" y="305" fill="var(--fg)" font-family="Outfit" font-size="20">API</text>
@@ -226,7 +411,7 @@
                         </div>
                         
                         <div class="cinematic-canvas-wrapper" id="scene-sepsis">
-                            <svg class="cinematic-svg" id="svg-sepsis" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+                            <svg class="cinematic-svg" id="svg-sepsis" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
                                 <!-- ICU Monitor Background -->
                                 <rect x="50" y="50" width="900" height="200" fill="none" stroke="var(--fg)" stroke-width="2" rx="10"/>
                                 <path d="M50,150 L950,150" stroke="var(--text-muted)" stroke-width="1" stroke-dasharray="5 5"/>
