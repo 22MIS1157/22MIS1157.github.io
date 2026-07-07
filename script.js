@@ -1,12 +1,11 @@
 /* ============================================
-   AFNAAN AHMED P — ULTRA-PREMIUM PORTFOLIO
-   Lenis Scroll + GSAP + Custom Canvas Animations
+   AFNAAN AHMED P — DENSE ACADEMIC / SWE PORTFOLIO
+   Strict 3s Loader + Advanced Canvas Simulations
    ============================================ */
 
 (function () {
   "use strict";
 
-  // Check for reduced motion
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // 1. LENIS SMOOTH SCROLL SETUP
@@ -14,233 +13,95 @@
   if (!prefersReducedMotion) {
     lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
       gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
+      smooth: true
     });
 
     lenis.on('scroll', ScrollTrigger.update);
-
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
   }
 
-  // 2. TEXT SCRAMBLE CLASS FOR LOADER
-  class TextScramble {
-    constructor(el) {
-      this.el = el;
-      this.chars = '!<>-_\\/[]{}—=+*^?#________';
-      this.update = this.update.bind(this);
-    }
-    setText(newText) {
-      const oldText = this.el.innerText;
-      const length = Math.max(oldText.length, newText.length);
-      const promise = new Promise((resolve) => this.resolve = resolve);
-      this.queue = [];
-      for (let i = 0; i < length; i++) {
-        const from = oldText[i] || '';
-        const to = newText[i] || '';
-        const start = Math.floor(Math.random() * 40);
-        const end = start + Math.floor(Math.random() * 40);
-        this.queue.push({ from, to, start, end });
-      }
-      cancelAnimationFrame(this.frameRequest);
-      this.frame = 0;
-      this.update();
-      return promise;
-    }
-    update() {
-      let output = '';
-      let complete = 0;
-      for (let i = 0, n = this.queue.length; i < n; i++) {
-        let { from, to, start, end, char } = this.queue[i];
-        if (this.frame >= end) {
-          complete++;
-          output += to;
-        } else if (this.frame >= start) {
-          if (!char || Math.random() < 0.28) {
-            char = this.randomChar();
-            this.queue[i].char = char;
-          }
-          output += `<span style="color:var(--accent-1);">${char}</span>`;
-        } else {
-          output += from;
-        }
-      }
-      this.el.innerHTML = output;
-      if (complete === this.queue.length) {
-        this.resolve();
-      } else {
-        this.frameRequest = requestAnimationFrame(this.update);
-        this.frame++;
-      }
-    }
-    randomChar() {
-      return this.chars[Math.floor(Math.random() * this.chars.length)];
-    }
-  }
-
-  // 3. LOADER & REVEAL CHOREOGRAPHY
+  // 2. STRICT 3-SECOND ADVANCED TERMINAL LOADER
   const initLoader = () => {
     if (prefersReducedMotion) {
       document.getElementById("loader").style.display = "none";
-      initScrollTriggers();
       return;
     }
-    
-    // Stop scrolling while loading
+
     if(lenis) lenis.stop();
-
-    const loaderTextEl = document.getElementById('loaderText');
-    const loaderBar = document.getElementById('loaderBar');
-    const slices = document.querySelectorAll('.loader__slice');
+    document.body.style.overflow = "hidden"; // Prevent native scroll
     
-    const fx = new TextScramble(loaderTextEl);
+    const logsEl = document.getElementById('termLogs');
+    const progressEl = document.getElementById('termProgress');
+    const statusEl = document.getElementById('termStatus');
     
-    // Fake loading progress
-    gsap.to(loaderBar, {
-      width: '100%',
-      duration: 2.5,
-      ease: 'power2.inOut'
-    });
-
-    // Scramble sequence
-    const phrases = [
-      'BOOTING_SYSTEM...',
-      'LOADING_ASSETS...',
-      'AFNAAN AHMED P.'
+    const logs = [
+      { t: 100, msg: "Initializing kernel... [OK]" },
+      { t: 300, msg: "Mounting virtual file systems... [OK]" },
+      { t: 600, msg: "Checking memory allocation... [OK]" },
+      { t: 800, msg: "Loading portfolio dependencies... [WARN: Heavy load]" },
+      { t: 1100, msg: "Establishing secure connection to LexCloud nodes..." },
+      { t: 1500, msg: "LexCloud handshake successful. [OK]" },
+      { t: 1800, msg: "Compiling V-Park computer vision models..." },
+      { t: 2200, msg: "Loading CNN weights for Anemia Detection... [OK]" },
+      { t: 2500, msg: "Starting XGBoost clinical decision engine..." },
+      { t: 2800, msg: "System fully operational. Launching UI..." }
     ];
 
-    let counter = 0;
-    const next = () => {
-      fx.setText(phrases[counter]).then(() => {
-        if (counter < phrases.length - 1) {
-          counter++;
-          setTimeout(next, 800);
-        } else {
-          // Final Loader Exit Animation
-          const tl = gsap.timeline({
-            onComplete: () => {
-              document.getElementById("loader").style.display = "none";
-              if(lenis) lenis.start();
-              initScrollTriggers();
-            }
-          });
+    let start = Date.now();
+    let interval = setInterval(() => {
+      let elapsed = Date.now() - start;
+      let percent = Math.min(100, (elapsed / 3000) * 100);
+      progressEl.style.width = percent + "%";
+      statusEl.innerText = Math.floor(percent) + "%";
 
-          tl.to(loaderTextEl, {
-            opacity: 0,
-            y: -20,
-            duration: 0.5,
-            ease: 'power2.in'
-          }, "+=0.5")
-          .to('.loader__progress', {
-            opacity: 0,
-            duration: 0.3
-          }, "<")
-          // The Curtain Split
-          .to(slices, {
-            yPercent: (i) => i % 2 === 0 ? -100 : 100, // Alternate up/down
-            duration: 1.2,
-            ease: 'power4.inOut',
-            stagger: 0.1
-          }, "+=0.2")
-          // Hero entrance
-          .from('.hero-greeting .reveal-text', { yPercent: 110, duration: 0.8, ease: 'power3.out' }, "-=0.8")
-          .from('.hero-name .reveal-text', { yPercent: 110, duration: 0.8, ease: 'power3.out' }, "-=0.6")
-          .from('.hero-role .reveal-text', { yPercent: 110, duration: 0.8, ease: 'power3.out' }, "-=0.5")
-          .from('.hero-desc .reveal-text', { yPercent: 110, duration: 0.8, ease: 'power3.out' }, "-=0.4")
-          .from('.hero-cta', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' }, "-=0.4")
-          .to('.hero-scroll-indicator', { opacity: 1, duration: 1 }, "-=0.2");
+      if (elapsed >= 3000) {
+        clearInterval(interval);
+        // Loader Exit Animation
+        gsap.to('#loader', {
+          opacity: 0,
+          scale: 1.05,
+          duration: 0.5,
+          ease: 'power3.inOut',
+          onComplete: () => {
+            document.getElementById("loader").style.display = "none";
+            document.body.style.overflow = "";
+            if(lenis) lenis.start();
+          }
+        });
+      }
+    }, 30);
+
+    // Inject logs based on time
+    logs.forEach(log => {
+      setTimeout(() => {
+        const line = document.createElement('div');
+        line.className = 'log-line';
+        
+        let statusHtml = '';
+        if (log.msg.includes('[OK]')) {
+          log.msg = log.msg.replace('[OK]', '');
+          statusHtml = '<span class="status ok">[OK]</span>';
+        } else if (log.msg.includes('[WARN')) {
+          let warnMsg = log.msg.substring(log.msg.indexOf('[WARN'));
+          log.msg = log.msg.replace(warnMsg, '');
+          statusHtml = `<span class="status warn">${warnMsg}</span>`;
         }
-      });
-    };
-    
-    setTimeout(next, 500);
+
+        const date = new Date();
+        const timeStr = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.${date.getMilliseconds()}`;
+        
+        line.innerHTML = `<span class="time">[${timeStr}]</span>${log.msg}${statusHtml}`;
+        logsEl.appendChild(line);
+        logsEl.scrollTop = logsEl.scrollHeight; // Auto-scroll
+      }, log.t);
+    });
   };
 
-  // 4. GSAP SCROLL TRIGGERS & PINNED HORIZONTAL
-  const initScrollTriggers = () => {
-    if (prefersReducedMotion) return;
-
-    // Text Reveals
-    const revealTexts = document.querySelectorAll('.section-title .reveal-text, .horizontal-spacer h2 .reveal-text');
-    revealTexts.forEach((text) => {
-      gsap.to(text, {
-        scrollTrigger: {
-          trigger: text.closest('.section-title') || text.closest('.horizontal-spacer'),
-          start: "top 85%",
-        },
-        yPercent: -110, // from translateY(110%) to 0
-        duration: 1,
-        ease: 'power3.out'
-      });
-    });
-
-    const revealParas = document.querySelectorAll('.reveal-para');
-    revealParas.forEach((para) => {
-      gsap.from(para, {
-        scrollTrigger: {
-          trigger: para,
-          start: "top 85%",
-        },
-        y: 30,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out'
-      });
-    });
-
-    // Number counters
-    const stats = document.querySelectorAll('.stat-num');
-    stats.forEach(stat => {
-      const target = parseInt(stat.getAttribute('data-target'));
-      gsap.to(stat, {
-        scrollTrigger: {
-          trigger: '.about-stats',
-          start: "top 85%",
-        },
-        innerHTML: target,
-        duration: 2,
-        snap: { innerHTML: 1 },
-        ease: "power2.out",
-        onUpdate: function() {
-          stat.innerHTML = Math.round(this.targets()[0].innerHTML) + "+";
-        }
-      });
-    });
-
-    // --- PINNED HORIZONTAL SCROLL FOR PROJECTS ---
-    const horizontalTrack = document.getElementById('horizontalTrack');
-    const horizontalSection = document.getElementById('projects');
-    
-    if (horizontalTrack && horizontalSection) {
-      // Calculate how far to move: track width - window width
-      let getToValue = () => -(horizontalTrack.scrollWidth - window.innerWidth);
-      
-      gsap.to(horizontalTrack, {
-        x: getToValue,
-        ease: "none",
-        scrollTrigger: {
-          trigger: horizontalSection,
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-          start: "top top",
-          end: () => "+=" + (horizontalTrack.scrollWidth - window.innerWidth),
-        }
-      });
-    }
-  };
-
-  // 5. THEME TOGGLE LOGIC
+  // 3. THEME TOGGLE LOGIC
   const initTheme = () => {
     const themeBtn = document.getElementById('themeToggle');
     const currentTheme = localStorage.getItem('theme');
@@ -259,9 +120,8 @@
     });
   };
 
-  // 6. CANVAS ANIMATIONS (SIMULATIONS)
+  // 4. HIGHLY ADVANCED CANVAS ANIMATIONS
   const initCanvas = () => {
-    // Basic setup function for all canvases
     const setupCanvas = (id) => {
       const cvs = document.getElementById(id);
       if (!cvs) return null;
@@ -275,144 +135,222 @@
       return { cvs, ctx, w: () => cvs.width, h: () => cvs.height };
     };
 
-    // V-Park (Grid/Nodes)
+    const isLight = () => document.body.classList.contains('light-theme');
+
+    // 4A: V-PARK (Pathfinding & YOLO Box Simulation)
     const vpark = setupCanvas('vparkCanvas');
     if (vpark) {
-      let t = 0;
-      const draw = () => {
-        vpark.ctx.fillStyle = document.body.classList.contains('light-theme') ? '#f0f0f0' : '#050505';
+      let cars = Array.from({length: 5}, () => ({
+        x: Math.random() * vpark.w(), y: -20,
+        targetX: Math.random() * vpark.w(), targetY: vpark.h() * (0.2 + Math.random()*0.6),
+        speed: 1 + Math.random(),
+        parked: false, parkTime: 0
+      }));
+
+      const drawVPark = () => {
+        vpark.ctx.fillStyle = isLight() ? '#f6f8fa' : '#0d1117';
         vpark.ctx.fillRect(0, 0, vpark.w(), vpark.h());
-        vpark.ctx.strokeStyle = document.body.classList.contains('light-theme') ? 'rgba(0,0,0,0.1)' : 'rgba(0, 229, 255, 0.2)';
-        vpark.ctx.lineWidth = 2;
-        
-        const size = 50;
-        const offsetX = (t * 0.5) % size;
-        const offsetY = (t * 0.5) % size;
-        
-        vpark.ctx.beginPath();
-        for (let x = offsetX; x < vpark.w(); x += size) {
-          vpark.ctx.moveTo(x, 0); vpark.ctx.lineTo(x, vpark.h());
-        }
-        for (let y = offsetY; y < vpark.h(); y += size) {
-          vpark.ctx.moveTo(0, y); vpark.ctx.lineTo(vpark.w(), y);
-        }
-        vpark.ctx.stroke();
-        t++;
-        requestAnimationFrame(draw);
+
+        // Draw Grid
+        vpark.ctx.strokeStyle = isLight() ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
+        vpark.ctx.lineWidth = 1;
+        for (let i=0; i<vpark.w(); i+=40) { vpark.ctx.beginPath(); vpark.ctx.moveTo(i,0); vpark.ctx.lineTo(i,vpark.h()); vpark.ctx.stroke(); }
+        for (let i=0; i<vpark.h(); i+=40) { vpark.ctx.beginPath(); vpark.ctx.moveTo(0,i); vpark.ctx.lineTo(vpark.w(),i); vpark.ctx.stroke(); }
+
+        cars.forEach(car => {
+          if (!car.parked) {
+            let dx = car.targetX - car.x;
+            let dy = car.targetY - car.y;
+            let dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < 5) {
+              car.parked = true; car.parkTime = Date.now();
+            } else {
+              car.x += (dx/dist) * car.speed;
+              car.y += (dy/dist) * car.speed;
+            }
+          } else {
+            if (Date.now() - car.parkTime > 3000) {
+              car.parked = false; car.y = -20; car.x = Math.random() * vpark.w();
+              car.targetX = Math.random() * vpark.w(); car.targetY = vpark.h() * (0.2 + Math.random()*0.6);
+            }
+          }
+
+          // Draw Car
+          vpark.ctx.fillStyle = isLight() ? '#0969da' : '#58a6ff';
+          vpark.ctx.fillRect(car.x - 5, car.y - 10, 10, 20);
+
+          // Draw YOLO Box
+          if (car.parked) {
+            vpark.ctx.strokeStyle = '#7ee787'; // Green box
+            vpark.ctx.lineWidth = 1.5;
+            vpark.ctx.strokeRect(car.x - 15, car.y - 20, 30, 40);
+            vpark.ctx.fillStyle = '#7ee787';
+            vpark.ctx.font = '10px monospace';
+            vpark.ctx.fillText("SLOT_FULL: 98%", car.x - 15, car.y - 25);
+          } else {
+            vpark.ctx.strokeStyle = '#ff7b72'; // Red box tracking
+            vpark.ctx.lineWidth = 1;
+            vpark.ctx.strokeRect(car.x - 12, car.y - 15, 24, 30);
+          }
+        });
+        requestAnimationFrame(drawVPark);
       };
-      draw();
+      drawVPark();
     }
 
-    // Anemia (Pulse/Wave)
+    // 4B: ANEMIA (Eye Scanning & CNN Feature Maps)
     const anemia = setupCanvas('anemiaCanvas');
     if (anemia) {
-      let t = 0;
-      const draw = () => {
-        anemia.ctx.fillStyle = document.body.classList.contains('light-theme') ? '#e0e5ec' : '#0a0a0f';
+      let scanLineY = 0;
+      const drawAnemia = () => {
+        anemia.ctx.fillStyle = isLight() ? '#f6f8fa' : '#0d1117';
         anemia.ctx.fillRect(0, 0, anemia.w(), anemia.h());
-        anemia.ctx.strokeStyle = document.body.classList.contains('light-theme') ? '#FF2D55' : '#FF006E';
-        anemia.ctx.lineWidth = 3;
+
+        const cx = anemia.w()/2;
+        const cy = anemia.h()/2;
+
+        // Draw Eye Wireframe
+        anemia.ctx.strokeStyle = isLight() ? '#24292f' : '#c9d1d9';
+        anemia.ctx.lineWidth = 2;
         anemia.ctx.beginPath();
-        for (let x = 0; x < anemia.w(); x += 5) {
-          const y = anemia.h() / 2 + Math.sin((x + t) * 0.02) * 50 * Math.sin(t * 0.05);
-          if (x === 0) anemia.ctx.moveTo(x, y);
-          else anemia.ctx.lineTo(x, y);
-        }
+        anemia.ctx.ellipse(cx, cy, 80, 40, 0, 0, 2*Math.PI);
         anemia.ctx.stroke();
-        t += 2;
-        requestAnimationFrame(draw);
+        anemia.ctx.beginPath();
+        anemia.ctx.arc(cx, cy, 20, 0, 2*Math.PI);
+        anemia.ctx.stroke();
+
+        // Draw Scan Line
+        anemia.ctx.strokeStyle = 'rgba(88, 166, 255, 0.8)';
+        anemia.ctx.lineWidth = 2;
+        anemia.ctx.beginPath();
+        anemia.ctx.moveTo(cx - 100, scanLineY);
+        anemia.ctx.lineTo(cx + 100, scanLineY);
+        anemia.ctx.stroke();
+        
+        // Scan glow
+        anemia.ctx.fillStyle = 'rgba(88, 166, 255, 0.1)';
+        anemia.ctx.fillRect(cx - 100, 0, 200, scanLineY);
+
+        scanLineY += 2;
+        if (scanLineY > anemia.h()) scanLineY = 0;
+
+        // CNN Matrix overlay (fake)
+        anemia.ctx.fillStyle = isLight() ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)';
+        anemia.ctx.font = '8px monospace';
+        if (Math.random() > 0.8) {
+          anemia.ctx.fillText(`Conv2D [${Math.floor(Math.random()*255)}]`, cx + 90, scanLineY);
+        }
+
+        requestAnimationFrame(drawAnemia);
       };
-      draw();
+      drawAnemia();
     }
 
-    // LexCloud (Data Stream)
+    // 4C: LEXCLOUD (Decentralized Node Graph Encryption)
     const lex = setupCanvas('lexcloudCanvas');
     if (lex) {
-      const drops = [];
-      for (let i = 0; i < 100; i++) drops.push({ x: Math.random(), y: Math.random(), speed: Math.random() * 0.02 + 0.01 });
-      const draw = () => {
-        lex.ctx.fillStyle = document.body.classList.contains('light-theme') ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
-        lex.ctx.fillRect(0, 0, lex.w(), lex.h());
-        lex.ctx.fillStyle = document.body.classList.contains('light-theme') ? '#007AFF' : '#00E5FF';
-        lex.ctx.font = '14px monospace';
-        drops.forEach(d => {
-          lex.ctx.fillText(Math.random() > 0.5 ? '1' : '0', d.x * lex.w(), d.y * lex.h());
-          d.y += d.speed;
-          if (d.y > 1) d.y = 0;
-        });
-        requestAnimationFrame(draw);
-      };
-      draw();
-    }
+      const nodes = Array.from({length: 15}, () => ({
+        x: Math.random() * lex.w(), y: Math.random() * lex.h(),
+        vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5
+      }));
+      let t = 0;
 
-    // Sepsis (Scatter Plot/Tree)
-    const sepsis = setupCanvas('sepsisCanvas');
-    if (sepsis) {
-      const points = Array.from({length: 50}, () => ({x: Math.random(), y: Math.random(), vx: (Math.random()-0.5)*0.01, vy: (Math.random()-0.5)*0.01}));
-      const draw = () => {
-        sepsis.ctx.fillStyle = document.body.classList.contains('light-theme') ? '#f5f5f7' : '#050507';
-        sepsis.ctx.fillRect(0, 0, sepsis.w(), sepsis.h());
-        points.forEach(p => {
-          p.x += p.vx; p.y += p.vy;
-          if(p.x < 0 || p.x > 1) p.vx *= -1;
-          if(p.y < 0 || p.y > 1) p.vy *= -1;
-          sepsis.ctx.beginPath();
-          sepsis.ctx.arc(p.x * sepsis.w(), p.y * sepsis.h(), 3, 0, Math.PI*2);
-          sepsis.ctx.fillStyle = document.body.classList.contains('light-theme') ? '#1d1d1f' : '#fff';
-          sepsis.ctx.fill();
+      const drawLex = () => {
+        lex.ctx.fillStyle = isLight() ? '#f6f8fa' : '#0d1117';
+        lex.ctx.fillRect(0, 0, lex.w(), lex.h());
+
+        nodes.forEach(n => {
+          n.x += n.vx; n.y += n.vy;
+          if(n.x < 0 || n.x > lex.w()) n.vx *= -1;
+          if(n.y < 0 || n.y > lex.h()) n.vy *= -1;
+          
+          lex.ctx.fillStyle = isLight() ? '#0969da' : '#58a6ff';
+          lex.ctx.beginPath(); lex.ctx.arc(n.x, n.y, 3, 0, 2*Math.PI); lex.ctx.fill();
         });
-        sepsis.ctx.strokeStyle = document.body.classList.contains('light-theme') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
-        for(let i=0; i<points.length; i++) {
-          for(let j=i+1; j<points.length; j++) {
-            const dx = points[i].x - points[j].x;
-            const dy = points[i].y - points[j].y;
-            if(dx*dx + dy*dy < 0.02) {
-              sepsis.ctx.beginPath();
-              sepsis.ctx.moveTo(points[i].x*sepsis.w(), points[i].y*sepsis.h());
-              sepsis.ctx.lineTo(points[j].x*sepsis.w(), points[j].y*sepsis.h());
-              sepsis.ctx.stroke();
+
+        lex.ctx.strokeStyle = isLight() ? 'rgba(9, 105, 218, 0.15)' : 'rgba(88, 166, 255, 0.15)';
+        for(let i=0; i<nodes.length; i++) {
+          for(let j=i+1; j<nodes.length; j++) {
+            let dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+            if (dist < 100) {
+              lex.ctx.lineWidth = 1 - (dist/100);
+              lex.ctx.beginPath(); lex.ctx.moveTo(nodes[i].x, nodes[i].y); lex.ctx.lineTo(nodes[j].x, nodes[j].y); lex.ctx.stroke();
+              
+              // Packets moving along lines
+              if (Math.random() > 0.95) {
+                let pPos = (t % 100) / 100;
+                let px = nodes[i].x + (nodes[j].x - nodes[i].x) * pPos;
+                let py = nodes[i].y + (nodes[j].y - nodes[i].y) * pPos;
+                lex.ctx.fillStyle = '#7ee787';
+                lex.ctx.beginPath(); lex.ctx.arc(px, py, 2, 0, 2*Math.PI); lex.ctx.fill();
+              }
             }
           }
         }
-        requestAnimationFrame(draw);
+        t++;
+        requestAnimationFrame(drawLex);
       };
-      draw();
+      drawLex();
     }
-  };
 
-  // 7. MAGNETIC BUTTONS (Basic Implementation without custom cursor)
-  const initMagneticButtons = () => {
-    if (prefersReducedMotion) return;
-    const magnets = document.querySelectorAll('.magnetic-btn');
-    magnets.forEach(btn => {
-      btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        gsap.to(btn, {
-          x: x * 0.2,
-          y: y * 0.2,
-          duration: 0.5,
-          ease: "power2.out"
-        });
-      });
-      btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, {
-          x: 0,
-          y: 0,
-          duration: 0.7,
-          ease: "elastic.out(1, 0.3)"
-        });
-      });
-    });
+    // 4D: SEPSIS (ECG Monitor + XGBoost Tree)
+    const sepsis = setupCanvas('sepsisCanvas');
+    if (sepsis) {
+      let ecg = [];
+      let t = 0;
+      const drawSepsis = () => {
+        sepsis.ctx.fillStyle = isLight() ? '#f6f8fa' : '#0d1117';
+        sepsis.ctx.fillRect(0, 0, sepsis.w(), sepsis.h());
+
+        // Background Decision Tree Nodes (Fake)
+        sepsis.ctx.strokeStyle = isLight() ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
+        sepsis.ctx.lineWidth = 1;
+        const drawTree = (x, y, level, spacing) => {
+          if (level === 0) return;
+          sepsis.ctx.beginPath(); sepsis.ctx.arc(x, y, 4, 0, 2*Math.PI); sepsis.ctx.stroke();
+          sepsis.ctx.beginPath(); sepsis.ctx.moveTo(x, y); sepsis.ctx.lineTo(x - spacing, y + 30); sepsis.ctx.stroke();
+          sepsis.ctx.beginPath(); sepsis.ctx.moveTo(x, y); sepsis.ctx.lineTo(x + spacing, y + 30); sepsis.ctx.stroke();
+          drawTree(x - spacing, y + 30, level - 1, spacing / 2);
+          drawTree(x + spacing, y + 30, level - 1, spacing / 2);
+        };
+        drawTree(sepsis.w()/2, 20, 4, 60);
+
+        // Active ECG Line
+        let ecgY = sepsis.h() / 2;
+        if (t % 100 < 10) ecgY -= 40;
+        else if (t % 100 < 20) ecgY += 20;
+        else ecgY += (Math.random() - 0.5) * 5;
+
+        ecg.push(ecgY);
+        if (ecg.length > sepsis.w() / 2) ecg.shift();
+
+        sepsis.ctx.strokeStyle = '#ff7b72'; // Red warning color
+        sepsis.ctx.lineWidth = 2;
+        sepsis.ctx.beginPath();
+        for(let i=0; i<ecg.length; i++) {
+          let px = i * 2;
+          if (i === 0) sepsis.ctx.moveTo(px, ecg[i]);
+          else sepsis.ctx.lineTo(px, ecg[i]);
+        }
+        sepsis.ctx.stroke();
+
+        // Readout text
+        sepsis.ctx.fillStyle = '#ff7b72';
+        sepsis.ctx.font = '12px monospace';
+        sepsis.ctx.fillText(`HR: ${Math.floor(80 + Math.random()*20)} | RISK: HIGH`, 10, sepsis.h() - 10);
+
+        t++;
+        requestAnimationFrame(drawSepsis);
+      };
+      drawSepsis();
+    }
   };
 
   // INIT ALL
   window.addEventListener("DOMContentLoaded", () => {
     initTheme();
     initCanvas();
-    initMagneticButtons();
-    initLoader(); // Triggers scroll triggers after load
+    initLoader(); 
   });
 
 })();
