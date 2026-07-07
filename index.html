@@ -14,20 +14,30 @@
     <!-- NOISE TEXTURE OVERLAY -->
     <div class="noise-overlay" aria-hidden="true"></div>
 
-    <!-- LOADER — Matrix/HUD Boot Sequence -->
+    <!-- LOADER — High-End Diagnostic HUD Boot Sequence -->
     <div class="loader" id="loader">
         <div class="loader__grid" aria-hidden="true"></div>
         <div class="loader__scanline" aria-hidden="true"></div>
-        <div class="loader__inner">
-            <div class="loader__logo">
-                <span class="loader__logo-bracket">[</span>
-                <span class="loader__logo-text" id="loaderText">BOOTING</span>
-                <span class="loader__logo-bracket">]</span>
+        <div class="loader__content">
+            <!-- Circular Diagnostics Ring -->
+            <div class="loader__ring-container">
+                <svg class="loader__ring" width="120" height="120" viewBox="0 0 120 120">
+                    <circle class="loader__ring-track" cx="60" cy="60" r="50" fill="none" stroke-width="3"></circle>
+                    <circle class="loader__ring-fill" id="loaderRingFill" cx="60" cy="60" r="50" fill="none" stroke-width="3" stroke-dasharray="314" stroke-dashoffset="314"></circle>
+                </svg>
+                <div class="loader__percentage" id="loaderPercent">0%</div>
             </div>
-            <h1 class="loader__title" id="loaderTitle">AFNAAN AHMED P</h1>
-            <p class="loader__sub">SOFTWARE ENGINEER & AI DEVELOPER</p>
-            <div class="loader__bar"><div class="loader__fill" id="loaderFill"></div></div>
-            <p class="loader__status" id="loaderStatus">Initializing system configurations...</p>
+            
+            <div class="loader__meta">
+                <span class="loader__badge">SYSTEM STATUS: LOADING</span>
+                <h1 class="loader__title">AFNAAN AHMED P</h1>
+                <p class="loader__sub">SOFTWARE ENGINEER & AI DEVELOPER</p>
+            </div>
+
+            <!-- Diagnostic Console Logs -->
+            <div class="loader__console">
+                <div class="loader__console-line" id="loaderConsole">INIT_BOOT_SEQUENCE...</div>
+            </div>
         </div>
     </div>
 
@@ -122,6 +132,9 @@
 
     <!-- ===== ABOUT ===== -->
     <section id="about" class="section">
+        <!-- Giant Parallax Watermark -->
+        <div class="section__watermark watermark-left" aria-hidden="true">ABOUT ARCHITECTURE</div>
+        
         <div class="container">
             <div class="section-header">
                 <span class="section-label">01 — About</span>
@@ -178,6 +191,9 @@
 
     <!-- ===== SKILLS ===== -->
     <section class="section section--alt" id="skills">
+        <!-- Giant Parallax Watermark -->
+        <div class="section__watermark watermark-right" aria-hidden="true">ENGINEER ARSENAL</div>
+
         <div class="container">
             <div class="section-header">
                 <span class="section-label">02 — Skills</span>
@@ -195,6 +211,9 @@
 
     <!-- ===== PROJECTS ===== -->
     <section class="section" id="projects">
+        <!-- Giant Parallax Watermark -->
+        <div class="section__watermark watermark-left" aria-hidden="true">SYSTEMS DEPLOYED</div>
+
         <div class="container">
             <div class="section-header">
                 <span class="section-label">03 — Projects</span>
@@ -279,6 +298,9 @@
 
     <!-- ===== EXPERIENCE ===== -->
     <section class="section section--alt" id="experience">
+        <!-- Giant Parallax Watermark -->
+        <div class="section__watermark watermark-right" aria-hidden="true">EXPERIENCE RECORD</div>
+
         <div class="container">
             <div class="section-header">
                 <span class="section-label">04 — Experience</span>
@@ -296,6 +318,7 @@
                 <div class="timeline__item"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__content clay-card"><div class="timeline__head"><h3>Class XII — PCBM · 85.20%</h3><span class="timeline__date">2021</span></div><p class="timeline__org">Mazharul Uloom HSS, Ambur</p></div></div>
             </div>
             <span class="section-label" style="margin-top:64px;display:block">Leadership</span>
+            <div class="timeline__line"></div>
             <div class="leadership-row">
                 <div class="leadership-item clay-card">
                     <div class="leadership-item__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
@@ -321,6 +344,9 @@
 
     <!-- ===== CONTACT ===== -->
     <section class="section" id="contact">
+        <!-- Giant Parallax Watermark -->
+        <div class="section__watermark watermark-left" aria-hidden="true">ESTABLISH CONNECTION</div>
+
         <div class="container">
             <div class="section-header">
                 <span class="section-label">05 — Contact</span>

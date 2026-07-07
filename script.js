@@ -10,44 +10,55 @@
   gsap.registerPlugin(ScrollTrigger);
 
   /* ══════════════════════════════════════════
-     1. LOADER — Boot sequence
+     1. LOADER — Diagnostic HUD Boot Sequence
      ══════════════════════════════════════════ */
   const loader = document.getElementById("loader");
-  const loaderFill = document.getElementById("loaderFill");
-  const loaderStatus = document.getElementById("loaderStatus");
-  const loaderText = document.getElementById("loaderText");
+  const loaderRingFill = document.getElementById("loaderRingFill");
+  const loaderPercent = document.getElementById("loaderPercent");
+  const loaderConsole = document.getElementById("loaderConsole");
 
-  const loadMessages = [
-    "Loading configuration files...",
-    "Compiling styles & dynamic themes...",
-    "Synthesizing RAG AI vectors...",
-    "Mapping hardware interfaces...",
-    "Activating simulation canvases...",
-    "Ready."
+  const diagnosticLogs = [
+    "LOADING_SYSTEM_CONFIGS...",
+    "INIT_CORE_COMPILER...",
+    "DOCKER_IMAGE_BOOT_SEQUENCE...",
+    "AWS_GATEWAY_HANDSHAKE_OK",
+    "PULLING_CHROMADB_VECTORS...",
+    "PARSING_YOLOV8_WEIGHTS...",
+    "SYNAPSE_GRADIENTS_RESOLVED",
+    "ATCC_VPARK_SERIAL_CONNECTING...",
+    "ICU_SEPSIS_ML_MODEL_LOAD...",
+    "LEXCLOUD_RAG_PIPELINE_INIT...",
+    "ESTABLISHING_HUD_RENDERERS...",
+    "BOOT_COMPLETED_SUCCESSFULLY"
   ];
 
-  let loadProgress = 0;
-  const loadInterval = setInterval(() => {
-    loadProgress += Math.random() * 20 + 8;
-    if (loadProgress >= 100) loadProgress = 100;
-    if (loaderFill) loaderFill.style.width = loadProgress + "%";
+  let progress = 0;
+  const progressLimit = 100;
+  const circumference = 314; // 2 * pi * 50
+
+  const loaderInterval = setInterval(() => {
+    progress += Math.random() * 12 + 4;
+    if (progress >= progressLimit) progress = progressLimit;
+
+    const roundProgress = Math.round(progress);
+    if (loaderPercent) loaderPercent.textContent = roundProgress + "%";
     
-    const msgIdx = Math.min(Math.floor((loadProgress / 100) * loadMessages.length), loadMessages.length - 1);
-    if (loaderStatus) loaderStatus.textContent = loadMessages[msgIdx];
-    
-    if (loaderText) {
-      const titles = ["BOOTING", "COMPILED", "AI_ACTIVE", "SYS_SYNC", "READY"];
-      loaderText.textContent = titles[Math.min(Math.floor((loadProgress / 100) * titles.length), titles.length - 1)];
+    if (loaderRingFill) {
+      const offset = circumference - (progress / 100) * circumference;
+      loaderRingFill.style.strokeDashoffset = offset;
     }
 
-    if (loadProgress >= 100) {
-      clearInterval(loadInterval);
+    const logIdx = Math.min(Math.floor((progress / 100) * diagnosticLogs.length), diagnosticLogs.length - 1);
+    if (loaderConsole) loaderConsole.textContent = diagnosticLogs[logIdx];
+
+    if (progress >= progressLimit) {
+      clearInterval(loaderInterval);
       setTimeout(() => {
         if (loader) loader.classList.add("hidden");
-        setTimeout(() => initGSAPAnimations(), 150);
-      }, 500);
+        setTimeout(() => initGSAPAnimations(), 200);
+      }, 700);
     }
-  }, 160);
+  }, 120);
 
   // Failsafe
   setTimeout(() => {
@@ -55,7 +66,7 @@
       loader.classList.add("hidden");
       setTimeout(() => initGSAPAnimations(), 100);
     }
-  }, 4000);
+  }, 4500);
 
   /* ══════════════════════════════════════════
      2. THEME SYSTEM (Light / Dark)
@@ -72,7 +83,6 @@
       document.body.classList.toggle("light-theme");
       const theme = document.body.classList.contains("light-theme") ? "light" : "dark";
       localStorage.setItem("theme", theme);
-      // Restart project canvases to apply updated theme colors
       initProjectCanvases();
     });
   }
@@ -143,7 +153,6 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        // Adapt color dynamically
         const isLight = document.body.classList.contains("light-theme");
         ctx.fillStyle = isLight ? `rgba(0, 180, 216, ${this.opacity})` : `rgba(0, 229, 255, ${this.opacity})`;
         ctx.fill();
@@ -187,7 +196,6 @@
   let activeAnimations = [];
 
   function initProjectCanvases() {
-    // Clear any running loops
     activeAnimations.forEach(cancelAnimationFrame);
     activeAnimations = [];
 
@@ -209,26 +217,22 @@
       function drawVPark() {
         ctx.clearRect(0, 0, width, height);
 
-        // Draw bays
         const bayW = width / 5;
         const bayH = height * 0.4;
         ctx.strokeStyle = getGridColor();
         ctx.lineWidth = 1;
 
-        // Pulse occupancy state every 2 seconds
         timer++;
         if (timer % 120 === 0) {
           occupied = occupied.map(() => Math.random() > 0.4);
-          gateTarget = occupied[1] ? Math.PI / 2 : 0; // Trigger gate move
+          gateTarget = occupied[1] ? Math.PI / 2 : 0;
         }
 
-        // Draw spots
         for (let i = 0; i < 4; i++) {
           const x = bayW * (i + 0.5);
           const y = height * 0.15;
           ctx.strokeRect(x, y, bayW, bayH);
           
-          // Spot Indicator
           ctx.beginPath();
           ctx.arc(x + bayW/2, y + bayH/2, 6, 0, Math.PI*2);
           ctx.fillStyle = occupied[i] ? "#EF4444" : getAccent();
@@ -242,10 +246,8 @@
           ctx.fillText(`BAY 0${i+1}`, x + 6, y + 16);
         }
 
-        // Interpolate Gate Angle
         gateAngle += (gateTarget - gateAngle) * 0.08;
 
-        // Draw Barrier Gate
         const gateX = width * 0.8;
         const gateY = height * 0.7;
         ctx.strokeStyle = "#FF006E";
@@ -255,13 +257,11 @@
         ctx.lineTo(gateX - Math.cos(gateAngle) * 45, gateY - Math.sin(gateAngle) * 45);
         ctx.stroke();
 
-        // Gate Post
         ctx.fillStyle = isLight() ? "#1E293B" : "#F1F5F9";
         ctx.beginPath();
         ctx.arc(gateX, gateY, 6, 0, Math.PI*2);
         ctx.fill();
 
-        // HUD Info
         ctx.font = "8px monospace";
         ctx.fillStyle = getAccent();
         ctx.fillText(`GATE: ${gateAngle > 0.2 ? "OPEN" : "LOCKED"}`, 12, height - 24);
@@ -286,18 +286,15 @@
       function drawAnemia() {
         ctx.clearRect(0, 0, width, height);
 
-        // Nail outline
         ctx.strokeStyle = isLight() ? "#64748B" : "#475569";
         ctx.lineWidth = 2;
         ctx.beginPath();
-        // Drawing stylized fingernail
         ctx.arc(width/2, height/2 - 10, 30, Math.PI, 0, false);
         ctx.lineTo(width/2 + 30, height/2 + 50);
         ctx.lineTo(width/2 - 30, height/2 + 50);
         ctx.closePath();
         ctx.stroke();
 
-        // Pulsing hemoglobin flow inside nail
         pulseVal += 0.05;
         const capillaryAlpha = 0.15 + Math.sin(pulseVal) * 0.06;
         ctx.fillStyle = `rgba(255, 0, 110, ${capillaryAlpha})`;
@@ -308,11 +305,9 @@
         ctx.closePath();
         ctx.fill();
 
-        // Laser scan line movement
         scanY += 1.2 * scanDirection;
         if (scanY > height * 0.8 || scanY < height * 0.2) scanDirection *= -1;
 
-        // Laser line render
         ctx.strokeStyle = getAccent();
         ctx.lineWidth = 1.5;
         ctx.beginPath();
@@ -323,7 +318,6 @@
         ctx.stroke();
         ctx.shadowBlur = 0;
 
-        // Diagnostic HUD
         ctx.font = "8px monospace";
         ctx.fillStyle = getAccent();
         ctx.fillText(`HEMOGLOBIN: 13.8 g/dL`, 12, height - 24);
@@ -354,7 +348,6 @@
       function drawLexCloud() {
         ctx.clearRect(0, 0, width, height);
 
-        // Draw connections
         ctx.strokeStyle = getGridColor();
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -366,7 +359,6 @@
         ctx.lineTo(nodes[3].x, nodes[3].y);
         ctx.stroke();
 
-        // Spawn packets
         if (Math.random() < 0.03 && packets.length < 5) {
           packets.push({
             start: nodes[0],
@@ -377,7 +369,6 @@
           });
         }
 
-        // Draw and update packets
         ctx.fillStyle = getAccent();
         packets.forEach((p, idx) => {
           p.progress += p.speed;
@@ -403,7 +394,6 @@
           if (p.progress >= 1) packets.splice(idx, 1);
         });
 
-        // Draw nodes
         nodes.forEach((node) => {
           ctx.fillStyle = varColor(node.label);
           ctx.beginPath();
@@ -437,7 +427,6 @@
       let ecgPoints = [];
       let step = 0;
 
-      // Populate placeholder points
       for (let i = 0; i < width; i++) {
         ecgPoints.push(height * 0.5);
       }
@@ -448,19 +437,17 @@
         step++;
         let nextY = height * 0.5;
 
-        // Generate dynamic ECG peaks
         if (step % 40 === 0) {
-          nextY = height * 0.2; // QRS peak
+          nextY = height * 0.2;
         } else if (step % 40 === 2) {
-          nextY = height * 0.85; // S drop
+          nextY = height * 0.85;
         } else if (step % 40 === 5) {
-          nextY = height * 0.45; // T wave
+          nextY = height * 0.45;
         }
 
         ecgPoints.shift();
         ecgPoints.push(nextY);
 
-        // Draw grid lines
         ctx.strokeStyle = getGridColor();
         ctx.lineWidth = 0.5;
         for (let i = 0; i < width; i += 20) {
@@ -476,7 +463,6 @@
           ctx.stroke();
         }
 
-        // Draw vital trace
         ctx.strokeStyle = "#10B981";
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -489,7 +475,6 @@
         ctx.stroke();
         ctx.shadowBlur = 0;
 
-        // Display pulse metrics
         ctx.font = "8px monospace";
         ctx.fillStyle = "#10B981";
         ctx.fillText(`HR: 82 BPM`, 12, height - 24);
@@ -506,14 +491,10 @@
      6. GSAP ANIMATIONS
      ══════════════════════════════════════════ */
   function initGSAPAnimations() {
-    // Enable type loop
     typeRole();
-
-    // Init the project specific simulation loops
     initProjectCanvases();
 
     if (prefersReducedMotion) {
-      // Force instant visibility
       gsap.set(".hero__greeting, .hero__name-line, .hero__role-line, .hero__tagline, .hero__sys-status, .hero__cta, .hero__scroll-hint, .section-label, .section__title, .contact__title", { opacity: 1, y: 0, x: 0 });
       animateCounters();
       return;
@@ -565,7 +546,6 @@
       );
     });
 
-    // Run counters
     animateCounters();
 
     /* ── PROJECT CARDS ── */
@@ -612,13 +592,31 @@
       );
     });
 
-    /* ── PARALLAX DEPTH BLOCKS ── */
+    /* ── PARALLAX ORBS & WATERMARKS ── */
     gsap.utils.toArray(".hero__orb").forEach((orb, i) => {
       gsap.to(orb, {
         yPercent: (i + 1) * -10,
         ease: "none",
         scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
       });
+    });
+
+    // Left moving watermarks
+    gsap.utils.toArray(".watermark-left").forEach((w) => {
+      gsap.fromTo(w,
+        { xPercent: -15 },
+        { xPercent: 15, ease: "none",
+          scrollTrigger: { trigger: w.parentElement, start: "top bottom", end: "bottom top", scrub: 1.5 } }
+      );
+    });
+
+    // Right moving watermarks
+    gsap.utils.toArray(".watermark-right").forEach((w) => {
+      gsap.fromTo(w,
+        { xPercent: 15 },
+        { xPercent: -15, ease: "none",
+          scrollTrigger: { trigger: w.parentElement, start: "top bottom", end: "bottom top", scrub: 1.5 } }
+      );
     });
   }
 
@@ -648,19 +646,16 @@
   /* ══════════════════════════════════════════
      8. GLOBAL LISTENERS
      ══════════════════════════════════════════ */
-  // Header scrolled state
   window.addEventListener("scroll", () => {
     const nav = document.getElementById("nav");
     if (nav) nav.classList.toggle("scrolled", window.scrollY > 50);
 
-    // Scroll progress update
     const scrollProgress = document.getElementById("scrollProgress");
     if (scrollProgress) {
       const totalH = document.documentElement.scrollHeight - window.innerHeight;
       scrollProgress.style.width = totalH > 0 ? (window.scrollY / totalH) * 100 + "%" : "0%";
     }
 
-    // Active nav tracking
     const sections = document.querySelectorAll("section[id]");
     let currentSec = "";
     sections.forEach((sec) => {
@@ -673,7 +668,6 @@
     });
   });
 
-  // Hamburger Toggle
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobileMenu");
   if (hamburger && mobileMenu) {
@@ -689,13 +683,11 @@
     });
   }
 
-  // Scroll to top button
   const scrollTopBtn = document.getElementById("scrollTopBtn");
   if (scrollTopBtn) {
     scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   }
 
-  // Set local greeting based on hour
   const greetingEl = document.querySelector(".hero__greeting");
   if (greetingEl) {
     const hr = new Date().getHours();
@@ -707,7 +699,6 @@
      9. MAGNETIC & TILT EFFECTS
      ══════════════════════════════════════════ */
   if (!prefersReducedMotion && window.innerWidth > 768) {
-    // Magnetic pull
     document.querySelectorAll(".magnetic").forEach((el) => {
       el.addEventListener("mousemove", (e) => {
         const bounds = el.getBoundingClientRect();
@@ -720,7 +711,6 @@
       });
     });
 
-    // 3D card tilt
     document.querySelectorAll("[data-tilt]").forEach((card) => {
       card.addEventListener("mousemove", (e) => {
         const bounds = card.getBoundingClientRect();
