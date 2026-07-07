@@ -4,385 +4,314 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afnaan Ahmed P — Software Engineer & AI Developer</title>
-    <meta name="description" content="Portfolio of Afnaan Ahmed P — M.Tech Software Engineering, VIT Chennai. AI, ML, Cloud & Full-Stack Systems.">
+    <meta name="description" content="Portfolio of Afnaan Ahmed P, Software Engineer and AI Developer specializing in scalable systems, AI integration, and modern web development.">
+    <meta name="theme-color" content="#0A0A0F">
+    
+    <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 </head>
-<body>
-    <!-- NOISE TEXTURE OVERLAY -->
-    <div class="noise-overlay" aria-hidden="true"></div>
+<body class="dark-theme">
 
-    <!-- LOADER — High-End Diagnostic HUD Boot Sequence -->
-    <div class="loader" id="loader">
-        <div class="loader__grid" aria-hidden="true"></div>
-        <div class="loader__scanline" aria-hidden="true"></div>
+    <!-- Premium Cinematic Loader -->
+    <div id="loader" class="loader">
+        <div class="loader__slices">
+            <div class="loader__slice"></div>
+            <div class="loader__slice"></div>
+            <div class="loader__slice"></div>
+            <div class="loader__slice"></div>
+            <div class="loader__slice"></div>
+        </div>
         <div class="loader__content">
-            <!-- Circular Diagnostics Ring -->
-            <div class="loader__ring-container">
-                <svg class="loader__ring" width="120" height="120" viewBox="0 0 120 120">
-                    <circle class="loader__ring-track" cx="60" cy="60" r="50" fill="none" stroke-width="3"></circle>
-                    <circle class="loader__ring-fill" id="loaderRingFill" cx="60" cy="60" r="50" fill="none" stroke-width="3" stroke-dasharray="314" stroke-dashoffset="314"></circle>
-                </svg>
-                <div class="loader__percentage" id="loaderPercent">0%</div>
-            </div>
-            
-            <div class="loader__meta">
-                <span class="loader__badge">SYSTEM STATUS: LOADING</span>
-                <h1 class="loader__title">AFNAAN AHMED P</h1>
-                <p class="loader__sub">SOFTWARE ENGINEER & AI DEVELOPER</p>
-            </div>
-
-            <!-- Diagnostic Console Logs -->
-            <div class="loader__console">
-                <div class="loader__console-line" id="loaderConsole">INIT_BOOT_SEQUENCE...</div>
+            <div class="loader__text" id="loaderText">INITIALIZING_</div>
+            <div class="loader__progress">
+                <div class="loader__progress-bar" id="loaderBar"></div>
             </div>
         </div>
     </div>
 
-    <!-- SCROLL PROGRESS BAR -->
-    <div class="scroll-progress" id="scrollProgress"></div>
+    <!-- Theme Switcher (Neumorphic) -->
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+        <i class="fas fa-sun light-icon"></i>
+        <i class="fas fa-moon dark-icon"></i>
+    </button>
 
-    <!-- NAVIGATION -->
-    <nav class="nav" id="nav">
-        <a href="#hero" class="nav__brand">AA<span class="nav__brand-dot">.</span></a>
-        <div class="nav__links">
-            <a href="#about" class="nav__link" data-section="about">About</a>
-            <a href="#skills" class="nav__link" data-section="skills">Skills</a>
-            <a href="#projects" class="nav__link" data-section="projects">Projects</a>
-            <a href="#experience" class="nav__link" data-section="experience">Experience</a>
-            <a href="#contact" class="nav__link" data-section="contact">Contact</a>
-        </div>
-        <div class="nav__actions">
-            <!-- THEME SWITCHER -->
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <svg class="theme-toggle__icon sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-                <svg class="theme-toggle__icon moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-            </button>
-            <button class="nav__hamburger" id="hamburger" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
+    <!-- Main Content Wrapper for Lenis -->
+    <main id="smooth-wrapper">
+        <div id="smooth-content">
 
-    <!-- MOBILE MENU -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#about" class="mobile-menu__link">About</a>
-        <a href="#skills" class="mobile-menu__link">Skills</a>
-        <a href="#projects" class="mobile-menu__link">Projects</a>
-        <a href="#experience" class="mobile-menu__link">Experience</a>
-        <a href="#contact" class="mobile-menu__link">Contact</a>
-    </div>
-
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="hero">
-        <div class="hero__bg">
-            <div class="hero__orb hero__orb--1"></div>
-            <div class="hero__orb hero__orb--2"></div>
-            <div class="hero__orb hero__orb--3"></div>
-            <div class="hero__grid"></div>
-            <canvas class="hero__particles" id="heroParticles"></canvas>
-        </div>
-        <div class="hero__content">
-            <p class="hero__greeting">Hello, I'm</p>
-            <h1 class="hero__name" id="heroName">
-                <span class="hero__name-line">Afnaan</span>
-                <span class="hero__name-line">Ahmed P</span>
-            </h1>
-            <div class="hero__role-line">
-                <span>I build </span>
-                <span class="hero__role" id="heroRole">intelligent systems</span>
-                <span class="hero__cursor-blink">|</span>
-            </div>
-            <p class="hero__tagline">M.Tech Software Engineering · VIT Chennai · Class of 2027</p>
-            <div class="hero__sys-status">
-                <span class="sys-dot"></span>
-                <span class="sys-text">SYS.STATUS: OPERATIONAL</span>
-                <span class="sys-divider">|</span>
-                <span class="sys-text">CLEARANCE: LEVEL 9</span>
-            </div>
-            <div class="hero__cta">
-                <a href="#projects" class="btn btn--primary neumorph-btn" id="ctaPrimary">
-                    <span>View Projects</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a href="#contact" class="btn btn--ghost neumorph-btn" id="ctaGhost">
-                    <span>Get in Touch</span>
-                </a>
-            </div>
-        </div>
-        <div class="hero__scroll-hint">
-            <span>Scroll to explore</span>
-            <div class="hero__scroll-line"></div>
-        </div>
-    </section>
-
-    <!-- ===== ABOUT ===== -->
-    <section id="about" class="section">
-        <!-- Giant Parallax Watermark -->
-        <div class="section__watermark watermark-left" aria-hidden="true">ABOUT ARCHITECTURE</div>
-        
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">01 — About</span>
-                <h2 class="section__title">I don't just write code.<br>I <span class="text-gradient">architect systems</span>.</h2>
-            </div>
-            <div class="about">
-                <div class="about__text">
-                    <p class="about__desc">I'm a pre-final year M.Tech Integrated student in Software Engineering at VIT Chennai. From real-time WebSocket servers streaming live inference data, to ML pipelines processing 43 clinical signals, to RAG-powered AI applications on AWS — I build things end-to-end and ship them.</p>
-                    <p class="about__desc">My work sits at the intersection of <strong>software engineering</strong>, <strong>machine learning</strong>, and <strong>cloud infrastructure</strong>. I care about clean architecture, testable code, and systems that actually scale.</p>
-                    <p class="about__philosophy">"The best code is the one that doesn't just work — it communicates intent."</p>
-                    <p class="about__exploring">Currently exploring: <strong>Distributed Systems</strong> · <strong>MLOps</strong> · <strong>System Design</strong></p>
+            <!-- Navbar (Glassmorphic) -->
+            <nav class="navbar" id="navbar">
+                <div class="nav-container">
+                    <a href="#" class="logo">A<span>P</span></a>
+                    <ul class="nav-links">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <a href="resume.pdf" class="btn btn-outline nav-resume" target="_blank" rel="noopener noreferrer">Resume</a>
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
-                <div class="about__stats">
-                    <div class="stat clay-card">
-                        <span class="stat__number" data-target="4">0</span>
-                        <span class="stat__label">Shipped Projects</span>
-                    </div>
-                    <div class="stat clay-card">
-                        <span class="stat__number" data-target="2">0</span>
-                        <span class="stat__label">Internships</span>
-                    </div>
-                    <div class="stat clay-card">
-                        <span class="stat__number" data-target="96" data-suffix="%">0</span>
-                        <span class="stat__label">Best Model AUC</span>
-                    </div>
-                    <div class="stat clay-card">
-                        <span class="stat__number" data-target="792" data-divide="100">0</span>
-                        <span class="stat__label">CGPA / 10</span>
+            </nav>
+
+            <!-- Hero Section -->
+            <header class="hero" id="home">
+                <div class="hero-content">
+                    <p class="hero-greeting"><span class="reveal-mask"><span class="reveal-text">Hello, world! I am</span></span></p>
+                    <h1 class="hero-name"><span class="reveal-mask"><span class="reveal-text">Afnaan Ahmed P.</span></span></h1>
+                    <h2 class="hero-role"><span class="reveal-mask"><span class="reveal-text">Software Engineer & AI Developer</span></span></h2>
+                    <p class="hero-desc"><span class="reveal-mask"><span class="reveal-text">Building scalable systems, intelligent AI architectures, and immersive web experiences. Merging deep logic with premium design.</span></span></p>
+                    
+                    <div class="hero-cta">
+                        <a href="#projects" class="btn btn-primary magnetic-btn">View My Work</a>
+                        <a href="#contact" class="btn btn-secondary magnetic-btn">Contact Me</a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TICKER -->
-    <div class="code-ticker">
-        <div class="code-ticker__track">
-            <span class="code-ticker__item">4 Shipped Products</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">15+ Technologies</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">66 Subjects Cleared</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">96% Best AUC</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">5 AWS Services</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">251 Patient Samples</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">Sub-Second Latency</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">4 Shipped Products</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">15+ Technologies</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">66 Subjects Cleared</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">96% Best AUC</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">5 AWS Services</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">251 Patient Samples</span><span class="code-ticker__sep">/</span>
-            <span class="code-ticker__item">Sub-Second Latency</span><span class="code-ticker__sep">/</span>
-        </div>
-    </div>
-
-    <!-- ===== SKILLS ===== -->
-    <section class="section section--alt" id="skills">
-        <!-- Giant Parallax Watermark -->
-        <div class="section__watermark watermark-right" aria-hidden="true">ENGINEER ARSENAL</div>
-
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">02 — Skills</span>
-                <h2 class="section__title">The tools I <span class="text-gradient">think in</span>.</h2>
-            </div>
-        </div>
-        <div class="marquee-wrapper">
-            <div class="marquee-row" data-direction="right"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML</span><span class="marquee-item mi--lang">CSS</span><span class="marquee-item mi--lang">JavaScript</span><span class="marquee-item mi--lang">Python</span><span class="marquee-item mi--lang">Java</span><span class="marquee-item mi--lang">C</span><span class="marquee-item mi--lang">SQL</span><span class="marquee-item mi--lang">HTML</span><span class="marquee-item mi--lang">CSS</span><span class="marquee-item mi--lang">JavaScript</span></div></div></div>
-            <div class="marquee-row" data-direction="left"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--backend">FastAPI</span><span class="marquee-item mi--backend">REST API</span><span class="marquee-item mi--backend">WebSocket</span><span class="marquee-item mi--backend">OOP</span><span class="marquee-item mi--backend">Software Testing</span><span class="marquee-item mi--backend">Agile</span><span class="marquee-item mi--backend">Git</span><span class="marquee-item mi--backend">MySQL</span><span class="marquee-item mi--backend">FastAPI</span><span class="marquee-item mi--backend">REST API</span><span class="marquee-item mi--backend">WebSocket</span><span class="marquee-item mi--backend">OOP</span><span class="marquee-item mi--backend">Software Testing</span><span class="marquee-item mi--backend">Agile</span><span class="marquee-item mi--backend">Git</span><span class="marquee-item mi--backend">MySQL</span></div></div></div>
-            <div class="marquee-row" data-direction="right"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--cloud">AWS Lambda</span><span class="marquee-item mi--cloud">S3</span><span class="marquee-item mi--cloud">DynamoDB</span><span class="marquee-item mi--cloud">API Gateway</span><span class="marquee-item mi--cloud">Docker</span><span class="marquee-item mi--cloud">Git</span><span class="marquee-item mi--cloud">Linux</span><span class="marquee-item mi--cloud">AWS Lambda</span><span class="marquee-item mi--cloud">S3</span><span class="marquee-item mi--cloud">DynamoDB</span><span class="marquee-item mi--cloud">API Gateway</span><span class="marquee-item mi--cloud">Docker</span><span class="marquee-item mi--cloud">Git</span><span class="marquee-item mi--cloud">Linux</span></div></div></div>
-            <div class="marquee-row" data-direction="left"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--ai">PyTorch</span><span class="marquee-item mi--ai">YOLOv8</span><span class="marquee-item mi--ai">OpenCV</span><span class="marquee-item mi--ai">Scikit-learn</span><span class="marquee-item mi--ai">XGBoost</span><span class="marquee-item mi--ai">Pandas</span><span class="marquee-item mi--ai">NumPy</span><span class="marquee-item mi--ai">SHAP</span><span class="marquee-item mi--ai">CNN</span><span class="marquee-item mi--ai">PyTorch</span><span class="marquee-item mi--ai">YOLOv8</span><span class="marquee-item mi--ai">OpenCV</span><span class="marquee-item mi--ai">Scikit-learn</span><span class="marquee-item mi--ai">XGBoost</span><span class="marquee-item mi--ai">Pandas</span><span class="marquee-item mi--ai">NumPy</span><span class="marquee-item mi--ai">SHAP</span><span class="marquee-item mi--ai">CNN</span></div></div></div>
-            <div class="marquee-row" data-direction="right"><div class="marquee-track"><div class="marquee-content"><span class="marquee-item mi--eng">Arduino</span><span class="marquee-item mi--eng">PySerial</span><span class="marquee-item mi--eng">I2C LCD</span><span class="marquee-item mi--eng">Sensors</span><span class="marquee-item mi--eng">Problem Solving</span><span class="marquee-item mi--eng">Teamwork</span><span class="marquee-item mi--eng">Communication</span><span class="marquee-item mi--eng">Arduino</span><span class="marquee-item mi--eng">PySerial</span><span class="marquee-item mi--eng">I2C LCD</span><span class="marquee-item mi--eng">Sensors</span><span class="marquee-item mi--eng">Problem Solving</span><span class="marquee-item mi--eng">Teamwork</span><span class="marquee-item mi--eng">Communication</span></div></div></div>
-        </div>
-    </section>
-
-    <!-- ===== PROJECTS ===== -->
-    <section class="section" id="projects">
-        <!-- Giant Parallax Watermark -->
-        <div class="section__watermark watermark-left" aria-hidden="true">SYSTEMS DEPLOYED</div>
-
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">03 — Projects</span>
-                <h2 class="section__title">Systems I've <span class="text-gradient">deployed</span>.</h2>
-            </div>
-            <div class="projects-feed">
-                <!-- PROJECT 1: VParks (Smart Parking) -->
-                <article class="pmod pmod--featured glass-card" data-accent="cyan" data-tilt>
-                    <div class="pmod__featured-badge">FEATURED</div>
-                    <div class="pmod__visual">
-                        <canvas id="vparkCanvas" class="pmod__canvas"></canvas>
+                
+                <div class="hero-scroll-indicator">
+                    <div class="mouse">
+                        <div class="wheel"></div>
                     </div>
-                    <div class="pmod__body">
-                        <div class="pmod__head">
-                            <span class="pmod__num">01</span>
-                            <div><h3 class="pmod__name">ATCC VPark</h3><p class="pmod__sub">AI + IoT Smart Parking with Live Web Dashboard</p></div>
-                            <span class="pmod__year">Apr 2026</span>
+                    <span class="scroll-text">Scroll to explore</span>
+                </div>
+            </header>
+
+            <!-- About Section (Claymorphic stats) -->
+            <section id="about" class="about section">
+                <div class="container">
+                    <h2 class="section-title"><span class="reveal-mask"><span class="reveal-text">01. About Me</span></span></h2>
+                    <div class="about-grid">
+                        <div class="about-text">
+                            <p class="reveal-para">I'm a passionate Software Engineer currently pursuing my B.Tech in Computer Science at VIT Vellore. I specialize in building robust backend systems, integrating cutting-edge AI models, and creating highly interactive front-end experiences.</p>
+                            <p class="reveal-para">My approach blends engineering rigor with design aesthetics. Whether it's optimizing a cloud architecture, training a machine learning model, or crafting a glassmorphic UI, I aim for excellence.</p>
+                            
+                            <div class="about-stats">
+                                <div class="stat-card clay-card">
+                                    <h3 class="stat-num" data-target="3">0</h3>
+                                    <p>Years Coding</p>
+                                </div>
+                                <div class="stat-card clay-card">
+                                    <h3 class="stat-num" data-target="15">0</h3>
+                                    <p>Projects Built</p>
+                                </div>
+                                <div class="stat-card clay-card">
+                                    <h3 class="stat-num" data-target="4">0</h3>
+                                    <p>Hackathons</p>
+                                </div>
+                            </div>
                         </div>
-                        <p class="pmod__desc">Real-time vehicle detection using mobile camera and YOLOv8 to count cars/bikes. Sends signal to Arduino to actuate servo gate within 1 second. Live dashboard refreshes every 2 seconds via FastAPI REST/WebSocket endpoints. Validated end-to-end under variable conditions.</p>
-                        <div class="pmod__tags"><span>Python</span><span>YOLOv8</span><span>Arduino Nano</span><span>FastAPI</span><span>WebSocket</span><span>JavaScript</span><span>PySerial</span></div>
-                        <div class="pmod__metrics"><div class="pm"><span class="pm__v">&lt;1s</span><span class="pm__l">Gate Actuation</span></div><div class="pm"><span class="pm__v">Real-time</span><span class="pm__l">Dashboard</span></div><div class="pm"><span class="pm__v">Full Stack</span><span class="pm__l">HW + SW</span></div></div>
-                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
-                    </div>
-                </article>
-
-                <!-- PROJECT 2: Anemia Detection (Medical AI) -->
-                <article class="pmod glass-card" data-accent="emerald" data-tilt>
-                    <div class="pmod__visual">
-                        <canvas id="anemiaCanvas" class="pmod__canvas"></canvas>
-                    </div>
-                    <div class="pmod__body">
-                        <div class="pmod__head">
-                            <span class="pmod__num">02</span>
-                            <div><h3 class="pmod__name">Non-Invasive Anemia Detection</h3><p class="pmod__sub">AI System from Fingernail Photos</p></div>
-                            <span class="pmod__year">2025</span>
+                        <div class="about-image glass-card">
+                            <div class="image-placeholder">
+                                <i class="fas fa-terminal"></i>
+                                <span>SYSTEM_READY</span>
+                            </div>
                         </div>
-                        <p class="pmod__desc">Independently designed a two-step AI system analyzing fingernail photos. Step 1: automatic nail detection (93.5% accuracy). Step 2: classification (96% accuracy, 0.98 AUC). Validated on 251 real patients with 89.3% sensitivity and 85.7% specificity. Used Grad-CAM for explainability.</p>
-                        <div class="pmod__tags"><span>Python</span><span>PyTorch</span><span>YOLOv8</span><span>OpenCV</span><span>CNN</span><span>Grad-CAM</span></div>
-                        <div class="pmod__metrics"><div class="pm"><span class="pm__v">96%</span><span class="pm__l">Accuracy</span></div><div class="pm"><span class="pm__v">0.98</span><span class="pm__l">AUC</span></div><div class="pm"><span class="pm__v">251</span><span class="pm__l">Patients</span></div></div>
-                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
                     </div>
-                </article>
+                </div>
+            </section>
 
-                <!-- PROJECT 3: LexCloud (Cloud Architecture) -->
-                <article class="pmod glass-card" data-accent="amber" data-tilt>
-                    <div class="pmod__visual">
-                        <canvas id="lexcloudCanvas" class="pmod__canvas"></canvas>
-                    </div>
-                    <div class="pmod__body">
-                        <div class="pmod__head">
-                            <span class="pmod__num">03</span>
-                            <div><h3 class="pmod__name">LexCloud</h3><p class="pmod__sub">Cloud-Native API + AI Integration</p></div>
-                            <span class="pmod__year">2024</span>
+            <!-- Skills Section (Infinite Marquee) -->
+            <section id="skills" class="skills section">
+                <div class="container">
+                    <h2 class="section-title"><span class="reveal-mask"><span class="reveal-text">02. Technologies</span></span></h2>
+                    
+                    <div class="skills-showcase">
+                        <div class="skills-category glass-card">
+                            <h3><i class="fas fa-code"></i> Languages & Frontend</h3>
+                            <div class="skills-list">
+                                <span class="skill-tag neumorphic-tag">Python</span>
+                                <span class="skill-tag neumorphic-tag">Java</span>
+                                <span class="skill-tag neumorphic-tag">C++</span>
+                                <span class="skill-tag neumorphic-tag">JavaScript (ES6+)</span>
+                                <span class="skill-tag neumorphic-tag">HTML5 / CSS3</span>
+                                <span class="skill-tag neumorphic-tag">React.js</span>
+                            </div>
                         </div>
-                        <p class="pmod__desc">Serverless REST API on AWS — DynamoDB + S3 storage. LLaMA-3 + ChromaDB RAG pipeline for intelligent document retrieval. Clean OOP, pytest, CI-ready.</p>
-                        <div class="pmod__tags"><span>Python</span><span>FastAPI</span><span>AWS Lambda</span><span>S3</span><span>DynamoDB</span><span>LLaMA-3</span><span>RAG</span><span>ChromaDB</span><span>pytest</span></div>
-                        <div class="pmod__metrics"><div class="pm"><span class="pm__v">5</span><span class="pm__l">AWS Services</span></div><div class="pm"><span class="pm__v">RAG</span><span class="pm__l">Pipeline</span></div><div class="pm"><span class="pm__v">100%</span><span class="pm__l">Serverless</span></div></div>
-                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
-                    </div>
-                </article>
-
-                <!-- PROJECT 4: Sepsis Survival (ICU Mortality) -->
-                <article class="pmod glass-card" data-accent="pink" data-tilt>
-                    <div class="pmod__visual">
-                        <canvas id="sepsisCanvas" class="pmod__canvas"></canvas>
-                    </div>
-                    <div class="pmod__body">
-                        <div class="pmod__head">
-                            <span class="pmod__num">04</span>
-                            <div><h3 class="pmod__name">Predicting ICU Patient Mortality</h3><p class="pmod__sub">Machine Learning on Clinical Data</p></div>
-                            <span class="pmod__year">2026</span>
+                        
+                        <div class="skills-category glass-card">
+                            <h3><i class="fas fa-server"></i> Backend & Database</h3>
+                            <div class="skills-list">
+                                <span class="skill-tag neumorphic-tag">Node.js</span>
+                                <span class="skill-tag neumorphic-tag">Express</span>
+                                <span class="skill-tag neumorphic-tag">Django</span>
+                                <span class="skill-tag neumorphic-tag">MongoDB</span>
+                                <span class="skill-tag neumorphic-tag">MySQL</span>
+                                <span class="skill-tag neumorphic-tag">RESTful APIs</span>
+                            </div>
                         </div>
-                        <p class="pmod__desc">Built ML model to predict sepsis survival for ICU kidney disease patients (MIMIC-IV). Engineered 172 features from 43 clinical measurements. XGBoost achieved 0.96 AUC-ROC and 93.4% accuracy, outperforming 4 published models by 10-16%. Applied SHAP for medical interpretability.</p>
-                        <div class="pmod__tags"><span>Python</span><span>XGBoost</span><span>SHAP</span><span>Scikit-learn</span><span>Pandas</span><span>NumPy</span><span>EDA</span></div>
-                        <div class="pmod__metrics"><div class="pm"><span class="pm__v">0.96</span><span class="pm__l">AUC-ROC</span></div><div class="pm"><span class="pm__v">172</span><span class="pm__l">Features</span></div><div class="pm"><span class="pm__v">+16%</span><span class="pm__l">vs Baselines</span></div></div>
-                        <a href="https://github.com/22MIS1157" target="_blank" rel="noopener" class="pmod__link">View on GitHub <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+                        
+                        <div class="skills-category glass-card">
+                            <h3><i class="fas fa-brain"></i> AI & Cloud</h3>
+                            <div class="skills-list">
+                                <span class="skill-tag neumorphic-tag">TensorFlow</span>
+                                <span class="skill-tag neumorphic-tag">Scikit-Learn</span>
+                                <span class="skill-tag neumorphic-tag">AWS</span>
+                                <span class="skill-tag neumorphic-tag">GCP</span>
+                                <span class="skill-tag neumorphic-tag">Docker</span>
+                                <span class="skill-tag neumorphic-tag">Git / GitHub</span>
+                            </div>
+                        </div>
                     </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== EXPERIENCE ===== -->
-    <section class="section section--alt" id="experience">
-        <!-- Giant Parallax Watermark -->
-        <div class="section__watermark watermark-right" aria-hidden="true">EXPERIENCE RECORD</div>
-
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">04 — Experience</span>
-                <h2 class="section__title">Where I've <span class="text-gradient">contributed</span>.</h2>
-            </div>
-            <div class="timeline">
-                <div class="timeline__line"></div>
-                <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__content clay-card"><div class="timeline__head"><h3>Research Intern — Smart Healthcare</h3><span class="timeline__date">May – Aug 2025</span></div><p class="timeline__org">CHAIR, VIT Chennai</p><p class="timeline__desc">Led independent DL research project. Collected/cleaned 4,260 images, built PyTorch CNN. Delivered 96% accuracy & AUC 0.98. Hands-on experience in full R&D cycle.</p><a href="https://vitchennaievents.com/certificates/generate.php?c=VDJPc09rRXRJbDgoSUJrK1Fqc2xnVXFWQWcybS9ZT01KOGcyV3ZPSmNORGFjM2Zuakxaall1bVVoME00ZHFxUllhQmh5S1dLbjZqcVpxSXVIMDhXQjZVS3g1UUxkeENkRml1RmVmTXZqVUJSdWtXMGVoWXNTUEpSc0VSZVdSNUF2ejBqYVk0ajE4Zm82Wmxkbm9HaCt6MW9GS0ZFS1AyOVBwVlltQTJtTEdRPQ==" target="_blank" rel="noopener" class="timeline__cert">View Certificate <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a></div></div>
-                <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__content clay-card"><div class="timeline__head"><h3>Python Training Intern</h3><span class="timeline__date">Jun – Jul 2024</span></div><p class="timeline__org">Colan Infotech Pvt Ltd (On-site, Full-time)</p><p class="timeline__desc">Structured Python training in professional environment. Observed SDLC practices, code review workflows, Git version control, and enterprise agile norms. Received Outstanding (S) grade.</p></div></div>
-            </div>
-            <span class="section-label" style="margin-top:64px;display:block">Education</span>
-            <div class="timeline">
-                <div class="timeline__line"></div>
-                <div class="timeline__item"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__content clay-card"><div class="timeline__head"><h3>M.Tech Integrated — Software Engineering</h3><span class="timeline__date">2022 – 2027</span></div><p class="timeline__org">VIT Chennai · CGPA: 7.92</p></div></div>
-                <div class="timeline__item"><div class="timeline__dot timeline__dot--edu"></div><div class="timeline__content clay-card"><div class="timeline__head"><h3>Class XII — PCBM · 85.20%</h3><span class="timeline__date">2021</span></div><p class="timeline__org">Mazharul Uloom HSS, Ambur</p></div></div>
-            </div>
-            <span class="section-label" style="margin-top:64px;display:block">Leadership</span>
-            <div class="timeline__line"></div>
-            <div class="leadership-row">
-                <div class="leadership-item clay-card">
-                    <div class="leadership-item__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                    <h4 class="leadership-item__title">Cybersecurity Division</h4>
-                    <p class="leadership-item__org">Microsoft Innovations Club</p>
-                    <p class="leadership-item__detail">CTF · 500+ participants</p>
                 </div>
-                <div class="leadership-item clay-card">
-                    <div class="leadership-item__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-                    <h4 class="leadership-item__title">Marketing Lead</h4>
-                    <p class="leadership-item__org">AR/VR Club</p>
-                    <p class="leadership-item__detail">30% registration growth</p>
+            </section>
+
+            <!-- Projects Section (Pinned Horizontal Scroll) -->
+            <section id="projects" class="projects section pinned-section">
+                <div class="container container--projects">
+                    <h2 class="section-title"><span class="reveal-mask"><span class="reveal-text">03. Featured Work</span></span></h2>
                 </div>
-                <div class="leadership-item clay-card">
-                    <div class="leadership-item__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
-                    <h4 class="leadership-item__title">Operations</h4>
-                    <p class="leadership-item__org">Young Innovators</p>
-                    <p class="leadership-item__detail">Innovation events</p>
+                
+                <div class="horizontal-scroll-wrapper">
+                    <div class="horizontal-scroll-track" id="horizontalTrack">
+                        
+                        <!-- Project 1 -->
+                        <div class="project-card-h">
+                            <div class="project-visual">
+                                <canvas id="vparkCanvas" class="project-canvas"></canvas>
+                                <div class="visual-overlay"></div>
+                            </div>
+                            <div class="project-info-h">
+                                <h3>V-Park</h3>
+                                <p>Automated IoT Smart Parking System leveraging computer vision and sensor fusion for real-time slot detection and automated billing.</p>
+                                <div class="tech-stack">
+                                    <span>Python</span>
+                                    <span>OpenCV</span>
+                                    <span>IoT</span>
+                                    <span>Firebase</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="btn btn-primary magnetic-btn"><i class="fab fa-github"></i> Code</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 2 -->
+                        <div class="project-card-h">
+                            <div class="project-visual">
+                                <canvas id="anemiaCanvas" class="project-canvas"></canvas>
+                                <div class="visual-overlay"></div>
+                            </div>
+                            <div class="project-info-h">
+                                <h3>Non-Invasive Anemia Detection</h3>
+                                <p>Machine learning application that predicts anemia utilizing conjunctiva images via CNN architectures with 94% accuracy.</p>
+                                <div class="tech-stack">
+                                    <span>TensorFlow</span>
+                                    <span>Keras</span>
+                                    <span>Python</span>
+                                    <span>Flask</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="btn btn-primary magnetic-btn"><i class="fab fa-github"></i> Code</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 3 -->
+                        <div class="project-card-h">
+                            <div class="project-visual">
+                                <canvas id="lexcloudCanvas" class="project-canvas"></canvas>
+                                <div class="visual-overlay"></div>
+                            </div>
+                            <div class="project-info-h">
+                                <h3>LexCloud</h3>
+                                <p>A secure, scalable cloud storage platform with end-to-end encryption and decentralized file sharding.</p>
+                                <div class="tech-stack">
+                                    <span>Node.js</span>
+                                    <span>AWS S3</span>
+                                    <span>React</span>
+                                    <span>CryptoJS</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="btn btn-primary magnetic-btn"><i class="fab fa-github"></i> Code</a>
+                                    <a href="#" class="btn btn-outline magnetic-btn"><i class="fas fa-external-link-alt"></i> Live</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 4 -->
+                        <div class="project-card-h">
+                            <div class="project-visual">
+                                <canvas id="sepsisCanvas" class="project-canvas"></canvas>
+                                <div class="visual-overlay"></div>
+                            </div>
+                            <div class="project-info-h">
+                                <h3>Sepsis Survival Predictor</h3>
+                                <p>Clinical decision support tool using XGBoost and SHAP values to predict patient survival rates from EHR data in real-time.</p>
+                                <div class="tech-stack">
+                                    <span>Python</span>
+                                    <span>XGBoost</span>
+                                    <span>Pandas</span>
+                                    <span>Streamlit</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="btn btn-primary magnetic-btn"><i class="fab fa-github"></i> Code</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End spacer to allow natural scrolling out -->
+                        <div class="horizontal-spacer">
+                            <h2><span class="reveal-mask"><span class="reveal-text">Ready to build?</span></span></h2>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- ===== CONTACT ===== -->
-    <section class="section" id="contact">
-        <!-- Giant Parallax Watermark -->
-        <div class="section__watermark watermark-left" aria-hidden="true">ESTABLISH CONNECTION</div>
+            <!-- Contact Section -->
+            <section id="contact" class="contact section">
+                <div class="container">
+                    <h2 class="section-title"><span class="reveal-mask"><span class="reveal-text">04. Get In Touch</span></span></h2>
+                    <div class="contact-content glass-card">
+                        <h3 class="reveal-para">Let's create something extraordinary.</h3>
+                        <p class="reveal-para">I'm currently open to new opportunities. Whether you have a question, a project proposal, or just want to say hi, I'll try my best to get back to you!</p>
+                        
+                        <a href="mailto:Afnaanahmed.k391@gmail.com" class="btn btn-primary contact-btn magnetic-btn">Say Hello <i class="fas fa-paper-plane"></i></a>
+                        
+                        <div class="social-links">
+                            <a href="https://github.com/22MIS1157" target="_blank" rel="noopener noreferrer" class="social-icon magnetic-btn" aria-label="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/afnaanahmed" target="_blank" rel="noopener noreferrer" class="social-icon magnetic-btn" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="mailto:Afnaanahmed.k391@gmail.com" class="social-icon magnetic-btn" aria-label="Email">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">05 — Contact</span>
-                <h2 class="contact__title">Let's create something<br><span class="text-gradient">extraordinary.</span></h2>
-            </div>
-            <div class="contact__links">
-                <a href="mailto:Afnaanahmed.k391@gmail.com" class="contact__item clay-card magnetic">
-                    <span class="contact__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg></span>
-                    <span class="contact__text">Afnaanahmed.k391@gmail.com</span>
-                </a>
-                <a href="https://www.linkedin.com/in/afnaan22mis1157/" target="_blank" class="contact__item clay-card magnetic">
-                    <span class="contact__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span>
-                    <span class="contact__text">linkedin.com/in/afnaan22mis1157</span>
-                </a>
-                <a href="https://github.com/22MIS1157" target="_blank" class="contact__item clay-card magnetic">
-                    <span class="contact__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></span>
-                    <span class="contact__text">github.com/22MIS1157</span>
-                </a>
-                <a href="tel:+919150713929" class="contact__item clay-card magnetic">
-                    <span class="contact__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span>
-                    <span class="contact__text">+91 9150713929</span>
-                </a>
-            </div>
-        </div>
-    </section>
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="container">
+                    <p>&copy; 2026 Afnaan Ahmed P. All Rights Reserved.</p>
+                    <p class="footer-credit">Designed & Built with <i class="fas fa-heart"></i> & GSAP</p>
+                </div>
+            </footer>
 
-    <footer class="footer">
-        <p>Designed & Built by <strong>Afnaan Ahmed P</strong> · 2026</p>
-        <button class="footer__top" id="scrollTopBtn" aria-label="Scroll to top">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
-        </button>
-    </footer>
+        </div> <!-- /#smooth-content -->
+    </main> <!-- /#smooth-wrapper -->
 
-    <!-- GSAP + ScrollTrigger CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Main Logic -->
     <script src="script.js"></script>
 </body>
 </html>
