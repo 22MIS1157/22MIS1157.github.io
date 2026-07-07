@@ -22,7 +22,10 @@
     document.querySelectorAll(selector).forEach(el => {
       const text = el.innerHTML; el.innerHTML = '';
       text.split('<br>').forEach((line, i, arr) => {
-        const lineDiv = document.createElement('div'); lineDiv.style.overflow = 'hidden';
+        const lineDiv = document.createElement('div');
+        lineDiv.style.overflow = 'hidden';
+        lineDiv.style.paddingBottom = '0.3em';
+        lineDiv.style.marginBottom = '-0.3em';
         const temp = document.createElement('div'); temp.innerHTML = line;
         
         Array.from(temp.childNodes).forEach(node => {
