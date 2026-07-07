@@ -1,14 +1,13 @@
 /* ============================================
-   AFNAAN AHMED P — ELITE AGENCY
-   GSAP Iris Reveal & Horizontal Scroll
+   AFNAAN AHMED P — CINEMATIC ENGINE
+   GSAP 3D Assembly & Complex SVG Scenes
    ============================================ */
 
 (function () {
   "use strict";
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const isMobile = window.matchMedia("(max-width: 1024px)").matches;
 
-  // 1. LENIS SMOOTH SCROLL
+  // 1. SMOOTH SCROLLING (Lenis)
   let lenis;
   if (!prefersReducedMotion) {
     lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), direction: 'vertical', smooth: true });
@@ -17,17 +16,22 @@
     gsap.ticker.lagSmoothing(0);
   }
 
-  // 2. TEXT SPLITTING (Vanilla)
+  // 2. THEME SWITCHER
+  const themeSwitch = document.getElementById('checkbox');
+  const html = document.documentElement;
+  themeSwitch.addEventListener('change', (e) => {
+    if(e.target.checked) html.setAttribute('data-theme', 'light');
+    else html.setAttribute('data-theme', 'dark');
+  });
+
+  // 3. TEXT SPLITTING UTILITY
   const splitText = (selector) => {
     document.querySelectorAll(selector).forEach(el => {
       const text = el.innerHTML; el.innerHTML = '';
       text.split('<br>').forEach((line, i, arr) => {
         const lineDiv = document.createElement('div');
-        lineDiv.style.overflow = 'hidden';
-        lineDiv.style.paddingBottom = '0.3em';
-        lineDiv.style.marginBottom = '-0.3em';
+        lineDiv.style.display = 'inline-block';
         const temp = document.createElement('div'); temp.innerHTML = line;
-        
         Array.from(temp.childNodes).forEach(node => {
           if(node.nodeType === 3) {
             node.textContent.split(' ').forEach(word => {
@@ -47,103 +51,143 @@
     });
   };
 
-  // 3. IRIS REVEAL LOADER
-  const initLoader = () => {
-    splitText('.split-text');
-    gsap.set('.char', { y: '110%' });
-    gsap.set('.fade-up', { autoAlpha: 0, y: 30 });
-    gsap.set('.fade-up-nav', { autoAlpha: 0, y: -20 });
-    gsap.set('#smooth-content', { autoAlpha: 0 });
-
-    const counter = { val: 0 };
-    const counterEl = document.getElementById('counter');
-    const tl = gsap.timeline();
-
-    tl.to(counter, {
-      val: 100, duration: 2, ease: 'power3.inOut',
-      onUpdate: () => { counterEl.innerText = Math.round(counter.val); }
-    })
-    .to('.loader-circle', { strokeDashoffset: 0, duration: 2, ease: 'power3.inOut' }, 0)
-    .to('.loader-content', { scale: 0.8, autoAlpha: 0, duration: 0.5, ease: 'power2.in' })
-    // The Iris Reveal
-    .set('#smooth-content', { autoAlpha: 1 })
-    .to('#irisMask', { 
-        width: '300vw', height: '300vw', duration: 1.5, ease: 'power4.inOut' 
-    })
-    .to('#loader-wrapper', { autoAlpha: 0, duration: 0.1 })
-    // Hero Elements
-    .to('.char', { y: '0%', duration: 1, stagger: 0.02, ease: 'expo.out' }, "-=0.5")
-    .to('.fade-up', { autoAlpha: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power2.out' }, "-=0.8")
-    .to('.fade-up-nav', { autoAlpha: 1, y: 0, duration: 1, ease: 'power2.out' }, "-=0.8");
-  };
-
-  // 4. HORIZONTAL SCROLL (The Elite Gallery)
-  const initHorizontalScroll = () => {
-    if(prefersReducedMotion || isMobile) {
-        // Standard fade ups for mobile/reduced motion
-        gsap.utils.toArray('.fade-up').forEach(el => {
-            gsap.fromTo(el, { autoAlpha: 0, y: 40 }, { scrollTrigger: { trigger: el, start: 'top 85%' }, autoAlpha: 1, y: 0, duration: 1, ease: 'power2.out' });
-        });
-        return;
-    }
-
-    // Standard fade ups for vertical sections
-    gsap.utils.toArray('section:not(.horizontal-scroll-wrapper) .fade-up').forEach(el => {
-        gsap.fromTo(el, { autoAlpha: 0, y: 40 }, { scrollTrigger: { trigger: el, start: 'top 85%' }, autoAlpha: 1, y: 0, duration: 1, ease: 'power2.out' });
-    });
-
-    const horizontalWrapper = document.querySelector('.horizontal-scroll-wrapper');
-    const horizontalContainer = document.querySelector('.horizontal-scroll-container');
-    const panels = gsap.utils.toArray('.panel');
-
-    gsap.to(panels, {
-      xPercent: -100 * (panels.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: horizontalWrapper,
-        pin: true,
-        scrub: 1,
-        snap: 1 / (panels.length - 1),
-        end: () => "+=" + horizontalContainer.offsetWidth
-      }
-    });
-  };
-
-  // 5. ADVANCED SVG ANIMATIONS
-  const initSVGAnimations = () => {
+  // 4. CINEMATIC HERO ASSEMBLY (3D PHYSICS)
+  const initHero = () => {
+    splitText('.split-hero');
+    splitText('.split-name');
     
-    // A. VPark (Motion Path simulated)
-    const vparkTl = gsap.timeline({ repeat: -1, yoyo: false });
-    vparkTl.to('#svgCar', { y: 250, duration: 4, ease: 'none' })
-           .set('#svgCar', { y: -50 });
-           
-    const yoloTl = gsap.timeline({ repeat: -1 });
-    yoloTl.to(['#yoloBox', '#yoloText'], { autoAlpha: 1, duration: 0.2 }, 1)
-          .to(['#yoloBox', '#yoloText'], { autoAlpha: 0, duration: 0.2 }, 3.5);
+    const tl = gsap.timeline();
+    // 3D Assembly
+    tl.to('.split-name .char', {
+        y: 0, z: 0, rotationX: 0, opacity: 1, duration: 1.5,
+        stagger: { amount: 1, from: "random" }, ease: "expo.out"
+    })
+    .to('.split-hero .char', {
+        y: 0, z: 0, rotationX: 0, opacity: 1, duration: 1,
+        stagger: { amount: 0.5, from: "center" }, ease: "power3.out"
+    }, "-=1")
+    // Shockwave glow
+    .to('.hero-glow', {
+        opacity: 0.5, scale: 2, duration: 2, ease: "power2.out"
+    }, "-=1.5")
+    .to('.scroll-down-indicator', { opacity: 1, duration: 1 }, "-=1");
+  };
 
-    // B. Anemia (Clip-path sweep)
-    const anemiaTl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
-    anemiaTl.to('#scanRect', { height: 300, duration: 3, ease: 'power1.inOut' })
-            .to('#scanLine', { autoAlpha: 1, duration: 0.1 }, 0)
-            .to('#scanLine', { y: 300, duration: 3, ease: 'power1.inOut' }, 0)
-            .to('#anemiaText', { autoAlpha: 1, duration: 0.5 }, 2)
-            .to(['#scanRect', '#scanLine', '#anemiaText'], { autoAlpha: 0, duration: 0.5 })
-            .set('#scanRect', { height: 0 })
-            .set('#scanLine', { y: 0 });
+  // 5. MAGIC SCROLL HEADERS (No Overlap)
+  const initMagicScroll = () => {
+    gsap.utils.toArray('.magic-title-container').forEach(container => {
+      const title = container.querySelector('.magic-title');
+      
+      // Title fades in when section enters
+      gsap.fromTo(title, { opacity: 0, scale: 0.9 }, {
+        scrollTrigger: { trigger: container, start: 'top 70%', end: 'top 30%', scrub: true },
+        opacity: 0.08, scale: 1
+      });
 
-    // C. ECG Draw (Sepsis)
-    // Achieved via CSS, but GSAP can control the text
-    gsap.to('#ecgLine', { strokeDashoffset: -1000, duration: 5, ease: 'none', repeat: -1 });
+      // Title dissolves into nothing BEFORE content overlaps it
+      // Content container usually starts ~10vh below the sticky title
+      gsap.to(title, {
+        scrollTrigger: {
+            trigger: container.nextElementSibling, // the content container
+            start: 'top 50%', // when content hits the middle of screen
+            end: 'top 20%',
+            scrub: true
+        },
+        opacity: 0, filter: 'blur(10px)', y: -50
+      });
+    });
+
+    gsap.utils.toArray('.fade-up').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, y: 50 }, {
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+        opacity: 1, y: 0, duration: 1, ease: 'power3.out'
+      });
+    });
+  };
+
+  // 6. HYPER-DETAILED CINEMATIC SCENES (SVGs)
+  const initCinematicScenes = () => {
+    if (prefersReducedMotion) return;
+
+    // A. ANEMIA DETECTION (The Zoom Scene)
+    const anemiaTl = gsap.timeline({
+        scrollTrigger: { trigger: '#scene-anemia', start: 'top 70%', toggleActions: 'play pause resume reverse' },
+        repeat: -1, repeatDelay: 2
+    });
+    anemiaTl
+      // 1. Zoom into finger
+      .to('#anemia-camera', { scale: 5, x: 500, y: -1000, duration: 2, ease: "power3.inOut" })
+      // 2. Laser sweeps
+      .to('#anemia-laser', { opacity: 1, duration: 0.2 })
+      .to('#anemia-laser', { y: 600, duration: 1.5, ease: "none" })
+      .to('#anemia-laser', { opacity: 0, duration: 0.2 })
+      // 3. UI pops up & types
+      .to('#anemia-ui', { opacity: 1, duration: 0.5, ease: "power2.out" })
+      .to('#ui-text-1', { opacity: 1, duration: 0.1 })
+      .to('#ui-text-2', { opacity: 1, duration: 0.1 }, "+=0.5")
+      .to('#ui-text-3', { opacity: 1, duration: 0.1, scale: 1.1, transformOrigin: "left center" }, "+=0.5")
+      .to('#ui-text-3', { scale: 1, duration: 0.2 })
+      // 4. Hold and reset
+      .to({}, { duration: 3 })
+      .to(['#anemia-ui', '#ui-text-1', '#ui-text-2', '#ui-text-3'], { opacity: 0, duration: 0.5 })
+      .to('#anemia-camera', { scale: 1, x: 0, y: 0, duration: 1.5, ease: "power3.inOut" })
+      .set('#anemia-laser', { y: 0 });
+
+    // B. VPARK (Smart Lot)
+    gsap.registerPlugin(MotionPathPlugin);
+    const vparkTl = gsap.timeline({
+        scrollTrigger: { trigger: '#scene-vpark', start: 'top 70%', toggleActions: 'play pause resume reverse' },
+        repeat: -1, repeatDelay: 2
+    });
+    vparkTl
+      // 1. Car drives path
+      .to('#vpark-car', {
+          duration: 3, ease: "power1.inOut",
+          motionPath: { path: "#vpark-car-path", align: "#vpark-car-path", alignOrigin: [0.5, 0.5], autoRotate: true }
+      })
+      // 2. YOLO Scan overlaps
+      .to('#vpark-yolo', { opacity: 1, duration: 0.2 }, 1)
+      .to('#vpark-yolo', { opacity: 0, duration: 0.2 }, 3.5)
+      // 3. Path glows & UI flashes
+      .to('#vpark-guide', { strokeDashoffset: 0, duration: 1.5, ease: "power2.out" }, 1.5)
+      .to('#vpark-ui', { opacity: 1, duration: 0.5 }, 3)
+      // 4. Reset
+      .to({}, { duration: 3 })
+      .to(['#vpark-ui', '#vpark-guide'], { opacity: 0, duration: 1 })
+      .set('#vpark-guide', { strokeDashoffset: 1000 })
+      .set('#vpark-car', { x: -100, y: 300, rotation: 0 }); // reset car
+
+    // C. LEXCLOUD (Data Flow)
+    const lexTl = gsap.timeline({
+        scrollTrigger: { trigger: '#scene-lexcloud', start: 'top 70%', toggleActions: 'play pause resume reverse' },
+        repeat: -1
+    });
+    gsap.to('#lex-ring', { rotation: 360, duration: 10, ease: "none", repeat: -1, transformOrigin: "500px 200px" });
+    lexTl.to('#lex-glow-1', { strokeDashoffset: -400, duration: 2, ease: "none" })
+         .to('#lex-glow-2', { strokeDashoffset: -400, duration: 2, ease: "none" }, 1);
+
+    // D. SEPSIS (ECG to XGBoost)
+    const sepsisTl = gsap.timeline({
+        scrollTrigger: { trigger: '#scene-sepsis', start: 'top 70%', toggleActions: 'play pause resume reverse' },
+        repeat: -1, repeatDelay: 2
+    });
+    sepsisTl
+      // Draw ECG
+      .to('#sepsis-ecg', { strokeDashoffset: 0, duration: 3, ease: "none" })
+      // Fade in Tree
+      .to('#sepsis-tree', { opacity: 1, y: -20, duration: 1, ease: "power2.out" })
+      // Reset
+      .to({}, { duration: 3 })
+      .to(['#sepsis-ecg', '#sepsis-tree'], { opacity: 0, duration: 1 })
+      .set('#sepsis-ecg', { strokeDashoffset: 1200 })
+      .set('#sepsis-tree', { y: 0 });
   };
 
   // INIT
   window.addEventListener("DOMContentLoaded", () => {
     window.scrollTo(0, 0);
-    initHorizontalScroll();
-    initSVGAnimations();
-    initLoader(); // Run loader last
-    
-    // Refresh ScrollTrigger after loader in case DOM changes
-    setTimeout(() => { ScrollTrigger.refresh(); }, 3000);
+    initHero();
+    initMagicScroll();
+    initCinematicScenes();
   });
 })();
