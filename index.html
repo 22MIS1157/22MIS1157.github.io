@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AFNAAN AHMED P | Kinetic Brutalism</title>
+    <title>AFNAAN AHMED P | Elite Agency</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Archivo:wght@400;500;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
     
@@ -17,194 +17,259 @@
 </head>
 <body>
 
-    <!-- THE KINETIC SHATTER LOADER -->
-    <div id="loader">
-        <div class="loader-grid" id="loaderGrid"></div>
+    <!-- IRIS REVEAL LOADER -->
+    <div id="loader-wrapper">
+        <div class="loader-bg"></div>
         <div class="loader-content">
-            <div class="loader-counter"><span id="counter">0</span>%</div>
-            <div class="loader-text">INITIALIZING SYSTEM</div>
+            <svg class="loader-svg" viewBox="0 0 100 100">
+                <circle class="loader-circle" cx="50" cy="50" r="45"></circle>
+            </svg>
+            <div class="loader-text">AFNAAN AHMED P. <br> <span id="counter">0</span>%</div>
         </div>
+        <div class="iris-mask" id="irisMask"></div>
     </div>
 
-    <!-- THEME TOGGLE (Optional/Included for robustness) -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
-        <span class="theme-icon">◐</span>
-    </button>
-
     <!-- NAVIGATION -->
-    <nav class="navbar" id="navbar">
-        <a href="#hero" class="nav-brand">AFNAAN AHMED P.</a>
-        <div class="nav-links">
-            <a href="#about" class="nav-link" data-text="ABOUT">ABOUT</a>
-            <a href="#projects" class="nav-link" data-text="PROJECTS">PROJECTS</a>
-            <a href="#experience" class="nav-link" data-text="EXPERIENCE">EXPERIENCE</a>
-            <a href="resume.pdf" target="_blank" class="nav-link highlight" data-text="RESUME">RESUME</a>
+    <nav class="navbar fade-up-nav">
+        <div class="nav-grid">
+            <div class="col-3">
+                <a href="#hero" class="nav-brand">AA.</a>
+            </div>
+            <div class="col-6 nav-links-center">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects-wrap" class="nav-link">Work</a>
+                <a href="#experience" class="nav-link">Experience</a>
+            </div>
+            <div class="col-3 nav-links-right">
+                <a href="resume.pdf" target="_blank" class="btn-primary">View PDF</a>
+            </div>
         </div>
     </nav>
-
-    <!-- BACKGROUND PARALLAX TITLES (Z-Index: -1) -->
-    <!-- These sit safely in the background and DO NOT overlap text -->
-    <div class="bg-title-container" id="bg-title-about">ABOUT</div>
-    <div class="bg-title-container" id="bg-title-projects">PROJECTS</div>
-    <div class="bg-title-container" id="bg-title-experience">EXPERIENCE</div>
 
     <main id="smooth-wrapper">
         <div id="smooth-content">
 
             <!-- HERO -->
             <section class="section hero" id="hero">
-                <div class="hero-container">
-                    <p class="hero-sub fade-up">M.TECH SOFTWARE ENGINEERING</p>
-                    <h1 class="hero-title split-text">ARCHITECTING <br><span class="text-accent">INTELLIGENT</span><br> SYSTEMS.</h1>
-                    <div class="hero-marquee">
-                        <div class="marquee-track">
-                            <span>CREATIVE DEVELOPER</span> • <span>AI ENGINEER</span> • <span>FULL-STACK</span> • <span>CREATIVE DEVELOPER</span> • <span>AI ENGINEER</span> • <span>FULL-STACK</span> •
+                <div class="grid-container">
+                    <div class="col-12 hero-content">
+                        <p class="hero-sub fade-up">Software Engineer / AI Developer</p>
+                        <h1 class="hero-title split-text">Building<br>Intelligent<br>Systems.</h1>
+                        <div class="hero-scroll-indicator fade-up">
+                            <div class="mouse"></div>
+                            <span>Scroll to explore</span>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- ABOUT (Resume Driven) -->
+            <!-- ABOUT -->
             <section class="section" id="about">
-                <div class="container layout-grid">
-                    <div class="layout-col empty-col"></div> <!-- Empty space for background title to show through -->
-                    <div class="layout-col content-col skew-elem glass-panel fade-up">
+                <div class="grid-container">
+                    <div class="col-4 fade-up">
                         <h2 class="section-title">Professional Summary</h2>
-                        <p class="body-text">Pre-final year M.Tech Integrated student at VIT Chennai. I build robust backend services, REST APIs, and full-stack applications using Python, FastAPI, and JavaScript. I have independently shipped four AI-powered projects with real-time WebSocket servers, RAG integrations, and Docker deployments. Eager to contribute to a fast-paced product engineering team.</p>
-                        
-                        <h2 class="section-title mt-4">Education</h2>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <span class="timeline-date">2022 — 2027</span>
-                                <h3>VIT Chennai</h3>
-                                <p>M.Tech Software Engineering (7.92 CGPA). Coursework: DSA, Design Patterns, OOP, Big Data, AI.</p>
+                    </div>
+                    <div class="col-8 fade-up">
+                        <p class="body-text large-text">Pre-final year M.Tech Integrated student at VIT Chennai. I build robust backend services, REST APIs, and full-stack applications using Python, FastAPI, and JavaScript. I have independently shipped four AI-powered projects with real-time WebSocket servers, RAG integrations, and Docker deployments.</p>
+                    </div>
+                </div>
+
+                <div class="grid-container mt-section">
+                    <div class="col-4 fade-up">
+                        <h2 class="section-title">Education</h2>
+                    </div>
+                    <div class="col-8 fade-up">
+                        <div class="timeline-row border-bottom">
+                            <div class="timeline-meta">2022 — 2027</div>
+                            <div class="timeline-content">
+                                <h3>Vellore Institute of Technology, Chennai</h3>
+                                <p>M.Tech Software Engineering (7.92 CGPA). DSA, Design Patterns, OOP, AI.</p>
                             </div>
                         </div>
+                        <div class="timeline-row border-bottom">
+                            <div class="timeline-meta">2019 — 2021</div>
+                            <div class="timeline-content">
+                                <h3>Mazharul Uloom HSS, Ambur</h3>
+                                <p>Class XII – PCBM (85.20%)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <h2 class="section-title mt-4">Technical Skills</h2>
-                        <div class="skills-flex">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">FastAPI</span>
-                            <span class="skill-tag">AWS (Lambda/S3)</span>
-                            <span class="skill-tag">Docker</span>
-                            <span class="skill-tag">PyTorch</span>
-                            <span class="skill-tag">XGBoost</span>
-                            <span class="skill-tag">JavaScript</span>
+                <div class="grid-container mt-section">
+                    <div class="col-4 fade-up">
+                        <h2 class="section-title">Skills</h2>
+                    </div>
+                    <div class="col-8 fade-up">
+                        <div class="skills-wrapper">
+                            <div class="skill-pill">Python</div><div class="skill-pill">FastAPI</div><div class="skill-pill">JavaScript</div>
+                            <div class="skill-pill">AWS Lambda</div><div class="skill-pill">Docker</div><div class="skill-pill">Git</div>
+                            <div class="skill-pill">PyTorch</div><div class="skill-pill">XGBoost</div><div class="skill-pill">React</div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- PROJECTS -->
-            <section class="section" id="projects">
-                <div class="container projects-stack">
+            <!-- HORIZONTAL SCROLL PROJECTS -->
+            <section id="projects-wrap" class="horizontal-scroll-wrapper">
+                <div class="horizontal-scroll-container" id="horizontalContainer">
                     
+                    <!-- Intro Panel -->
+                    <div class="panel panel-intro">
+                        <h2 class="massive-title">Selected<br>Works</h2>
+                        <p class="body-text">Scroll to view technical implementations.</p>
+                    </div>
+
                     <!-- VPark -->
-                    <article class="project-card skew-elem fade-up">
-                        <div class="project-info">
-                            <div class="project-header">
+                    <div class="panel project-panel">
+                        <div class="project-grid">
+                            <div class="project-info">
+                                <span class="project-year">2026</span>
                                 <h3>ATCC VPark</h3>
-                                <span>2026</span>
+                                <p>Real-time IoT Smart Parking with WebSocket streaming. Python backend serving REST endpoints to a JavaScript dashboard.</p>
+                                <div class="tech-stack"><span class="tech">FastAPI</span><span class="tech">YOLOv8</span><span class="tech">Arduino</span></div>
                             </div>
-                            <p class="body-text">Real-time IoT Smart Parking with WebSocket streaming. Python backend serving REST endpoints to a JavaScript dashboard.</p>
-                            <div class="skills-flex mt-2">
-                                <span class="skill-tag">FastAPI</span><span class="skill-tag">YOLOv8</span><span class="skill-tag">Arduino</span>
+                            <div class="project-visual">
+                                <!-- Minimalist SVG Car & Scanner -->
+                                <svg class="svg-graphic" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+                                    <!-- Parking Lines -->
+                                    <path d="M150,50 L150,250 M250,50 L250,250" stroke="#f4f4f5" stroke-width="4" stroke-dasharray="10 10"/>
+                                    <!-- Car Path (invisible) -->
+                                    <path id="carPath" d="M200,-50 L200,150" fill="none"/>
+                                    <!-- Car -->
+                                    <g id="svgCar" transform="translate(180, -50)">
+                                        <rect width="40" height="80" rx="10" fill="#10b981"/>
+                                        <rect x="5" y="15" width="30" height="20" rx="3" fill="#09090b"/>
+                                        <rect x="5" y="50" width="30" height="15" rx="3" fill="#09090b"/>
+                                    </g>
+                                    <!-- YOLO Scanner Box -->
+                                    <rect id="yoloBox" x="175" y="50" width="50" height="100" fill="none" stroke="#10b981" stroke-width="2" opacity="0"/>
+                                    <text id="yoloText" x="175" y="40" fill="#10b981" font-family="JetBrains Mono" font-size="12" opacity="0">CAR: 0.98</text>
+                                </svg>
                             </div>
                         </div>
-                        <div class="project-canvas-container">
-                            <canvas id="vparkCanvas"></canvas>
-                        </div>
-                    </article>
+                    </div>
 
                     <!-- LexCloud -->
-                    <article class="project-card skew-elem fade-up">
-                        <div class="project-info">
-                            <div class="project-header">
+                    <div class="panel project-panel">
+                        <div class="project-grid">
+                            <div class="project-info">
+                                <span class="project-year">2024</span>
                                 <h3>LexCloud AI</h3>
-                                <span>2024</span>
+                                <p>Production-grade REST API on AWS. Integrated LLaMA-3 + ChromaDB RAG layer for intelligent document retrieval.</p>
+                                <div class="tech-stack"><span class="tech">AWS Lambda</span><span class="tech">DynamoDB</span><span class="tech">RAG</span></div>
                             </div>
-                            <p class="body-text">Production-grade REST API on AWS. Integrated LLaMA-3 + ChromaDB RAG layer for intelligent document retrieval.</p>
-                            <div class="skills-flex mt-2">
-                                <span class="skill-tag">AWS Lambda</span><span class="skill-tag">DynamoDB</span><span class="skill-tag">RAG</span>
+                            <div class="project-visual">
+                                <!-- SVG Nodes -->
+                                <svg class="svg-graphic" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+                                    <!-- Connections -->
+                                    <path id="nodePath1" d="M100,150 L300,150" stroke="#3f3f46" stroke-width="2"/>
+                                    <path class="animated-path" d="M100,150 L300,150" stroke="#10b981" stroke-width="4" stroke-dasharray="20 100" stroke-dashoffset="0"/>
+                                    
+                                    <path id="nodePath2" d="M100,150 C150,50 250,50 300,150" stroke="#3f3f46" stroke-width="2"/>
+                                    <path class="animated-path" d="M100,150 C150,50 250,50 300,150" stroke="#10b981" stroke-width="4" stroke-dasharray="20 150" stroke-dashoffset="0"/>
+                                    
+                                    <!-- Nodes -->
+                                    <circle cx="100" cy="150" r="20" fill="#09090b" stroke="#f4f4f5" stroke-width="4"/>
+                                    <circle cx="300" cy="150" r="20" fill="#09090b" stroke="#10b981" stroke-width="4"/>
+                                    <text x="70" y="190" fill="#f4f4f5" font-family="JetBrains Mono" font-size="14">API</text>
+                                    <text x="270" y="190" fill="#f4f4f5" font-family="JetBrains Mono" font-size="14">LLM</text>
+                                </svg>
                             </div>
                         </div>
-                        <div class="project-canvas-container">
-                            <canvas id="lexcloudCanvas"></canvas>
-                        </div>
-                    </article>
+                    </div>
 
                     <!-- Anemia -->
-                    <article class="project-card skew-elem fade-up">
-                        <div class="project-info">
-                            <div class="project-header">
+                    <div class="panel project-panel">
+                        <div class="project-grid">
+                            <div class="project-info">
+                                <span class="project-year">2025</span>
                                 <h3>Anemia CV</h3>
-                                <span>2025</span>
+                                <p>Two-stage CV pipeline: automatic fingernail detection (93.5% mAP) paired with CNN classification (96% Accuracy).</p>
+                                <div class="tech-stack"><span class="tech">PyTorch</span><span class="tech">CNN</span><span class="tech">OpenCV</span></div>
                             </div>
-                            <p class="body-text">Two-stage CV pipeline: automatic fingernail detection (93.5% mAP) paired with CNN classification (96% Accuracy).</p>
-                            <div class="skills-flex mt-2">
-                                <span class="skill-tag">PyTorch</span><span class="skill-tag">CNN</span><span class="skill-tag">OpenCV</span>
+                            <div class="project-visual">
+                                <!-- SVG Mask Scan -->
+                                <svg class="svg-graphic" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+                                    <defs>
+                                        <clipPath id="scanMask">
+                                            <rect id="scanRect" x="0" y="0" width="400" height="0" />
+                                        </clipPath>
+                                    </defs>
+                                    <!-- Base Hand -->
+                                    <path d="M170,250 L170,100 C170,80 190,80 190,100 L190,250 M190,100 L190,70 C190,50 210,50 210,70 L210,250 M210,90 L210,80 C210,60 230,60 230,80 L230,250" fill="none" stroke="#3f3f46" stroke-width="6" stroke-linecap="round"/>
+                                    <!-- Scanned Hand -->
+                                    <path d="M170,250 L170,100 C170,80 190,80 190,100 L190,250 M190,100 L190,70 C190,50 210,50 210,70 L210,250 M210,90 L210,80 C210,60 230,60 230,80 L230,250" fill="none" stroke="#10b981" stroke-width="6" stroke-linecap="round" clip-path="url(#scanMask)"/>
+                                    <!-- Scan Line -->
+                                    <line id="scanLine" x1="100" y1="0" x2="300" y2="0" stroke="#10b981" stroke-width="2" opacity="0"/>
+                                    <!-- Terminal Output -->
+                                    <text id="anemiaText" x="120" y="280" fill="#10b981" font-family="JetBrains Mono" font-size="14" opacity="0">DIAGNOSIS: NEGATIVE</text>
+                                </svg>
                             </div>
                         </div>
-                        <div class="project-canvas-container">
-                            <canvas id="anemiaCanvas"></canvas>
-                        </div>
-                    </article>
+                    </div>
 
                     <!-- Sepsis -->
-                    <article class="project-card skew-elem fade-up">
-                        <div class="project-info">
-                            <div class="project-header">
+                    <div class="panel project-panel">
+                        <div class="project-grid">
+                            <div class="project-info">
+                                <span class="project-year">2026</span>
                                 <h3>Sepsis Prediction</h3>
-                                <span>2026</span>
+                                <p>Modular data pipeline extracting 172 features from 43 time-series signals. Trained XGBoost model (96% AUC-ROC).</p>
+                                <div class="tech-stack"><span class="tech">XGBoost</span><span class="tech">Scikit-learn</span><span class="tech">SHAP</span></div>
                             </div>
-                            <p class="body-text">Modular data pipeline extracting 172 features from 43 time-series signals. Trained XGBoost model (96% AUC-ROC).</p>
-                            <div class="skills-flex mt-2">
-                                <span class="skill-tag">XGBoost</span><span class="skill-tag">Scikit-learn</span><span class="skill-tag">SHAP</span>
+                            <div class="project-visual">
+                                <!-- SVG ECG Draw -->
+                                <svg class="svg-graphic" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+                                    <!-- Grid -->
+                                    <path d="M0,75 L400,75 M0,150 L400,150 M0,225 L400,225" stroke="#3f3f46" stroke-width="1" stroke-dasharray="4 4"/>
+                                    <path d="M100,0 L100,300 M200,0 L200,300 M300,0 L300,300" stroke="#3f3f46" stroke-width="1" stroke-dasharray="4 4"/>
+                                    <!-- Heartbeat line -->
+                                    <path id="ecgLine" d="M0,150 L50,150 L70,120 L90,200 L110,80 L130,170 L150,150 L250,150 L270,120 L290,200 L310,80 L330,170 L350,150 L400,150" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <!-- Data Output -->
+                                    <rect x="50" y="250" width="300" height="30" fill="#09090b" stroke="#10b981" stroke-width="1"/>
+                                    <text x="70" y="270" fill="#10b981" font-family="JetBrains Mono" font-size="14">XGBOOST SURVIVAL PROB: 96%</text>
+                                </svg>
                             </div>
                         </div>
-                        <div class="project-canvas-container">
-                            <canvas id="sepsisCanvas"></canvas>
-                        </div>
-                    </article>
+                    </div>
 
                 </div>
             </section>
 
             <!-- EXPERIENCE -->
             <section class="section" id="experience">
-                <div class="container layout-grid">
-                    <div class="layout-col empty-col"></div>
-                    <div class="layout-col content-col skew-elem glass-panel fade-up">
+                <div class="grid-container">
+                    <div class="col-4 fade-up">
                         <h2 class="section-title">Experience</h2>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <span class="timeline-date">May 2025 — Aug 2025</span>
-                                <h3>Research Intern – AI Software Development</h3>
-                                <p>Centre for Healthcare Advancement (CHAIR), VIT Chennai</p>
-                                <ul class="timeline-list">
-                                    <li>Built a complete software application from scratch including data pipelines and PyTorch algorithms.</li>
-                                    <li>Participated in code reviews and communicated technical tradeoffs effectively.</li>
-                                </ul>
-                            </div>
-                            <div class="timeline-item">
-                                <span class="timeline-date">Jun 2024 — Jul 2024</span>
-                                <h3>Python Training Intern</h3>
-                                <p>Colan Infotech, Tamil Nadu</p>
-                                <ul class="timeline-list">
-                                    <li>Completed structured training on Python OOP, design patterns, and Git version control.</li>
-                                </ul>
+                    </div>
+                    <div class="col-8 fade-up">
+                        <div class="timeline-row border-bottom">
+                            <div class="timeline-meta">May '25 — Aug '25</div>
+                            <div class="timeline-content">
+                                <h3>Research Intern (CHAIR), VIT Chennai</h3>
+                                <p>Built a complete software application from scratch including data pipelines and PyTorch algorithms. Participated in code reviews and communicated technical tradeoffs effectively.</p>
                             </div>
                         </div>
-
-                        <h2 class="section-title mt-4">Certifications & Leadership</h2>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <span class="timeline-date">Dec 2023</span>
-                                <h3>What Is Generative AI? (LinkedIn Learning)</h3>
+                        <div class="timeline-row border-bottom">
+                            <div class="timeline-meta">Jun '24 — Jul '24</div>
+                            <div class="timeline-content">
+                                <h3>Python Training Intern, Colan Infotech</h3>
+                                <p>Completed structured training on Python OOP, design patterns, and Git version control.</p>
                             </div>
-                            <div class="timeline-item">
-                                <span class="timeline-date">Oct 2023 — Jun 2024</span>
-                                <h3>Core Member, Cybersecurity Division (Microsoft Innovations Club)</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-container mt-section">
+                    <div class="col-4 fade-up">
+                        <h2 class="section-title">Leadership</h2>
+                    </div>
+                    <div class="col-8 fade-up">
+                        <div class="timeline-row border-bottom">
+                            <div class="timeline-meta">2023 — 2024</div>
+                            <div class="timeline-content">
+                                <h3>Core Member, Microsoft Innovations Club</h3>
                                 <p>Organized CTF competitions for 500+ participants.</p>
                             </div>
                         </div>
@@ -212,12 +277,13 @@
                 </div>
             </section>
 
-            <footer class="footer fade-up">
-                <div class="marquee-track">
-                    <span>AVAILABLE FOR HIRE</span> • <span>AVAILABLE FOR HIRE</span> • <span>AVAILABLE FOR HIRE</span> •
-                </div>
-                <div class="footer-bottom">
-                    <p>© 2026 Afnaan Ahmed P. All Rights Reserved.</p>
+            <footer class="footer">
+                <div class="grid-container">
+                    <div class="col-12 fade-up" style="text-align: center;">
+                        <h2 class="massive-title">Let's Talk.</h2>
+                        <a href="mailto:Afnaanahmed.k391@gmail.com" class="btn-primary" style="margin-top: 20px;">Afnaanahmed.k391@gmail.com</a>
+                        <p class="body-text" style="margin-top: 40px; font-size: 0.9rem; color: #71717a;">© 2026 Afnaan Ahmed P. All Rights Reserved.</p>
+                    </div>
                 </div>
             </footer>
 
