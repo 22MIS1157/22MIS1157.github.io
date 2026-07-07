@@ -1,174 +1,122 @@
 /* ============================================
-   AFNAAN AHMED P — AWWWARDS MASTERPIECE
-   Creative Developer • Lenis + GSAP Elite
+   AFNAAN AHMED P — INTERACTIVE RESUME
+   Masculine Tech Palette • GSAP Engine
    ============================================ */
+
+/* --- CSS VARIABLES (THEMES) --- */
+:root[data-theme="dark"] {
+  --bg-primary: #0a0f1c; /* Deep Navy */
+  --bg-secondary: #111a2f;
+  --bg-card: rgba(17, 26, 47, 0.7);
+  
+  --text-primary: #f0f4f8; /* Ice White */
+  --text-secondary: #94a3b8; /* Slate */
+  
+  --accent: #00e5ff; /* Electric Cyan */
+  --border: rgba(0, 229, 255, 0.15);
+  --border-hover: rgba(0, 229, 255, 0.4);
+}
+
+:root[data-theme="light"] {
+  --bg-primary: #f8fafc; /* Ice White */
+  --bg-secondary: #e2e8f0;
+  --bg-card: #ffffff;
+  
+  --text-primary: #0f172a; /* Slate 900 */
+  --text-secondary: #475569; /* Slate 600 */
+  
+  --accent: #1d4ed8; /* Royal Blue */
+  --border: rgba(29, 78, 216, 0.2);
+  --border-hover: rgba(29, 78, 216, 0.5);
+}
 
 :root {
-  --bg: #050505;
-  --fg: #f0f0f5;
-  --accent: #D6FF00; /* Neon Chartreuse */
-  --muted: #666;
-  
-  --font-main: 'Space Grotesk', sans-serif;
+  --font-main: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --max-width: 900px; /* Resume width */
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; cursor: none; /* Custom cursor */ }
-html, body { background: var(--bg); color: var(--fg); font-family: var(--font-main); overflow-x: hidden; }
-::selection { background: var(--accent); color: #000; }
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: auto !important; }
+html, body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-main); transition: background 0.3s, color 0.3s; overflow-x: hidden; }
 
-/* ============================================
-   LENIS SMOOTH SCROLL
-   ============================================ */
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: hidden; }
-
-/* ============================================
-   CUSTOM CURSOR
-   ============================================ */
-.cursor {
-  position: fixed; top: 0; left: 0; width: 12px; height: 12px;
-  background: var(--accent); border-radius: 50%;
-  pointer-events: none; z-index: 999999;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: difference; transition: width 0.3s, height 0.3s;
+/* --- THEME TOGGLE --- */
+.theme-toggle {
+  position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 50%;
+  z-index: 9999; display: flex; justify-content: center; align-items: center;
+  font-size: 1.2rem; cursor: pointer !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: 0.2s;
 }
-.cursor.hover { width: 40px; height: 40px; background: #fff; }
+.theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
 
-/* ============================================
-   MASSIVE CURTAIN LOADER
-   ============================================ */
-#loader-wrapper {
-  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-  z-index: 99999; display: flex; justify-content: center; align-items: center;
-  pointer-events: none; overflow: hidden;
+/* --- NAV --- */
+.navbar {
+  position: fixed; top: 0; left: 0; width: 100vw; padding: 20px 0;
+  background: rgba(var(--bg-primary), 0.8); backdrop-filter: blur(10px);
+  display: flex; justify-content: center; align-items: center; gap: 40px; z-index: 100;
+  border-bottom: 1px solid var(--border);
 }
-.loader-curtain { position: absolute; left: 0; width: 100vw; height: 50vh; background: #000; z-index: 1; }
-.loader-curtain-top { top: 0; }
-.loader-curtain-bottom { bottom: 0; }
+.nav-brand { font-family: var(--font-mono); font-weight: 700; color: var(--text-primary); text-decoration: none; font-size: 1.2rem; margin-right: auto; padding-left: 5vw; }
+.nav-links { display: flex; gap: 30px; }
+.nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--accent); }
+.btn-outline { font-family: var(--font-mono); font-size: 0.8rem; padding: 8px 16px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 4px; margin-right: 5vw; transition: 0.2s; }
+.btn-outline:hover { background: var(--accent); color: var(--bg-primary); }
 
-.loader-content {
-  position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center;
-}
-.loader-counter {
-  font-size: clamp(6rem, 15vw, 12rem); font-weight: 300; letter-spacing: -5px;
-  line-height: 1; color: var(--accent); mix-blend-mode: difference;
-}
-.loader-brand {
-  position: absolute; font-size: 1.2rem; font-weight: 700; letter-spacing: 2px;
-  opacity: 0; color: #fff; white-space: nowrap; mix-blend-mode: difference;
-}
+/* --- HERO --- */
+.hero-section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; }
+.hero-greeting { font-family: var(--font-mono); color: var(--accent); margin-bottom: 20px; font-size: 1.1rem; }
+.hero-name { font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; letter-spacing: -2px; margin-bottom: 20px; color: var(--text-primary); }
+.hero-role { font-size: clamp(1.2rem, 3vw, 2rem); color: var(--text-secondary); font-weight: 400; margin-bottom: 40px; }
+.hero-contact, .hero-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 15px; font-family: var(--font-mono); font-size: 0.9rem; }
+.hero-contact a, .hero-links a, .hero-contact span { color: var(--text-secondary); text-decoration: none; transition: 0.2s; }
+.hero-contact a:hover, .hero-links a:hover { color: var(--accent); }
 
-/* ============================================
-   NAVIGATION
-   ============================================ */
-.nav-bar {
-  position: fixed; top: 0; left: 0; width: 100vw; padding: 40px 50px;
-  display: flex; justify-content: space-between; align-items: center;
-  z-index: 9000; mix-blend-mode: difference;
-}
-.nav-logo { font-weight: 700; font-size: 1.2rem; letter-spacing: 2px; color: #fff; }
-.nav-links { display: flex; gap: 40px; }
-.magnetic-wrap { display: inline-block; }
-.magnetic-btn {
-  position: relative; display: inline-block; text-decoration: none; color: #fff;
-  font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; letter-spacing: 1px;
-}
-.magnetic-btn::after {
-  content: attr(data-text); position: absolute; left: 0; top: 100%;
-  color: var(--accent); transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
-}
-.magnetic-btn span { display: inline-block; transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1); }
-.magnetic-wrap:hover .magnetic-btn span { transform: translateY(-100%); }
-.magnetic-wrap:hover .magnetic-btn::after { transform: translateY(-100%); }
+/* Split Text Animation Classes */
+.split-name, .split-text { display: inline-block; overflow: hidden; }
+.char { display: inline-block; transform: translateY(110%); }
+.scroll-indicator { position: absolute; bottom: 40px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); letter-spacing: 2px; }
 
-.magnetic-btn.accent { color: var(--accent); }
+/* --- RESUME LAYOUT --- */
+.resume-section { max-width: var(--max-width); margin: 0 auto; padding: 100px 20px; }
+.section-header { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
+.section-header h2 { font-size: 2rem; font-weight: 700; color: var(--text-primary); white-space: nowrap; }
+.header-line { flex-grow: 1; height: 1px; background: var(--border); }
 
-/* ============================================
-   TYPOGRAPHY
-   ============================================ */
-.text-accent { color: var(--accent); }
-.massive-title {
-  font-size: clamp(5rem, 18vw, 15rem); font-weight: 700; letter-spacing: -0.05em;
-  line-height: 0.8; margin: 0; color: #fff; white-space: nowrap;
-}
+.summary-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); }
 
-/* ============================================
-   HERO SECTION
-   ============================================ */
-.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 5vw; }
-.hero-sub { font-family: var(--font-mono); font-size: 0.9rem; color: var(--muted); margin-bottom: 20px; }
-.hero-main { font-size: clamp(3rem, 7vw, 6rem); font-weight: 500; line-height: 1.1; letter-spacing: -2px; }
-.hero-footer { margin-top: 10vh; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
+.timeline-item { margin-bottom: 40px; }
+.timeline-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; flex-wrap: wrap; gap: 10px; }
+.timeline-header h3 { font-size: 1.2rem; font-weight: 600; color: var(--text-primary); }
+.timeline-date { font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); }
+.timeline-sub { font-style: italic; color: var(--text-secondary); margin-bottom: 15px; }
+.timeline-desc, .timeline-item ul { font-size: 1rem; line-height: 1.7; color: var(--text-secondary); }
+.timeline-item ul { padding-left: 20px; margin-top: 10px; }
+.timeline-item li { margin-bottom: 8px; }
+.timeline-item strong { color: var(--text-primary); }
 
-/* ============================================
-   PINNED PARALLAX TITLES
-   ============================================ */
-.section { position: relative; padding: 20vh 0; }
-.pinned-title-wrapper {
-  position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
-  display: flex; justify-content: center; align-items: center;
-  pointer-events: none; mix-blend-mode: difference; z-index: 10;
-}
-.section-content { position: relative; z-index: 5; padding: 0 5vw; }
+/* --- SKILLS GRID --- */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.skill-category h4 { font-family: var(--font-mono); font-size: 1rem; color: var(--accent); margin-bottom: 10px; }
+.skill-category p { color: var(--text-secondary); line-height: 1.6; }
 
-/* ============================================
-   ABOUT
-   ============================================ */
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10vw; align-items: center; }
-.about-headline { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; margin-bottom: 40px; }
-.body-text { font-size: 1.2rem; line-height: 1.6; color: #aaa; }
+/* --- PROJECTS WITH CANVASES --- */
+.projects-wrapper { display: flex; flex-direction: column; gap: 80px; }
+.project-card { display: flex; flex-direction: column; gap: 30px; }
+.tech-stack-line { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 20px; }
+.project-info ul { padding-left: 20px; line-height: 1.7; color: var(--text-secondary); }
+.project-info li { margin-bottom: 10px; }
+.project-info strong { color: var(--text-primary); }
 
-.stat-card { border-bottom: 1px solid #333; padding: 40px 0; display: flex; justify-content: space-between; align-items: baseline; }
-.stat-num { font-size: 4rem; font-weight: 300; color: var(--accent); }
-.stat-label { font-family: var(--font-mono); letter-spacing: 1px; }
+.project-visual { width: 100%; aspect-ratio: 16/9; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.project-visual canvas { width: 100%; height: 100%; display: block; }
 
-/* ============================================
-   PROJECTS
-   ============================================ */
-.projects-container { margin-top: 30vh; display: flex; flex-direction: column; gap: 30vh; }
-.project-panel { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5vw; align-items: center; }
-.project-panel.reverse { grid-template-columns: 1fr 1.2fr; }
+/* --- FOOTER --- */
+.resume-footer { text-align: center; padding: 40px; font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-secondary); border-top: 1px solid var(--border); margin-top: 50px; }
 
-.project-canvas-wrap { width: 100%; aspect-ratio: 16/9; background: #0A0A0A; position: relative; overflow: hidden; border-radius: 4px; }
-.project-canvas-wrap canvas { width: 100%; height: 100%; display: block; filter: grayscale(50%) contrast(1.2); transition: filter 0.5s; }
-.project-canvas-wrap:hover canvas { filter: grayscale(0%) contrast(1.5); }
-
-.project-year { font-family: var(--font-mono); color: var(--accent); font-size: 0.9rem; }
-.project-title { font-size: clamp(3rem, 5vw, 4.5rem); letter-spacing: -2px; margin: 10px 0 20px 0; }
-.project-desc { font-size: 1.1rem; color: #aaa; line-height: 1.6; margin-bottom: 30px; }
-
-.tech-stack { display: flex; flex-wrap: wrap; gap: 15px; }
-.tech-stack span { font-family: var(--font-mono); font-size: 0.8rem; padding: 8px 16px; border: 1px solid #333; border-radius: 50px; }
-
-/* ============================================
-   SKILLS (Marquee)
-   ============================================ */
-.skills-section { padding: 30vh 0; overflow: hidden; }
-.marquee-container { display: flex; flex-direction: column; gap: 20px; }
-.marquee { font-size: clamp(4rem, 8vw, 7rem); font-weight: 700; white-space: nowrap; line-height: 1; letter-spacing: -2px; opacity: 0.3; }
-
-/* ============================================
-   FOOTER
-   ============================================ */
-.footer { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--accent); color: #000; mix-blend-mode: normal; }
-.footer-title { font-size: clamp(4rem, 10vw, 8rem); font-weight: 700; letter-spacing: -4px; margin-bottom: 50px; }
-.footer-links { display: flex; gap: 50px; }
-.footer .magnetic-btn { color: #000; font-size: 1.2rem; }
-.footer .magnetic-btn::after { color: #fff; }
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-@media (max-width: 1024px) {
-  .project-panel, .project-panel.reverse { grid-template-columns: 1fr; gap: 40px; }
-  .about-grid { grid-template-columns: 1fr; }
-  .project-info { padding: 0 5vw; }
-}
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
   .nav-links { display: none; }
-  .loader-counter { font-size: 5rem; }
-  .massive-title { font-size: 20vw; }
+  .section-header h2 { font-size: 1.5rem; }
+  .hero-name { font-size: 3rem; }
 }

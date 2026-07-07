@@ -1,186 +1,259 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AFNAAN AHMED P | Creative Developer</title>
+    <title>Afnaan Ahmed P | Interactive Resume</title>
     
-    <!-- Elite Awwwards Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@100;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
     
-    <!-- Ultimate Physics Engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 </head>
 <body>
 
-    <!-- CUSTOM CURSOR -->
-    <div id="cursor" class="cursor"></div>
+    <!-- THEME TOGGLE -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+        <span class="icon-dark">🌙</span>
+        <span class="icon-light" style="display:none;">☀️</span>
+    </button>
 
-    <!-- MASSIVE LOADER -->
-    <div id="loader-wrapper">
-        <div class="loader-curtain loader-curtain-top"></div>
-        <div class="loader-curtain loader-curtain-bottom"></div>
-        <div class="loader-content">
-            <h1 class="loader-counter"><span id="counter">0</span>%</h1>
-            <div class="loader-brand" id="loaderBrand">AFNAAN AHMED P.</div>
+    <!-- NAVIGATION -->
+    <nav class="navbar fade-up-nav">
+        <a href="#hero" class="nav-brand">AA</a>
+        <div class="nav-links">
+            <a href="#summary">Summary</a>
+            <a href="#education">Education</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#experience">Experience</a>
         </div>
-    </div>
-
-    <!-- MAIN NAV -->
-    <nav class="nav-bar">
-        <div class="nav-logo" id="navLogo"></div> <!-- Injected by GSAP from Loader -->
-        <div class="nav-links magnetic-wrap">
-            <a href="#about" class="magnetic-btn" data-text="ABOUT">ABOUT</a>
-            <a href="#projects" class="magnetic-btn" data-text="WORK">WORK</a>
-            <a href="#skills" class="magnetic-btn" data-text="SKILLS">SKILLS</a>
-            <a href="resume.pdf" class="magnetic-btn accent" target="_blank" data-text="RESUME">RESUME</a>
-        </div>
+        <a href="resume.pdf" target="_blank" class="btn btn-outline">PDF Resume</a>
     </nav>
 
-    <!-- SCROLL WRAPPER -->
     <main id="smooth-wrapper">
         <div id="smooth-content">
 
             <!-- HERO -->
-            <section class="hero" id="hero">
-                <div class="hero-container">
-                    <p class="hero-sub fade-up">M.TECH SOFTWARE ENGINEERING · CLASS OF 2027</p>
-                    <h1 class="hero-main split-lines">I ENGINEER <br><span class="text-accent">INTELLIGENT</span> SYSTEMS.</h1>
-                    <div class="hero-footer fade-up">
-                        <div class="hero-location">BASED IN AMBUR, TN</div>
-                        <div class="hero-scroll">SCROLL TO EXPLORE ↓</div>
+            <section id="hero" class="hero-section">
+                <div class="hero-content">
+                    <p class="hero-greeting split-text">Hello, I am</p>
+                    <h1 class="hero-name split-name">AFNAAN AHMED P</h1>
+                    <h2 class="hero-role split-text">Software Engineer & AI Developer</h2>
+                    <div class="hero-contact fade-up-hero">
+                        <a href="mailto:Afnaanahmed.k391@gmail.com">Afnaanahmed.k391@gmail.com</a> • <span>+91 9150713929</span> • <span>Ambur, TN</span>
+                    </div>
+                    <div class="hero-links fade-up-hero">
+                        <a href="https://linkedin.com/in/afnaan22mis1157" target="_blank">LinkedIn</a>
+                        <a href="https://github.com/22MIS1157" target="_blank">GitHub</a>
+                    </div>
+                </div>
+                <div class="scroll-indicator fade-up-hero">SCROLL</div>
+            </section>
+
+            <!-- PROFESSIONAL SUMMARY -->
+            <section id="summary" class="resume-section">
+                <div class="section-header"><h2>Professional Summary</h2><div class="header-line"></div></div>
+                <div class="section-content">
+                    <p class="summary-text fade-up-content">Pre-final year M.Tech Integrated student in Software Engineering at VIT Chennai with hands-on experience building backend services, REST APIs, and full-stack applications using Python, FastAPI, and JavaScript. Comfortable writing clean, modular, well-tested code following OOP design patterns and agile workflows. Have independently shipped four software projects – from real-time WebSocket servers and cloud-deployed APIs to AI-powered applications with LLM and RAG integrations. Experienced with Docker, AWS, Git, CI/CD pipelines, and collaborative code review practices. Eager to contribute to a fast-paced product engineering team and grow as a software developer.</p>
+                </div>
+            </section>
+
+            <!-- EDUCATION -->
+            <section id="education" class="resume-section">
+                <div class="section-header"><h2>Education</h2><div class="header-line"></div></div>
+                <div class="section-content">
+                    <div class="timeline-item fade-up-content">
+                        <div class="timeline-header">
+                            <h3>Vellore Institute of Technology (VIT), Chennai</h3>
+                            <span class="timeline-date">2022 – 2027</span>
+                        </div>
+                        <p class="timeline-sub">M.Tech Integrated – Software Engineering | CGPA: 7.92 / 10.0 | No Backlogs</p>
+                        <p class="timeline-desc"><strong>Relevant Coursework:</strong> Data Structures & Algorithms, Design Patterns (A), Object Oriented Programming (A), Database Management Systems, Software Engineering, Agile Development, Software Testing, Advanced Software Testing, Computer Networks, Operating Systems, Big Data Technologies, Artificial Intelligence (A), Software Reuse (A), Programming in Java (A)</p>
+                    </div>
+                    <div class="timeline-item fade-up-content">
+                        <div class="timeline-header">
+                            <h3>Mazharul Uloom HSS, Ambur</h3>
+                            <span class="timeline-date">2019 – 2021</span>
+                        </div>
+                        <p class="timeline-sub">Class XII – PCBM (Physics, Chemistry, Biology, Mathematics) | 85.20% | Tamil Nadu State Board</p>
                     </div>
                 </div>
             </section>
 
-            <!-- ABOUT -->
-            <section class="section about-section" id="about">
-                <!-- Massive Pinned Title -->
-                <div class="pinned-title-wrapper" id="about-title-trigger">
-                    <h2 class="massive-title" id="about-title">ABOUT</h2>
-                </div>
-                
-                <div class="section-content">
-                    <div class="container about-grid">
-                        <div class="about-text-col skew-elem">
-                            <h3 class="about-headline">Bridging the gap between Machine Learning and Cloud Infrastructure.</h3>
-                            <p class="body-text">I am a pre-final year M.Tech Integrated student at VIT Chennai. I don't just write scripts—I architect end-to-end software solutions. From real-time WebSocket servers streaming live inference data, to building production-grade RAG pipelines on AWS, I care deeply about clean architecture, scalable code, and delivering undeniable results.</p>
-                        </div>
-                        <div class="about-stats-col">
-                            <div class="stat-card skew-elem magnetic-wrap">
-                                <span class="stat-num">04</span>
-                                <span class="stat-label">SHIPPED PRODUCTS</span>
-                            </div>
-                            <div class="stat-card skew-elem magnetic-wrap">
-                                <span class="stat-num">96%</span>
-                                <span class="stat-label">BEST MODEL AUC</span>
-                            </div>
-                            <div class="stat-card skew-elem magnetic-wrap">
-                                <span class="stat-num">05</span>
-                                <span class="stat-label">AWS SERVICES</span>
-                            </div>
-                        </div>
+            <!-- TECHNICAL SKILLS -->
+            <section id="skills" class="resume-section">
+                <div class="section-header"><h2>Technical Skills</h2><div class="header-line"></div></div>
+                <div class="section-content skills-grid">
+                    <div class="skill-category fade-up-content">
+                        <h4>Languages</h4>
+                        <p>Python, JavaScript, Java, C, SQL, HTML/CSS</p>
+                    </div>
+                    <div class="skill-category fade-up-content">
+                        <h4>Backend & APIs</h4>
+                        <p>FastAPI, REST API Design, WebSocket (Real-time Streaming), JSON Schema Validation, Microservices Architecture</p>
+                    </div>
+                    <div class="skill-category fade-up-content">
+                        <h4>Software Engineering</h4>
+                        <p>Object Oriented Programming, Design Patterns, Data Structures & Algorithms, Clean Code Practices, Code Review, Debugging, Modular Architecture</p>
+                    </div>
+                    <div class="skill-category fade-up-content">
+                        <h4>Testing & QA</h4>
+                        <p>pytest (Unit Testing), Selenium (Browser Automation), Test-Driven Development, Error Logging, Regression Testing</p>
+                    </div>
+                    <div class="skill-category fade-up-content">
+                        <h4>Cloud & DevOps</h4>
+                        <p>AWS (Lambda, S3, DynamoDB, API Gateway), Git/GitHub, Docker</p>
+                    </div>
+                    <div class="skill-category fade-up-content">
+                        <h4>AI & Data</h4>
+                        <p>Scikit-learn, PyTorch, XGBoost, RAG Pipelines, ChromaDB, OpenCV, Pandas, NumPy, Matplotlib</p>
                     </div>
                 </div>
             </section>
 
             <!-- PROJECTS -->
-            <section class="section projects-section" id="projects">
-                <div class="pinned-title-wrapper" id="projects-title-trigger">
-                    <h2 class="massive-title" id="projects-title">WORK</h2>
-                </div>
-
-                <div class="section-content projects-container">
+            <section id="projects" class="resume-section">
+                <div class="section-header"><h2>Projects</h2><div class="header-line"></div></div>
+                <div class="section-content projects-wrapper">
                     
-                    <!-- ATCC VPark -->
-                    <article class="project-panel skew-elem">
-                        <div class="project-canvas-wrap" data-speed="0.8">
-                            <canvas id="vparkCanvas" data-canvas="true"></canvas>
-                        </div>
-                        <div class="project-info" data-speed="1.2">
-                            <span class="project-year">2026</span>
-                            <h3 class="project-title">ATCC VPARK</h3>
-                            <p class="project-desc">Real-time IoT Smart Parking. Python backend serving REST/WebSockets. YOLOv8 object detection actuating hardware gates in &lt;1s.</p>
-                            <div class="tech-stack"><span>FastAPI</span><span>WebSocket</span><span>YOLOv8</span><span>Docker</span></div>
-                        </div>
-                    </article>
-
                     <!-- LexCloud -->
-                    <article class="project-panel reverse skew-elem">
-                        <div class="project-canvas-wrap" data-speed="0.8">
-                            <canvas id="lexcloudCanvas" data-canvas="true"></canvas>
+                    <div class="project-card fade-up-content">
+                        <div class="project-info">
+                            <div class="timeline-header">
+                                <h3>LexCloud – Cloud-Native API Backend with AI Integration</h3>
+                                <span class="timeline-date">2024</span>
+                            </div>
+                            <p class="tech-stack-line">Python, FastAPI, REST API, JSON, AWS (Lambda, S3, DynamoDB, API Gateway), LLaMA-3, RAG, ChromaDB, Git</p>
+                            <ul>
+                                <li>Designed and deployed a <strong>production-grade REST API backend on AWS</strong> using FastAPI – handling JSON data ingestion, schema validation, and structured storage across DynamoDB and S3 with serverless compute via Lambda.</li>
+                                <li>Built clean, modular <strong>object-oriented Python code</strong> with separate packages for routing, validation, storage, and AI services. Added <strong>pytest-based unit tests</strong>, structured error logging, and comprehensive API documentation.</li>
+                                <li>Integrated a <strong>Generative AI feature layer</strong> (LLaMA-3 + ChromaDB vector database) on top of the existing API – enabling intelligent document retrieval and text generation. Demonstrates ability to extend existing software with new capabilities without rewriting core systems.</li>
+                                <li>Maintained under <strong>Git version control</strong> with branching strategy and CI-ready configuration for reproducible deployment.</li>
+                            </ul>
                         </div>
-                        <div class="project-info" data-speed="1.2">
-                            <span class="project-year">2024</span>
-                            <h3 class="project-title">LEXCLOUD AI</h3>
-                            <p class="project-desc">Serverless AWS Data Pipeline. Integrated LLaMA-3 + ChromaDB RAG for intelligent decentralized document retrieval via REST APIs.</p>
-                            <div class="tech-stack"><span>AWS Lambda</span><span>DynamoDB</span><span>LLaMA-3</span><span>RAG</span></div>
+                        <div class="project-visual">
+                            <canvas id="lexcloudCanvas"></canvas>
                         </div>
-                    </article>
+                    </div>
 
-                    <!-- Anemia -->
-                    <article class="project-panel skew-elem">
-                        <div class="project-canvas-wrap" data-speed="0.8">
-                            <canvas id="anemiaCanvas" data-canvas="true"></canvas>
+                    <!-- ATCC VPark -->
+                    <div class="project-card fade-up-content">
+                        <div class="project-info">
+                            <div class="timeline-header">
+                                <h3>ATCC VPark – Real-Time Full-Stack Application with WebSocket Streaming</h3>
+                                <span class="timeline-date">Apr 2026</span>
+                            </div>
+                            <p class="tech-stack-line">Python, FastAPI, REST API, WebSocket, Docker, HTML/CSS/JavaScript, YOLOv8, OpenCV, Arduino, PySerial</p>
+                            <ul>
+                                <li>Built a <strong>full-stack real-time application:</strong> Python backend (FastAPI) serving both <strong>REST API endpoints</strong> and <strong>WebSocket connections</strong> that stream live data to a responsive <strong>JavaScript/HTML/CSS frontend dashboard</strong> with sub-second latency.</li>
+                                <li>Implemented the complete <strong>software-hardware integration layer</strong> using serial communication (PySerial) to trigger automated hardware actions based on backend logic – demonstrating ability to work across the full stack from UI to device control.</li>
+                                <li>Containerised the entire application in <strong>Docker</strong> for one-command reproducible deployment. Wrote well-structured code with clear separation between the API layer, processing logic, hardware interface, and frontend.</li>
+                            </ul>
                         </div>
-                        <div class="project-info" data-speed="1.2">
-                            <span class="project-year">2025</span>
-                            <h3 class="project-title">DIAGNOSTICS CV</h3>
-                            <p class="project-desc">Two-stage medical image processing. Automatic fingernail detection (93.5% mAP) paired with CNN classification (96% Accuracy, 0.98 AUC).</p>
-                            <div class="tech-stack"><span>PyTorch</span><span>CNN</span><span>OpenCV</span><span>Grad-CAM</span></div>
+                        <div class="project-visual">
+                            <canvas id="vparkCanvas"></canvas>
                         </div>
-                    </article>
+                    </div>
 
                     <!-- Sepsis -->
-                    <article class="project-panel reverse skew-elem">
-                        <div class="project-canvas-wrap" data-speed="0.8">
-                            <canvas id="sepsisCanvas" data-canvas="true"></canvas>
+                    <div class="project-card fade-up-content">
+                        <div class="project-info">
+                            <div class="timeline-header">
+                                <h3>Sepsis Mortality Prediction – Data Pipeline & ML System</h3>
+                                <span class="timeline-date">2026</span>
+                            </div>
+                            <p class="tech-stack-line">Python, Scikit-learn, XGBoost, Pandas, NumPy, SHAP, SQL, Matplotlib, Seaborn</p>
+                            <ul>
+                                <li>Engineered a <strong>modular data processing pipeline</strong> that ingests large-scale clinical datasets, performs automated data cleaning and quality checks, and extracts <strong>172 features from 43 time-series signals</strong> – structured as reusable, testable Python modules.</li>
+                                <li>Trained and evaluated a gradient boosting classifier achieving <strong>96% AUC-ROC</strong>. Applied rigorous <strong>debugging and error analysis</strong> (confusion matrices, feature importance, edge-case review) to systematically improve model quality.</li>
+                                <li>Codebase follows <strong>clean-code principles</strong>: separate modules for ingestion, preprocessing, feature extraction, training, and evaluation. Every component is independently testable and documented.</li>
+                            </ul>
                         </div>
-                        <div class="project-info" data-speed="1.2">
-                            <span class="project-year">2026</span>
-                            <h3 class="project-title">SEPSIS PREDICT</h3>
-                            <p class="project-desc">ICU Mortality prediction via clinical time-series data. Extracted 172 features. Trained XGBoost model achieving 0.96 AUC-ROC (+16% vs baseline).</p>
-                            <div class="tech-stack"><span>XGBoost</span><span>Scikit-learn</span><span>Pandas</span><span>SHAP</span></div>
+                        <div class="project-visual">
+                            <canvas id="sepsisCanvas"></canvas>
                         </div>
-                    </article>
+                    </div>
+
+                    <!-- Anemia -->
+                    <div class="project-card fade-up-content">
+                        <div class="project-info">
+                            <div class="timeline-header">
+                                <h3>Non-Invasive Diagnostics – Computer Vision Application</h3>
+                                <span class="timeline-date">2025</span>
+                            </div>
+                            <p class="tech-stack-line">Python, PyTorch, YOLOv8, OpenCV, CNN, Transfer Learning, Grad-CAM, Git</p>
+                            <ul>
+                                <li>Developed a two-stage image processing application: object detection (YOLOv8, 93.5% mAP) followed by classification (CNN, <strong>96% accuracy, AUC 0.98</strong>). Validated on 251 real-world samples with ground-truth data.</li>
+                                <li>Managed the complete <strong>software development lifecycle</strong> independently: requirements analysis, design, implementation, testing, debugging, documentation, and delivery – all under structured <strong>Git version control</strong>.</li>
+                            </ul>
+                        </div>
+                        <div class="project-visual">
+                            <canvas id="anemiaCanvas"></canvas>
+                        </div>
+                    </div>
 
                 </div>
             </section>
 
-            <!-- SKILLS -->
-            <section class="section skills-section" id="skills">
-                <div class="pinned-title-wrapper" id="skills-title-trigger">
-                    <h2 class="massive-title" id="skills-title">SKILLS</h2>
-                </div>
-
+            <!-- EXPERIENCE -->
+            <section id="experience" class="resume-section">
+                <div class="section-header"><h2>Experience</h2><div class="header-line"></div></div>
                 <div class="section-content">
-                    <div class="marquee-container">
-                        <div class="marquee" id="marquee-1">
-                            <span class="text-accent">PYTHON</span> • JAVASCRIPT • FASTAPI • AWS • DOCKER • <span class="text-accent">PYTHON</span> • JAVASCRIPT • FASTAPI • AWS • DOCKER • 
+                    <div class="timeline-item fade-up-content">
+                        <div class="timeline-header">
+                            <h3>Research Intern – AI Software Development</h3>
+                            <span class="timeline-date">May 2025 – Aug 2025</span>
                         </div>
-                        <div class="marquee" id="marquee-2">
-                            PYTORCH • XGBOOST • RAG • SYSTEM DESIGN • <span class="text-accent">PYTORCH</span> • XGBOOST • RAG • SYSTEM DESIGN • 
+                        <p class="timeline-sub">Centre for Healthcare Advancement, Innovation & Research (CHAIR), VIT Chennai | Chennai, Tamil Nadu</p>
+                        <ul>
+                            <li>Independently built and delivered a complete <strong>software application</strong> from scratch – covering requirements gathering, data pipeline design, algorithm implementation (Python, PyTorch), systematic testing and debugging, and technical documentation.</li>
+                            <li>Participated in regular <strong>code reviews and design discussions</strong> with research supervisors. Learned to communicate technical tradeoffs clearly and iterate based on feedback – skills directly transferable to a collaborative engineering team.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item fade-up-content">
+                        <div class="timeline-header">
+                            <h3>Python Training Intern</h3>
+                            <span class="timeline-date">Jun 2024 – Jul 2024</span>
                         </div>
+                        <p class="timeline-sub">Colan Infotech Private Limited | Pernambut, Tamil Nadu (On-site)</p>
+                        <ul>
+                            <li>Completed structured training on <strong>Python programming</strong>, software design patterns, scripting, and <strong>Git-based version control</strong> in a professional development environment. Participated in <strong>code reviews</strong> and collaborative coding sessions following agile practices.</li>
+                        </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- FOOTER -->
-            <footer class="footer">
-                <div class="footer-content fade-up">
-                    <h2 class="footer-title">LET'S BUILD.</h2>
-                    <div class="footer-links">
-                        <a href="mailto:Afnaanahmed.k391@gmail.com" class="magnetic-wrap"><span class="magnetic-btn" data-text="EMAIL">EMAIL</span></a>
-                        <a href="https://linkedin.com/in/afnaan22mis1157" target="_blank" class="magnetic-wrap"><span class="magnetic-btn" data-text="LINKEDIN">LINKEDIN</span></a>
-                        <a href="https://github.com/22MIS1157" target="_blank" class="magnetic-wrap"><span class="magnetic-btn" data-text="GITHUB">GITHUB</span></a>
+            <!-- CERTIFICATIONS -->
+            <section id="certifications" class="resume-section">
+                <div class="section-header"><h2>Certifications</h2><div class="header-line"></div></div>
+                <div class="section-content">
+                    <div class="timeline-item fade-up-content">
+                        <p><strong>What Is Generative AI?</strong> – LinkedIn Learning, Dec 2023</p>
+                        <p><strong>Summer Research Internship</strong> – AI Software Development – CHAIR, VIT Chennai, 2025</p>
                     </div>
                 </div>
+            </section>
+
+            <!-- ACTIVITIES & LEADERSHIP -->
+            <section id="leadership" class="resume-section">
+                <div class="section-header"><h2>Activities & Leadership</h2><div class="header-line"></div></div>
+                <div class="section-content">
+                    <div class="timeline-item fade-up-content">
+                        <p><strong>Core Member, Cybersecurity Division</strong> – Microsoft Innovations Club, VIT Chennai (Oct 2023 – Jun 2024): Organised CTF competitions and technical workshops for 500+ participants; handled event coordination and logistics.</p>
+                        <p><strong>Core Member, Marketing & Management</strong> – Augmented & Virtual Reality Club, VIT Chennai (May 2023 – Mar 2024): Led cross-functional student teams for campus tech events; drove 30% registration growth through targeted outreach.</p>
+                        <p><strong>Operations Member</strong> – Fraternity of Young Innovators, VIT Chennai (Nov 2023 – Jun 2024): Coordinated planning, scheduling, and execution of inter-college innovation events.</p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="resume-footer">
+                <p>© 2026 Afnaan Ahmed P. All Rights Reserved.</p>
             </footer>
 
         </div>

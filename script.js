@@ -1,194 +1,91 @@
 /* ============================================
-   AFNAAN AHMED P — AWWWARDS MASTERPIECE
-   Ultimate GSAP Physics Engine
+   AFNAAN AHMED P — INTERACTIVE RESUME
+   GSAP Animations & Canvas Engine
    ============================================ */
 
 (function () {
   "use strict";
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // 1. LENIS SMOOTH SCROLL (Awwwards Butter Smooth)
+  // 1. LENIS SMOOTH SCROLL
   let lenis;
   if (!prefersReducedMotion) {
-    lenis = new Lenis({ duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), direction: 'vertical', smooth: true });
+    lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), direction: 'vertical', smooth: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
   }
 
-  // 2. CUSTOM CURSOR
-  const initCursor = () => {
-    if(prefersReducedMotion || window.innerWidth < 1024) return;
-    const cursor = document.getElementById('cursor');
-    gsap.set(cursor, { xPercent: -50, yPercent: -50 });
-    
-    let mouseX = 0, mouseY = 0, posX = 0, posY = 0;
-    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
-    
-    gsap.ticker.add(() => {
-      posX += (mouseX - posX) * 0.15;
-      posY += (mouseY - posY) * 0.15;
-      gsap.set(cursor, { x: posX, y: posY });
-    });
+  // 2. THEME SWITCHER
+  const themeToggle = document.getElementById('theme-toggle');
+  const iconDark = document.querySelector('.icon-dark');
+  const iconLight = document.querySelector('.icon-light');
+  let currentTheme = 'dark';
+  
+  themeToggle.addEventListener('click', () => {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    if(currentTheme === 'dark') { iconDark.style.display = 'block'; iconLight.style.display = 'none'; }
+    else { iconDark.style.display = 'none'; iconLight.style.display = 'block'; }
+  });
 
-    document.querySelectorAll('a, .magnetic-wrap, canvas').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-  };
-
-  // 3. MAGNETIC BUTTONS
-  const initMagnetic = () => {
-    if(prefersReducedMotion || window.innerWidth < 1024) return;
-    document.querySelectorAll('.magnetic-wrap').forEach(wrap => {
-      const btn = wrap.querySelector('.magnetic-btn');
-      wrap.addEventListener('mousemove', e => {
-        const rect = wrap.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        gsap.to(btn, { x: x * 0.4, y: y * 0.4, duration: 0.4, ease: 'power2.out' });
-      });
-      wrap.addEventListener('mouseleave', () => {
-        gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
-      });
-    });
-  };
-
-  // 4. TEXT SPLITTING (Vanilla)
+  // 3. TEXT SPLITTING (Vanilla)
   const splitText = (selector) => {
     document.querySelectorAll(selector).forEach(el => {
-      const text = el.innerHTML; el.innerHTML = '';
-      text.split('<br>').forEach((line, i, arr) => {
-        const lineDiv = document.createElement('div');
-        lineDiv.style.overflow = 'hidden';
-        
-        // Handle nested span for accent
-        const temp = document.createElement('div'); temp.innerHTML = line;
-        
-        Array.from(temp.childNodes).forEach(node => {
-          if(node.nodeType === 3) {
-            node.textContent.split(' ').forEach(word => {
-              if(!word) return;
-              const wordDiv = document.createElement('div'); wordDiv.style.display = 'inline-block'; wordDiv.style.marginRight = '0.3em';
-              word.split('').forEach(char => {
-                const charSpan = document.createElement('span'); charSpan.className = 'char'; charSpan.style.display = 'inline-block'; charSpan.innerHTML = char;
-                wordDiv.appendChild(charSpan);
-              });
-              lineDiv.appendChild(wordDiv);
-            });
-          } else if(node.nodeType === 1) {
-             const styledSpan = document.createElement('span');
-             styledSpan.className = node.className;
-             node.textContent.split(' ').forEach(word => {
-               if(!word) return;
-               const wordDiv = document.createElement('div'); wordDiv.style.display = 'inline-block'; wordDiv.style.marginRight = '0.3em';
-               word.split('').forEach(char => {
-                 const charSpan = document.createElement('span'); charSpan.className = 'char'; charSpan.style.display = 'inline-block'; charSpan.innerHTML = char;
-                 wordDiv.appendChild(charSpan);
-               });
-               styledSpan.appendChild(wordDiv);
-             });
-             lineDiv.appendChild(styledSpan);
-          }
+      const text = el.innerText; el.innerHTML = '';
+      text.split(' ').forEach(word => {
+        if(!word) return;
+        const wordDiv = document.createElement('div'); wordDiv.style.display = 'inline-block'; wordDiv.style.marginRight = '0.3em'; wordDiv.style.overflow = 'hidden';
+        word.split('').forEach(char => {
+          const charSpan = document.createElement('span'); charSpan.className = 'char'; charSpan.style.display = 'inline-block'; charSpan.innerHTML = char;
+          wordDiv.appendChild(charSpan);
         });
-        
-        el.appendChild(lineDiv);
-        if(i < arr.length - 1) el.appendChild(document.createElement('br'));
+        el.appendChild(wordDiv);
       });
     });
   };
 
-  // 5. JAW-DROPPING LOADER
-  const initLoader = () => {
-    splitText('.split-lines');
+  // 4. JAW-DROPPING HERO ASSEMBLY
+  const initHero = () => {
+    splitText('.split-name');
+    splitText('.split-text');
     gsap.set('.char', { y: '110%' });
-    gsap.set('.fade-up', { autoAlpha: 0, y: 30 });
-    gsap.set('#smooth-content', { autoAlpha: 0 }); // Hide until curtain drops
+    gsap.set('.fade-up-hero', { autoAlpha: 0, y: 30 });
+    gsap.set('.fade-up-nav', { autoAlpha: 0, y: -30 });
 
-    const counter = { val: 0 };
-    const counterEl = document.getElementById('counter');
-    const tl = gsap.timeline();
-
-    tl.to(counter, {
-      val: 100, duration: 2.5, ease: 'power4.inOut',
-      onUpdate: () => { counterEl.innerText = Math.round(counter.val); }
-    })
-    .to('.loader-brand', { autoAlpha: 1, duration: 0.5 }, "-=0.5")
-    .to('.loader-counter', { scale: 1.5, autoAlpha: 0, duration: 0.8, ease: 'power3.inOut' })
-    // Curtain Split
-    .set('#smooth-content', { autoAlpha: 1 })
-    .to('.loader-curtain-top', { yPercent: -100, duration: 1.2, ease: 'expo.inOut' }, "split")
-    .to('.loader-curtain-bottom', { yPercent: 100, duration: 1.2, ease: 'expo.inOut' }, "split")
-    // Brand flies to Nav
-    .to('.loader-brand', { 
-        top: '40px', left: '50px', scale: 1, duration: 1.2, ease: 'expo.inOut',
-        onComplete: () => { document.getElementById('navLogo').innerText = "AFNAAN AHMED P."; document.getElementById('loaderBrand').style.display = 'none'; }
-    }, "split")
-    .to('#loader-wrapper', { autoAlpha: 0, duration: 0.1 })
-    // Hero Text Reveal
-    .to('.char', { y: '0%', duration: 1.2, stagger: 0.02, ease: 'expo.out' }, "-=0.6")
-    .to('.fade-up', { autoAlpha: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power2.out' }, "-=0.8");
+    const tl = gsap.timeline({ delay: 0.2 });
+    tl.to('.split-name .char', { y: '0%', duration: 1.2, stagger: 0.04, ease: 'expo.out' })
+      .to('.split-text .char', { y: '0%', duration: 0.8, stagger: 0.02, ease: 'power3.out' }, "-=0.8")
+      .to('.fade-up-hero', { autoAlpha: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power2.out' }, "-=0.5")
+      .to('.fade-up-nav', { autoAlpha: 1, y: 0, duration: 1, ease: 'power2.out' }, "-=0.8");
   };
 
-  // 6. SCROLL PHYSICS (Parallax, Skew, Pinned Titles)
-  const initScrollPhysics = () => {
+  // 5. RESUME SCROLL ANIMATIONS (No Overlaps)
+  const initScrollAnim = () => {
     if(prefersReducedMotion) return;
-
-    // Skew Velocity
-    let proxy = { skew: 0 }, skewSetter = gsap.quickSetter(".skew-elem", "skewY", "deg"), clamp = gsap.utils.clamp(-8, 8);
-    ScrollTrigger.create({
-      onUpdate: (self) => {
-        let skew = clamp(self.getVelocity() / -200);
-        if (Math.abs(skew) > Math.abs(proxy.skew)) {
-          proxy.skew = skew;
-          gsap.to(proxy, { skew: 0, duration: 1, ease: "power3", overwrite: true, onUpdate: () => skewSetter(proxy.skew) });
-        }
-      }
-    });
-
-    // Pinned Parallax Titles (Massive Awwwards Effect)
-    const titles = ['about', 'projects', 'skills'];
-    titles.forEach(id => {
-      const trigger = document.getElementById(`${id}-title-trigger`);
-      const title = document.getElementById(`${id}-title`);
-      if(trigger && title) {
-        ScrollTrigger.create({
-          trigger: `#${id}`,
-          start: 'top top',
-          end: 'bottom top',
-          pin: trigger,
-          pinSpacing: false
-        });
-        
-        // Dissolve when leaving
-        gsap.to(title, {
-          scrollTrigger: {
-            trigger: `#${id}`,
-            start: 'bottom 50%',
-            end: 'bottom top',
-            scrub: true
-          },
-          autoAlpha: 0,
-          scale: 1.2
-        });
-      }
-    });
-
-    // Image Parallax
-    gsap.utils.toArray('[data-speed]').forEach(el => {
-      gsap.to(el, {
-        y: () => (1 - parseFloat(el.getAttribute('data-speed'))) * (ScrollTrigger.maxScroll(window) - (ScrollTrigger.maxScroll(window) / 2)),
-        ease: 'none',
-        scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: true }
+    
+    // Standard fade-ups for content
+    gsap.utils.toArray('.fade-up-content').forEach(el => {
+      gsap.fromTo(el, { autoAlpha: 0, y: 40 }, {
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+        autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out'
       });
     });
 
-    // Marquee
-    gsap.to('#marquee-1', { xPercent: -20, ease: 'none', scrollTrigger: { trigger: '.skills-section', scrub: 1 } });
-    gsap.to('#marquee-2', { xPercent: 20, ease: 'none', scrollTrigger: { trigger: '.skills-section', scrub: 1 } });
+    // Section Titles animate in, but stay in flow (no overlapping fixed layers)
+    gsap.utils.toArray('.section-header').forEach(header => {
+      gsap.fromTo(header, { autoAlpha: 0, x: -30 }, {
+        scrollTrigger: { trigger: header, start: 'top 90%' },
+        autoAlpha: 1, x: 0, duration: 1, ease: 'power3.out'
+      });
+      gsap.fromTo(header.querySelector('.header-line'), { scaleX: 0 }, {
+        scrollTrigger: { trigger: header, start: 'top 90%' },
+        scaleX: 1, transformOrigin: 'left', duration: 1.5, ease: 'power4.out'
+      });
+    });
   };
 
-  // 7. ELITE CANVAS SIMULATIONS
+  // 6. COMPLEX ILLUSTRATIVE CANVASES
   const initCanvas = () => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => { entry.target.dataset.active = entry.isIntersecting ? 'true' : 'false'; });
@@ -196,134 +93,171 @@
 
     const setupCanvas = (id) => {
       const cvs = document.getElementById(id); if (!cvs) return null;
-      observer.observe(cvs); 
-      const ctx = cvs.getContext('2d');
+      observer.observe(cvs); const ctx = cvs.getContext('2d');
       const resize = () => { cvs.width = cvs.parentElement.clientWidth; cvs.height = cvs.parentElement.clientHeight; };
       window.addEventListener('resize', resize); resize();
       return { cvs, ctx, w: () => cvs.width, h: () => cvs.height };
     };
 
-    const accent = '#D6FF00';
-    let mouseX = 0, mouseY = 0;
-    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+    const getColors = () => currentTheme === 'dark' ? { bg: '#111a2f', fg: '#94a3b8', accent: '#00e5ff' } : { bg: '#ffffff', fg: '#475569', accent: '#1d4ed8' };
 
-    // A. VPark (Mouse Reactive Radar)
+    // A. VPark (2D Top-Down Car Scan)
     const vpark = setupCanvas('vparkCanvas');
     if (vpark) {
-      let angle = 0;
+      let carY = -50; let state = 0; let timer = 0;
       const drawVPark = () => {
         if(vpark.cvs.dataset.active === 'true') {
-          vpark.ctx.fillStyle = '#050505'; vpark.ctx.fillRect(0, 0, vpark.w(), vpark.h());
+          const c = getColors(); vpark.ctx.fillStyle = c.bg; vpark.ctx.fillRect(0, 0, vpark.w(), vpark.h());
+          let cx = vpark.w()/2;
           
-          let cx = vpark.w()/2; let cy = vpark.h()/2; 
-          // Parallax center based on mouse
-          cx += (mouseX - window.innerWidth/2) * 0.05;
-          cy += (mouseY - window.innerHeight/2) * 0.05;
+          // Draw parking lines
+          vpark.ctx.strokeStyle = c.fg; vpark.ctx.lineWidth = 2;
+          vpark.ctx.strokeRect(cx - 60, vpark.h()/2 - 100, 120, 200);
           
-          let radius = Math.min(vpark.w(), vpark.h())/2 - 40;
+          // Animation Logic
+          if(state === 0) { carY += 2; if(carY > vpark.h()/2 - 40) state = 1; }
+          else if(state === 1) { timer++; if(timer > 60) { state = 2; timer = 0; } }
+          else if(state === 2) { carY -= 1; if(carY < vpark.h()/2 - 80) { state = 3; timer = 0; } }
+          else if(state === 3) { timer++; if(timer > 100) { state = 0; carY = -50; timer = 0; } }
 
-          vpark.ctx.strokeStyle = `rgba(255, 255, 255, 0.05)`; vpark.ctx.lineWidth = 1;
-          for(let i=0; i<vpark.w(); i+=40) { vpark.ctx.beginPath(); vpark.ctx.moveTo(i,0); vpark.ctx.lineTo(i,vpark.h()); vpark.ctx.stroke(); }
-          for(let i=0; i<vpark.h(); i+=40) { vpark.ctx.beginPath(); vpark.ctx.moveTo(0,i); vpark.ctx.lineTo(vpark.w(),i); vpark.ctx.stroke(); }
-
-          vpark.ctx.strokeStyle = accent; vpark.ctx.lineWidth = 1;
-          vpark.ctx.beginPath(); vpark.ctx.arc(cx, cy, radius, 0, Math.PI*2); vpark.ctx.stroke();
+          // Draw Car
+          vpark.ctx.fillStyle = c.fg; vpark.ctx.fillRect(cx - 30, carY, 60, 100);
           
-          angle += 0.04;
-          vpark.ctx.fillStyle = `rgba(214, 255, 0, 0.15)`;
-          vpark.ctx.beginPath(); vpark.ctx.moveTo(cx, cy); vpark.ctx.arc(cx, cy, radius, angle, angle + 0.8); vpark.ctx.fill();
+          // YOLO Box
+          if(state === 1 || state === 2) {
+            vpark.ctx.strokeStyle = '#22c55e'; vpark.ctx.lineWidth = 3;
+            vpark.ctx.strokeRect(cx - 35, carY - 5, 70, 110);
+            vpark.ctx.fillStyle = '#22c55e'; vpark.ctx.font = '12px monospace';
+            vpark.ctx.fillText('CAR: 0.98', cx - 35, carY - 10);
+          }
+          
+          // UI Text
+          vpark.ctx.fillStyle = c.accent; vpark.ctx.font = 'bold 16px monospace';
+          if(state === 3) vpark.ctx.fillText('SPACE ALLOCATED', cx - 70, vpark.h() - 30);
+          else vpark.ctx.fillText('SCANNING...', cx - 45, vpark.h() - 30);
+
         } requestAnimationFrame(drawVPark);
       }; drawVPark();
     }
 
-    // B. LexCloud (Scroll Reactive Nodes)
-    const lex = setupCanvas('lexcloudCanvas');
-    if (lex) {
-      let packets = []; let scrollVel = 0;
-      if(!prefersReducedMotion) {
-        ScrollTrigger.create({ onUpdate: (self) => { scrollVel = Math.abs(self.getVelocity()); } });
-      }
-
-      const drawLex = () => {
-        if(lex.cvs.dataset.active === 'true') {
-          lex.ctx.fillStyle = '#050505'; lex.ctx.fillRect(0, 0, lex.w(), lex.h());
-          let nodes = [ {x: 80, y: lex.h()/2}, {x: lex.w()/2, y: 80}, {x: lex.w()-80, y: lex.h()/2} ];
-          
-          lex.ctx.strokeStyle = `rgba(255, 255, 255, 0.1)`; lex.ctx.lineWidth = 1; lex.ctx.beginPath();
-          lex.ctx.moveTo(nodes[0].x, nodes[0].y); lex.ctx.lineTo(nodes[1].x, nodes[1].y); lex.ctx.lineTo(nodes[2].x, nodes[2].y); lex.ctx.stroke();
-
-          let spawnRate = scrollVel > 500 ? 0.8 : 0.96;
-          let speedMulti = scrollVel > 500 ? 3 : 1;
-
-          if(Math.random() > spawnRate) packets.push({ p: 0, f: 0, t: 1 });
-          lex.ctx.fillStyle = accent;
-          for(let i=packets.length-1; i>=0; i--) {
-            let pk = packets[i]; pk.p += 0.015 * speedMulti;
-            if(pk.p >= 1) { if(pk.t === 1) { pk.f = 1; pk.t = 2; pk.p = 0; } else { packets.splice(i, 1); continue; } }
-            let start = nodes[pk.f]; let end = nodes[pk.t];
-            let px = start.x + (end.x - start.x) * pk.p; let py = start.y + (end.y - start.y) * pk.p;
-            lex.ctx.beginPath(); lex.ctx.arc(px, py, 3, 0, Math.PI*2); lex.ctx.fill();
-          }
-
-          nodes.forEach(n => {
-            lex.ctx.strokeStyle = accent; lex.ctx.beginPath(); lex.ctx.arc(n.x, n.y, 8, 0, Math.PI*2); lex.ctx.stroke();
-          });
-        } requestAnimationFrame(drawLex);
-      }; drawLex();
-    }
-
-    // C. Anemia (Scroll Sync Laser)
+    // B. Anemia (2D Hand & Laser)
     const anemia = setupCanvas('anemiaCanvas');
     if (anemia) {
-      let scrollY = 0;
-      window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+      let scanY = 0;
       const drawAnemia = () => {
         if(anemia.cvs.dataset.active === 'true') {
-          anemia.ctx.fillStyle = '#050505'; anemia.ctx.fillRect(0, 0, anemia.w(), anemia.h());
+          const c = getColors(); anemia.ctx.fillStyle = c.bg; anemia.ctx.fillRect(0, 0, anemia.w(), anemia.h());
+          let cx = anemia.w()/2; let cy = anemia.h()/2;
           
-          anemia.ctx.strokeStyle = `rgba(255, 255, 255, 0.1)`; anemia.ctx.lineWidth = 1;
-          let cx = anemia.w()/2;
-          for(let i=0; i<15; i++) { anemia.ctx.beginPath(); anemia.ctx.arc(cx, anemia.h()/2, 10 + i*15, 0, Math.PI*2); anemia.ctx.stroke(); }
+          // Draw Hand Outline
+          anemia.ctx.strokeStyle = c.fg; anemia.ctx.lineWidth = 3; anemia.ctx.beginPath();
+          anemia.ctx.arc(cx, cy + 50, 40, Math.PI, 0); // Palm
+          anemia.ctx.moveTo(cx - 30, cy + 50); anemia.ctx.lineTo(cx - 30, cy - 40); // Finger 1
+          anemia.ctx.moveTo(cx, cy + 50); anemia.ctx.lineTo(cx, cy - 50); // Finger 2
+          anemia.ctx.moveTo(cx + 30, cy + 50); anemia.ctx.lineTo(cx + 30, cy - 30); // Finger 3
+          anemia.ctx.stroke();
 
-          // Laser syncs with scroll
-          let scanY = (scrollY * 0.5) % anemia.h();
-          
-          anemia.ctx.fillStyle = `rgba(214, 255, 0, 0.1)`; anemia.ctx.fillRect(0, 0, anemia.w(), scanY);
-          anemia.ctx.strokeStyle = accent; anemia.ctx.lineWidth = 2;
+          // Laser
+          scanY += 2; if(scanY > anemia.h()) scanY = 0;
+          anemia.ctx.fillStyle = `rgba(0, 229, 255, 0.2)`; anemia.ctx.fillRect(0, 0, anemia.w(), scanY);
+          anemia.ctx.strokeStyle = c.accent; anemia.ctx.lineWidth = 2;
           anemia.ctx.beginPath(); anemia.ctx.moveTo(0, scanY); anemia.ctx.lineTo(anemia.w(), scanY); anemia.ctx.stroke();
+          
+          // Output terminal
+          anemia.ctx.fillStyle = c.bg; anemia.ctx.fillRect(cx - 90, cy + 80, 180, 40);
+          anemia.ctx.strokeStyle = c.accent; anemia.ctx.strokeRect(cx - 90, cy + 80, 180, 40);
+          anemia.ctx.fillStyle = c.accent; anemia.ctx.font = 'bold 14px monospace';
+          anemia.ctx.fillText(scanY > cy ? 'ANEMIA: NEGATIVE' : 'ANALYZING...', cx - 75, cy + 105);
+
         } requestAnimationFrame(drawAnemia);
       }; drawAnemia();
     }
 
-    // D. Sepsis
+    // C. LexCloud (Cloud Data Flow)
+    const lex = setupCanvas('lexcloudCanvas');
+    if (lex) {
+      let packets = [];
+      const drawLex = () => {
+        if(lex.cvs.dataset.active === 'true') {
+          const c = getColors(); lex.ctx.fillStyle = c.bg; lex.ctx.fillRect(0, 0, lex.w(), lex.h());
+          let cx = lex.w()/2; let cy = lex.h()/2;
+
+          // Lines
+          lex.ctx.strokeStyle = c.fg; lex.ctx.lineWidth = 2; lex.ctx.beginPath();
+          lex.ctx.moveTo(cx - 100, cy); lex.ctx.lineTo(cx, cy - 50); lex.ctx.lineTo(cx + 100, cy); lex.ctx.stroke();
+          lex.ctx.moveTo(cx - 100, cy); lex.ctx.lineTo(cx, cy + 50); lex.ctx.lineTo(cx + 100, cy); lex.ctx.stroke();
+
+          // Packets
+          if(Math.random() > 0.95) packets.push({ p: 0, path: Math.random() > 0.5 ? 1 : 2 });
+          lex.ctx.fillStyle = c.accent;
+          for(let i=packets.length-1; i>=0; i--) {
+            let pk = packets[i]; pk.p += 0.01;
+            if(pk.p >= 1) { packets.splice(i, 1); continue; }
+            let px = cx - 100 + (200 * pk.p);
+            let py = pk.path === 1 ? cy - (50 * Math.sin(pk.p * Math.PI)) : cy + (50 * Math.sin(pk.p * Math.PI));
+            lex.ctx.beginPath(); lex.ctx.arc(px, py, 4, 0, Math.PI*2); lex.ctx.fill();
+          }
+
+          // Nodes
+          lex.ctx.fillStyle = c.bg; lex.ctx.strokeStyle = c.accent; lex.ctx.lineWidth = 3;
+          lex.ctx.beginPath(); lex.ctx.arc(cx - 100, cy, 15, 0, Math.PI*2); lex.ctx.fill(); lex.ctx.stroke();
+          lex.ctx.beginPath(); lex.ctx.arc(cx + 100, cy, 15, 0, Math.PI*2); lex.ctx.fill(); lex.ctx.stroke();
+          
+          lex.ctx.fillStyle = c.accent; lex.ctx.font = '12px monospace';
+          lex.ctx.fillText('API', cx - 110, cy + 35); lex.ctx.fillText('RAG', cx + 90, cy + 35);
+
+        } requestAnimationFrame(drawLex);
+      }; drawLex();
+    }
+
+    // D. Sepsis (ECG & Tree)
     const sepsis = setupCanvas('sepsisCanvas');
     if (sepsis) {
-      let cols = []; 
+      let ecg = []; let x = 0;
       const drawSepsis = () => {
         if(sepsis.cvs.dataset.active === 'true') {
-          sepsis.ctx.fillStyle = 'rgba(5, 5, 5, 0.15)'; sepsis.ctx.fillRect(0, 0, sepsis.w(), sepsis.h());
+          const c = getColors(); sepsis.ctx.fillStyle = c.bg; sepsis.ctx.fillRect(0, 0, sepsis.w(), sepsis.h());
+          let cy = sepsis.h()/3;
           
-          if(cols.length === 0) { for(let i=0; i<sepsis.w()/20; i++) cols.push({x: i*20, y: Math.random()*sepsis.h()}); }
+          // ECG
+          x += 2; if(x > sepsis.w()) { x = 0; ecg = []; }
+          let y = cy;
+          if(x % 100 < 20) {
+             if(x % 100 < 5) y = cy - 20;
+             else if(x % 100 < 10) y = cy + 40;
+             else if(x % 100 < 15) y = cy - 10;
+          }
+          ecg.push({x, y});
+
+          sepsis.ctx.strokeStyle = c.accent; sepsis.ctx.lineWidth = 2; sepsis.ctx.beginPath();
+          if(ecg.length > 0) {
+            sepsis.ctx.moveTo(ecg[0].x, ecg[0].y);
+            ecg.forEach(pt => sepsis.ctx.lineTo(pt.x, pt.y));
+            sepsis.ctx.stroke();
+          }
+
+          // Decision Tree Nodes
+          let tx = sepsis.w()/2; let ty = sepsis.h() * 0.6;
+          sepsis.ctx.strokeStyle = c.fg;
+          sepsis.ctx.beginPath(); sepsis.ctx.moveTo(tx, ty); sepsis.ctx.lineTo(tx - 40, ty + 40); sepsis.ctx.stroke();
+          sepsis.ctx.beginPath(); sepsis.ctx.moveTo(tx, ty); sepsis.ctx.lineTo(tx + 40, ty + 40); sepsis.ctx.stroke();
           
-          sepsis.ctx.font = "bold 12px monospace";
-          cols.forEach(c => {
-            let char = Math.random() > 0.5 ? '1' : '0';
-            sepsis.ctx.fillStyle = Math.random() > 0.98 ? accent : '#333';
-            sepsis.ctx.fillText(char, c.x, c.y);
-            c.y += 18; if(c.y > sepsis.h()) c.y = 0;
-          });
+          sepsis.ctx.fillStyle = c.bg; sepsis.ctx.strokeStyle = c.accent; sepsis.ctx.lineWidth = 2;
+          sepsis.ctx.beginPath(); sepsis.ctx.arc(tx, ty, 10, 0, Math.PI*2); sepsis.ctx.fill(); sepsis.ctx.stroke();
+          sepsis.ctx.beginPath(); sepsis.ctx.arc(tx - 40, ty + 40, 10, 0, Math.PI*2); sepsis.ctx.fill(); sepsis.ctx.stroke();
+          sepsis.ctx.beginPath(); sepsis.ctx.arc(tx + 40, ty + 40, 10, 0, Math.PI*2); sepsis.ctx.fill(); sepsis.ctx.stroke();
+
+          sepsis.ctx.fillStyle = c.fg; sepsis.ctx.font = '12px monospace';
+          sepsis.ctx.fillText('XGBOOST: SURVIVAL 96%', 10, sepsis.h() - 20);
+
         } requestAnimationFrame(drawSepsis);
       }; drawSepsis();
     }
   };
 
-  // INIT
   window.addEventListener("DOMContentLoaded", () => {
-    window.scrollTo(0, 0);
-    initCursor();
-    initMagnetic();
-    initScrollPhysics();
+    initHero();
+    initScrollAnim();
     initCanvas();
-    initLoader(); // Run loader last
   });
 })();
