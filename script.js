@@ -1,167 +1,138 @@
 /* ============================================
-   AFNAAN AHMED P — $10K PREMIUM PORTFOLIO
-   GSAP ScrollTrigger + Custom Cursor + 3D Tilt
+   AFNAAN AHMED P — MULTI-MORPHIC PORTFOLIO
+   GSAP Motion, Theme System & Simulation loops
    ============================================ */
 
 (function () {
   "use strict";
 
-  /* ── REDUCED MOTION CHECK ── */
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ── GSAP REGISTER ── */
   gsap.registerPlugin(ScrollTrigger);
 
   /* ══════════════════════════════════════════
-     1. LOADER — Matrix Boot Sequence
+     1. LOADER — Boot sequence
      ══════════════════════════════════════════ */
   const loader = document.getElementById("loader");
   const loaderFill = document.getElementById("loaderFill");
   const loaderStatus = document.getElementById("loaderStatus");
   const loaderText = document.getElementById("loaderText");
-  const loaderTitle = document.getElementById("loaderTitle");
 
   const loadMessages = [
-    "Loading modules...",
-    "Initializing neural networks...",
-    "Connecting to cloud services...",
-    "Compiling shaders...",
-    "Calibrating sensors...",
-    "System ready."
+    "Loading configuration files...",
+    "Compiling styles & dynamic themes...",
+    "Synthesizing RAG AI vectors...",
+    "Mapping hardware interfaces...",
+    "Activating simulation canvases...",
+    "Ready."
   ];
 
   let loadProgress = 0;
   const loadInterval = setInterval(() => {
-    loadProgress += Math.random() * 18 + 5;
+    loadProgress += Math.random() * 20 + 8;
     if (loadProgress >= 100) loadProgress = 100;
     if (loaderFill) loaderFill.style.width = loadProgress + "%";
-    const msgIndex = Math.min(Math.floor((loadProgress / 100) * loadMessages.length), loadMessages.length - 1);
-    if (loaderStatus) loaderStatus.textContent = loadMessages[msgIndex];
+    
+    const msgIdx = Math.min(Math.floor((loadProgress / 100) * loadMessages.length), loadMessages.length - 1);
+    if (loaderStatus) loaderStatus.textContent = loadMessages[msgIdx];
+    
     if (loaderText) {
-      const states = ["INITIALIZING", "COMPILING", "LOADING", "DEPLOYING", "READY"];
-      loaderText.textContent = states[Math.min(Math.floor((loadProgress / 100) * states.length), states.length - 1)];
+      const titles = ["BOOTING", "COMPILED", "AI_ACTIVE", "SYS_SYNC", "READY"];
+      loaderText.textContent = titles[Math.min(Math.floor((loadProgress / 100) * titles.length), titles.length - 1)];
     }
+
     if (loadProgress >= 100) {
       clearInterval(loadInterval);
       setTimeout(() => {
         if (loader) loader.classList.add("hidden");
-        setTimeout(() => initAnimations(), 300);
-      }, 600);
+        setTimeout(() => initGSAPAnimations(), 150);
+      }, 500);
     }
-  }, 250);
+  }, 160);
 
   // Failsafe
   setTimeout(() => {
     if (loader && !loader.classList.contains("hidden")) {
       loader.classList.add("hidden");
-      setTimeout(() => initAnimations(), 100);
+      setTimeout(() => initGSAPAnimations(), 100);
     }
-  }, 5000);
+  }, 4000);
 
   /* ══════════════════════════════════════════
-     2. CUSTOM CURSOR
+     2. THEME SYSTEM (Light / Dark)
      ══════════════════════════════════════════ */
-  const cursor = document.getElementById("cursor");
-  const cursorDot = cursor ? cursor.querySelector(".cursor__dot") : null;
-  const cursorRing = cursor ? cursor.querySelector(".cursor__ring") : null;
-  let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+  const themeToggle = document.getElementById("themeToggle");
+  const currentTheme = localStorage.getItem("theme") || "dark";
 
-  if (cursor && !prefersReducedMotion && window.innerWidth > 768) {
-    document.addEventListener("mousemove", (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+  if (currentTheme === "light") {
+    document.body.classList.add("light-theme");
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("light-theme");
+      const theme = document.body.classList.contains("light-theme") ? "light" : "dark";
+      localStorage.setItem("theme", theme);
+      // Restart project canvases to apply updated theme colors
+      initProjectCanvases();
     });
+  }
 
-    function updateCursor() {
-      cursorX += (mouseX - cursorX) * 0.15;
-      cursorY += (mouseY - cursorY) * 0.15;
-      if (cursorDot) {
-        cursorDot.style.transform = `translate(${mouseX - 3}px, ${mouseY - 3}px)`;
+  /* ══════════════════════════════════════════
+     3. TYPING EFFECT
+     ══════════════════════════════════════════ */
+  const roleEl = document.getElementById("heroRole");
+  const roles = ["intelligent systems", "ML pipelines", "cloud infrastructure", "real-time APIs", "AI applications"];
+  let roleIdx = 0, charIdx = 0, isDeleting = false;
+
+  function typeRole() {
+    if (!roleEl) return;
+    const current = roles[roleIdx];
+    if (isDeleting) {
+      roleEl.textContent = current.substring(0, charIdx - 1);
+      charIdx--;
+      if (charIdx === 0) {
+        isDeleting = false;
+        roleIdx = (roleIdx + 1) % roles.length;
+        setTimeout(typeRole, 300);
+        return;
       }
-      if (cursorRing) {
-        cursorRing.style.transform = `translate(${cursorX - 19}px, ${cursorY - 19}px)`;
+      setTimeout(typeRole, 30);
+    } else {
+      roleEl.textContent = current.substring(0, charIdx + 1);
+      charIdx++;
+      if (charIdx === current.length) {
+        setTimeout(() => { isDeleting = true; typeRole(); }, 2000);
+        return;
       }
-      requestAnimationFrame(updateCursor);
+      setTimeout(typeRole, 60);
     }
-    updateCursor();
-
-    // Hover detection
-    const hoverTargets = "a, button, .btn, .magnetic, .pmod, .stat, .contact__item, .leadership-item, .marquee-item, .nav__link, .timeline__item";
-    document.addEventListener("mouseover", (e) => {
-      if (e.target.closest(hoverTargets)) cursor.classList.add("hovering");
-    });
-    document.addEventListener("mouseout", (e) => {
-      if (e.target.closest(hoverTargets)) cursor.classList.remove("hovering");
-    });
-  } else if (cursor) {
-    cursor.style.display = "none";
   }
 
   /* ══════════════════════════════════════════
-     3. MAGNETIC BUTTON EFFECT
-     ══════════════════════════════════════════ */
-  if (!prefersReducedMotion && window.innerWidth > 768) {
-    document.querySelectorAll(".magnetic").forEach((el) => {
-      el.addEventListener("mousemove", (e) => {
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        gsap.to(el, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: "power2.out" });
-      });
-      el.addEventListener("mouseleave", () => {
-        gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.5)" });
-      });
-    });
-  }
-
-  /* ══════════════════════════════════════════
-     4. 3D TILT EFFECT ON CARDS
-     ══════════════════════════════════════════ */
-  if (!prefersReducedMotion && window.innerWidth > 768) {
-    document.querySelectorAll("[data-tilt]").forEach((card) => {
-      card.addEventListener("mousemove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        gsap.to(card, {
-          rotateY: x * 8,
-          rotateX: -y * 8,
-          duration: 0.4,
-          ease: "power2.out",
-          transformPerspective: 800,
-        });
-      });
-      card.addEventListener("mouseleave", () => {
-        gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.6, ease: "power2.out" });
-      });
-    });
-  }
-
-  /* ══════════════════════════════════════════
-     5. HERO PARTICLES CANVAS
+     4. HERO PARTICLES
      ══════════════════════════════════════════ */
   const heroCanvas = document.getElementById("heroParticles");
   if (heroCanvas) {
     const ctx = heroCanvas.getContext("2d");
     let particles = [];
-    const PARTICLE_COUNT = window.innerWidth > 768 ? 60 : 30;
+    const count = window.innerWidth > 768 ? 50 : 25;
 
-    function resizeCanvas() {
+    function resizeHero() {
       heroCanvas.width = heroCanvas.offsetWidth;
       heroCanvas.height = heroCanvas.offsetHeight;
     }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    resizeHero();
+    window.addEventListener("resize", resizeHero);
 
     class Particle {
       constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * heroCanvas.width;
         this.y = Math.random() * heroCanvas.height;
-        this.vx = (Math.random() - 0.5) * 0.4;
-        this.vy = (Math.random() - 0.5) * 0.4;
+        this.vx = (Math.random() - 0.5) * 0.35;
+        this.vy = (Math.random() - 0.5) * 0.35;
         this.radius = Math.random() * 1.5 + 0.5;
-        this.opacity = Math.random() * 0.4 + 0.1;
+        this.opacity = Math.random() * 0.3 + 0.15;
       }
       update() {
         this.x += this.vx;
@@ -172,24 +143,28 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 229, 255, ${this.opacity})`;
+        // Adapt color dynamically
+        const isLight = document.body.classList.contains("light-theme");
+        ctx.fillStyle = isLight ? `rgba(0, 180, 216, ${this.opacity})` : `rgba(0, 229, 255, ${this.opacity})`;
         ctx.fill();
       }
     }
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+    for (let i = 0; i < count; i++) particles.push(new Particle());
 
-    function drawConnections() {
+    function connectParticles() {
+      const isLight = document.body.classList.contains("light-theme");
+      const lineAlpha = 0.05;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
+          if (dist < 100) {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 229, 255, ${0.06 * (1 - dist / 120)})`;
+            ctx.strokeStyle = isLight ? `rgba(0, 180, 216, ${lineAlpha * (1 - dist / 100)})` : `rgba(0, 229, 255, ${lineAlpha * (1 - dist / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -197,102 +172,510 @@
       }
     }
 
-    function animateParticles() {
+    function runParticles() {
       ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
-      particles.forEach((p) => { p.update(); p.draw(); });
-      drawConnections();
-      requestAnimationFrame(animateParticles);
+      particles.forEach(p => { p.update(); p.draw(); });
+      connectParticles();
+      requestAnimationFrame(runParticles);
     }
-    if (!prefersReducedMotion) animateParticles();
+    if (!prefersReducedMotion) runParticles();
   }
 
   /* ══════════════════════════════════════════
-     6. TYPING EFFECT
+     5. PROJECT-SPECIFIC SIMULATION CANVASES
      ══════════════════════════════════════════ */
-  const roleEl = document.getElementById("heroRole");
-  const roles = ["intelligent systems", "ML pipelines", "cloud infrastructure", "real-time APIs", "AI applications"];
-  let roleIndex = 0, charIndex = 0, isDeleting = false;
+  let activeAnimations = [];
 
-  function typeRole() {
-    if (!roleEl) return;
-    const current = roles[roleIndex];
-    if (isDeleting) {
-      roleEl.textContent = current.substring(0, charIndex - 1);
-      charIndex--;
-      if (charIndex === 0) {
-        isDeleting = false;
-        roleIndex = (roleIndex + 1) % roles.length;
-        setTimeout(typeRole, 400);
-        return;
+  function initProjectCanvases() {
+    // Clear any running loops
+    activeAnimations.forEach(cancelAnimationFrame);
+    activeAnimations = [];
+
+    const isLight = () => document.body.classList.contains("light-theme");
+    const getAccent = () => isLight() ? "#00B4D8" : "#00E5FF";
+    const getGridColor = () => isLight() ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.04)";
+
+    // --- 1. VPark (Parking Simulation) ---
+    const vpark = document.getElementById("vparkCanvas");
+    if (vpark) {
+      const ctx = vpark.getContext("2d");
+      let width = vpark.width = vpark.offsetWidth;
+      let height = vpark.height = vpark.offsetHeight;
+      let gateAngle = 0;
+      let gateTarget = 0;
+      let timer = 0;
+      let occupied = [true, false, true, false];
+
+      function drawVPark() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Draw bays
+        const bayW = width / 5;
+        const bayH = height * 0.4;
+        ctx.strokeStyle = getGridColor();
+        ctx.lineWidth = 1;
+
+        // Pulse occupancy state every 2 seconds
+        timer++;
+        if (timer % 120 === 0) {
+          occupied = occupied.map(() => Math.random() > 0.4);
+          gateTarget = occupied[1] ? Math.PI / 2 : 0; // Trigger gate move
+        }
+
+        // Draw spots
+        for (let i = 0; i < 4; i++) {
+          const x = bayW * (i + 0.5);
+          const y = height * 0.15;
+          ctx.strokeRect(x, y, bayW, bayH);
+          
+          // Spot Indicator
+          ctx.beginPath();
+          ctx.arc(x + bayW/2, y + bayH/2, 6, 0, Math.PI*2);
+          ctx.fillStyle = occupied[i] ? "#EF4444" : getAccent();
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = occupied[i] ? "#EF4444" : getAccent();
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
+          ctx.font = "8px monospace";
+          ctx.fillStyle = isLight() ? "#475569" : "#94A3B8";
+          ctx.fillText(`BAY 0${i+1}`, x + 6, y + 16);
+        }
+
+        // Interpolate Gate Angle
+        gateAngle += (gateTarget - gateAngle) * 0.08;
+
+        // Draw Barrier Gate
+        const gateX = width * 0.8;
+        const gateY = height * 0.7;
+        ctx.strokeStyle = "#FF006E";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(gateX, gateY);
+        ctx.lineTo(gateX - Math.cos(gateAngle) * 45, gateY - Math.sin(gateAngle) * 45);
+        ctx.stroke();
+
+        // Gate Post
+        ctx.fillStyle = isLight() ? "#1E293B" : "#F1F5F9";
+        ctx.beginPath();
+        ctx.arc(gateX, gateY, 6, 0, Math.PI*2);
+        ctx.fill();
+
+        // HUD Info
+        ctx.font = "8px monospace";
+        ctx.fillStyle = getAccent();
+        ctx.fillText(`GATE: ${gateAngle > 0.2 ? "OPEN" : "LOCKED"}`, 12, height - 24);
+        ctx.fillText(`METRICS: YOLOv8 RUNNING`, 12, height - 12);
+
+        const id = requestAnimationFrame(drawVPark);
+        activeAnimations.push(id);
       }
-      setTimeout(typeRole, 40);
-    } else {
-      roleEl.textContent = current.substring(0, charIndex + 1);
-      charIndex++;
-      if (charIndex === current.length) {
-        setTimeout(() => { isDeleting = true; typeRole(); }, 2200);
-        return;
+      drawVPark();
+    }
+
+    // --- 2. Anemia (Nail Laser Scan) ---
+    const anemia = document.getElementById("anemiaCanvas");
+    if (anemia) {
+      const ctx = anemia.getContext("2d");
+      let width = anemia.width = anemia.offsetWidth;
+      let height = anemia.height = anemia.offsetHeight;
+      let scanY = 20;
+      let scanDirection = 1;
+      let pulseVal = 0;
+
+      function drawAnemia() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Nail outline
+        ctx.strokeStyle = isLight() ? "#64748B" : "#475569";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        // Drawing stylized fingernail
+        ctx.arc(width/2, height/2 - 10, 30, Math.PI, 0, false);
+        ctx.lineTo(width/2 + 30, height/2 + 50);
+        ctx.lineTo(width/2 - 30, height/2 + 50);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Pulsing hemoglobin flow inside nail
+        pulseVal += 0.05;
+        const capillaryAlpha = 0.15 + Math.sin(pulseVal) * 0.06;
+        ctx.fillStyle = `rgba(255, 0, 110, ${capillaryAlpha})`;
+        ctx.beginPath();
+        ctx.arc(width/2, height/2 - 5, 25, Math.PI, 0, false);
+        ctx.lineTo(width/2 + 25, height/2 + 45);
+        ctx.lineTo(width/2 - 25, height/2 + 45);
+        ctx.closePath();
+        ctx.fill();
+
+        // Laser scan line movement
+        scanY += 1.2 * scanDirection;
+        if (scanY > height * 0.8 || scanY < height * 0.2) scanDirection *= -1;
+
+        // Laser line render
+        ctx.strokeStyle = getAccent();
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(width/2 - 40, scanY);
+        ctx.lineTo(width/2 + 40, scanY);
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = getAccent();
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Diagnostic HUD
+        ctx.font = "8px monospace";
+        ctx.fillStyle = getAccent();
+        ctx.fillText(`HEMOGLOBIN: 13.8 g/dL`, 12, height - 24);
+        ctx.fillText(`SCAN STATUS: 96% CONF`, 12, height - 12);
+
+        const id = requestAnimationFrame(drawAnemia);
+        activeAnimations.push(id);
       }
-      setTimeout(typeRole, 70);
+      drawAnemia();
+    }
+
+    // --- 3. LexCloud (Cloud Data Packets) ---
+    const lexcloud = document.getElementById("lexcloudCanvas");
+    if (lexcloud) {
+      const ctx = lexcloud.getContext("2d");
+      let width = lexcloud.width = lexcloud.offsetWidth;
+      let height = lexcloud.height = lexcloud.offsetHeight;
+      
+      const nodes = [
+        { x: width * 0.2, y: height * 0.5, label: "DOC" },
+        { x: width * 0.5, y: height * 0.3, label: "S3" },
+        { x: width * 0.5, y: height * 0.7, label: "DB" },
+        { x: width * 0.8, y: height * 0.5, label: "RAG" }
+      ];
+
+      let packets = [];
+
+      function drawLexCloud() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Draw connections
+        ctx.strokeStyle = getGridColor();
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(nodes[0].x, nodes[0].y);
+        ctx.lineTo(nodes[1].x, nodes[1].y);
+        ctx.lineTo(nodes[3].x, nodes[3].y);
+        ctx.moveTo(nodes[0].x, nodes[0].y);
+        ctx.lineTo(nodes[2].x, nodes[2].y);
+        ctx.lineTo(nodes[3].x, nodes[3].y);
+        ctx.stroke();
+
+        // Spawn packets
+        if (Math.random() < 0.03 && packets.length < 5) {
+          packets.push({
+            start: nodes[0],
+            mid: Math.random() > 0.5 ? nodes[1] : nodes[2],
+            end: nodes[3],
+            progress: 0,
+            speed: Math.random() * 0.01 + 0.008
+          });
+        }
+
+        // Draw and update packets
+        ctx.fillStyle = getAccent();
+        packets.forEach((p, idx) => {
+          p.progress += p.speed;
+          let currentX, currentY;
+          
+          if (p.progress < 0.5) {
+            const t = p.progress * 2;
+            currentX = p.start.x + (p.mid.x - p.start.x) * t;
+            currentY = p.start.y + (p.mid.y - p.start.y) * t;
+          } else {
+            const t = (p.progress - 0.5) * 2;
+            currentX = p.mid.x + (p.end.x - p.mid.x) * t;
+            currentY = p.mid.y + (p.end.y - p.mid.y) * t;
+          }
+
+          ctx.beginPath();
+          ctx.arc(currentX, currentY, 4, 0, Math.PI*2);
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = getAccent();
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
+          if (p.progress >= 1) packets.splice(idx, 1);
+        });
+
+        // Draw nodes
+        nodes.forEach((node) => {
+          ctx.fillStyle = varColor(node.label);
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, 10, 0, Math.PI*2);
+          ctx.fill();
+
+          ctx.font = "8px monospace";
+          ctx.fillStyle = isLight() ? "#475569" : "#94A3B8";
+          ctx.fillText(node.label, node.x - 8, node.y + 20);
+        });
+
+        const id = requestAnimationFrame(drawLexCloud);
+        activeAnimations.push(id);
+      }
+
+      function varColor(lbl) {
+        if (lbl === "DOC") return "#FFB000";
+        if (lbl === "RAG") return getAccent();
+        return "#FF006E";
+      }
+
+      drawLexCloud();
+    }
+
+    // --- 4. Sepsis Survival (ICU Vital Telemetry) ---
+    const sepsis = document.getElementById("sepsisCanvas");
+    if (sepsis) {
+      const ctx = sepsis.getContext("2d");
+      let width = sepsis.width = sepsis.offsetWidth;
+      let height = sepsis.height = sepsis.offsetHeight;
+      let ecgPoints = [];
+      let step = 0;
+
+      // Populate placeholder points
+      for (let i = 0; i < width; i++) {
+        ecgPoints.push(height * 0.5);
+      }
+
+      function drawSepsis() {
+        ctx.clearRect(0, 0, width, height);
+
+        step++;
+        let nextY = height * 0.5;
+
+        // Generate dynamic ECG peaks
+        if (step % 40 === 0) {
+          nextY = height * 0.2; // QRS peak
+        } else if (step % 40 === 2) {
+          nextY = height * 0.85; // S drop
+        } else if (step % 40 === 5) {
+          nextY = height * 0.45; // T wave
+        }
+
+        ecgPoints.shift();
+        ecgPoints.push(nextY);
+
+        // Draw grid lines
+        ctx.strokeStyle = getGridColor();
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i < width; i += 20) {
+          ctx.beginPath();
+          ctx.moveTo(i, 0);
+          ctx.lineTo(i, height);
+          ctx.stroke();
+        }
+        for (let i = 0; i < height; i += 20) {
+          ctx.beginPath();
+          ctx.moveTo(0, i);
+          ctx.lineTo(width, i);
+          ctx.stroke();
+        }
+
+        // Draw vital trace
+        ctx.strokeStyle = "#10B981";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let i = 0; i < width; i++) {
+          if (i === 0) ctx.moveTo(i, ecgPoints[i]);
+          else ctx.lineTo(i, ecgPoints[i]);
+        }
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = "#10B981";
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Display pulse metrics
+        ctx.font = "8px monospace";
+        ctx.fillStyle = "#10B981";
+        ctx.fillText(`HR: 82 BPM`, 12, height - 24);
+        ctx.fillText(`SURVIVAL CONFIDENCE: 93.4%`, 12, height - 12);
+
+        const id = requestAnimationFrame(drawSepsis);
+        activeAnimations.push(id);
+      }
+      drawSepsis();
     }
   }
 
   /* ══════════════════════════════════════════
-     7. COUNTER ANIMATION
+     6. GSAP ANIMATIONS
+     ══════════════════════════════════════════ */
+  function initGSAPAnimations() {
+    // Enable type loop
+    typeRole();
+
+    // Init the project specific simulation loops
+    initProjectCanvases();
+
+    if (prefersReducedMotion) {
+      // Force instant visibility
+      gsap.set(".hero__greeting, .hero__name-line, .hero__role-line, .hero__tagline, .hero__sys-status, .hero__cta, .hero__scroll-hint, .section-label, .section__title, .contact__title", { opacity: 1, y: 0, x: 0 });
+      animateCounters();
+      return;
+    }
+
+    /* ── HERO TIMELINE ── */
+    const heroTl = gsap.timeline();
+    heroTl
+      .fromTo(".hero__greeting", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" })
+      .fromTo(".hero__name-line", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "expo.out", stagger: 0.15 }, "-=0.2")
+      .fromTo(".hero__role-line", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.3")
+      .fromTo(".hero__tagline", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.2")
+      .fromTo(".hero__sys-status", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, "-=0.2")
+      .fromTo(".hero__cta", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.2")
+      .fromTo(".hero__scroll-hint", { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=0.1");
+
+    /* ── SCROLL TRIGGER SECTIONS ── */
+    gsap.utils.toArray(".section-label").forEach((lbl) => {
+      gsap.fromTo(lbl, 
+        { opacity: 0, x: -20 },
+        { opacity: 1, x: 0, duration: 0.5, ease: "power2.out",
+          scrollTrigger: { trigger: lbl, start: "top 88%", toggleActions: "play none none reverse" } }
+      );
+    });
+
+    gsap.utils.toArray(".section__title, .contact__title").forEach((tit) => {
+      gsap.fromTo(tit,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "expo.out",
+          scrollTrigger: { trigger: tit, start: "top 85%", toggleActions: "play none none reverse" } }
+      );
+    });
+
+    /* ── ABOUT FADES ── */
+    gsap.utils.toArray(".about__desc, .about__philosophy, .about__exploring").forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, delay: i * 0.08, ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" } }
+      );
+    });
+
+    /* ── STATS CARDS STAGGER ── */
+    gsap.utils.toArray(".stat").forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 30, scale: 0.94 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, delay: i * 0.08, ease: "back.out(1.3)",
+          scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none reverse" } }
+      );
+    });
+
+    // Run counters
+    animateCounters();
+
+    /* ── PROJECT CARDS ── */
+    gsap.utils.toArray(".pmod").forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.6, delay: i * 0.1, ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" } }
+      );
+    });
+
+    /* ── TIMELINE ── */
+    gsap.utils.toArray(".timeline__item").forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, x: -30 },
+        { opacity: 1, x: 0, duration: 0.6, delay: i * 0.08, ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none reverse" } }
+      );
+    });
+
+    gsap.utils.toArray(".timeline__line").forEach((line) => {
+      gsap.fromTo(line,
+        { scaleY: 0, transformOrigin: "top center" },
+        { scaleY: 1, duration: 1.2, ease: "power2.out",
+          scrollTrigger: { trigger: line.parentElement, start: "top 80%", toggleActions: "play none none reverse" } }
+      );
+    });
+
+    /* ── LEADERSHIP ── */
+    gsap.utils.toArray(".leadership-item").forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 25, scale: 0.94 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, delay: i * 0.08, ease: "back.out(1.3)",
+          scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none reverse" } }
+      );
+    });
+
+    /* ── CONTACT ITEMS ── */
+    gsap.utils.toArray(".contact__item").forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.5, delay: i * 0.08, ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" } }
+      );
+    });
+
+    /* ── PARALLAX DEPTH BLOCKS ── */
+    gsap.utils.toArray(".hero__orb").forEach((orb, i) => {
+      gsap.to(orb, {
+        yPercent: (i + 1) * -10,
+        ease: "none",
+        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
+      });
+    });
+  }
+
+  /* ══════════════════════════════════════════
+     7. COUNTERS LOOP
      ══════════════════════════════════════════ */
   function animateCounters() {
     document.querySelectorAll(".stat__number").forEach((el) => {
       const target = parseInt(el.getAttribute("data-target"));
       const divide = parseInt(el.getAttribute("data-divide")) || 1;
       const suffix = el.getAttribute("data-suffix") || "";
-      const finalValue = divide > 1 ? (target / divide).toFixed(2) : target;
-      const duration = 1.5;
+      const valObj = { val: 0 };
 
-      const counter = { val: 0 };
-      gsap.to(counter, {
+      gsap.to(valObj, {
         val: target,
-        duration: duration,
+        duration: 1.5,
         ease: "power2.out",
         scrollTrigger: { trigger: el, start: "top 85%", once: true },
         onUpdate: () => {
-          const v = divide > 1 ? (counter.val / divide).toFixed(2) : Math.round(counter.val);
-          el.textContent = v + suffix;
-        },
+          const formatted = divide > 1 ? (valObj.val / divide).toFixed(2) : Math.round(valObj.val);
+          el.textContent = formatted + suffix;
+        }
       });
     });
   }
 
   /* ══════════════════════════════════════════
-     8. NAVIGATION
+     8. GLOBAL LISTENERS
      ══════════════════════════════════════════ */
-  const nav = document.getElementById("nav");
-  const hamburger = document.getElementById("hamburger");
-  const mobileMenu = document.getElementById("mobileMenu");
-
-  // Scroll state
+  // Header scrolled state
   window.addEventListener("scroll", () => {
-    if (nav) nav.classList.toggle("scrolled", window.scrollY > 80);
+    const nav = document.getElementById("nav");
+    if (nav) nav.classList.toggle("scrolled", window.scrollY > 50);
 
-    // Scroll progress
+    // Scroll progress update
     const scrollProgress = document.getElementById("scrollProgress");
     if (scrollProgress) {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      scrollProgress.style.width = h > 0 ? (window.scrollY / h) * 100 + "%" : "0%";
+      const totalH = document.documentElement.scrollHeight - window.innerHeight;
+      scrollProgress.style.width = totalH > 0 ? (window.scrollY / totalH) * 100 + "%" : "0%";
     }
 
-    // Active nav link
+    // Active nav tracking
     const sections = document.querySelectorAll("section[id]");
-    let current = "";
+    let currentSec = "";
     sections.forEach((sec) => {
       const top = sec.offsetTop - 120;
-      if (window.scrollY >= top) current = sec.id;
+      if (window.scrollY >= top) currentSec = sec.id;
     });
+
     document.querySelectorAll(".nav__link").forEach((link) => {
-      link.classList.toggle("active", link.getAttribute("data-section") === current);
+      link.classList.toggle("active", link.getAttribute("data-section") === currentSec);
     });
   });
 
-  // Hamburger
+  // Hamburger Toggle
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobileMenu");
   if (hamburger && mobileMenu) {
     hamburger.addEventListener("click", () => {
       hamburger.classList.toggle("open");
@@ -306,142 +689,55 @@
     });
   }
 
-  // Scroll to top
+  // Scroll to top button
   const scrollTopBtn = document.getElementById("scrollTopBtn");
   if (scrollTopBtn) {
     scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   }
 
-  // Greeting
+  // Set local greeting based on hour
   const greetingEl = document.querySelector(".hero__greeting");
   if (greetingEl) {
-    const hour = new Date().getHours();
-    const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
-    greetingEl.textContent = greeting + ". I'm";
+    const hr = new Date().getHours();
+    const greetStr = hr < 12 ? "Good morning" : hr < 18 ? "Good afternoon" : "Good evening";
+    greetingEl.textContent = `${greetStr}. I'm`;
   }
 
   /* ══════════════════════════════════════════
-     9. GSAP SCROLL ANIMATIONS — Main init
+     9. MAGNETIC & TILT EFFECTS
      ══════════════════════════════════════════ */
-  function initAnimations() {
-    if (prefersReducedMotion) {
-      // Show everything immediately
-      gsap.set(".hero__greeting, .hero__name-line, .hero__role-line, .hero__tagline, .hero__sys-status, .hero__cta, .hero__scroll-hint, .section-label, .section__title, .contact__title", { opacity: 1, y: 0, x: 0 });
-      typeRole();
-      animateCounters();
-      return;
-    }
-
-    /* ── HERO ENTRANCE ── */
-    const heroTl = gsap.timeline({ delay: 0.2 });
-
-    heroTl
-      .to(".hero__greeting", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" })
-      .to(".hero__name-line", { opacity: 1, y: 0, duration: 0.8, ease: "expo.out", stagger: 0.15 }, "-=0.3")
-      .to(".hero__role-line", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "-=0.4")
-      .to(".hero__tagline", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.3")
-      .to(".hero__sys-status", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.2")
-      .to(".hero__cta", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "-=0.2")
-      .to(".hero__scroll-hint", { opacity: 1, duration: 0.6, ease: "power2.out" }, "-=0.2")
-      .call(() => typeRole());
-
-    /* ── SECTION HEADERS ── */
-    gsap.utils.toArray(".section-label").forEach((el) => {
-      gsap.to(el, {
-        opacity: 1, x: 0, duration: 0.6, ease: "power2.out",
-        scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none reverse" },
+  if (!prefersReducedMotion && window.innerWidth > 768) {
+    // Magnetic pull
+    document.querySelectorAll(".magnetic").forEach((el) => {
+      el.addEventListener("mousemove", (e) => {
+        const bounds = el.getBoundingClientRect();
+        const mx = e.clientX - bounds.left - bounds.width / 2;
+        const my = e.clientY - bounds.top - bounds.height / 2;
+        gsap.to(el, { x: mx * 0.25, y: my * 0.25, duration: 0.3, ease: "power2.out" });
+      });
+      el.addEventListener("mouseleave", () => {
+        gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.4)" });
       });
     });
 
-    gsap.utils.toArray(".section__title, .contact__title").forEach((el) => {
-      gsap.to(el, {
-        opacity: 1, y: 0, duration: 0.8, ease: "expo.out",
-        scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
+    // 3D card tilt
+    document.querySelectorAll("[data-tilt]").forEach((card) => {
+      card.addEventListener("mousemove", (e) => {
+        const bounds = card.getBoundingClientRect();
+        const mx = (e.clientX - bounds.left) / bounds.width - 0.5;
+        const my = (e.clientY - bounds.top) / bounds.height - 0.5;
+        gsap.to(card, {
+          rotateY: mx * 6,
+          rotateX: -my * 6,
+          duration: 0.3,
+          ease: "power2.out",
+          transformPerspective: 1000
+        });
       });
-    });
-
-    /* ── ABOUT TEXT ── */
-    gsap.utils.toArray(".about__desc, .about__philosophy, .about__exploring").forEach((el, i) => {
-      gsap.fromTo(el,
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.6, delay: i * 0.1, ease: "power2.out",
-          scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none reverse" } }
-      );
-    });
-
-    /* ── STAT CARDS ── */
-    gsap.utils.toArray(".stat").forEach((el, i) => {
-      gsap.fromTo(el,
-        { opacity: 0, y: 30, scale: 0.92 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, delay: i * 0.08, ease: "back.out(1.4)",
-          scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none reverse" } }
-      );
-    });
-
-    /* ── COUNTERS ── */
-    animateCounters();
-
-    /* ── PROJECT CARDS ── */
-    gsap.utils.toArray(".pmod").forEach((el, i) => {
-      gsap.fromTo(el,
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.7, delay: i * 0.1, ease: "power2.out",
-          scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" } }
-      );
-    });
-
-    /* ── TIMELINE ITEMS ── */
-    gsap.utils.toArray(".timeline__item").forEach((el, i) => {
-      gsap.fromTo(el,
-        { opacity: 0, x: -40 },
-        { opacity: 1, x: 0, duration: 0.6, delay: i * 0.1, ease: "power2.out",
-          scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none reverse" } }
-      );
-    });
-
-    /* ── LEADERSHIP ── */
-    gsap.utils.toArray(".leadership-item").forEach((el, i) => {
-      gsap.fromTo(el,
-        { opacity: 0, y: 30, scale: 0.92 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, delay: i * 0.1, ease: "back.out(1.4)",
-          scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none reverse" } }
-      );
-    });
-
-    /* ── CONTACT ITEMS ── */
-    gsap.utils.toArray(".contact__item").forEach((el, i) => {
-      gsap.fromTo(el,
-        { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 0.5, delay: i * 0.08, ease: "power2.out",
-          scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" } }
-      );
-    });
-
-    /* ── MARQUEE ROWS ── */
-    gsap.utils.toArray(".marquee-row").forEach((el, i) => {
-      gsap.fromTo(el,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, delay: i * 0.08, ease: "power2.out",
-          scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none reverse" } }
-      );
-    });
-
-    /* ── PARALLAX HERO ORBS ── */
-    gsap.utils.toArray(".hero__orb").forEach((orb, i) => {
-      gsap.to(orb, {
-        yPercent: (i + 1) * -12,
-        ease: "none",
-        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.5 },
+      card.addEventListener("mouseleave", () => {
+        gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.5, ease: "power2.out" });
       });
-    });
-
-    /* ── TIMELINE LINE DRAW ── */
-    gsap.utils.toArray(".timeline__line").forEach((line) => {
-      gsap.fromTo(line,
-        { scaleY: 0, transformOrigin: "top center" },
-        { scaleY: 1, duration: 1.5, ease: "power2.out",
-          scrollTrigger: { trigger: line.parentElement, start: "top 80%", toggleActions: "play none none reverse" } }
-      );
     });
   }
+
 })();
