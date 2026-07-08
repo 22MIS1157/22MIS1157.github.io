@@ -299,6 +299,7 @@
           <div class="leo-hero-container">
             <div class="leo-flash-screen" id="leo-flash-screen"></div>
             <div class="leo-slash" id="leo-slash"></div>
+            <div class="leo-slash-2" id="leo-slash-2"></div>
             <div class="leo-logo-box" id="hero-logo-box">
               <div class="leo-line-1" id="hero-line-1"></div>
               <div class="leo-line-2" id="hero-line-2"></div>
@@ -310,6 +311,7 @@
           const line1 = document.getElementById('hero-line-1');
           const line2 = document.getElementById('hero-line-2');
           const slash = document.getElementById('leo-slash');
+          const slash2 = document.getElementById('leo-slash-2');
           const flashScreen = document.getElementById('leo-flash-screen');
 
           line1.innerHTML = '';
@@ -335,17 +337,19 @@
           const chars2 = line2.querySelectorAll('.leo-char-2');
           const allChars = [...chars1, ...chars2];
 
-          // Initialize states
+          // Initialize states in deep Z space with rotation
           allChars.forEach(span => {
             if (span.innerText === '\u00A0') return;
             gsap.set(span, {
-              scale: 8,
+              scale: 15,
+              z: -1500,
               opacity: 0,
-              filter: 'blur(20px)',
-              rotationY: -45,
-              rotationZ: -10,
+              filter: 'blur(30px)',
+              rotationX: -90,
+              rotationY: 45,
+              rotationZ: -15,
               y: -50,
-              transformOrigin: "50% 50% -100px"
+              transformOrigin: "50% 50% -150px"
             });
           });
 
@@ -396,30 +400,39 @@
           const tl = gsap.timeline();
 
           // A. Cinematic screen flashes before the main cut
-          tl.to(flashScreen, { opacity: 0.7, duration: 0.05 })
-            .to(flashScreen, { opacity: 0, duration: 0.05 })
-            .to(flashScreen, { opacity: 0.5, duration: 0.05, delay: 0.1 })
-            .to(flashScreen, { opacity: 0, duration: 0.05 })
+          tl.to(flashScreen, { opacity: 0.8, duration: 0.04 })
+            .to(flashScreen, { opacity: 0, duration: 0.04 })
+            .to(flashScreen, { opacity: 0.6, duration: 0.04, delay: 0.08 })
+            .to(flashScreen, { opacity: 0, duration: 0.04 })
             
-            // B. Slash transition
+            // B. Crossed sword slashes
             .set(slash, { opacity: 1 })
             .fromTo(slash, 
               { left: '-120%' }, 
-              { left: '120%', duration: 0.7, ease: 'power3.inOut', onStart: triggerRumble }
+              { left: '120%', duration: 0.6, ease: 'power3.inOut', onStart: triggerRumble }
             )
-            .to(slash, { opacity: 0, duration: 0.1 }, '-=0.05')
+            .to(slash, { opacity: 0, duration: 0.1 }, '-=0.1')
+            .set(slash2, { opacity: 1 }, '-=0.3')
+            .fromTo(slash2,
+              { left: '-120%' },
+              { left: '120%', duration: 0.6, ease: 'power3.inOut', onStart: triggerRumble },
+              '-=0.3'
+            )
+            .to(slash2, { opacity: 0, duration: 0.1 }, '-=0.1')
 
-            // C. Letters slam down with localized sparks
+            // C. Letters slam down with localized sparks and heavy 3D assembly
             .to(allChars, {
               scale: 1,
+              z: 0,
               opacity: 1,
               filter: 'blur(0px)',
+              rotationX: 0,
               rotationY: 0,
               rotationZ: 0,
               y: 0,
               duration: 0.7,
               stagger: {
-                amount: 0.6,
+                amount: 0.7,
                 from: 'start',
                 onStart: function() {
                   const targetChar = this.targets()[0];
@@ -429,8 +442,8 @@
                   }
                 }
               },
-              ease: 'back.out(1.8)'
-            }, '-=0.35')
+              ease: 'back.out(2.2)'
+            }, '-=0.25')
 
             // D. Reveal aura, shockwave, scroll down indicator
             .call(() => {
