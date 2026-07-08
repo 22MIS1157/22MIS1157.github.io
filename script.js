@@ -16,11 +16,15 @@
   }
 
   // 2. THEME SWITCHER
-  const themeSwitch = document.getElementById('checkbox');
+  const themeBtn = document.getElementById('theme-btn');
   const html = document.documentElement;
-  themeSwitch.addEventListener('change', (e) => {
-    if(e.target.checked) html.setAttribute('data-theme', 'light');
-    else html.setAttribute('data-theme', 'dark');
+  themeBtn.addEventListener('click', () => {
+    const currentTheme = html.getAttribute('data-theme');
+    if (currentTheme === 'light') {
+      html.setAttribute('data-theme', 'dark');
+    } else {
+      html.setAttribute('data-theme', 'light');
+    }
   });
 
   // 3. TEXT SPLITTING UTILITY
@@ -127,8 +131,8 @@
           const glitchInterval = setInterval(() => {
             const dx = (Math.random() - 0.5) * 12;
             const dy = (Math.random() - 0.5) * 6;
-            gsap.set(l1, { x: dx, y: dy, opacity: 0.6, color: '#FF0055' });
-            gsap.set(l2, { x: -dx, y: -dy, opacity: 0.6, color: '#00F0FF' });
+            gsap.set(l1, { x: dx, y: dy, opacity: 0.6, color: '#FF2B2B' });
+            gsap.set(l2, { x: -dx, y: -dy, opacity: 0.6, color: '#FFAA00' });
           }, 60);
 
           // Typing/Decrypting text
@@ -152,7 +156,7 @@
               // Resolve to clean cyber accent
               gsap.set([l1, l2], { opacity: 0 });
               textEl.style.color = '#FFFFFF';
-              textEl.style.textShadow = '0 0 20px var(--accent)';
+              textEl.style.textShadow = '0 0 25px #FF0000, 0 0 50px #FFAA00';
               sub.innerText = "ACCESS GRANTED. DECAPPED ENVIRONMENT READY.";
               
               // Collapse animation
@@ -360,29 +364,30 @@
             const cx = rect.left - containerRect.left + rect.width / 2;
             const cy = rect.top - containerRect.top + rect.height / 2;
 
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 20; i++) {
               const spark = document.createElement('div');
               spark.className = 'leo-spark';
               container.appendChild(spark);
 
+              // Emulate metal impact spray (spawning outwards with physics-based gravity drag)
               const angle = Math.random() * Math.PI * 2;
-              const distance = 40 + Math.random() * 120;
-              const tx = cx + Math.cos(angle) * distance;
-              const ty = cy + Math.sin(angle) * distance;
+              const force = 80 + Math.random() * 200;
+              const tx = cx + Math.cos(angle) * force;
+              const ty = cy + Math.sin(angle) * force + (100 + Math.random() * 150); // Gravity drop pull
 
               gsap.set(spark, {
-                x: cx + (Math.random() - 0.5) * 15,
-                y: cy + (Math.random() - 0.5) * 15,
-                scale: Math.random() * 1.4 + 0.6
+                x: cx + (Math.random() - 0.5) * 12,
+                y: cy + (Math.random() - 0.5) * 12,
+                scale: Math.random() * 1.6 + 0.6
               });
 
               gsap.to(spark, {
                 x: tx,
                 y: ty,
                 opacity: 0,
-                scale: 0.1,
-                duration: 0.4 + Math.random() * 0.4,
-                ease: 'power2.out',
+                scale: 0.05,
+                duration: 0.6 + Math.random() * 0.6,
+                ease: 'power3.out',
                 onComplete: () => spark.remove()
               });
             }
