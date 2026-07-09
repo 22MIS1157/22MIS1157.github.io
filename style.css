@@ -12,7 +12,7 @@
   --glass-bg: rgba(13, 13, 17, 0.8);
   --glass-border: rgba(0, 240, 255, 0.15);
   --grid-color: rgba(0, 240, 255, 0.015);
-  --magic-title-color: rgba(255, 255, 255, 0.18); /* Light Watermark for Dark Theme */
+  --magic-title-color: rgba(255, 255, 255, 0.25); /* Light Watermark for Dark Theme */
   --leo-char-1-grad: linear-gradient(to bottom, #FFFFFF 10%, #8B5CF6 50%, #00F0FF 100%);
   --leo-char-2-grad: linear-gradient(to bottom, #FFFFFF 10%, #C084FC 55%, #06B6D4 100%);
   --leo-char-glow-1: drop-shadow(0 0 10px rgba(0, 240, 255, 0.6)) drop-shadow(0 0 25px rgba(139, 92, 246, 0.4));
@@ -20,7 +20,7 @@
 }
 
 :root[data-theme="light"] {
-  --bg: #FDF8F2;        /* Vanilla Cloud Cream Background */
+  --bg: #FDFBF7;        /* Vanilla Cloud Cream Background */
   --bg-card: #FFFFFF;   /* Clean White Card Surfaces */
   --fg: #1E56CD;        /* Stream Blue Text */
   --accent: #1E56CD;    /* Stream Blue Accent */
@@ -29,7 +29,7 @@
   --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-border: rgba(30, 86, 205, 0.12);
   --grid-color: rgba(30, 86, 205, 0.015);
-  --magic-title-color: rgba(15, 23, 42, 0.16); /* Dark Watermark for Light Theme */
+  --magic-title-color: rgba(30, 86, 205, 0.20); /* Dark Watermark for Light Theme */
   --leo-char-1-grad: linear-gradient(to bottom, #1E56CD 10%, #2563EB 50%, #151C2C 100%);
   --leo-char-2-grad: linear-gradient(to bottom, #1E56CD 10%, #3B82F6 55%, #111827 100%);
   --leo-char-glow-1: drop-shadow(0 0 8px rgba(30, 86, 205, 0.2));
@@ -308,7 +308,7 @@ html[data-theme="light"] .moon-icon {
   letter-spacing: -5px; 
   text-transform: uppercase; 
   pointer-events: none; 
-  filter: blur(10px);
+  filter: blur(3px); /* Reduced blur for better visibility */
   z-index: 10;
 }
 
@@ -392,6 +392,7 @@ html[data-theme="light"] .moon-icon {
 .skills-display-pane {
   width: 100%;
   aspect-ratio: 1/1;
+  min-height: 400px;
   max-width: 500px;
   margin: 0 auto;
   position: relative;
@@ -588,31 +589,33 @@ html[data-theme="light"] .moon-icon {
   width: 100%;
 }
 .decent-line-1, .decent-line-2 {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
   overflow: visible;
-  text-align: center;
   width: 100%;
-  padding: 10px 0;
+  padding-bottom: 20px; /* Fix for truncation */
 }
 .decent-char {
   display: inline-block;
   font-family: 'Outfit', sans-serif;
   text-transform: uppercase;
   color: var(--accent);
-  transform: translateY(110%);
   opacity: 0;
-  letter-spacing: -2px;
   text-shadow: 0 4px 12px rgba(30, 86, 205, 0.1);
+  line-height: 1.1;
 }
 .decent-char-1 {
   font-size: clamp(2.5rem, 7vw, 4.5rem);
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-bottom: -10px;
+  letter-spacing: 2px;
 }
 .decent-char-2 {
-  font-size: clamp(4.5rem, 12vw, 9rem);
+  font-size: clamp(4.5rem, 12vw, 9.5rem);
   font-weight: 900;
-  letter-spacing: -4px;
+  letter-spacing: -1px;
 }
 
 

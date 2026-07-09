@@ -191,38 +191,37 @@
           const chars1 = line1.querySelectorAll('.decent-char-1');
           const chars2 = line2.querySelectorAll('.decent-char-2');
           const allChars = [...chars1, ...chars2];
-
-          // Initialize states dispersed in Z space with rotations for the arrival sequence
+          // Jaw-Dropping Catchy Arrival Animation
           allChars.forEach((span) => {
             if (span.innerText === '\u00A0') return;
             gsap.set(span, {
               opacity: 0,
-              y: 120,
-              z: -600,
-              rotationX: 110,
-              rotationY: 45,
-              rotationZ: -20,
-              scale: 0.2,
-              transformOrigin: "50% 50% -100px"
+              z: -1000,
+              y: 200,
+              rotationX: 180,
+              rotationY: 90,
+              scale: 0.1,
+              filter: 'blur(30px)',
+              transformOrigin: "50% 50% -200px"
             });
           });
 
           const tl = gsap.timeline();
           tl.to(allChars, {
             opacity: 1,
-            y: 0,
             z: 0,
+            y: 0,
             rotationX: 0,
             rotationY: 0,
-            rotationZ: 0,
             scale: 1,
+            filter: 'blur(0px)',
             duration: 1.5,
             stagger: {
-              amount: 0.7,
-              from: "center"
+              each: 0.08,
+              from: "random"
             },
-            ease: "elastic.out(1.15, 0.7)"
-          })
+            ease: "elastic.out(1, 0.5)"
+          }, "+=0.3")
           .to('.hero-glow', { opacity: 0.65, scale: 1.8, duration: 1.5, ease: 'power2.out' }, '-=0.8')
           .to('.scroll-down-indicator', { opacity: 1, y: 0, duration: 0.8 }, '-=1.0');
         }
