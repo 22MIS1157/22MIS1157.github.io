@@ -1,101 +1,225 @@
-import { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Stars, Html, Float } from '@react-three/drei';
+import { useState, useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
 import { useTheme } from './ThemeContext';
 
-const skills = [
-  "Python", "Java", "JavaScript", "C", "C++", "SQL",
-  "React", "Next.js", "Framer Motion", "Tailwind", "Three.js",
-  "Node.js", "Express", "FastAPI", "REST API",
-  "PyTorch", "TensorFlow", "YOLOv8", "OpenCV", "Scikit-Learn",
-  "AWS Lambda", "DynamoDB", "S3", "MySQL", "MongoDB",
-  "Git", "Docker", "Agile", "IoT", "Arduino"
+const categories = [
+  {
+    name: "AI & ML",
+    icon: "🧠",
+    skills: [
+      { name: "PyTorch", level: 90 },
+      { name: "TensorFlow", level: 85 },
+      { name: "YOLOv8", level: 92 },
+      { name: "OpenCV", level: 88 },
+      { name: "Scikit-Learn", level: 80 },
+    ]
+  },
+  {
+    name: "Frontend",
+    icon: "🎨",
+    skills: [
+      { name: "React", level: 95 },
+      { name: "Next.js", level: 85 },
+      { name: "Framer Motion", level: 90 },
+      { name: "Tailwind CSS", level: 92 },
+      { name: "Three.js", level: 75 },
+    ]
+  },
+  {
+    name: "Backend",
+    icon: "⚙️",
+    skills: [
+      { name: "Node.js", level: 88 },
+      { name: "Express", level: 90 },
+      { name: "FastAPI", level: 82 },
+      { name: "REST API", level: 95 },
+    ]
+  },
+  {
+    name: "Languages",
+    icon: "💻",
+    skills: [
+      { name: "Python", level: 95 },
+      { name: "JavaScript", level: 92 },
+      { name: "Java", level: 85 },
+      { name: "C++", level: 78 },
+      { name: "SQL", level: 88 },
+    ]
+  },
+  {
+    name: "Cloud & DB",
+    icon: "☁️",
+    skills: [
+      { name: "AWS Lambda", level: 80 },
+      { name: "DynamoDB", level: 78 },
+      { name: "S3", level: 82 },
+      { name: "MySQL", level: 88 },
+      { name: "MongoDB", level: 85 },
+    ]
+  },
+  {
+    name: "Tools",
+    icon: "🛠️",
+    skills: [
+      { name: "Git", level: 95 },
+      { name: "Docker", level: 78 },
+      { name: "Arduino", level: 80 },
+      { name: "Agile", level: 85 },
+      { name: "IoT", level: 82 },
+    ]
+  },
 ];
 
-function SkillNode({ skill, position, accentColor }) {
-  const ref = useRef();
-  
-  // Orbit logic
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    ref.current.rotation.y = Math.sin(t / 4) * 0.5;
-    ref.current.rotation.x = Math.cos(t / 4) * 0.5;
-  });
+/* ── 3D-tilt skill card (hover-driven) ─────────────────── */
+function SkillCard({ skill, index }) {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [15, -15]), { stiffness: 200, damping: 20 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-15, 15]), { stiffness: 200, damping: 20 });
+
+  function handleMouse(e) {
+    const rect = ref.current.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    x.set(px);
+    y.set(py);
+  }
+
+  function handleLeave() {
+    x.set(0);
+    y.set(0);
+  }
 
   return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2} position={position}>
-      <group ref={ref}>
-        {/* Core glowing sphere */}
-        <mesh>
-          <sphereGeometry args={[0.3, 16, 16]} />
-          <meshBasicMaterial color={accentColor} transparent opacity={0.5} />
-        </mesh>
-        
-        {/* HTML Tag hovering over the sphere */}
-        <Html center distanceFactor={15} zIndexRange={[100, 0]}>
-          <div className="px-3 py-1.5 rounded-full border border-[var(--glass-border)] bg-[var(--glass-bg)] backdrop-blur-md text-[var(--fg)] font-bold text-sm whitespace-nowrap shadow-xl hover:bg-[var(--accent)] hover:text-[var(--bg)] transition-colors duration-300 cursor-pointer">
-            {skill}
-          </div>
-        </Html>
-      </group>
-    </Float>
-  );
-}
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={handleLeave}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.06 }}
+      style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+      className="group relative p-5 rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-bg)] backdrop-blur-md cursor-pointer hover:border-[var(--accent)] transition-colors duration-300"
+    >
+      {/* Glow on hover */}
+      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{ background: 'radial-gradient(circle at 50% 50%, var(--accent), transparent 70%)', opacity: 0.08 }}
+      />
 
-function SkillCloud({ accentColor }) {
-  const groupRef = useRef();
+      <div className="flex items-center justify-between mb-3 relative z-10">
+        <span className="text-lg font-bold text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors duration-300">{skill.name}</span>
+        <span className="font-mono text-sm text-[var(--accent)] font-bold">{skill.level}%</span>
+      </div>
 
-  // Rotate the entire cloud slowly
-  useFrame((state) => {
-    groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.05;
-  });
-
-  // Distribute skills spherically
-  const nodes = useMemo(() => {
-    return skills.map((skill, i) => {
-      const phi = Math.acos(-1 + (2 * i) / skills.length);
-      const theta = Math.sqrt(skills.length * Math.PI) * phi;
-      const r = 8; // Radius of the cloud
-      const x = r * Math.cos(theta) * Math.sin(phi);
-      const y = r * Math.sin(theta) * Math.sin(phi);
-      const z = r * Math.cos(phi);
-      return { skill, position: [x, y, z] };
-    });
-  }, []);
-
-  return (
-    <group ref={groupRef}>
-      {nodes.map((node, i) => (
-        <SkillNode key={i} skill={node.skill} position={node.position} accentColor={accentColor} />
-      ))}
-    </group>
+      {/* Animated progress bar */}
+      <div className="w-full h-2 rounded-full bg-[var(--glass-border)] overflow-hidden relative z-10">
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: `${skill.level}%` }}
+          transition={{ duration: 1.2, delay: index * 0.06 + 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="h-full rounded-full"
+          style={{ background: 'linear-gradient(90deg, var(--accent), var(--fg))' }}
+        />
+      </div>
+    </motion.div>
   );
 }
 
 export default function Skills() {
+  const [activeCategory, setActiveCategory] = useState(0);
   const { theme } = useTheme();
-  const accentColor = theme === 'dark' ? '#FFEA00' : '#1E56CD';
 
   return (
-    <section className="relative w-full h-[800px] flex flex-col items-center justify-center bg-[var(--bg)] overflow-hidden" id="skills">
-      <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 18], fov: 60 }}>
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[10, 10, 10]} intensity={1} />
-          {theme === 'dark' && <Stars radius={50} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />}
-          <SkillCloud accentColor={accentColor} />
-          <OrbitControls 
-            enableZoom={false} 
-            enablePan={false} 
-            autoRotate={false}
+    <section className="relative w-full py-24 flex flex-col items-center justify-center bg-[var(--bg)] overflow-hidden" id="skills">
+
+      {/* Background particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              background: 'var(--accent)',
+              opacity: 0.2,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.1, 0.4, 0.1],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+            }}
           />
-        </Canvas>
+        ))}
       </div>
 
-      <div className="absolute bottom-10 z-10 w-full text-center pointer-events-none">
-        <p className="font-mono text-[var(--text-muted)] text-sm tracking-widest uppercase">
-          Drag to rotate the technology constellation
-        </p>
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6">
+
+        {/* Category tabs — HOVER driven, not click */}
+        <div className="flex flex-wrap justify-center gap-3 mb-16">
+          {categories.map((cat, i) => (
+            <motion.button
+              key={cat.name}
+              onMouseEnter={() => setActiveCategory(i)}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className={`relative px-6 py-3 rounded-xl font-bold text-base transition-all duration-300 border ${
+                activeCategory === i
+                  ? 'bg-[var(--fg)] text-[var(--bg)] border-[var(--fg)] shadow-xl scale-105'
+                  : 'bg-transparent text-[var(--text-muted)] border-[var(--glass-border)] hover:border-[var(--accent)] hover:text-[var(--fg)]'
+              }`}
+            >
+              <span className="mr-2">{cat.icon}</span>
+              {cat.name}
+
+              {activeCategory === i && (
+                <motion.div
+                  layoutId="activeCategoryIndicator"
+                  className="absolute inset-0 rounded-xl border-2 border-[var(--accent)]"
+                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                />
+              )}
+            </motion.button>
+          ))}
+        </div>
+
+        {/* Skill cards grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
+            {categories[activeCategory].skills.map((skill, i) => (
+              <SkillCard key={skill.name} skill={skill} index={i} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Average proficiency display */}
+        <motion.div
+          key={`avg-${activeCategory}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-12 text-center"
+        >
+          <p className="font-mono text-[var(--text-muted)] text-sm tracking-widest uppercase">
+            Average Proficiency: <span className="text-[var(--accent)] font-bold text-lg">
+              {Math.round(categories[activeCategory].skills.reduce((a, s) => a + s.level, 0) / categories[activeCategory].skills.length)}%
+            </span>
+          </p>
+        </motion.div>
       </div>
     </section>
   );
