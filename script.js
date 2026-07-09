@@ -133,8 +133,8 @@
           const glitchInterval = setInterval(() => {
             const dx = (Math.random() - 0.5) * 12;
             const dy = (Math.random() - 0.5) * 6;
-            gsap.set(l1, { x: dx, y: dy, opacity: 0.6, color: '#FF2B2B' });
-            gsap.set(l2, { x: -dx, y: -dy, opacity: 0.6, color: '#FFAA00' });
+            gsap.set(l1, { x: dx, y: dy, opacity: 0.6, color: '#4FD8E8' });
+            gsap.set(l2, { x: -dx, y: -dy, opacity: 0.6, color: '#FFA23C' });
           }, 60);
 
           // Typing/Decrypting text
@@ -158,7 +158,7 @@
               // Resolve to clean cyber accent
               gsap.set([l1, l2], { opacity: 0 });
               textEl.style.color = '#FFFFFF';
-              textEl.style.textShadow = '0 0 25px #FF0000, 0 0 50px #FFAA00';
+              textEl.style.textShadow = '0 0 25px #4FD8E8, 0 0 50px #FFA23C';
               sub.innerText = "ACCESS GRANTED. DECAPPED ENVIRONMENT READY.";
               
               // Collapse animation
@@ -199,12 +199,13 @@
           const particles = [];
           const particleCount = 180;
           for (let i = 0; i < particleCount; i++) {
+            const isAmber = Math.random() > 0.5;
             particles.push({
               angle: Math.random() * Math.PI * 2,
               radius: Math.random() * Math.max(canvas.width, canvas.height) * 0.6 + 50,
               speed: Math.random() * 0.02 + 0.005,
               size: Math.random() * 2 + 1,
-              color: `rgba(0, 240, 255, ${Math.random() * 0.6 + 0.3})`
+              color: isAmber ? `rgba(255, 162, 60, ${Math.random() * 0.6 + 0.3})` : `rgba(79, 216, 232, ${Math.random() * 0.6 + 0.3})`
             });
           }
 
@@ -213,7 +214,7 @@
           let isComplete = false;
 
           const animateParticles = () => {
-            ctx.fillStyle = 'rgba(2, 2, 5, 0.2)'; // trail effect
+            ctx.fillStyle = 'rgba(11, 14, 19, 0.25)'; // trail effect using deep panel ink
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const centerX = canvas.width / 2;
@@ -238,8 +239,8 @@
             // Accretion disk glow
             const glowRad = 40 + (loadingProgress / 100) * 120;
             const grad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, glowRad);
-            grad.addColorStop(0, 'rgba(0, 240, 255, 0.4)');
-            grad.addColorStop(0.5, 'rgba(0, 240, 255, 0.1)');
+            grad.addColorStop(0, 'rgba(255, 162, 60, 0.45)');   // Signal Amber center
+            grad.addColorStop(0.5, 'rgba(79, 216, 232, 0.15)'); // Scope Cyan corona
             grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
             ctx.fillStyle = grad;
             ctx.beginPath();
@@ -892,9 +893,162 @@
       .set(['#tree-root', '#tree-left', '#tree-leaf-1'], { scale: 1, stroke: '' });
   };
 
+  // 9. DIAGNOSTIC HUD CONTROLLER
+  const initHudController = () => {
+    const coordsEl = document.getElementById('hud-coordinates');
+    const signalEl = document.getElementById('hud-signal');
+    const clockEl = document.getElementById('hud-utc-time');
+    const sectionEl = document.getElementById('hud-section-name');
+
+    // Mouse coordinates tracker
+    window.addEventListener('mousemove', (e) => {
+      if (coordsEl) {
+        coordsEl.innerText = `[SYS_LOCK: OK] X:${String(Math.round(e.clientX)).padStart(3, '0')} / Y:${String(Math.round(e.clientY)).padStart(3, '0')}`;
+      }
+    });
+
+    // Scroll percentage (Signal strength tracker)
+    const updateSignal = () => {
+      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = window.scrollY || document.documentElement.scrollTop;
+      const pct = docHeight > 0 ? Math.round((scrolled / docHeight) * 100) : 0;
+      if (signalEl) {
+        const signalStrength = 80 + Math.round((pct / 100) * 20);
+        signalEl.innerText = `SIG: ${signalStrength}%`;
+      }
+    };
+    window.addEventListener('scroll', updateSignal);
+    updateSignal();
+
+    // UTC System Clock
+    const updateClock = () => {
+      const now = new Date();
+      const timeStr = now.toISOString().substr(11, 8);
+      if (clockEl) clockEl.innerText = timeStr;
+    };
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Active Section segment tracker
+    const sections = document.querySelectorAll('section');
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px -50% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.getAttribute('id');
+          if (sectionEl && sectionId) {
+            sectionEl.innerText = `ACTIVE_SEG: ${sectionId.toUpperCase()}`;
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+  };
+
+  // 10. ACTIVE TELEMETRY SCOPE (Oscilloscope Waveform on Canvas)
+  const initTelemetryScope = () => {
+    const canvas = document.getElementById('hud-oscilloscope');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    
+    const resize = () => {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    let offset = 0;
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw grid lines inside the mini oscilloscope
+      ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--glass-border') || 'rgba(79, 216, 232, 0.1)';
+      ctx.lineWidth = 0.5;
+      
+      // Horizontal center line
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height / 2);
+      ctx.lineTo(canvas.width, canvas.height / 2);
+      ctx.stroke();
+
+      // Draw dynamic sine-based telemetry sweep line
+      ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary') || '#4FD8E8';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      
+      for (let x = 0; x < canvas.width; x++) {
+        const y = canvas.height / 2 + 
+          Math.sin(x * 0.05 + offset) * 4 + 
+          Math.sin(x * 0.12 - offset * 1.5) * 2;
+        if (x === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+      
+      offset += 0.08;
+      requestAnimationFrame(draw);
+    };
+    draw();
+  };
+
+  // 11. CUSTOM CROSSHAIR CURSOR CONTROLLER
+  const initCustomCursor = () => {
+    const cursor = document.getElementById('crosshair-cursor');
+    if (!cursor) return;
+
+    // Center coordinates
+    const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const mouse = { x: pos.x, y: pos.y };
+    
+    // QuickTo properties for high-performance GSAP tracking
+    const xTo = gsap.quickTo(cursor, "x", { duration: 0.08, ease: "power2.out" });
+    const yTo = gsap.quickTo(cursor, "y", { duration: 0.08, ease: "power2.out" });
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      xTo(mouse.x);
+      yTo(mouse.y);
+    });
+
+    // Detect clickable hover states
+    const hoverables = document.querySelectorAll('a, button, select, input, textarea, [role="button"], .bento-card, .project-block, .theme-btn');
+    const labelEl = document.getElementById('crosshair-label');
+
+    hoverables.forEach(el => {
+      el.addEventListener('mouseenter', (e) => {
+        cursor.classList.add('hovering');
+        if (labelEl) {
+          let hoverText = el.getAttribute('data-cursor') || '[INTERACT]';
+          if (el.classList.contains('bento-card')) hoverText = '[EXPAND MATRIX]';
+          if (el.classList.contains('project-block')) hoverText = '[VIEW SCENE HUD]';
+          if (el.classList.contains('theme-btn')) hoverText = '[TOGGLE TELEMETRY]';
+          
+          labelEl.innerText = hoverText;
+        }
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hovering');
+      });
+    });
+  };
+
   // INIT
   window.addEventListener("DOMContentLoaded", () => {
     window.scrollTo(0, 0);
     initLoader(); // Run loader -> hero -> animations sequentially
+    initHudController();
+    initTelemetryScope();
+    initCustomCursor();
   });
 })();
