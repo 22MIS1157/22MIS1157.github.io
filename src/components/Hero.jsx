@@ -1,5 +1,4 @@
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stars } from '@react-three/drei';
+
 import { motion } from 'framer-motion';
 import { useTheme } from './ThemeContext';
 
@@ -30,14 +29,32 @@ export default function Hero() {
   return (
     <section className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center bg-[var(--bg)]">
       
-      {/* 3D Background */}
-      <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
-        <Canvas camera={{ position: [0, 0, 8] }}>
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[10, 10, 5]} intensity={1} />
-          <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />
-          <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
-        </Canvas>
+      {/* 2D Framer Motion Stars Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {[...Array(150)].map((_, i) => {
+          const size = Math.random() * 2 + 1;
+          return (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-[var(--accent)]"
+              style={{
+                width: size,
+                height: size,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                opacity: [0.1, 0.8, 0.1],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 2 + Math.random() * 4,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+              }}
+            />
+          );
+        })}
       </div>
 
       {/* Hero Typography Foreground */}
