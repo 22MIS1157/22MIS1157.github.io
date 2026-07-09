@@ -57,239 +57,99 @@
   };
 
   // 4. CINEMATIC RANDOMIZED LOADER
+  // 4. KINETIC MORPHING TITLE CARD LOADER
   const initLoader = () => {
     const loaderContainer = document.getElementById('loader-content-container');
     const loaderWrapper = document.getElementById('loader-wrapper');
 
-    // Create 3 advanced loaders
-    const loaders = [
-      {
-        id: 'marvel',
-        html: `
-          <div class="marvel-loader">
-            <div class="marvel-logo-box" id="marvel-box">
-              <span class="marvel-logo-text projecting" id="marvel-text">AFNAAN AHMED</span>
-            </div>
-            <div class="marvel-sub" id="marvel-sub">ACADEMIC LIFE PORTFOLIO</div>
+    const loaderHtml = `
+      <div class="kinetic-loader">
+        <div class="kinetic-center">
+          <div class="kinetic-letter-shield" id="kinetic-shield">A</div>
+          <div class="kinetic-name-row" id="kinetic-name"></div>
+          <div class="kinetic-progress-bar">
+            <div class="kinetic-progress-fill" id="kinetic-progress"></div>
           </div>
-        `,
-        run: (htmlCode, onComplete) => {
-          loaderContainer.innerHTML = htmlCode;
-          const box = document.getElementById('marvel-box');
-          const sub = document.getElementById('marvel-sub');
-          const text = document.getElementById('marvel-text');
+        </div>
+      </div>
+    `;
 
-          const tl = gsap.timeline({ onComplete });
+    loaderContainer.innerHTML = loaderHtml;
+    const shield = document.getElementById('kinetic-shield');
+    const nameRow = document.getElementById('kinetic-name');
+    const progressFill = document.getElementById('kinetic-progress');
 
-          // Screen rumble/shake helper
-          const triggerRumble = () => {
-            document.body.classList.add('rumble');
-            setTimeout(() => document.body.classList.remove('rumble'), 300);
-          };
-
-          // Scale down from giant zoom
-          tl.fromTo(box, 
-            { scale: 12, opacity: 0, rotationX: 45, filter: 'blur(20px)' },
-            { scale: 1, opacity: 1, rotationX: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power4.out', onComplete: triggerRumble }
-          )
-          .to(sub, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
-          .to({}, { duration: 1.2 }) // Keep showing
-          .call(() => {
-            // Remove projection gradient for a solid white flash
-            text.classList.remove('projecting');
-            text.style.color = '#FFFFFF';
-            box.style.background = '#FFFFFF';
-            box.style.borderColor = '#E50914';
-            triggerRumble();
-          })
-          .to(box, { scale: 18, opacity: 0, duration: 0.8, ease: 'power3.in' })
-          .to(loaderWrapper, { autoAlpha: 0, duration: 0.4 }, '-=0.4');
-        }
-      },
-      {
-        id: 'matrix-glitch',
-        html: `
-          <div class="glitch-loader-container">
-            <div class="matrix-scanline"></div>
-            <div class="glitch-base" id="glitch-text">INITIALIZING_SYS_</div>
-            <div class="glitch-layer layer-1" id="glitch-l1">INITIALIZING_SYS_</div>
-            <div class="glitch-layer layer-2" id="glitch-l2">INITIALIZING_SYS_</div>
-            <div class="marvel-sub" id="glitch-sub" style="opacity: 1; transform: none; margin-top: 20px;">ESTABLISHING HIGH-SECURE PORT...</div>
-          </div>
-        `,
-        run: (htmlCode, onComplete) => {
-          loaderContainer.innerHTML = htmlCode;
-          const textEl = document.getElementById('glitch-text');
-          const l1 = document.getElementById('glitch-l1');
-          const l2 = document.getElementById('glitch-l2');
-          const sub = document.getElementById('glitch-sub');
-          
-          const targetWord = "AFNAAN AHMED";
-          const glyphs = "0123456789ABCDEF@#$%-+=_?";
-
-          const tl = gsap.timeline({ onComplete });
-
-          // Glitch text chromatic aberration loop
-          const glitchInterval = setInterval(() => {
-            const dx = (Math.random() - 0.5) * 12;
-            const dy = (Math.random() - 0.5) * 6;
-            gsap.set(l1, { x: dx, y: dy, opacity: 0.6, color: '#4FD8E8' });
-            gsap.set(l2, { x: -dx, y: -dy, opacity: 0.6, color: '#FFA23C' });
-          }, 60);
-
-          // Typing/Decrypting text
-          let currentStep = 0;
-          const decryptInterval = setInterval(() => {
-            let result = "";
-            for (let i = 0; i < targetWord.length; i++) {
-              if (i < currentStep) {
-                result += targetWord[i];
-              } else {
-                result += glyphs[Math.floor(Math.random() * glyphs.length)];
-              }
-            }
-            textEl.innerText = result;
-            l1.innerText = result;
-            l2.innerText = result;
-
-            if (currentStep >= targetWord.length) {
-              clearInterval(decryptInterval);
-              clearInterval(glitchInterval);
-              // Resolve to clean cyber accent
-              gsap.set([l1, l2], { opacity: 0 });
-              textEl.style.color = '#FFFFFF';
-              textEl.style.textShadow = '0 0 25px #4FD8E8, 0 0 50px #FFA23C';
-              sub.innerText = "ACCESS GRANTED. DECAPPED ENVIRONMENT READY.";
-              
-              // Collapse animation
-              tl.to('.glitch-loader-container', { scaleY: 0.005, duration: 0.3, ease: 'power3.inOut', delay: 0.5 })
-                .to('.glitch-loader-container', { scaleX: 0, duration: 0.3, ease: 'power3.in' })
-                .to(loaderWrapper, { autoAlpha: 0, duration: 0.3 }, '-=0.2');
-            }
-            currentStep += 0.5; // Decrypt speeds
-          }, 45);
-        }
-      },
-      {
-        id: 'cosmic-swarm',
-        html: `
-          <div class="cosmic-loader-container" style="position:relative; width:100%; height:100%; display:flex; justify-content:center; align-items:center;">
-            <canvas id="cosmic-canvas" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></canvas>
-            <div class="cosmic-text" style="z-index:2; font-family:'Outfit',sans-serif; font-weight:800; font-size:clamp(1.8rem,5vw,3.5rem); color:#FFF; letter-spacing:4px; text-align:center;">
-               <div id="cosmic-percent" style="font-size:1.8rem; font-family:'JetBrains Mono',monospace; opacity:0.8; margin-bottom:15px; color:var(--accent);">0%</div>
-               <div id="cosmic-status">LOADING AFNAAN'S ACADEMIC LIFE...</div>
-            </div>
-          </div>
-        `,
-        run: (htmlCode, onComplete) => {
-          loaderContainer.innerHTML = htmlCode;
-          const canvas = document.getElementById('cosmic-canvas');
-          const ctx = canvas.getContext('2d');
-          const percentEl = document.getElementById('cosmic-percent');
-          const statusEl = document.getElementById('cosmic-status');
-
-          const resize = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-          };
-          window.addEventListener('resize', resize);
-          resize();
-
-          // Particle structure
-          const particles = [];
-          const particleCount = 180;
-          for (let i = 0; i < particleCount; i++) {
-            const isAmber = Math.random() > 0.5;
-            particles.push({
-              angle: Math.random() * Math.PI * 2,
-              radius: Math.random() * Math.max(canvas.width, canvas.height) * 0.6 + 50,
-              speed: Math.random() * 0.02 + 0.005,
-              size: Math.random() * 2 + 1,
-              color: isAmber ? `rgba(255, 162, 60, ${Math.random() * 0.6 + 0.3})` : `rgba(79, 216, 232, ${Math.random() * 0.6 + 0.3})`
-            });
-          }
-
-          let loadingProgress = 0;
-          let flareSize = 0;
-          let isComplete = false;
-
-          const animateParticles = () => {
-            ctx.fillStyle = 'rgba(11, 14, 19, 0.25)'; // trail effect using deep panel ink
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-
-            // Swirl speeds adapt to progress
-            const speedMultiplier = 1 + (loadingProgress / 100) * 3;
-            const contraction = 1 - (loadingProgress / 100) * 0.9; // spiral inwards
-
-            particles.forEach(p => {
-              p.angle += p.speed * speedMultiplier;
-              const r = p.radius * contraction;
-              const x = centerX + Math.cos(p.angle) * r;
-              const y = centerY + Math.sin(p.angle) * r;
-
-              ctx.beginPath();
-              ctx.arc(x, y, p.size, 0, Math.PI * 2);
-              ctx.fillStyle = p.color;
-              ctx.fill();
-            });
-
-            // Accretion disk glow
-            const glowRad = 40 + (loadingProgress / 100) * 120;
-            const grad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, glowRad);
-            grad.addColorStop(0, 'rgba(255, 162, 60, 0.45)');   // Signal Amber center
-            grad.addColorStop(0.5, 'rgba(79, 216, 232, 0.15)'); // Scope Cyan corona
-            grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            ctx.fillStyle = grad;
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, glowRad, 0, Math.PI * 2);
-            ctx.fill();
-
-            if (isComplete) {
-              // Draw final flash burst
-              ctx.fillStyle = `rgba(255, 255, 255, ${flareSize})`;
-              ctx.fillRect(0, 0, canvas.width, canvas.height);
-              flareSize += 0.05;
-              if (flareSize >= 1.2) {
-                // Done
-                window.removeEventListener('resize', resize);
-                gsap.to(loaderWrapper, { autoAlpha: 0, duration: 0.4, onComplete });
-                return;
-              }
-            }
-
-            requestAnimationFrame(animateParticles);
-          };
-
-          // Trigger particle animation loop
-          animateParticles();
-
-          // Increment percentage loader
-          const progressInterval = setInterval(() => {
-            loadingProgress += Math.floor(Math.random() * 4) + 1;
-            if (loadingProgress >= 100) {
-              loadingProgress = 100;
-              clearInterval(progressInterval);
-              statusEl.innerText = "ORBIT STABILIZED. WELCOME.";
-              setTimeout(() => {
-                isComplete = true;
-              }, 400);
-            }
-            percentEl.innerText = `${loadingProgress}%`;
-          }, 45);
-        }
-      }
-    ];
-
-    const chosenLoader = loaders[Math.floor(Math.random() * loaders.length)];
-    chosenLoader.run(chosenLoader.html, () => {
-      initHero();
-      initMagicScroll();
-      initBentoHover();
-      initCinematicScenes();
+    // Split target name: "AFNAAN AHMED P"
+    const name = "AFNAAN AHMED P";
+    nameRow.innerHTML = '';
+    name.split('').forEach(char => {
+      const span = document.createElement('span');
+      span.className = 'kinetic-char';
+      span.innerText = char === ' ' ? '\u00A0' : char;
+      nameRow.appendChild(span);
     });
+
+    const chars = nameRow.querySelectorAll('.kinetic-char');
+
+    // Initialize states
+    gsap.set(chars, {
+      opacity: 0,
+      scale: 3,
+      rotationY: 90,
+      display: 'inline-block'
+    });
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        initHero();
+        initMagicScroll();
+        initBentoHover();
+        initCinematicScenes();
+      }
+    });
+
+    // 1. Zoom and pulse the central letter shield "A"
+    tl.fromTo(shield, 
+      { scale: 0.2, opacity: 0, rotationY: -180 },
+      { scale: 1, opacity: 1, rotationY: 0, duration: 1.2, ease: "elastic.out(1, 0.75)" }
+    )
+    .to(shield, {
+      scale: 1.1,
+      textShadow: '0 0 30px var(--accent-secondary)',
+      duration: 0.6,
+      yoyo: true,
+      repeat: 1,
+      ease: "power2.inOut"
+    })
+    
+    // 2. Morph: Shield collapses, name row staggers open in 3D Y-axis
+    .to(shield, {
+      scale: 0,
+      opacity: 0,
+      rotationY: 180,
+      duration: 0.5,
+      ease: "power3.in"
+    })
+    .to(progressFill, {
+      width: '100%',
+      duration: 1.8,
+      ease: "power2.inOut"
+    }, "-=0.2")
+    .to(chars, {
+      opacity: 1,
+      scale: 1,
+      rotationY: 0,
+      duration: 0.8,
+      stagger: 0.05,
+      ease: "back.out(2.2)"
+    }, "-=1.5")
+    
+    // 3. Flash fade wrapper out
+    .to(loaderWrapper, {
+      autoAlpha: 0,
+      duration: 0.5,
+      ease: "power2.in"
+    }, "+=0.3");
   };
 
   // 5. CINEMATIC RANDOMIZED HERO
@@ -893,229 +753,6 @@
       .set(['#tree-root', '#tree-left', '#tree-leaf-1'], { scale: 1, stroke: '' });
   };
 
-  // 9. DIAGNOSTIC HUD CONTROLLER
-  const initHudController = () => {
-    const coordsEl = document.getElementById('hud-coordinates');
-    const signalEl = document.getElementById('hud-signal');
-    const clockEl = document.getElementById('hud-utc-time');
-    const sectionEl = document.getElementById('hud-section-name');
-
-    // Mouse coordinates tracker
-    window.addEventListener('mousemove', (e) => {
-      if (coordsEl) {
-        coordsEl.innerText = `[SYS_LOCK: OK] X:${String(Math.round(e.clientX)).padStart(3, '0')} / Y:${String(Math.round(e.clientY)).padStart(3, '0')}`;
-      }
-    });
-
-    // Scroll percentage (Signal strength tracker)
-    const updateSignal = () => {
-      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = window.scrollY || document.documentElement.scrollTop;
-      const pct = docHeight > 0 ? Math.round((scrolled / docHeight) * 100) : 0;
-      if (signalEl) {
-        const signalStrength = 80 + Math.round((pct / 100) * 20);
-        signalEl.innerText = `SIG: ${signalStrength}%`;
-      }
-    };
-    window.addEventListener('scroll', updateSignal);
-    updateSignal();
-
-    // UTC System Clock
-    const updateClock = () => {
-      const now = new Date();
-      const timeStr = now.toISOString().substr(11, 8);
-      if (clockEl) clockEl.innerText = timeStr;
-    };
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // Active Section segment tracker
-    const sections = document.querySelectorAll('section');
-    const observerOptions = {
-      root: null,
-      rootMargin: '-50% 0px -50% 0px',
-      threshold: 0
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const sectionId = entry.target.getAttribute('id');
-          if (sectionEl && sectionId) {
-            sectionEl.innerText = `ACTIVE_SEG: ${sectionId.toUpperCase()}`;
-          }
-        }
-      });
-    }, observerOptions);
-
-    sections.forEach(section => observer.observe(section));
-  };
-
-  // 10. ACTIVE TELEMETRY SCOPE (Oscilloscope Waveform on Canvas)
-  const initTelemetryScope = () => {
-    const canvas = document.getElementById('hud-oscilloscope');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    
-    const resize = () => {
-      canvas.width = canvas.parentElement.clientWidth;
-      canvas.height = canvas.parentElement.clientHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    let offset = 0;
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw grid lines inside the mini oscilloscope
-      ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--glass-border') || 'rgba(79, 216, 232, 0.1)';
-      ctx.lineWidth = 0.5;
-      
-      // Horizontal center line
-      ctx.beginPath();
-      ctx.moveTo(0, canvas.height / 2);
-      ctx.lineTo(canvas.width, canvas.height / 2);
-      ctx.stroke();
-
-      // Draw dynamic sine-based telemetry sweep line
-      ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary') || '#4FD8E8';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      
-      for (let x = 0; x < canvas.width; x++) {
-        const y = canvas.height / 2 + 
-          Math.sin(x * 0.05 + offset) * 4 + 
-          Math.sin(x * 0.12 - offset * 1.5) * 2;
-        if (x === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      }
-      ctx.stroke();
-      
-      offset += 0.08;
-      requestAnimationFrame(draw);
-    };
-    draw();
-  };
-
-  // 11. INTERACTIVE RADAR SCOPE WIDGET
-  const initRadarWidget = () => {
-    const canvas = document.getElementById('hero-radar-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const cpuEl = document.getElementById('tel-cpu');
-    const memEl = document.getElementById('tel-mem');
-    const logEl = document.getElementById('monitor-log');
-
-    const resize = () => {
-      canvas.width = canvas.parentElement.clientWidth;
-      canvas.height = canvas.parentElement.clientHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    // Mouse coordinates relative to radar center
-    let scopeMouse = { x: 0, y: 0, active: false };
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      scopeMouse.x = e.clientX - rect.left;
-      scopeMouse.y = e.clientY - rect.top;
-      scopeMouse.active = true;
-    });
-    canvas.addEventListener('mouseleave', () => {
-      scopeMouse.active = false;
-    });
-
-    // CPU/Memory stats simulator
-    setInterval(() => {
-      if (cpuEl) cpuEl.innerText = `${(Math.random() * 25 + 4).toFixed(1)}%`;
-      if (memEl) memEl.innerText = `${(2.4 + Math.random() * 0.8).toFixed(2)}MB`;
-    }, 1500);
-
-    const logs = [
-      "> SIGNAL DETECTED. LOCK ACTIVE.",
-      "> STABILIZING ACCRETION DISK...",
-      "> PACKET DISPATCH STABLE [128kb/s]",
-      "> VECTOR STORAGE SYNCHRONIZED",
-      "> SCANNING FINGER NAILBED SPECTRA...",
-      "> ICU PATIENT MORTALITY EVAL READY",
-      "> YOKOGAWA PLC TETHER ACTIVE",
-      "> DECAPP CONTROLLER STABLE"
-    ];
-    setInterval(() => {
-      if (logEl) {
-        logEl.innerText = logs[Math.floor(Math.random() * logs.length)];
-      }
-    }, 4000);
-
-    let sweepAngle = 0;
-    const drawRadar = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const cx = canvas.width / 2;
-      const cy = canvas.height / 2;
-      const radius = Math.min(cx, cy) * 0.85;
-
-      // Draw concentric radar scale circles
-      ctx.strokeStyle = 'rgba(79, 216, 232, 0.08)';
-      ctx.lineWidth = 1;
-      for (let r = radius / 4; r <= radius; r += radius / 4) {
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-
-      // Draw crosshair axes
-      ctx.beginPath();
-      ctx.moveTo(cx - radius, cy);
-      ctx.lineTo(cx + radius, cy);
-      ctx.moveTo(cx, cy - radius);
-      ctx.lineTo(cx, cy + radius);
-      ctx.stroke();
-
-      // Sweeper rotating line
-      ctx.strokeStyle = 'rgba(79, 216, 232, 0.4)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.lineTo(cx + Math.cos(sweepAngle) * radius, cy + Math.sin(sweepAngle) * radius);
-      ctx.stroke();
-
-      // Sweeper trail fade glow
-      ctx.fillStyle = 'rgba(79, 216, 232, 0.03)';
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.arc(cx, cy, radius, sweepAngle - 0.2, sweepAngle);
-      ctx.lineTo(cx, cy);
-      ctx.fill();
-
-      // Mouse interactive target reticle
-      if (scopeMouse.active) {
-        const dx = scopeMouse.x - cx;
-        const dy = scopeMouse.y - cy;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        
-        if (dist < radius) {
-          ctx.strokeStyle = '#FFA23C'; // Signal Amber lock
-          ctx.lineWidth = 1.5;
-          ctx.beginPath();
-          ctx.arc(scopeMouse.x, scopeMouse.y, 8, 0, Math.PI * 2);
-          ctx.stroke();
-
-          ctx.fillStyle = '#FFA23C';
-          ctx.font = '9px monospace';
-          ctx.fillText(`LOC:[${Math.round(dx)},${Math.round(-dy)}]`, scopeMouse.x + 12, scopeMouse.y - 6);
-        }
-      }
-
-      sweepAngle += 0.015;
-      requestAnimationFrame(drawRadar);
-    };
-    drawRadar();
-  };
-
   // 12. MAGNETIC MICRO-INTERACTIONS (Emil Kowalski style)
   const initMagneticElements = () => {
     const magnetics = document.querySelectorAll('.theme-btn, .social-btn, .contact-value.link');
@@ -1151,9 +788,6 @@
   window.addEventListener("DOMContentLoaded", () => {
     window.scrollTo(0, 0);
     initLoader(); // Run loader -> hero -> animations sequentially
-    initHudController();
-    initTelemetryScope();
-    initRadarWidget();
     initMagneticElements();
   });
 })();

@@ -18,26 +18,7 @@
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 </head>
 <body>
-    <!-- Diagnostic HUD Overlay -->
-    <header class="hud-header">
-        <div class="hud-logo">
-            <span class="hud-accent-text">// TELEMETRY.SYS</span>
-            <span class="hud-pulse-dot"></span>
-        </div>
-        <div class="hud-scope-container">
-            <canvas id="hud-oscilloscope"></canvas>
-        </div>
-        <div class="hud-coordinates" id="hud-coordinates">[SYS_LOCK: OK] X:000 / Y:000</div>
-        <div class="hud-right">
-            <span id="hud-section-name">ACTIVE_SEG: HERO</span>
-            <span class="hud-accent-text" id="hud-signal">SIG: 100%</span>
-        </div>
-    </header>
 
-    <div class="hud-corner hud-top-left">[SYS_MODE: TEST_ACTV]</div>
-    <div class="hud-corner hud-top-right">UTC_TIME: <span id="hud-utc-time">00:00:00</span></div>
-    <div class="hud-corner hud-bottom-left">BUILD_v7.4.2</div>
-    <div class="hud-corner hud-bottom-right">GRID_SCALE: 1:1</div>
 
     <!-- Scroll Progress Indicator -->
     <div id="scroll-progress"></div>
@@ -80,38 +61,12 @@
 
             <!-- CINEMATIC HERO -->
             <section class="cinematic-hero" id="hero">
-                <div class="hero-dashboard-grid">
-                    <!-- Left column: Big Name Slam Title -->
-                    <div class="hero-title-pane">
-                        <p class="hero-subtitle split-hero">// TELEMETRY SIGNAL DETECTED</p>
-                        <div class="hero-beam-container" id="hero-dynamic-container">
-                            <!-- JS will dynamically inject the chosen hero name animation markup here -->
-                        </div>
-                        <p class="hero-role-text">INTEGRATED SOFTWARE ENGINEER / AI DEVELOPER</p>
+                <div class="hero-center">
+                    <p class="hero-subtitle split-hero">Software Engineer / AI Developer</p>
+                    <div class="hero-beam-container" id="hero-dynamic-container">
+                        <!-- JS will dynamically inject the chosen hero name animation markup here -->
                     </div>
-                    
-                    <!-- Right column: Interactive Telemetry Monitor Widget -->
-                    <div class="hero-monitor-pane">
-                        <div class="monitor-card">
-                            <div class="monitor-header">
-                                <div class="monitor-dot active"></div>
-                                <span class="monitor-title">INSTRUMENTATION_SCOPE_A</span>
-                                <span class="monitor-stats" id="monitor-fps">FPS: 60</span>
-                            </div>
-                            <div class="monitor-screen">
-                                <canvas id="hero-radar-canvas"></canvas>
-                                <div class="monitor-overlay-text">
-                                    <div class="telemetry-row"><span>SYS_CORE:</span> <span id="tel-cpu">0.0%</span></div>
-                                    <div class="telemetry-row"><span>MEM_ALLOC:</span> <span id="tel-mem">2.4MB</span></div>
-                                    <div class="telemetry-row"><span>DECAPP_ENV:</span> <span class="hud-accent-text">READY</span></div>
-                                </div>
-                            </div>
-                            <div class="monitor-footer">
-                                <div class="monitor-bar"></div>
-                                <span class="monitor-log-text" id="monitor-log">> SYSTEM BOOT COMPLETED. LOCK ACTIVE.</span>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="hero-glow"></div>
                 </div>
                 
                 <div class="scroll-down-indicator">
