@@ -31,79 +31,147 @@ export default function Projects() {
           <div className="w-full aspect-video rounded-3xl border-2 border-[var(--glass-border)] bg-[var(--glass-bg)] shadow-2xl overflow-hidden relative flex items-center justify-center p-4">
             <svg className="w-full h-full drop-shadow-2xl" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
               
-              {/* Background Grid */}
-              <g opacity="0.1">
+              {/* Background Grid & Particles */}
+              <g opacity="0.15">
                 <path d="M0,100 L1000,100 M0,200 L1000,200 M0,300 L1000,300 M0,400 L1000,400 M0,500 L1000,500" stroke="var(--fg)" strokeWidth="1"/>
                 <path d="M100,0 L100,600 M200,0 L200,600 M300,0 L300,600 M400,0 L400,600 M500,0 L500,600 M600,0 L600,600 M700,0 L700,600 M800,0 L800,600 M900,0 L900,600" stroke="var(--fg)" strokeWidth="1"/>
+                {/* Floating data nodes */}
+                <circle cx="150" cy="150" r="3" fill="var(--fg)" />
+                <circle cx="850" cy="450" r="3" fill="var(--fg)" />
+                <circle cx="450" cy="50" r="3" fill="var(--fg)" />
               </g>
 
-              {/* 1. Person Silhouette */}
-              <g transform="translate(100, 200)">
-                <circle cx="100" cy="50" r="40" fill="var(--glass-bg)" stroke="var(--fg)" strokeWidth="4"/>
-                <path d="M40,150 C40,100 160,100 160,150 L180,250 L20,250 Z" fill="var(--glass-bg)" stroke="var(--fg)" strokeWidth="4"/>
-                {/* Arm and Hand */}
-                <path d="M170,180 Q250,220 280,180" fill="none" stroke="var(--fg)" strokeWidth="4"/>
-                <circle cx="280" cy="180" r="10" fill="var(--bg)" stroke="var(--fg)" strokeWidth="2"/>
-                <text x="50" y="280" fill="var(--text-muted)" fontFamily="var(--font-mono)" fontSize="14" fontWeight="bold">1. Patient</text>
+              {/* 1. Patient Scan Phase */}
+              <g transform="translate(40, 200)">
+                <circle cx="60" cy="50" r="30" fill="var(--glass-bg)" stroke="var(--fg)" strokeWidth="3"/>
+                <path d="M20,130 C20,90 100,90 100,130 L110,200 L10,200 Z" fill="var(--glass-bg)" stroke="var(--fg)" strokeWidth="3"/>
+                <path d="M105,150 Q160,180 180,150" fill="none" stroke="var(--fg)" strokeWidth="3"/>
+                <circle cx="180" cy="150" r="8" fill="var(--bg)" stroke="var(--fg)" strokeWidth="2"/>
+                
+                {/* Scan rays */}
+                <motion.path 
+                  animate={{ opacity: [0, 1, 0], scale: [0.8, 1.2, 0.8] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  d="M170,140 L200,100 M190,150 L230,140 M180,160 L210,190" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round"
+                />
+                <text x="60" y="230" fill="var(--text-muted)" fontFamily="var(--font-mono)" fontSize="12" fontWeight="bold" textAnchor="middle">1. PATIENT INPUT</text>
               </g>
 
-              {/* Zoom lens connecting line */}
+              {/* Data Flow Line 1 */}
               <motion.path 
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 3, repeat: Infinity, times: [0, 0.5, 1] }}
-                d="M390,380 L550,280" stroke="var(--accent)" strokeWidth="2" strokeDasharray="5 5" fill="none"
+                transition={{ duration: 2, repeat: Infinity }}
+                d="M250,350 L310,250" stroke="var(--accent)" strokeWidth="2" strokeDasharray="5 5" fill="none"
               />
 
-              {/* 2. Zoomed In View & Scanning */}
-              <g transform="translate(550, 100)">
-                <circle cx="120" cy="120" r="120" fill="var(--glass-bg)" stroke="var(--fg)" strokeWidth="4"/>
-                {/* Big Fingernail */}
-                <path d="M60,140 C60,70 180,70 180,140 C180,210 60,210 60,140 Z" fill="var(--bg)" stroke="var(--fg)" strokeWidth="4"/>
+              {/* 2. YOLOv8 ROI Extraction (Zoomed Nail) */}
+              <g transform="translate(250, 80)">
+                <circle cx="100" cy="100" r="90" fill="var(--glass-bg)" stroke="var(--fg)" strokeWidth="3" strokeDasharray="10 5"/>
+                {/* Nail Shape */}
+                <path d="M55,120 C55,70 145,70 145,120 C145,170 55,170 55,120 Z" fill="var(--bg)" stroke="var(--fg)" strokeWidth="3"/>
                 
-                {/* Laser scan line over zoomed nail */}
-                <motion.line 
-                  initial={{ y1: 70, y2: 70, opacity: 0 }}
-                  animate={{ y1: [70, 190, 70], y2: [70, 190, 70], opacity: [0, 1, 1, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, times: [0, 0.2, 0.8, 1] }}
-                  x1="50" x2="190" stroke="var(--accent)" strokeWidth="4"
+                {/* YOLO Bounding Box */}
+                <motion.rect 
+                  animate={{ opacity: [0.3, 1, 0.3], scale: [0.95, 1.05, 0.95] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                  x="45" y="60" width="110" height="120" fill="none" stroke="var(--accent)" strokeWidth="2" strokeDasharray="4 4"
                 />
                 
-                <text x="120" y="-20" fill="var(--text-muted)" fontFamily="var(--font-mono)" fontSize="14" fontWeight="bold" textAnchor="middle">2. ROI Scan</text>
+                {/* Laser Scanner */}
+                <motion.line 
+                  initial={{ y1: 65, y2: 65 }}
+                  animate={{ y1: [65, 175, 65], y2: [65, 175, 65] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  x1="50" x2="150" stroke="var(--accent)" strokeWidth="3"
+                />
+
+                {/* Extraction Nodes */}
+                <motion.circle animate={{ r: [2, 4, 2] }} transition={{ duration: 0.5, repeat: Infinity }} cx="80" cy="100" fill="var(--accent)"/>
+                <motion.circle animate={{ r: [2, 4, 2] }} transition={{ duration: 0.7, repeat: Infinity }} cx="120" cy="130" fill="var(--accent)"/>
+
+                <text x="100" y="-10" fill="var(--text-muted)" fontFamily="var(--font-mono)" fontSize="12" fontWeight="bold" textAnchor="middle">2. YOLOv8 ROI CROP</text>
               </g>
 
-              {/* Data flow to output */}
+              {/* Data Flow Line 2 */}
               <motion.path 
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-                d="M790,220 L850,220" stroke="var(--accent)" strokeWidth="4" strokeDasharray="10 10" fill="none"
+                initial={{ strokeDashoffset: 20 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                d="M450,180 L520,180" stroke="var(--fg)" strokeWidth="3" strokeDasharray="5 5" fill="none"
               />
 
-              {/* 3. Final Output */}
+              {/* 3. Computer Vision Preprocessing Pipeline */}
+              <g transform="translate(520, 90)">
+                <rect x="0" y="0" width="160" height="180" fill="var(--glass-bg)" stroke="var(--fg)" strokeWidth="2" rx="10" opacity="0.5"/>
+                <text x="80" y="30" fill="var(--fg)" fontFamily="var(--font-mono)" fontSize="12" fontWeight="bold" textAnchor="middle">3. CV PIPELINE</text>
+                
+                {/* Grayscale Block */}
+                <motion.g animate={{ y: [0, -3, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+                  <rect x="15" y="50" width="130" height="40" fill="var(--bg)" stroke="var(--accent)" strokeWidth="2" rx="5"/>
+                  <text x="80" y="75" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="10" fontWeight="bold" textAnchor="middle">GRAYSCALING</text>
+                </motion.g>
+
+                <path d="M80,90 L80,110" stroke="var(--fg)" strokeWidth="2" strokeDasharray="3 3"/>
+
+                {/* Convex Hull Block */}
+                <motion.g animate={{ y: [0, -3, 0] }} transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}>
+                  <rect x="15" y="110" width="130" height="40" fill="var(--bg)" stroke="var(--accent)" strokeWidth="2" rx="5"/>
+                  <text x="80" y="135" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="10" fontWeight="bold" textAnchor="middle">CONVEX HULL</text>
+                </motion.g>
+              </g>
+
+              {/* Data Flow Line 3 */}
+              <motion.path 
+                initial={{ strokeDashoffset: 20 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                d="M680,180 Q730,180 730,230 L730,270" stroke="var(--fg)" strokeWidth="3" strokeDasharray="5 5" fill="none"
+              />
+
+              {/* 4. Deep Learning CNN Classification */}
+              <g transform="translate(730, 290)">
+                {/* CNN Layers Visualization */}
+                <rect x="-40" y="-80" width="20" height="160" fill="var(--glass-border)" stroke="var(--fg)" strokeWidth="2" rx="3"/>
+                <rect x="0" y="-120" width="20" height="240" fill="var(--glass-border)" stroke="var(--fg)" strokeWidth="2" rx="3"/>
+                <rect x="40" y="-60" width="20" height="120" fill="var(--glass-border)" stroke="var(--fg)" strokeWidth="2" rx="3"/>
+                <rect x="80" y="-20" width="20" height="40" fill="var(--accent)" stroke="var(--fg)" strokeWidth="2" rx="3"/>
+                
+                {/* Neural Network Connections */}
+                <motion.path 
+                  animate={{ opacity: [0.1, 1, 0.1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                  d="M-20,-40 L0,-80 M-20,40 L0,80 M20,-80 L40,-40 M20,80 L40,40 M60,-40 L80,-10 M60,40 L80,10" stroke="var(--accent)" strokeWidth="1.5" fill="none"
+                />
+                
+                <text x="25" y="150" fill="var(--text-muted)" fontFamily="var(--font-mono)" fontSize="12" fontWeight="bold" textAnchor="middle">4. PyTorch CNN</text>
+              </g>
+
+              {/* 5. Final Output Diagnostic Panel */}
               <motion.g 
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: [0, 0, 1, 1], scale: [0.8, 0.8, 1, 1] }}
-                transition={{ duration: 3, repeat: Infinity, times: [0, 0.6, 0.7, 1] }}
-                transform="translate(850, 170)"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: [0, 1, 1, 0], scale: [0.9, 1, 1, 0.9] }}
+                transition={{ duration: 6, repeat: Infinity, times: [0, 0.1, 0.9, 1] }}
+                transform="translate(850, 200)"
               >
-                <rect x="0" y="0" width="130" height="100" fill="var(--bg)" stroke="var(--accent)" strokeWidth="3" rx="10"/>
-                <text x="65" y="40" fill="var(--fg)" fontFamily="var(--font-mono)" fontSize="14" textAnchor="middle">Prediction:</text>
-                <text x="65" y="70" fill="var(--accent)" fontFamily="var(--font-outfit)" fontSize="20" fontWeight="bold" textAnchor="middle">HEALTHY</text>
-                <text x="65" y="140" fill="var(--text-muted)" fontFamily="var(--font-mono)" fontSize="14" fontWeight="bold" textAnchor="middle">3. Output</text>
+                <rect x="0" y="0" width="130" height="110" fill="var(--bg)" stroke="var(--accent)" strokeWidth="3" rx="8" style={{ filter: 'drop-shadow(0 0 10px var(--accent))' }}/>
+                <text x="65" y="30" fill="var(--fg)" fontFamily="var(--font-mono)" fontSize="12" fontWeight="bold" textAnchor="middle">DIAGNOSIS:</text>
+                <text x="65" y="65" fill="var(--accent)" fontFamily="var(--font-outfit)" fontSize="20" fontWeight="bold" textAnchor="middle">HEALTHY</text>
+                <text x="65" y="90" fill="var(--text-muted)" fontFamily="var(--font-mono)" fontSize="10" textAnchor="middle">Conf: 96.4%</text>
               </motion.g>
 
-              {/* Final Output Log */}
+              {/* System Console Logs (Bottom) */}
               <motion.g 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0, 1, 1, 0] }}
-                transition={{ duration: 3, repeat: Infinity, times: [0, 0.7, 0.9, 1] }}
+                transition={{ duration: 6, repeat: Infinity, times: [0, 0.1, 0.9, 1] }}
                 transform="translate(100, 480)"
               >
                 <rect x="0" y="0" width="800" height="90" fill="var(--bg)" stroke="var(--accent)" strokeWidth="2" rx="8"/>
-                <text x="20" y="30" fill="var(--fg)" fontFamily="var(--font-mono)" fontSize="16" fontWeight="bold">SYSTEM LOGS_</text>
+                <text x="20" y="30" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="14" fontWeight="bold">SYSTEM_LOGS &gt;_</text>
                 <line x1="20" y1="45" x2="780" y2="45" stroke="var(--glass-border)" strokeWidth="2"/>
-                <text x="20" y="70" fill="var(--text-muted)" fontFamily="var(--font-mono)" fontSize="14">&gt; Person detected. Zooming to fingernail... Scanning ROI... DIAGNOSIS: NON-ANEMIC (96%)</text>
+                <text x="20" y="65" fill="var(--text-muted)" fontFamily="var(--font-mono)" fontSize="12">&gt; YOLOv8: Detected fingernail ROI (0.98)</text>
+                <text x="20" y="80" fill="var(--text-muted)" fontFamily="var(--font-mono)" fontSize="12">&gt; Preprocessing: Grayscale completed. Convex Hull area mapped.</text>
               </motion.g>
 
             </svg>
