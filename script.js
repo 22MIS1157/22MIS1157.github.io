@@ -152,30 +152,22 @@
     }, "+=0.3");
   };
 
-  // 5. CINEMATIC RANDOMIZED HERO
+  // 5. DECENT & ELEGANT HERO REVEAL
   const initHero = () => {
     const heroContainer = document.getElementById('hero-dynamic-container');
     const heroes = [
       {
         id: 'leo-movie',
         html: `
-          <div class="leo-hero-container">
-            <div class="leo-flash-screen" id="leo-flash-screen"></div>
-            <div class="leo-slash" id="leo-slash"></div>
-            <div class="leo-slash-2" id="leo-slash-2"></div>
-            <div class="leo-logo-box" id="hero-logo-box">
-              <div class="leo-line-1" id="hero-line-1"></div>
-              <div class="leo-line-2" id="hero-line-2"></div>
-            </div>
+          <div class="decent-hero-container">
+            <div class="decent-line-1" id="hero-line-1"></div>
+            <div class="decent-line-2" id="hero-line-2"></div>
           </div>
         `,
         run: (htmlCode) => {
           heroContainer.innerHTML = htmlCode;
           const line1 = document.getElementById('hero-line-1');
           const line2 = document.getElementById('hero-line-2');
-          const slash = document.getElementById('leo-slash');
-          const slash2 = document.getElementById('leo-slash-2');
-          const flashScreen = document.getElementById('leo-flash-screen');
 
           line1.innerHTML = '';
           line2.innerHTML = '';
@@ -183,7 +175,7 @@
           // Split "AFNAAN" into line 1
           "AFNAAN".split('').forEach(c => {
             const span = document.createElement('span');
-            span.className = 'leo-char-1';
+            span.className = 'decent-char decent-char-1';
             span.innerText = c;
             line1.appendChild(span);
           });
@@ -191,135 +183,29 @@
           // Split "AHMED P" into line 2
           "AHMED P".split('').forEach(c => {
             const span = document.createElement('span');
-            span.className = 'leo-char-2';
+            span.className = 'decent-char decent-char-2';
             span.innerText = c === ' ' ? '\u00A0' : c;
             line2.appendChild(span);
           });
 
-          const chars1 = line1.querySelectorAll('.leo-char-1');
-          const chars2 = line2.querySelectorAll('.leo-char-2');
+          const chars1 = line1.querySelectorAll('.decent-char-1');
+          const chars2 = line2.querySelectorAll('.decent-char-2');
           const allChars = [...chars1, ...chars2];
 
-          // Initialize states in deep Z space with rotation
-          allChars.forEach(span => {
-            if (span.innerText === '\u00A0') return;
-            gsap.set(span, {
-              scale: 15,
-              z: -1500,
-              opacity: 0,
-              filter: 'blur(30px)',
-              rotationX: -90,
-              rotationY: 45,
-              rotationZ: -15,
-              y: -50,
-              transformOrigin: "50% 50% -150px"
-            });
-          });
-
-          const triggerRumble = () => {
-            document.body.classList.add('rumble');
-            setTimeout(() => document.body.classList.remove('rumble'), 250);
-          };
-
-          const spawnSparks = (charEl) => {
-            const container = document.querySelector('.leo-hero-container');
-            if (!container || !charEl) return;
-            const containerRect = container.getBoundingClientRect();
-            const rect = charEl.getBoundingClientRect();
-
-            // Center of slamming letter relative to container
-            const cx = rect.left - containerRect.left + rect.width / 2;
-            const cy = rect.top - containerRect.top + rect.height / 2;
-
-            for (let i = 0; i < 20; i++) {
-              const spark = document.createElement('div');
-              spark.className = 'leo-spark';
-              container.appendChild(spark);
-
-              // Emulate metal impact spray (spawning outwards with physics-based gravity drag)
-              const angle = Math.random() * Math.PI * 2;
-              const force = 80 + Math.random() * 200;
-              const tx = cx + Math.cos(angle) * force;
-              const ty = cy + Math.sin(angle) * force + (100 + Math.random() * 150); // Gravity drop pull
-
-              gsap.set(spark, {
-                x: cx + (Math.random() - 0.5) * 12,
-                y: cy + (Math.random() - 0.5) * 12,
-                scale: Math.random() * 1.6 + 0.6
-              });
-
-              gsap.to(spark, {
-                x: tx,
-                y: ty,
-                opacity: 0,
-                scale: 0.05,
-                duration: 0.6 + Math.random() * 0.6,
-                ease: 'power3.out',
-                onComplete: () => spark.remove()
-              });
-            }
-          };
-
           const tl = gsap.timeline();
-
-          // A. Cinematic screen flashes before the main cut
-          tl.to(flashScreen, { opacity: 0.8, duration: 0.04 })
-            .to(flashScreen, { opacity: 0, duration: 0.04 })
-            .to(flashScreen, { opacity: 0.6, duration: 0.04, delay: 0.08 })
-            .to(flashScreen, { opacity: 0, duration: 0.04 })
-            
-            // B. Crossed sword slashes
-            .set(slash, { opacity: 1 })
-            .fromTo(slash, 
-              { left: '-120%' }, 
-              { left: '120%', duration: 0.6, ease: 'power3.inOut', onStart: triggerRumble }
-            )
-            .to(slash, { opacity: 0, duration: 0.1 }, '-=0.1')
-            .set(slash2, { opacity: 1 }, '-=0.3')
-            .fromTo(slash2,
-              { left: '-120%' },
-              { left: '120%', duration: 0.6, ease: 'power3.inOut', onStart: triggerRumble },
-              '-=0.3'
-            )
-            .to(slash2, { opacity: 0, duration: 0.1 }, '-=0.1')
-
-            // C. Letters slam down with localized sparks and heavy 3D assembly
-            .to(allChars, {
-              scale: 1,
-              z: 0,
-              opacity: 1,
-              filter: 'blur(0px)',
-              rotationX: 0,
-              rotationY: 0,
-              rotationZ: 0,
-              y: 0,
-              duration: 0.7,
-              stagger: {
-                amount: 0.7,
-                from: 'start',
-                onStart: function() {
-                  const targetChar = this.targets()[0];
-                  if (targetChar && targetChar.innerText !== '\u00A0') {
-                    triggerRumble();
-                    spawnSparks(targetChar);
-                  }
-                }
-              },
-              ease: 'back.out(2.2)'
-            }, '-=0.25')
-
-            // D. Reveal aura, shockwave, scroll down indicator
-            .call(() => {
-              const wave = document.createElement('div');
-              wave.className = 'shockwave';
-              heroContainer.appendChild(wave);
-              gsap.to(wave, { scale: 8, opacity: 0, duration: 0.7, ease: 'power2.out', onComplete: () => wave.remove() });
-              triggerRumble();
-            })
-            .to('.hero-glow', { opacity: 0.95, scale: 2.2, duration: 1.2, ease: 'power2.out' }, '-=0.2')
-            .to('.scroll-down-indicator', { opacity: 1, y: 0, duration: 0.8 }, '-=0.6');
+          tl.to(allChars, {
+            y: '0%',
+            opacity: 1,
+            rotationX: 0,
+            duration: 1.2,
+            stagger: 0.04,
+            ease: 'power4.out'
+          })
+          .to('.hero-glow', { opacity: 0.5, scale: 1.5, duration: 1.2, ease: 'power2.out' }, '-=0.6')
+          .to('.scroll-down-indicator', { opacity: 1, y: 0, duration: 0.8 }, '-=0.8');
         }
       },
+
       {
         id: 'cyber-decrypt',
         html: `
