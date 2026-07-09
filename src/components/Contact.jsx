@@ -21,16 +21,7 @@ export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   return (
-    <section className="relative w-full py-40 flex flex-col items-center justify-center bg-[var(--bg)] overflow-hidden" id="contact">
-      <motion.div 
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        className="w-full flex justify-center mb-20"
-      >
-        <h2 className="magic-title text-center">CONTACT</h2>
-      </motion.div>
-
+    <section className="relative w-full py-20 flex flex-col items-center justify-center bg-[var(--bg)] overflow-hidden" id="contact">
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16">
         
         <motion.div 

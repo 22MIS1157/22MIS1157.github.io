@@ -3,12 +3,8 @@ import { Award, Code, Users } from 'lucide-react';
 
 export default function Activities() {
   return (
-    <section className="relative w-full py-32 flex flex-col items-center justify-center bg-[var(--bg)]" id="activities">
-      <div className="w-full flex justify-center mb-16">
-        <h2 className="magic-title text-center">ACTIVITIES</h2>
-      </div>
-
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 mt-20">
+    <section className="relative w-full py-20 flex flex-col items-center justify-center bg-[var(--bg)]" id="activities">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6">
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}

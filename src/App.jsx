@@ -9,11 +9,11 @@ import Activities from './components/Activities';
 import Education from './components/Education';
 import Loader from './components/Loader';
 import Contact from './components/Contact';
+import SectionHeader from './components/SectionHeader';
 
 function App() {
   const [loading, setLoading] = useState(true);
 
-  // Lock scroll while loading
   useEffect(() => {
     if (loading) {
       document.body.style.overflow = 'hidden';
@@ -38,7 +38,7 @@ function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
-              className="flex flex-col gap-24 md:gap-40 pb-40 overflow-hidden"
+              className="flex flex-col pb-40 overflow-hidden"
             >
               <Hero />
               
@@ -57,10 +57,20 @@ function App() {
                 </div>
               </motion.section>
 
-              <Skills />
-              <Projects />
+              {/* Education right after About */}
+              <SectionHeader title="EDUCATION" />
               <Education />
+
+              <SectionHeader title="SKILLS" />
+              <Skills />
+
+              <SectionHeader title="PROJECTS" />
+              <Projects />
+
+              <SectionHeader title="ACTIVITIES" />
               <Activities />
+
+              <SectionHeader title="CONTACT" />
               <Contact />
             </motion.main>
           )}

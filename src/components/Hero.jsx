@@ -42,14 +42,6 @@ export default function Hero() {
 
       {/* Hero Typography Foreground */}
       <div className="relative z-10 text-center pointer-events-none flex flex-col items-center justify-center h-full w-full perspective-[1000px]">
-        <motion.p
-          initial={{ opacity: 0, letterSpacing: "-0.5em" }}
-          animate={{ opacity: 1, letterSpacing: "0.2em" }}
-          transition={{ duration: 1.5, ease: "easeOut", delay: 2 }}
-          className="font-mono text-[var(--accent)] text-lg md:text-xl mb-4 uppercase"
-        >
-          Cinematic Portfolio
-        </motion.p>
         
         <div className="flex flex-col items-center">
           <motion.div

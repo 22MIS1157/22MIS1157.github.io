@@ -3,12 +3,8 @@ import { GraduationCap, BookOpen } from 'lucide-react';
 
 export default function Education() {
   return (
-    <section className="relative w-full py-32 flex flex-col items-center justify-center bg-[var(--bg)]" id="education">
-      <div className="w-full flex justify-center mb-16">
-        <h2 className="magic-title text-center">EDUCATION</h2>
-      </div>
-
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-6 mt-12 space-y-8">
+    <section className="relative w-full py-20 flex flex-col items-center justify-center bg-[var(--bg)]" id="education">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-6 space-y-8">
         
         <motion.div 
           initial={{ opacity: 0, x: -50 }}
