@@ -1001,44 +1001,148 @@
     draw();
   };
 
-  // 11. CUSTOM CROSSHAIR CURSOR CONTROLLER
-  const initCustomCursor = () => {
-    const cursor = document.getElementById('crosshair-cursor');
-    if (!cursor) return;
+  // 11. INTERACTIVE RADAR SCOPE WIDGET
+  const initRadarWidget = () => {
+    const canvas = document.getElementById('hero-radar-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const cpuEl = document.getElementById('tel-cpu');
+    const memEl = document.getElementById('tel-mem');
+    const logEl = document.getElementById('monitor-log');
 
-    // Center coordinates
-    const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    const mouse = { x: pos.x, y: pos.y };
-    
-    // QuickTo properties for high-performance GSAP tracking
-    const xTo = gsap.quickTo(cursor, "x", { duration: 0.08, ease: "power2.out" });
-    const yTo = gsap.quickTo(cursor, "y", { duration: 0.08, ease: "power2.out" });
+    const resize = () => {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
 
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-      xTo(mouse.x);
-      yTo(mouse.y);
+    // Mouse coordinates relative to radar center
+    let scopeMouse = { x: 0, y: 0, active: false };
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      scopeMouse.x = e.clientX - rect.left;
+      scopeMouse.y = e.clientY - rect.top;
+      scopeMouse.active = true;
+    });
+    canvas.addEventListener('mouseleave', () => {
+      scopeMouse.active = false;
     });
 
-    // Detect clickable hover states
-    const hoverables = document.querySelectorAll('a, button, select, input, textarea, [role="button"], .bento-card, .project-block, .theme-btn');
-    const labelEl = document.getElementById('crosshair-label');
+    // CPU/Memory stats simulator
+    setInterval(() => {
+      if (cpuEl) cpuEl.innerText = `${(Math.random() * 25 + 4).toFixed(1)}%`;
+      if (memEl) memEl.innerText = `${(2.4 + Math.random() * 0.8).toFixed(2)}MB`;
+    }, 1500);
 
-    hoverables.forEach(el => {
-      el.addEventListener('mouseenter', (e) => {
-        cursor.classList.add('hovering');
-        if (labelEl) {
-          let hoverText = el.getAttribute('data-cursor') || '[INTERACT]';
-          if (el.classList.contains('bento-card')) hoverText = '[EXPAND MATRIX]';
-          if (el.classList.contains('project-block')) hoverText = '[VIEW SCENE HUD]';
-          if (el.classList.contains('theme-btn')) hoverText = '[TOGGLE TELEMETRY]';
-          
-          labelEl.innerText = hoverText;
+    const logs = [
+      "> SIGNAL DETECTED. LOCK ACTIVE.",
+      "> STABILIZING ACCRETION DISK...",
+      "> PACKET DISPATCH STABLE [128kb/s]",
+      "> VECTOR STORAGE SYNCHRONIZED",
+      "> SCANNING FINGER NAILBED SPECTRA...",
+      "> ICU PATIENT MORTALITY EVAL READY",
+      "> YOKOGAWA PLC TETHER ACTIVE",
+      "> DECAPP CONTROLLER STABLE"
+    ];
+    setInterval(() => {
+      if (logEl) {
+        logEl.innerText = logs[Math.floor(Math.random() * logs.length)];
+      }
+    }, 4000);
+
+    let sweepAngle = 0;
+    const drawRadar = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const radius = Math.min(cx, cy) * 0.85;
+
+      // Draw concentric radar scale circles
+      ctx.strokeStyle = 'rgba(79, 216, 232, 0.08)';
+      ctx.lineWidth = 1;
+      for (let r = radius / 4; r <= radius; r += radius / 4) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // Draw crosshair axes
+      ctx.beginPath();
+      ctx.moveTo(cx - radius, cy);
+      ctx.lineTo(cx + radius, cy);
+      ctx.moveTo(cx, cy - radius);
+      ctx.lineTo(cx, cy + radius);
+      ctx.stroke();
+
+      // Sweeper rotating line
+      ctx.strokeStyle = 'rgba(79, 216, 232, 0.4)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + Math.cos(sweepAngle) * radius, cy + Math.sin(sweepAngle) * radius);
+      ctx.stroke();
+
+      // Sweeper trail fade glow
+      ctx.fillStyle = 'rgba(79, 216, 232, 0.03)';
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, radius, sweepAngle - 0.2, sweepAngle);
+      ctx.lineTo(cx, cy);
+      ctx.fill();
+
+      // Mouse interactive target reticle
+      if (scopeMouse.active) {
+        const dx = scopeMouse.x - cx;
+        const dy = scopeMouse.y - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < radius) {
+          ctx.strokeStyle = '#FFA23C'; // Signal Amber lock
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(scopeMouse.x, scopeMouse.y, 8, 0, Math.PI * 2);
+          ctx.stroke();
+
+          ctx.fillStyle = '#FFA23C';
+          ctx.font = '9px monospace';
+          ctx.fillText(`LOC:[${Math.round(dx)},${Math.round(-dy)}]`, scopeMouse.x + 12, scopeMouse.y - 6);
         }
+      }
+
+      sweepAngle += 0.015;
+      requestAnimationFrame(drawRadar);
+    };
+    drawRadar();
+  };
+
+  // 12. MAGNETIC MICRO-INTERACTIONS (Emil Kowalski style)
+  const initMagneticElements = () => {
+    const magnetics = document.querySelectorAll('.theme-btn, .social-btn, .contact-value.link');
+    
+    magnetics.forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+        
+        gsap.to(el, {
+          x: dx * 0.35,
+          y: dy * 0.35,
+          duration: 0.3,
+          ease: "power2.out"
+        });
       });
+      
       el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('hovering');
+        gsap.to(el, {
+          x: 0,
+          y: 0,
+          duration: 0.6,
+          ease: "elastic.out(1.1, 0.4)"
+        });
       });
     });
   };
@@ -1049,6 +1153,7 @@
     initLoader(); // Run loader -> hero -> animations sequentially
     initHudController();
     initTelemetryScope();
-    initCustomCursor();
+    initRadarWidget();
+    initMagneticElements();
   });
 })();
