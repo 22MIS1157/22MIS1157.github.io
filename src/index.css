@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --font-outfit: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-neon: #E1FF00;
+  --color-neon-alt: #FAFF00;
+  --color-black: #000000;
+  --color-cloud: #FDFBF7;
+  --color-stream: #1E56CD;
+}
+
+:root {
+  --bg: #FDFBF7;
+  --bg-card: #FFFFFF;
+  --fg: #1E56CD;
+  --accent: #1E56CD;
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(30, 86, 205, 0.12);
+  --grid-color: rgba(30, 86, 205, 0.025);
+}
+
+:root[data-theme="dark"] {
+  --bg: #000000;
+  --bg-card: #0D0D11;
+  --fg: #FFFFFF;
+  --accent: #FFEA00;
+  --glass-bg: rgba(13, 13, 17, 0.8);
+  --glass-border: rgba(255, 234, 0, 0.2);
+  --grid-color: rgba(255, 234, 0, 0.05);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-outfit), sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+/* Background grid overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, var(--grid-color) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, var(--grid-color) 1.5px, transparent 1.5px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Global Typography Utilities */
+.magic-title-container {
+  position: sticky;
+  top: 25vh;
+  width: 100%;
+  text-align: center;
+  height: 0;
+  z-index: 10;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.magic-title {
+  font-size: clamp(4.5rem, 16vw, 13rem);
+  font-weight: 800;
+  color: rgba(15, 23, 42, 0.1);
+  line-height: 1;
+  letter-spacing: -5px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+:root[data-theme="dark"] .magic-title {
+  color: rgba(255, 255, 255, 0.15);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+}
