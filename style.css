@@ -3,37 +3,37 @@
    ============================================ */
 
 :root[data-theme="dark"] {
-  --bg: #0A0D14;        /* Deep Velvet Navy Midnight */
-  --bg-card: #111622;   /* Elevated Navy Card */
-  --fg: #F3F4F6;        /* Off-White */
-  --accent: #3B82F6;    /* Electric Sky Blue */
-  --accent-secondary: #60A5FA; /* Stream Light Blue */
-  --text-muted: #9CA3AF;
-  --glass-bg: rgba(17, 22, 34, 0.7);
-  --glass-border: rgba(59, 130, 246, 0.15);
-  --grid-color: rgba(59, 130, 246, 0.01);
-  --magic-title-color: rgba(59, 130, 246, 0.03);
-  --leo-char-1-grad: linear-gradient(to bottom, #FFFFFF 10%, #60A5FA 50%, #1E56CD 100%);
-  --leo-char-2-grad: linear-gradient(to bottom, #FFFFFF 10%, #93C5FD 55%, #1D4ED8 100%);
-  --leo-char-glow-1: drop-shadow(0 0 10px rgba(96, 165, 250, 0.6)) drop-shadow(0 0 25px rgba(30, 86, 205, 0.4));
-  --leo-char-glow-2: drop-shadow(0 0 15px rgba(147, 197, 253, 0.85)) drop-shadow(0 0 35px rgba(29, 78, 216, 0.5));
+  --bg: #02182B;        /* Nights Deep Midnight Navy */
+  --bg-card: #092237;   /* Elevated Card Navy */
+  --fg: #F4F6F9;        /* Off-White */
+  --accent: #D7263D;    /* Crimson Accent */
+  --accent-secondary: #F43F5E; /* Soft Crimson Red */
+  --text-muted: #94A3B8;
+  --glass-bg: rgba(9, 34, 55, 0.75);
+  --glass-border: rgba(215, 38, 61, 0.15);
+  --grid-color: rgba(215, 38, 61, 0.015);
+  --magic-title-color: rgba(215, 38, 61, 0.18); /* Highly visible crimson watermark watermark */
+  --leo-char-1-grad: linear-gradient(to bottom, #FFFFFF 10%, #F43F5E 50%, #D7263D 100%);
+  --leo-char-2-grad: linear-gradient(to bottom, #FFFFFF 10%, #FDA4AF 55%, #BE123C 100%);
+  --leo-char-glow-1: drop-shadow(0 0 10px rgba(244, 63, 94, 0.6)) drop-shadow(0 0 25px rgba(215, 38, 61, 0.4));
+  --leo-char-glow-2: drop-shadow(0 0 15px rgba(253, 164, 175, 0.85)) drop-shadow(0 0 35px rgba(190, 18, 60, 0.5));
 }
 
 :root[data-theme="light"] {
-  --bg: #FDFBF7;        /* Vanilla Cloud Cream */
-  --bg-card: #FFFFFF;   /* Raised White Card */
-  --fg: #0F172A;        /* Obsidian Midnight Navy */
-  --accent: #1E56CD;    /* Bold Stream Cobalt Blue */
-  --accent-secondary: #2563EB; /* Soft Royal Blue */
-  --text-muted: #64748B;
+  --bg: #FAF0CA;        /* Lemon Chiffon Cream Yellow */
+  --bg-card: #FFFFFF;   /* Clean White Card Surfaces */
+  --fg: #0D3B66;        /* Yale Blue Text */
+  --accent: #0D3B66;    /* Yale Blue Primary Accent */
+  --accent-secondary: #1E3A5F; /* Soft Slate Navy */
+  --text-muted: #475569;
   --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(30, 86, 205, 0.08);
-  --grid-color: rgba(30, 86, 205, 0.01);
-  --magic-title-color: rgba(30, 86, 205, 0.02);
-  --leo-char-1-grad: linear-gradient(to bottom, #1E56CD 10%, #2563EB 50%, #0F172A 100%);
-  --leo-char-2-grad: linear-gradient(to bottom, #1D4ED8 10%, #3B82F6 55%, #1E293B 100%);
-  --leo-char-glow-1: drop-shadow(0 0 8px rgba(30, 86, 205, 0.2));
-  --leo-char-glow-2: drop-shadow(0 0 12px rgba(30, 86, 205, 0.3));
+  --glass-border: rgba(13, 59, 102, 0.12);
+  --grid-color: rgba(13, 59, 102, 0.015);
+  --magic-title-color: rgba(13, 59, 102, 0.14); /* Highly visible yale blue watermark watermark */
+  --leo-char-1-grad: linear-gradient(to bottom, #0D3B66 10%, #1E3A5F 50%, #02182B 100%);
+  --leo-char-2-grad: linear-gradient(to bottom, #1B4F72 10%, #2874A6 55%, #154360 100%);
+  --leo-char-glow-1: drop-shadow(0 0 8px rgba(13, 59, 102, 0.2));
+  --leo-char-glow-2: drop-shadow(0 0 12px rgba(13, 59, 102, 0.3));
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -229,7 +229,8 @@ html[data-theme="light"] .moon-icon {
 
 .hero-beam-container {
   position: relative;
-  display: inline-block;
+  display: block;
+  width: 100%;
   overflow: visible;
 }
 .hero-neon-beam {
@@ -626,9 +627,10 @@ html[data-theme="light"] .moon-icon {
 }
 .decent-line-1, .decent-line-2 {
   display: block;
-  overflow: hidden;
+  overflow: visible;
   text-align: center;
-  height: clamp(3.2rem, 9vw, 6.5rem);
+  width: 100%;
+  padding: 10px 0;
 }
 .decent-char {
   display: inline-block;
