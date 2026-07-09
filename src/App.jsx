@@ -5,6 +5,8 @@ import ThemeSwitcher from './components/ThemeSwitcher';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
+import Experience from './components/Experience';
+import Certifications from './components/Certifications';
 import Activities from './components/Activities';
 import Education from './components/Education';
 import Loader from './components/Loader';
@@ -66,6 +68,12 @@ function App() {
 
               <SectionHeader title="PROJECTS" />
               <Projects />
+
+              <SectionHeader title="EXPERIENCE" />
+              <Experience />
+
+              <SectionHeader title="CERTIFICATIONS" />
+              <Certifications />
 
               <SectionHeader title="ACTIVITIES" />
               <Activities />

@@ -4,7 +4,7 @@ import { Award, Code, Users } from 'lucide-react';
 export default function Activities() {
   return (
     <section className="relative w-full py-20 flex flex-col items-center justify-center bg-[var(--bg)]" id="activities">
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -39,7 +39,7 @@ export default function Contact() {
             {[
               { icon: MailIcon, link: "mailto:afnaanahmedp@example.com" },
               { icon: GithubIcon, link: "https://github.com/22MIS1157" },
-              { icon: LinkedinIcon, link: "#" },
+              { icon: LinkedinIcon, link: "https://www.linkedin.com/in/afnaan22mis1157" },
               { icon: TwitterIcon, link: "#" }
             ].map((social, i) => (
               <a key={i} href={social.link} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-[var(--glass-border)] flex items-center justify-center text-[var(--fg)] hover:text-[var(--bg)] hover:bg-[var(--accent)] hover:border-[var(--accent)] transition-all duration-300">
