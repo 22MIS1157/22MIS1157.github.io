@@ -96,8 +96,8 @@ export default function Projects() {
                 <motion.g initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: 1.5, duration: 0.5 }}>
                   <rect x="40" y="40" width="320" height="240" fill="var(--glass-bg)" stroke="var(--accent)" strokeWidth="2" rx="8" />
                   <text x="60" y="65" fill="var(--fg)" fontFamily="var(--font-mono)" fontSize="14" fontWeight="bold">SPECTRAL_LOG</text>
-                  <text x="60" y="110" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="12">> CAMERA ZOOM: 400%</text>
-                  <text x="60" y="140" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="12">> EXTRACTING SPECTRUM...</text>
+                  <text x="60" y="110" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="12">&gt; CAMERA ZOOM: 400%</text>
+                  <text x="60" y="140" fill="var(--accent)" fontFamily="var(--font-mono)" fontSize="12">&gt; EXTRACTING SPECTRUM...</text>
                   <text x="60" y="240" fill="#EF4444" fontFamily="var(--font-mono)" fontSize="18" fontWeight="bold">DIAGNOSIS: ANEMIA DETECTED</text>
                 </motion.g>
               </g>
