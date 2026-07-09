@@ -14,9 +14,9 @@ export default function Skills() {
   const [hoveredIdx, setHoveredIdx] = useState(null);
 
   return (
-    <section className="relative w-full py-40 flex flex-col items-center justify-center bg-[var(--bg)]" id="skills">
-      <div className="absolute top-10 left-0 w-full text-center pointer-events-none overflow-hidden flex justify-center z-0">
-        <h2 className="magic-title">SKILLS</h2>
+    <section className="relative w-full py-32 flex flex-col items-center justify-center bg-[var(--bg)]" id="skills">
+      <div className="w-full flex justify-center mb-16">
+        <h2 className="magic-title text-center">SKILLS</h2>
       </div>
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-20">

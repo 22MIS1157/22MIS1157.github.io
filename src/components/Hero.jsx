@@ -1,25 +1,7 @@
 import { Canvas } from '@react-three/fiber';
-import { Float, MeshDistortMaterial, OrbitControls, Sphere, Stars } from '@react-three/drei';
+import { OrbitControls, Stars } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import { useTheme } from './ThemeContext';
-
-function AbstractShape({ color }) {
-  return (
-    <Float speed={2} rotationIntensity={2} floatIntensity={3}>
-      <Sphere args={[1, 64, 64]} scale={2.5}>
-        <MeshDistortMaterial
-          color={color}
-          attach="material"
-          distort={0.6}
-          speed={1.5}
-          roughness={0.2}
-          metalness={0.8}
-          wireframe={true}
-        />
-      </Sphere>
-    </Float>
-  );
-}
 
 const letterVariants = {
   hidden: { opacity: 0, scale: 4, filter: "blur(20px)", z: 500, rotateX: 90 },
@@ -54,7 +36,6 @@ export default function Hero() {
           <ambientLight intensity={0.5} />
           <directionalLight position={[10, 10, 5]} intensity={1} />
           <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />
-          <AbstractShape color={accentColor} />
           <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
         </Canvas>
       </div>

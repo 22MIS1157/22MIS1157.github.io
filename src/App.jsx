@@ -8,6 +8,7 @@ import Projects from './components/Projects';
 import Activities from './components/Activities';
 import Education from './components/Education';
 import Loader from './components/Loader';
+import Contact from './components/Contact';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -57,9 +58,10 @@ function App() {
               </motion.section>
 
               <Skills />
-              <Activities />
               <Projects />
               <Education />
+              <Activities />
+              <Contact />
             </motion.main>
           )}
         </AnimatePresence>

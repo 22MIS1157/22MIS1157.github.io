@@ -3,11 +3,9 @@ import { GraduationCap, BookOpen } from 'lucide-react';
 
 export default function Education() {
   return (
-    <section className="relative w-full py-24 flex flex-col items-center justify-center bg-[var(--bg)]" id="education">
-      <div className="absolute top-10 left-0 w-full text-center pointer-events-none overflow-hidden flex justify-center z-0">
-        <h2 className="text-[clamp(4.5rem,16vw,13rem)] font-black text-[var(--magic-title-color)] opacity-50 uppercase tracking-tighter leading-none select-none blur-[3px]">
-          EDUCATION
-        </h2>
+    <section className="relative w-full py-32 flex flex-col items-center justify-center bg-[var(--bg)]" id="education">
+      <div className="w-full flex justify-center mb-16">
+        <h2 className="magic-title text-center">EDUCATION</h2>
       </div>
 
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 mt-12 space-y-8">

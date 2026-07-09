@@ -25,17 +25,33 @@ export default function Loader({ onLoadingComplete }) {
     <motion.div
       key="loader"
       initial={{ y: 0 }}
-      exit={{ y: "-100vh", transition: { duration: 1, ease: [0.76, 0, 0.24, 1] } }}
+      exit={{ y: "-100vh", transition: { duration: 1.2, ease: [0.76, 0, 0.24, 1] } }}
       className="fixed inset-0 z-[100] bg-[var(--bg)] flex flex-col items-center justify-center overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-to-t from-[var(--grid-color)] to-transparent opacity-50" />
       
-      <div className="relative z-10 flex flex-col items-center">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full">
+        {/* Animated Logo A */}
+        <div className="relative w-32 h-32 md:w-48 md:h-48 mb-12 flex items-center justify-center">
+          <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_var(--accent)]">
+            <motion.path
+              d="M50 10 L10 90 L30 90 L40 65 L60 65 L70 90 L90 90 Z M45 50 L50 35 L55 50 Z"
+              fill="transparent"
+              stroke="var(--accent)"
+              strokeWidth="3"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1, fill: progress > 80 ? "var(--accent)" : "transparent" }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+            />
+          </svg>
+        </div>
+
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-[15vw] md:text-[12rem] font-black leading-none text-[var(--fg)] tracking-tighter"
+          className="text-6xl md:text-8xl font-black leading-none text-[var(--fg)] tracking-tighter"
         >
           {progress}<span className="text-[var(--accent)]">%</span>
         </motion.div>
