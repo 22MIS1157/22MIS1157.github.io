@@ -83,7 +83,7 @@ function OrbitalSystem({ category }) {
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: 'spring', bounce: 0.5, duration: 1 }}
-        className="absolute z-20 flex flex-col items-center justify-center w-32 h-32 rounded-full border border-[var(--glass-border)] bg-[var(--glass-bg)] backdrop-blur-xl shadow-[0_0_40px_var(--glass-border)]"
+        className="absolute z-20 flex flex-col items-center justify-center w-32 h-32 rounded-full border border-[var(--glass-border)] bg-[var(--glass-bg)] shadow-[0_0_40px_var(--glass-border)]"
       >
         <span className="text-4xl mb-1">{category.icon}</span>
         <span className="font-bold text-[var(--fg)] text-sm">{category.name}</span>
@@ -257,7 +257,7 @@ export default function Skills() {
           transition={{ delay: 0.8 }}
           className="mt-4 text-center z-20"
         >
-          <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full border border-[var(--glass-border)] bg-[var(--glass-bg)] backdrop-blur-md shadow-lg">
+          <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full border border-[var(--glass-border)] bg-[var(--glass-bg)] shadow-lg">
             <span className="font-mono text-[var(--text-muted)] text-sm tracking-widest uppercase">
               Average Proficiency
             </span>

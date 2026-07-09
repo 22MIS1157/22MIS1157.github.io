@@ -52,6 +52,7 @@ body::before {
     linear-gradient(to bottom, var(--grid-color) 1.5px, transparent 1.5px);
   pointer-events: none;
   z-index: 0;
+  will-change: transform;
 }
 
 /* Global Typography Utilities */
@@ -85,5 +86,4 @@ body::before {
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 40px;
-  backdrop-filter: blur(10px);
 }

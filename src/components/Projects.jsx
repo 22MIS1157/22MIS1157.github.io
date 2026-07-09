@@ -29,7 +29,7 @@ export default function Projects() {
           </div>
           
           <div className="w-full aspect-video rounded-3xl border-2 border-[var(--glass-border)] bg-[var(--glass-bg)] shadow-2xl overflow-hidden relative flex items-center justify-center p-4">
-            <svg className="w-full h-full drop-shadow-2xl" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+            <svg className="w-full h-full" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
               
               {/* Background Tech Grid */}
               <g opacity="0.1">
@@ -191,7 +191,7 @@ export default function Projects() {
           className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
         >
           <div className="order-2 lg:order-1 w-full aspect-video rounded-3xl border-2 border-[var(--glass-border)] bg-[var(--glass-bg)] shadow-2xl overflow-hidden relative flex items-center justify-center p-4">
-            <svg className="w-full h-full drop-shadow-2xl" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+            <svg className="w-full h-full" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
               
               {/* Background Grid */}
               <g opacity="0.05">
@@ -365,7 +365,7 @@ export default function Projects() {
           </div>
           
           <div className="w-full aspect-video rounded-3xl border-2 border-[var(--glass-border)] bg-[var(--glass-bg)] shadow-2xl overflow-hidden relative flex items-center justify-center p-4">
-            <svg className="w-full h-full drop-shadow-2xl" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+            <svg className="w-full h-full" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
               
               {/* Architecture Lines */}
               <path d="M150,300 L350,150 M350,150 L650,150 M150,300 L350,450 M350,450 L650,450 M650,150 L800,300 L650,450 M350,150 L350,450" stroke="var(--glass-border)" strokeWidth="4" strokeDasharray="10 10"/>
@@ -429,7 +429,7 @@ export default function Projects() {
           className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
         >
           <div className="order-2 lg:order-1 w-full aspect-video rounded-3xl border-2 border-[var(--glass-border)] bg-[var(--glass-bg)] shadow-2xl overflow-hidden relative flex items-center justify-center p-4">
-            <svg className="w-full h-full drop-shadow-2xl" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+            <svg className="w-full h-full" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
               
               {/* XGBoost Decision Tree */}
               <g transform="translate(300, 100)">

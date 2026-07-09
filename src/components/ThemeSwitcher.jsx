@@ -8,7 +8,8 @@ export default function ThemeSwitcher() {
     <div className="fixed bottom-8 right-8 z-50">
       <button
         onClick={toggleTheme}
-        className="w-14 h-14 rounded-full flex items-center justify-center bg-[var(--glass-bg)] border border-[var(--glass-border)] backdrop-blur-md shadow-2xl overflow-hidden group transition-all duration-300 hover:scale-110 hover:border-[var(--accent)] hover:shadow-[0_0_15px_var(--accent)]"
+        className="w-14 h-14 rounded-full flex items-center justify-center bg-[var(--glass-bg)] border border-[var(--glass-border)] shadow-2xl overflow-hidden group transition-all duration-300 hover:scale-110 hover:border-[var(--accent)] hover:shadow-[0_0_15px_var(--accent)]"
+        aria-label="Toggle Theme"
       >
         <div className="relative w-6 h-6 flex items-center justify-center">
           <Sun 
