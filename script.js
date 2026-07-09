@@ -192,17 +192,39 @@
           const chars2 = line2.querySelectorAll('.decent-char-2');
           const allChars = [...chars1, ...chars2];
 
+          // Initialize states dispersed in Z space with rotations for the arrival sequence
+          allChars.forEach((span) => {
+            if (span.innerText === '\u00A0') return;
+            gsap.set(span, {
+              opacity: 0,
+              y: 120,
+              z: -600,
+              rotationX: 110,
+              rotationY: 45,
+              rotationZ: -20,
+              scale: 0.2,
+              transformOrigin: "50% 50% -100px"
+            });
+          });
+
           const tl = gsap.timeline();
           tl.to(allChars, {
-            y: '0%',
             opacity: 1,
+            y: 0,
+            z: 0,
             rotationX: 0,
-            duration: 1.2,
-            stagger: 0.04,
-            ease: 'power4.out'
+            rotationY: 0,
+            rotationZ: 0,
+            scale: 1,
+            duration: 1.5,
+            stagger: {
+              amount: 0.7,
+              from: "center"
+            },
+            ease: "elastic.out(1.15, 0.7)"
           })
-          .to('.hero-glow', { opacity: 0.5, scale: 1.5, duration: 1.2, ease: 'power2.out' }, '-=0.6')
-          .to('.scroll-down-indicator', { opacity: 1, y: 0, duration: 0.8 }, '-=0.8');
+          .to('.hero-glow', { opacity: 0.65, scale: 1.8, duration: 1.5, ease: 'power2.out' }, '-=0.8')
+          .to('.scroll-down-indicator', { opacity: 1, y: 0, duration: 0.8 }, '-=1.0');
         }
       },
 
@@ -391,23 +413,22 @@
       });
     });
 
-    // Stagger Entrance for Bento Cards and inner tags
-    gsap.utils.toArray('.bento-grid').forEach(grid => {
-      const cards = grid.querySelectorAll('.bento-card');
+    // Stagger Entrance for Skills Orbit menu items and display pane
+    gsap.utils.toArray('.skills-orbit-container').forEach(container => {
+      const items = container.querySelectorAll('.skills-menu-item');
+      const pane = container.querySelector('.skills-display-pane');
       
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: grid, start: 'top 85%' }
+        scrollTrigger: { trigger: container, start: 'top 85%' }
       });
       
-      tl.fromTo(cards, 
-        { opacity: 0, y: 50, scale: 0.95, rotationX: 10 }, 
-        { opacity: 1, y: 0, scale: 1, rotationX: 0, duration: 0.8, stagger: 0.12, ease: "power3.out" }
-      );
-      
-      const tags = grid.querySelectorAll('.bento-tag');
-      tl.fromTo(tags,
-        { opacity: 0, scale: 0.8, y: 15 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.02, ease: "back.out(1.5)" },
+      tl.fromTo(items, 
+        { opacity: 0, x: -40, scale: 0.9 }, 
+        { opacity: 1, x: 0, scale: 1, duration: 0.7, stagger: 0.1, ease: "power3.out" }
+      )
+      .fromTo(pane,
+        { opacity: 0, scale: 0.8, rotationY: 25 },
+        { opacity: 1, scale: 1, rotationY: 0, duration: 0.9, ease: "back.out(1.2)" },
         '-=0.4'
       );
     });
@@ -639,6 +660,199 @@
       .set(['#tree-root', '#tree-left', '#tree-leaf-1'], { scale: 1, stroke: '' });
   };
 
+  // 11. JAW-DROPPING KINETIC SKILLS ORBIT ENGINE
+  const initSkillsOrbit = () => {
+    const canvas = document.getElementById('skills-interactive-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const menuItems = document.querySelectorAll('.skills-menu-item');
+
+    const skillData = {
+      core: ['Python', 'Java', 'JavaScript', 'C', 'SQL', 'HTML/CSS', 'PHP', 'Perl'],
+      ai: ['PyTorch', 'YOLOv8', 'OpenCV', 'scikit-learn', 'XGBoost'],
+      web: ['FastAPI', 'React', 'Node.js', 'REST API'],
+      data: ['SQL', 'Dashboards', 'Data Analysis'],
+      eng: ['Data Structures', 'Git', 'Agile/Scrum'],
+      test: ['Selenium', 'Unit Testing', 'Arduino Nano']
+    };
+
+    let activeCategory = 'core';
+
+    // Build skill node objects
+    const uniqueSkills = [...new Set(Object.values(skillData).flat())];
+    const nodes = uniqueSkills.map((skill) => {
+      const cats = Object.keys(skillData).filter(key => skillData[key].includes(skill));
+      return {
+        name: skill,
+        categories: cats,
+        x: Math.random() * 300 + 100,
+        y: Math.random() * 300 + 100,
+        vx: 0,
+        vy: 0,
+        targetX: 250,
+        targetY: 250,
+        radius: 0,
+        active: false,
+        alpha: 0.3,
+        scale: 0.85
+      };
+    });
+
+    const resize = () => {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Mouse coordinates relative to canvas
+    let mouse = { x: 0, y: 0, active: false };
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+      mouse.active = true;
+    });
+    canvas.addEventListener('mouseleave', () => {
+      mouse.active = false;
+    });
+
+    // Handle menu interaction
+    menuItems.forEach(item => {
+      const selectCategory = () => {
+        menuItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        activeCategory = item.getAttribute('data-category');
+      };
+      item.addEventListener('mouseenter', selectCategory);
+      item.addEventListener('click', selectCategory);
+    });
+
+    let rotationAngle = 0;
+
+    const tick = () => {
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+
+      // Filter active nodes in category
+      const activeNodes = nodes.filter(n => n.categories.includes(activeCategory));
+      const inactiveNodes = nodes.filter(n => !n.categories.includes(activeCategory));
+
+      // 1. Arrange active nodes along inner circle
+      activeNodes.forEach((node, idx) => {
+        node.active = true;
+        node.alpha = 1.0;
+        node.scale = 1.15;
+
+        const angle = (idx / activeNodes.length) * Math.PI * 2 + rotationAngle;
+        node.targetX = cx + Math.cos(angle) * 115;
+        node.targetY = cy + Math.sin(angle) * 115;
+      });
+
+      // 2. Arrange inactive nodes in outer cloud
+      inactiveNodes.forEach((node, idx) => {
+        node.active = false;
+        node.alpha = 0.25;
+        node.scale = 0.8;
+
+        const angle = (idx / inactiveNodes.length) * Math.PI * 2 - rotationAngle * 0.4;
+        node.targetX = cx + Math.cos(angle) * 190;
+        node.targetY = cy + Math.sin(angle) * 190;
+      });
+
+      // 3. Apply spring physics and mouse magnetism
+      nodes.forEach(node => {
+        let tx = node.targetX;
+        let ty = node.targetY;
+
+        if (mouse.active) {
+          const dx = mouse.x - node.x;
+          const dy = mouse.y - node.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 80) {
+            tx += dx * 0.45;
+            ty += dy * 0.45;
+            node.scale *= 1.12;
+            if (node.active) node.alpha = 1.0;
+          }
+        }
+
+        const ax = (tx - node.x) * 0.08;
+        const ay = (ty - node.y) * 0.08;
+        node.vx = (node.vx + ax) * 0.75;
+        node.vy = (node.vy + ay) * 0.75;
+        node.x += node.vx;
+        node.y += node.vy;
+      });
+
+      // Render
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw dashed background rings
+      ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--glass-border') || 'rgba(30, 86, 205, 0.08)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([5, 5]);
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, 115, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, 190, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Draw web lines connecting active nodes in a structure
+      ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--glass-border') || 'rgba(30, 86, 205, 0.08)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      for (let i = 0; i < activeNodes.length; i++) {
+        const nextNode = activeNodes[(i + 1) % activeNodes.length];
+        ctx.moveTo(activeNodes[i].x, activeNodes[i].y);
+        ctx.lineTo(nextNode.x, nextNode.y);
+      }
+      ctx.stroke();
+
+      // Draw node pills
+      nodes.forEach(node => {
+        ctx.font = 'bold 12px Outfit, sans-serif';
+        const txtWidth = ctx.measureText(node.name).width;
+        const w = (txtWidth + 24) * node.scale;
+        const h = 28 * node.scale;
+
+        // Draw pill outline
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg-card') || '#FFFFFF';
+        ctx.strokeStyle = node.active ? (getComputedStyle(document.documentElement).getPropertyValue('--accent') || '#1E56CD') : 'rgba(150, 150, 150, 0.2)';
+        ctx.lineWidth = node.active ? 2 : 1;
+        ctx.save();
+        ctx.globalAlpha = node.alpha;
+
+        ctx.beginPath();
+        const rx = node.x - w / 2;
+        const ry = node.y - h / 2;
+        if (ctx.roundRect) {
+          ctx.roundRect(rx, ry, w, h, 14 * node.scale);
+        } else {
+          ctx.rect(rx, ry, w, h);
+        }
+        ctx.fill();
+        ctx.stroke();
+
+        // Draw text
+        ctx.fillStyle = node.active ? (getComputedStyle(document.documentElement).getPropertyValue('--fg') || '#1E56CD') : 'var(--text-muted)';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(node.name, node.x, node.y);
+        ctx.restore();
+      });
+
+      rotationAngle += 0.005;
+      requestAnimationFrame(tick);
+    };
+
+    tick();
+  };
+
   // 12. MAGNETIC MICRO-INTERACTIONS (Emil Kowalski style)
   const initMagneticElements = () => {
     const magnetics = document.querySelectorAll('.theme-btn, .social-btn, .contact-value.link');
@@ -674,6 +888,7 @@
   window.addEventListener("DOMContentLoaded", () => {
     window.scrollTo(0, 0);
     initLoader(); // Run loader -> hero -> animations sequentially
+    initSkillsOrbit();
     initMagneticElements();
   });
 })();

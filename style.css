@@ -3,37 +3,37 @@
    ============================================ */
 
 :root[data-theme="dark"] {
-  --bg: #02182B;        /* Nights Deep Midnight Navy */
-  --bg-card: #092237;   /* Elevated Card Navy */
-  --fg: #F4F6F9;        /* Off-White */
-  --accent: #D7263D;    /* Crimson Accent */
-  --accent-secondary: #F43F5E; /* Soft Crimson Red */
+  --bg: #000000;        /* Pure Black for Neon theme */
+  --bg-card: #0D0D11;   /* Dark Obsidian card background */
+  --fg: #FFFFFF;        /* Pure White Text */
+  --accent: #00F0FF;    /* Neon Cyan */
+  --accent-secondary: #8B5CF6; /* Neon Purple */
   --text-muted: #94A3B8;
-  --glass-bg: rgba(9, 34, 55, 0.75);
-  --glass-border: rgba(215, 38, 61, 0.15);
-  --grid-color: rgba(215, 38, 61, 0.015);
-  --magic-title-color: rgba(215, 38, 61, 0.18); /* Highly visible crimson watermark watermark */
-  --leo-char-1-grad: linear-gradient(to bottom, #FFFFFF 10%, #F43F5E 50%, #D7263D 100%);
-  --leo-char-2-grad: linear-gradient(to bottom, #FFFFFF 10%, #FDA4AF 55%, #BE123C 100%);
-  --leo-char-glow-1: drop-shadow(0 0 10px rgba(244, 63, 94, 0.6)) drop-shadow(0 0 25px rgba(215, 38, 61, 0.4));
-  --leo-char-glow-2: drop-shadow(0 0 15px rgba(253, 164, 175, 0.85)) drop-shadow(0 0 35px rgba(190, 18, 60, 0.5));
+  --glass-bg: rgba(13, 13, 17, 0.8);
+  --glass-border: rgba(0, 240, 255, 0.15);
+  --grid-color: rgba(0, 240, 255, 0.015);
+  --magic-title-color: rgba(255, 255, 255, 0.18); /* Light Watermark for Dark Theme */
+  --leo-char-1-grad: linear-gradient(to bottom, #FFFFFF 10%, #8B5CF6 50%, #00F0FF 100%);
+  --leo-char-2-grad: linear-gradient(to bottom, #FFFFFF 10%, #C084FC 55%, #06B6D4 100%);
+  --leo-char-glow-1: drop-shadow(0 0 10px rgba(0, 240, 255, 0.6)) drop-shadow(0 0 25px rgba(139, 92, 246, 0.4));
+  --leo-char-glow-2: drop-shadow(0 0 15px rgba(192, 132, 252, 0.85)) drop-shadow(0 0 35px rgba(6, 182, 212, 0.5));
 }
 
 :root[data-theme="light"] {
-  --bg: #FAF0CA;        /* Lemon Chiffon Cream Yellow */
+  --bg: #FDF8F2;        /* Vanilla Cloud Cream Background */
   --bg-card: #FFFFFF;   /* Clean White Card Surfaces */
-  --fg: #0D3B66;        /* Yale Blue Text */
-  --accent: #0D3B66;    /* Yale Blue Primary Accent */
-  --accent-secondary: #1E3A5F; /* Soft Slate Navy */
-  --text-muted: #475569;
+  --fg: #1E56CD;        /* Stream Blue Text */
+  --accent: #1E56CD;    /* Stream Blue Accent */
+  --accent-secondary: #2563EB; /* Soft Royal Blue */
+  --text-muted: #4B5563; /* Darker grey text for readability */
   --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(13, 59, 102, 0.12);
-  --grid-color: rgba(13, 59, 102, 0.015);
-  --magic-title-color: rgba(13, 59, 102, 0.14); /* Highly visible yale blue watermark watermark */
-  --leo-char-1-grad: linear-gradient(to bottom, #0D3B66 10%, #1E3A5F 50%, #02182B 100%);
-  --leo-char-2-grad: linear-gradient(to bottom, #1B4F72 10%, #2874A6 55%, #154360 100%);
-  --leo-char-glow-1: drop-shadow(0 0 8px rgba(13, 59, 102, 0.2));
-  --leo-char-glow-2: drop-shadow(0 0 12px rgba(13, 59, 102, 0.3));
+  --glass-border: rgba(30, 86, 205, 0.12);
+  --grid-color: rgba(30, 86, 205, 0.015);
+  --magic-title-color: rgba(15, 23, 42, 0.16); /* Dark Watermark for Light Theme */
+  --leo-char-1-grad: linear-gradient(to bottom, #1E56CD 10%, #2563EB 50%, #151C2C 100%);
+  --leo-char-2-grad: linear-gradient(to bottom, #1E56CD 10%, #3B82F6 55%, #111827 100%);
+  --leo-char-glow-1: drop-shadow(0 0 8px rgba(30, 86, 205, 0.2));
+  --leo-char-glow-2: drop-shadow(0 0 12px rgba(30, 86, 205, 0.3));
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -338,116 +338,78 @@ html[data-theme="light"] .moon-icon {
 .text-link:hover { opacity: 0.7; }
 
 /* ============================================
-   BENTO BOX SKILLS GRID
+   INTERACTIVE KINETIC SKILLS ORBIT SYSTEM
    ============================================ */
-.bento-container {
+.skills-orbit-container {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 40px;
+  align-items: center;
+  min-height: 550px;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1300px;
   margin: 0 auto;
 }
-.bento-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(180px, auto);
-  gap: 20px;
-}
 @media (max-width: 1024px) {
-  .bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 600px) {
-  .bento-grid {
+  .skills-orbit-container {
     grid-template-columns: 1fr;
+    gap: 40px;
+    min-height: auto;
   }
 }
 
-.bento-card {
-  background: var(--bg-card);
-  border: 1.5px solid var(--glass-border);
-  border-radius: 24px;
-  padding: 30px;
-  backdrop-filter: blur(20px);
+.skills-menu-pane {
   display: flex;
   flex-direction: column;
-  position: relative;
-  overflow: hidden;
+  gap: 20px;
 }
-
-/* Hover Physics (Scale and translate handled by GSAP) */
-.bento-card:hover {
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  border-color: var(--accent);
-  z-index: 10;
-}
-
-/* Card Sizes */
-.bento-large { grid-column: span 2; grid-row: span 2; }
-.bento-medium { grid-column: span 2; grid-row: span 1; }
-.bento-small { grid-column: span 1; grid-row: span 1; }
-
-@media (max-width: 1024px) {
-  .bento-large, .bento-medium { grid-column: span 2; }
-  .bento-small { grid-column: span 1; }
-}
-@media (max-width: 600px) {
-  .bento-large, .bento-medium, .bento-small { grid-column: span 1; }
-}
-
-.bento-header {
+.skills-menu-item {
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-bottom: 20px;
-}
-.bento-icon {
-  font-size: 2rem;
-  background: var(--glass-border);
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 14px;
-  transition: 0.3s;
-}
-.bento-card:hover .bento-icon {
-  background: var(--accent);
-  color: #000;
-  transform: rotate(-10deg);
-}
-
-.bento-header h5 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--fg);
-  letter-spacing: -0.5px;
-}
-
-.bento-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: auto;
-}
-.bento-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  padding: 6px 14px;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  text-transform: uppercase;
   color: var(--text-muted);
-  transition: 0.3s;
+  cursor: pointer;
+  transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.bento-tag.primary {
+.skills-menu-item .menu-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--accent);
+  opacity: 0.7;
+}
+.skills-menu-item.active, .skills-menu-item:hover {
   color: var(--fg);
-  border-color: var(--glass-border);
+  transform: translateX(15px);
 }
-.bento-card:hover .bento-tag.primary {
-  background: var(--accent);
-  color: #000;
-  border-color: var(--accent);
+.skills-menu-item.active .menu-num {
+  opacity: 1;
+}
+
+.skills-display-pane {
+  width: 100%;
+  aspect-ratio: 1/1;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  background: var(--bg-card);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+}
+.skills-node-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#skills-interactive-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 /* ============================================
@@ -653,62 +615,7 @@ html[data-theme="light"] .moon-icon {
   letter-spacing: -4px;
 }
 
-/* Interactive Bento Card Tilt & Glow Border styling */
-.bento-card {
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.15s ease-out, box-shadow 0.4s ease, border-color 0.4s ease;
-}
-.bento-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 24px;
-  background: radial-gradient(220px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(0, 240, 255, 0.06), transparent 50%);
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-.bento-card:hover::before {
-  opacity: 1;
-}
-/* Glowing Border Trace Mask */
-.bento-card::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 24px;
-  padding: 1px;
-  background: radial-gradient(200px circle at var(--mouse-x, 0) var(--mouse-y, 0), var(--accent), transparent 60%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 2;
-}
-.bento-card:hover::after {
-  opacity: 1;
-}
-.bento-card h5, .bento-card .bento-skills, .bento-card .bento-icon {
-  transform: translateZ(25px); /* 3D layer float */
-  transition: transform 0.3s ease;
-}
-.bento-tag {
-  transform: translateZ(10px);
-  transform-style: preserve-3d;
-  transition: transform 0.2s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-}
-.bento-tag:hover {
-  background: var(--accent) !important;
-  color: var(--bg) !important;
-  box-shadow: 0 0 15px var(--accent);
-  transform: translateZ(35px) translateY(-3px) scale(1.1);
-  border-color: var(--accent);
-}
+
 
 
 

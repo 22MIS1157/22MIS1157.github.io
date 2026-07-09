@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,95 +94,40 @@
                     <h2 class="magic-title" data-magic="skills">SKILLS</h2>
                 </div>
                 
-                <div class="content-container bento-container">
-                    <div class="bento-grid fade-up">
-                        
-                        <!-- Core Card: Programming & CS -->
-                        <div class="bento-card bento-large group-hover-effect">
-                            <div class="bento-header">
-                                <span class="bento-icon">&lt;/&gt;</span>
-                                <h5>Core Languages</h5>
-                            </div>
-                            <div class="bento-skills">
-                                <span class="bento-tag primary">Python</span>
-                                <span class="bento-tag primary">Java (Grade A)</span>
-                                <span class="bento-tag">JavaScript</span>
-                                <span class="bento-tag">C</span>
-                                <span class="bento-tag">SQL</span>
-                                <span class="bento-tag">HTML/CSS</span>
-                                <span class="bento-tag">PHP</span>
-                                <span class="bento-tag">Perl</span>
-                            </div>
+                <div class="content-container skills-orbit-container fade-up">
+                    <!-- Left: Category List Selector -->
+                    <div class="skills-menu-pane">
+                        <div class="skills-menu-item active" data-category="core">
+                            <span class="menu-num">01 //</span>
+                            <span class="menu-text">Core Languages</span>
                         </div>
-
-                        <!-- Secondary Card: AI & ML -->
-                        <div class="bento-card bento-medium group-hover-effect">
-                            <div class="bento-header">
-                                <span class="bento-icon">🤖</span>
-                                <h5>AI & Machine Learning</h5>
-                            </div>
-                            <div class="bento-skills">
-                                <span class="bento-tag primary">PyTorch</span>
-                                <span class="bento-tag primary">YOLOv8</span>
-                                <span class="bento-tag">OpenCV</span>
-                                <span class="bento-tag">scikit-learn</span>
-                                <span class="bento-tag">XGBoost</span>
-                            </div>
+                        <div class="skills-menu-item" data-category="ai">
+                            <span class="menu-num">02 //</span>
+                            <span class="menu-text">AI & Machine Learning</span>
                         </div>
-
-                        <!-- Secondary Card: Full Stack -->
-                        <div class="bento-card bento-medium group-hover-effect">
-                            <div class="bento-header">
-                                <span class="bento-icon">🌐</span>
-                                <h5>Full-Stack & APIs</h5>
-                            </div>
-                            <div class="bento-skills">
-                                <span class="bento-tag primary">FastAPI</span>
-                                <span class="bento-tag primary">React</span>
-                                <span class="bento-tag">Node.js</span>
-                                <span class="bento-tag">REST API</span>
-                            </div>
+                        <div class="skills-menu-item" data-category="web">
+                            <span class="menu-num">03 //</span>
+                            <span class="menu-text">Full-Stack & APIs</span>
                         </div>
-
-                        <!-- Small Card: Data -->
-                        <div class="bento-card bento-small group-hover-effect">
-                            <div class="bento-header">
-                                <span class="bento-icon">📊</span>
-                                <h5>Data & DBs</h5>
-                            </div>
-                            <div class="bento-skills">
-                                <span class="bento-tag">SQL</span>
-                                <span class="bento-tag">Dashboards</span>
-                                <span class="bento-tag">Data Analysis</span>
-                            </div>
+                        <div class="skills-menu-item" data-category="data">
+                            <span class="menu-num">04 //</span>
+                            <span class="menu-text">Data & Databases</span>
                         </div>
-
-                        <!-- Small Card: Engineering -->
-                        <div class="bento-card bento-small group-hover-effect">
-                            <div class="bento-header">
-                                <span class="bento-icon">⚙️</span>
-                                <h5>Engineering</h5>
-                            </div>
-                            <div class="bento-skills">
-                                <span class="bento-tag">Data Structures</span>
-                                <span class="bento-tag">Git</span>
-                                <span class="bento-tag">Agile/Scrum</span>
-                            </div>
+                        <div class="skills-menu-item" data-category="eng">
+                            <span class="menu-num">05 //</span>
+                            <span class="menu-text">Engineering</span>
                         </div>
-                        
-                        <!-- Small Card: Testing & IoT -->
-                        <div class="bento-card bento-small group-hover-effect">
-                            <div class="bento-header">
-                                <span class="bento-icon">🧪</span>
-                                <h5>Testing & IoT</h5>
-                            </div>
-                            <div class="bento-skills">
-                                <span class="bento-tag">Selenium</span>
-                                <span class="bento-tag">Unit Testing</span>
-                                <span class="bento-tag">Arduino Nano</span>
-                            </div>
+                        <div class="skills-menu-item" data-category="test">
+                            <span class="menu-num">06 //</span>
+                            <span class="menu-text">Testing & IoT</span>
                         </div>
-
+                    </div>
+                    
+                    <!-- Right: Interactive Canvas Node Orbit Space -->
+                    <div class="skills-display-pane">
+                        <div class="skills-node-wrapper" id="skills-node-canvas-container">
+                            <canvas id="skills-interactive-canvas"></canvas>
+                        </div>
                     </div>
                 </div>
             </section>
