@@ -1,89 +1,77 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-const skillCategories = [
-  { id: 'core', name: 'Core Languages', skills: ['Python', 'Java', 'JavaScript', 'C', 'SQL', 'HTML/CSS', 'PHP', 'Perl'] },
-  { id: 'ai', name: 'AI & ML', skills: ['PyTorch', 'YOLOv8', 'OpenCV', 'scikit-learn', 'XGBoost'] },
-  { id: 'web', name: 'Full-Stack', skills: ['FastAPI', 'React', 'Node.js', 'REST API'] },
-  { id: 'data', name: 'Data', skills: ['SQL', 'Dashboards', 'Data Analysis'] },
-  { id: 'eng', name: 'Engineering', skills: ['Data Structures', 'Git', 'Agile/Scrum'] },
-  { id: 'test', name: 'Testing & IoT', skills: ['Selenium', 'Unit Testing', 'Arduino Nano'] },
+const skillsData = [
+  { category: 'AI & Machine Learning', items: ['PyTorch', 'TensorFlow', 'YOLOv8', 'scikit-learn', 'OpenCV'], colSpan: 'md:col-span-2', rowSpan: 'md:row-span-2' },
+  { category: 'Frontend', items: ['React', 'Next.js', 'Framer Motion', 'Tailwind', 'Three.js'], colSpan: 'md:col-span-1', rowSpan: 'md:row-span-1' },
+  { category: 'Backend & APIs', items: ['FastAPI', 'Node.js', 'Express', 'REST API'], colSpan: 'md:col-span-1', rowSpan: 'md:row-span-2' },
+  { category: 'Core Languages', items: ['Python', 'Java', 'JavaScript', 'C', 'SQL', 'C++'], colSpan: 'md:col-span-2', rowSpan: 'md:row-span-1' },
+  { category: 'Cloud & Database', items: ['AWS Lambda', 'DynamoDB', 'S3', 'MySQL', 'MongoDB'], colSpan: 'md:col-span-2', rowSpan: 'md:row-span-1' },
+  { category: 'Engineering Tools', items: ['Git', 'Docker', 'Agile', 'IoT / Arduino'], colSpan: 'md:col-span-1', rowSpan: 'md:row-span-1' },
 ];
 
 export default function Skills() {
-  const [activeCat, setActiveCat] = useState('core');
-  const [hoveredSkill, setHoveredSkill] = useState(null);
-
-  const currentSkills = skillCategories.find(c => c.id === activeCat)?.skills || [];
+  const [hoveredIdx, setHoveredIdx] = useState(null);
 
   return (
-    <section className="relative w-full min-h-screen py-32 flex flex-col items-center justify-center bg-[var(--bg)]" id="skills">
-      
-      {/* Background Watermark */}
+    <section className="relative w-full py-40 flex flex-col items-center justify-center bg-[var(--bg)]" id="skills">
       <div className="absolute top-10 left-0 w-full text-center pointer-events-none overflow-hidden flex justify-center z-0">
-        <h2 className="text-[clamp(4.5rem,16vw,13rem)] font-black text-[var(--magic-title-color)] opacity-50 uppercase tracking-tighter leading-none select-none blur-[3px]">
-          SKILLS
-        </h2>
+        <h2 className="magic-title">SKILLS</h2>
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-20">
         
-        {/* Left: Category Selector */}
-        <div className="lg:col-span-4 flex flex-col gap-6">
-          {skillCategories.map((cat, idx) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCat(cat.id)}
-              className={`flex items-center gap-4 text-left font-outfit text-xl transition-all duration-300 ${activeCat === cat.id ? 'text-[var(--fg)] translate-x-4' : 'text-[var(--accent)] opacity-60 hover:opacity-100 hover:translate-x-2'}`}
-            >
-              <span className={`font-mono text-sm ${activeCat === cat.id ? 'opacity-100' : 'opacity-0'}`}>0{idx + 1} //</span>
-              <span className="font-bold">{cat.name}</span>
-            </button>
-          ))}
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-min">
+          {skillsData.map((group, idx) => {
+            const isHovered = hoveredIdx === idx;
+            const isOtherHovered = hoveredIdx !== null && hoveredIdx !== idx;
 
-        {/* Right: Floating Skill Constellation */}
-        <div className="lg:col-span-8 relative h-[500px] w-full bg-[var(--bg-card)] border-[1.5px] border-[var(--glass-border)] rounded-[40px] shadow-2xl p-10 flex flex-wrap content-center justify-center gap-6 overflow-hidden backdrop-blur-md">
-          
-          <AnimatePresence mode="popLayout">
-            {currentSkills.map((skill, index) => (
+            return (
               <motion.div
-                key={skill}
-                layout
-                initial={{ opacity: 0, scale: 0, rotate: Math.random() * 45 - 22.5 }}
-                animate={{ 
-                  opacity: hoveredSkill && hoveredSkill !== skill ? 0.3 : 1, 
-                  scale: hoveredSkill === skill ? 1.2 : 1,
-                  rotate: hoveredSkill === skill ? 0 : Math.random() * 10 - 5,
-                  filter: hoveredSkill && hoveredSkill !== skill ? 'blur(4px)' : 'blur(0px)'
+                key={group.category}
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: idx * 0.1, type: "spring", bounce: 0.3 }}
+                onMouseEnter={() => setHoveredIdx(idx)}
+                onMouseLeave={() => setHoveredIdx(null)}
+                className={`relative flex flex-col p-8 rounded-3xl border border-[var(--glass-border)] transition-all duration-500 overflow-hidden ${group.colSpan} ${group.rowSpan}`}
+                style={{
+                  background: isHovered ? 'var(--bg-card)' : 'transparent',
+                  transform: isHovered ? 'scale(1.02)' : isOtherHovered ? 'scale(0.98)' : 'scale(1)',
+                  opacity: isOtherHovered ? 0.3 : 1,
+                  filter: isOtherHovered ? 'blur(4px)' : 'blur(0px)',
+                  boxShadow: isHovered ? '0 20px 40px rgba(0,0,0,0.2)' : 'none',
+                  borderColor: isHovered ? 'var(--accent)' : 'var(--glass-border)',
+                  zIndex: isHovered ? 20 : 10
                 }}
-                exit={{ opacity: 0, scale: 0, filter: 'blur(10px)' }}
-                transition={{ 
-                  type: 'spring', 
-                  stiffness: 300, 
-                  damping: 20, 
-                  mass: 1,
-                  delay: index * 0.05 
-                }}
-                onMouseEnter={() => setHoveredSkill(skill)}
-                onMouseLeave={() => setHoveredSkill(null)}
-                className={`px-8 py-4 rounded-full border-2 cursor-crosshair backdrop-blur-sm transition-colors duration-300 ${
-                  hoveredSkill === skill 
-                    ? 'bg-[var(--accent)] border-[var(--accent)] text-[var(--bg)] shadow-[0_0_30px_var(--accent)] z-20' 
-                    : 'bg-transparent border-[var(--glass-border)] text-[var(--fg)] z-10'
-                }`}
               >
-                <span className="font-bold text-lg">{skill}</span>
+                {/* Background glow on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br from-[var(--accent)] to-transparent opacity-0 transition-opacity duration-500 ${isHovered ? 'opacity-10' : ''}`} />
+
+                <h3 className="font-mono text-sm tracking-widest text-[var(--text-muted)] mb-6 uppercase">
+                  {group.category}
+                </h3>
+
+                <div className="flex flex-wrap gap-3 mt-auto">
+                  {group.items.map((skill, sIdx) => (
+                    <motion.div
+                      key={skill}
+                      initial={false}
+                      animate={{ 
+                        y: isHovered ? [10, 0] : 0, 
+                        opacity: isHovered ? [0, 1] : 1 
+                      }}
+                      transition={{ duration: 0.3, delay: sIdx * 0.05 }}
+                      className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors duration-300 ${isHovered ? 'bg-[var(--accent)] text-[var(--bg)] border-[var(--accent)]' : 'bg-[var(--glass-bg)] text-[var(--fg)] border-[var(--glass-border)]'}`}
+                    >
+                      {skill}
+                    </motion.div>
+                  ))}
+                </div>
               </motion.div>
-            ))}
-          </AnimatePresence>
-
-          {/* Grid Background inside card */}
-          <div className="absolute inset-0 z-0 opacity-10 pointer-events-none" style={{
-            backgroundImage: `radial-gradient(circle at center, var(--accent) 1px, transparent 1px)`,
-            backgroundSize: '30px 30px'
-          }} />
-
+            );
+          })}
         </div>
       </div>
     </section>

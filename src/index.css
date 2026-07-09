@@ -68,8 +68,8 @@ body::before {
 
 .magic-title {
   font-size: clamp(4.5rem, 16vw, 13rem);
-  font-weight: 800;
-  color: rgba(15, 23, 42, 0.1);
+  font-weight: 900;
+  color: rgba(30, 86, 205, 0.15); /* Dark matching color for light theme */
   line-height: 1;
   letter-spacing: -5px;
   text-transform: uppercase;
@@ -77,7 +77,7 @@ body::before {
 }
 
 :root[data-theme="dark"] .magic-title {
-  color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 234, 0, 0.15); /* Light color for dark theme */
 }
 
 .glass-card {
