@@ -234,7 +234,7 @@ export default function Contact() {
               </div>
             </motion.div>
 
-            {/* GITHUB SHOWCASE CARD WITH HOVER PROFILE IMAGE PREVIEW & MARQUEE */}
+            {/* GITHUB SHOWCASE CARD WITH OFFICIAL PIXEL-ART GITHUB AVATAR HOVER OVERLAY (MATCHING USER SCREENSHOT) */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -242,16 +242,19 @@ export default function Contact() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="rounded-3xl border border-[var(--border)] bg-[var(--bg-card)] p-6 flex flex-col justify-between gap-5 hover:border-[var(--fg)] transition-all duration-300 shadow-sm hover:shadow-xl group/ghbox flex-1 min-h-[320px] overflow-hidden relative"
             >
-              {/* HOVER PROFILE PICTURE OVERLAY FOR GITHUB */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-card)]/95 via-[var(--bg-elevated)]/95 to-[var(--bg-card)]/95 backdrop-blur opacity-0 group-hover/ghbox:opacity-100 transition-opacity duration-500 pointer-events-none flex flex-col items-center justify-center p-6 z-20 text-center gap-3">
-                <div className="w-20 h-20 rounded-full p-[2px] bg-[var(--fg)] shadow-xl overflow-hidden transform group-hover/ghbox:scale-105 transition-transform duration-500">
-                  <img src={profileImg} alt="Afnaan Ahmed P" className="w-full h-full object-cover object-top rounded-full" />
+              {/* HOVER PROFILE OVERLAY FOR GITHUB (MATCHING GITHUB PROFILE SCREENSHOT) */}
+              <div className="absolute inset-0 bg-[#0d1117]/95 backdrop-blur opacity-0 group-hover/ghbox:opacity-100 transition-opacity duration-500 pointer-events-none flex flex-col items-center justify-center p-6 z-20 text-center gap-2.5 text-white">
+                <div className="w-20 h-20 rounded-full p-[2px] border-2 border-emerald-400 shadow-2xl overflow-hidden transform group-hover/ghbox:scale-105 transition-transform duration-500 relative bg-black">
+                  <img src="https://github.com/22MIS1157.png" alt="AFNAAN AHMED 22MIS1157 GitHub Avatar" className="w-full h-full object-cover rounded-full" />
                 </div>
                 <div>
-                  <h4 className="font-grotesk font-black text-xl uppercase tracking-tight text-[var(--text-primary)] m-0">AFNAAN AHMED P</h4>
-                  <p className="font-mono text-xs text-[var(--text-secondary)] mt-1">github/22MIS1157</p>
+                  <h4 className="font-grotesk font-black text-xl text-white tracking-tight m-0">AFNAAN AHMED</h4>
+                  <p className="font-mono text-xs text-emerald-400 mt-0.5">22MIS1157 · he/him</p>
+                  <p className="font-inter text-[11px] text-zinc-300 italic mt-1 max-w-xs">
+                    "Happy to be a programmer and always be serve as a developer"
+                  </p>
                 </div>
-                <div className="px-4 py-1.5 rounded-full bg-[var(--fg)] text-[var(--bg)] font-mono text-[10px] font-bold tracking-widest uppercase shadow-md">
+                <div className="px-4 py-1.5 rounded-full bg-emerald-500 text-black font-mono text-[10px] font-bold tracking-widest uppercase shadow-lg mt-1">
                   VIEW GITHUB REPOSITORIES ↗
                 </div>
               </div>
