@@ -1,84 +1,90 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase } from 'lucide-react';
 
-export default function Experience() {
-  const experiences = [
-    {
-      title: "Research Intern -- Smart Healthcare 2025",
-      company: "Centre for Healthcare Advancement, Innovation & Research (CHAIR), VIT Chennai",
-      location: "Chennai, Tamil Nadu",
-      date: "May 2025 -- Aug 2025",
-      points: [
-        "Led an independent research project applying programming fundamentals to build a computer vision model from scratch; collected and preprocessed 4,260 images and wrote validation test cases.",
-        "Delivered a working deep learning model with 96% accuracy and presented weekly technical updates to the faculty supervisor."
-      ],
-      link: "https://vitchennaievents.com/certificates/generate.php?c=VDJPc09rRXRJbDhoSUJrK1Fqc2xnVXFWQWcybS9ZT01KOGcyV3ZPSmNORGFjM2Zuakxaall1bVVoME00ZHFxUllhQmh5S1dLbjZqcVpxSXVIMDhXQjZVS3g1UUxkeENkRml1RmVmTXZqVUJSdWtXMGVoWXNTUEpSc0VSZVdSNUF2ejBqYVk0ajE4Zm82Wmxkbm9HaCt6MW9GS0ZES1AyOVBwVlltQTJtTEdRPQ=="
-    },
-    {
-      title: "Python Training Intern",
-      company: "Colan Infotech Private Limited",
-      location: "Pernambut, Tamil Nadu (Full-time, On-site)",
-      date: "Jun 2024 -- Jul 2024",
-      points: [
-        "Completed structured enterprise training focused on core Python programming, Java, SQL databases, and software testing practices to debug, test, and enhance existing systems.",
-        "Gained practical exposure to standard industry workflows including Git version control, code reviews, and Agile team collaboration."
-      ]
-    }
-  ];
+const experiences = [
+  {
+    id: 1,
+    role: "Research Intern",
+    company: "CHAIR VIT Chennai",
+    period: "May 2025 – Aug 2025",
+    description: "Contributing to research initiatives and collaborating with faculty on cutting-edge technical projects."
+  },
+  {
+    id: 2,
+    role: "Python Training Intern",
+    company: "Colan Infotech",
+    period: "Jun 2024 – Jul 2024",
+    description: "Developed and refined Python programming skills, participating in training modules focused on software engineering best practices."
+  }
+];
 
+const Experience = () => {
   return (
-    <section className="relative w-full py-20 flex flex-col items-center justify-center bg-[var(--bg)]" id="experience">
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 space-y-12">
-        {experiences.map((exp, idx) => (
-          <motion.div 
-            key={idx}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: idx * 0.2 }}
-            className="glass-card flex gap-6 md:gap-8 flex-col md:flex-row relative overflow-hidden group hover:border-[var(--accent)] transition-colors duration-500"
-          >
-            <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500 pointer-events-none">
-              <Briefcase className="w-64 h-64 text-[var(--accent)]" />
-            </div>
-            
-            <div className="flex-shrink-0 pt-2">
-              <div className="w-16 h-16 rounded-2xl bg-[var(--accent)]/10 border border-[var(--accent)]/20 flex items-center justify-center text-[var(--accent)]">
-                <Briefcase className="w-8 h-8" />
-              </div>
-            </div>
-            
-            <div className="relative z-10 w-full">
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
-                <h3 className="text-2xl font-bold text-[var(--fg)]">{exp.title}</h3>
-                <span className="font-mono text-sm px-4 py-1 rounded-full border border-[var(--accent)] text-[var(--accent)] bg-[var(--accent)]/10 whitespace-nowrap">{exp.date}</span>
-              </div>
-              <p className="text-xl text-[var(--accent)] font-semibold mb-2">{exp.company}</p>
-              <p className="text-sm font-mono text-[var(--text-muted)] mb-6">{exp.location}</p>
-              
-              <ul className="space-y-4 text-[var(--text-muted)] text-base leading-relaxed mb-6">
-                {exp.points.map((point, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span className="text-[var(--accent)] mt-1">▹</span>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
+    <section id="experience" className="py-32 bg-[var(--bg)] relative">
+      <div className="container mx-auto px-6 max-w-5xl">
+        <div className="mb-20">
+          <span className="section-label block mb-4 text-[var(--text-muted)] font-inter text-sm font-semibold tracking-widest uppercase">
+            Work
+          </span>
+          <h2 className="section-heading font-grotesk font-black text-5xl md:text-7xl text-[var(--text-primary)] uppercase tracking-tight">
+            Experience
+          </h2>
+        </div>
 
-              {exp.link && (
-                <a 
-                  href={exp.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-block px-6 py-3 rounded-xl bg-[var(--fg)] text-[var(--bg)] font-bold text-sm hover:bg-[var(--accent)] transition-colors duration-300"
-                >
-                  View Certificate
-                </a>
-              )}
-            </div>
-          </motion.div>
-        ))}
+        <div className="relative">
+          {/* Main vertical timeline line */}
+          <div className="absolute left-[30%] md:left-[25%] top-0 bottom-0 w-[2px] bg-[var(--border)]" />
+
+          <div className="flex flex-col space-y-16">
+            {experiences.map((exp, index) => (
+              <motion.div 
+                key={exp.id}
+                className="relative flex w-full"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                {/* Date Side */}
+                <div className="w-[30%] md:w-[25%] pr-6 md:pr-12 flex justify-end items-start pt-1">
+                  <span className="font-inter text-sm md:text-base font-medium text-[var(--text-secondary)] text-right">
+                    {exp.period}
+                  </span>
+                </div>
+
+                {/* Timeline Dot */}
+                <div className="absolute left-[30%] md:left-[25%] -translate-x-[50%] mt-2 flex items-center justify-center">
+                  <motion.div 
+                    className="w-3 h-3 rounded-full bg-[var(--bg)] border-2 border-[var(--text-primary)] z-10"
+                    whileInView={{ backgroundColor: 'var(--text-primary)' }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.4, delay: index * 0.1 + 0.3 }}
+                  />
+                  {/* Connecting horizontal line */}
+                  <div className="absolute left-full top-1/2 -translate-y-1/2 w-4 md:w-8 h-[2px] bg-[var(--border)]" />
+                </div>
+
+                {/* Content Side */}
+                <div className="w-[70%] md:w-[75%] pl-8 md:pl-12">
+                  <div className="group border border-[var(--border)] p-6 md:p-8 hover:border-[var(--text-primary)] transition-colors duration-300 bg-[var(--bg)]">
+                    <h3 className="font-grotesk text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-2">
+                      {exp.role}
+                    </h3>
+                    <h4 className="font-inter text-lg text-[var(--text-secondary)] mb-4">
+                      {exp.company}
+                    </h4>
+                    <p className="font-inter text-base text-[var(--text-muted)] leading-relaxed">
+                      {exp.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
-}
+};
+
+export default Experience;

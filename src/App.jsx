@@ -1,90 +1,116 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ThemeProvider } from './components/ThemeContext';
-import ThemeSwitcher from './components/ThemeSwitcher';
+import MagneticCursor from './components/MagneticCursor';
+import Navbar from './components/Navbar';
+import FullscreenMenu from './components/FullscreenMenu';
+import Loader from './components/Loader';
 import Hero from './components/Hero';
-import Skills from './components/Skills';
+import Offerings from './components/Offerings';
+import TechStack from './components/TechStack';
 import Projects from './components/Projects';
-import Experience from './components/Experience';
+import ExperienceEducation from './components/ExperienceEducation';
 import Certifications from './components/Certifications';
 import Activities from './components/Activities';
-import Education from './components/Education';
-import Loader from './components/Loader';
 import Contact from './components/Contact';
-import SectionHeader from './components/SectionHeader';
+import SmoothScroll from './components/SmoothScroll';
+import './App.css';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (loading) {
+    if (loading || isMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     }
-  }, [loading]);
+    return () => { document.body.style.overflow = ''; };
+  }, [loading, isMenuOpen]);
 
   return (
     <ThemeProvider>
-      <div className="relative w-full min-h-screen selection:bg-[var(--accent)] selection:text-[var(--bg)]">
-        
-        <AnimatePresence mode="wait">
-          {loading && <Loader key="loader" onLoadingComplete={() => setLoading(false)} />}
-        </AnimatePresence>
+      <SmoothScroll>
+        <div className="relative w-full min-h-screen selection:bg-[var(--fg)] selection:text-[var(--bg)] bg-[var(--bg)]">
 
-        <ThemeSwitcher />
-        
-        <AnimatePresence>
-          {!loading && (
-            <motion.main 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-              className="flex flex-col pb-40 overflow-hidden"
-            >
-              <Hero />
-              
-              {/* About Section */}
-              <motion.section 
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8 }}
-                className="relative w-full py-32 flex flex-col items-center justify-center bg-[var(--bg)] z-10"
+          {/* Custom Target Reticle Cursor */}
+          <MagneticCursor />
+
+          {/* Preloader */}
+          <AnimatePresence mode="wait">
+            {loading && (
+              <Loader
+                key="loader"
+                onLoadingComplete={() => setLoading(false)}
+              />
+            )}
+          </AnimatePresence>
+
+          {/* Sticky Header Nav */}
+          <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} isLoaded={!loading} />
+          <FullscreenMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
+          {/* Main Content Sections */}
+          <AnimatePresence>
+            {!loading && (
+              <motion.main
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="relative z-[1] flex flex-col space-y-[40px]"
               >
-                <div className="max-w-4xl mx-auto px-6 text-center">
-                  <p className="text-2xl md:text-4xl leading-relaxed text-[var(--text-muted)] font-light tracking-wide">
-                    Software Engineer specializing in <span className="text-[var(--fg)] font-semibold">Full-Stack Web Development</span> and <span className="text-[var(--fg)] font-semibold">Machine Learning</span>. Passionate about building robust applications, designing scalable APIs, and applying data-driven solutions to real-world challenges.
-                  </p>
-                </div>
-              </motion.section>
+                <Hero />
+                <Offerings />
+                <TechStack />
+                <Projects />
+                <ExperienceEducation />
+                <Certifications />
+                <Activities />
+                <Contact />
 
-              {/* Education right after About */}
-              <SectionHeader title="EDUCATION" />
-              <Education />
-
-              <SectionHeader title="SKILLS" />
-              <Skills />
-
-              <SectionHeader title="PROJECTS" />
-              <Projects />
-
-              <SectionHeader title="EXPERIENCE" />
-              <Experience />
-
-              <SectionHeader title="CERTIFICATIONS" />
-              <Certifications />
-
-              <SectionHeader title="ACTIVITIES" />
-              <Activities />
-
-              <SectionHeader title="CONTACT" />
-              <Contact />
-            </motion.main>
-          )}
-        </AnimatePresence>
-      </div>
+                {/* Scroll to Top FAB */}
+                <ScrollToTop />
+              </motion.main>
+            )}
+          </AnimatePresence>
+        </div>
+      </SmoothScroll>
     </ThemeProvider>
+  );
+}
+
+/* ── Scroll to Top Button (Floating Black Square with White Up Arrow) ─── */
+function ScrollToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setVisible(window.scrollY > 500);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.3 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-lg bg-[var(--fg)] text-[var(--bg)] flex items-center justify-center shadow-lg hover:scale-105 transition-transform cursor-pointer"
+          data-cursor="pointer"
+          aria-label="Scroll to top"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 15l-6-6-6 6"/>
+          </svg>
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
 }
 
