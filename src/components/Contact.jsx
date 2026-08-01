@@ -55,18 +55,6 @@ const VerifiedBadge = () => (
   </svg>
 );
 
-const SimpleIconBg = ({ slug, isDark }) => (
-  <img 
-    src={`https://cdn.simpleicons.org/${slug}`}
-    alt=""
-    className="w-7 h-7 opacity-25 dark:opacity-40 hover:opacity-80 transition-all duration-300 pointer-events-none"
-    style={{
-      filter: isDark ? 'brightness(0) invert(1)' : 'brightness(0)'
-    }}
-    draggable={false}
-  />
-);
-
 // Authentic Dynamic Animated GIF Signature Logo Component
 const AfnaanSignatureLogo = ({ isDark }) => (
   <div className="flex items-center justify-center relative select-none group/logo w-full h-full p-1" data-cursor="pointer">
@@ -188,7 +176,7 @@ export default function Contact() {
                 </p>
               </div>
 
-              {/* Bottom Portrait Photo (DEFAULT B&W, HOVER SMOOTH FULL COLOR REVEAL) */}
+              {/* Bottom Portrait Photo */}
               <div className="relative flex-1 w-full overflow-hidden flex items-end" data-cursor="pointer">
                 <img
                   src={profileImg}
@@ -234,33 +222,16 @@ export default function Contact() {
               </div>
             </motion.div>
 
-            {/* GITHUB SHOWCASE CARD WITH OFFICIAL PIXEL-ART GITHUB AVATAR HOVER OVERLAY (MATCHING USER SCREENSHOT) */}
+            {/* GITHUB SHOWCASE CARD WITH PERMANENT CLEAN PROFILE HEADER & MOVING PROJECT MARQUEE */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="rounded-3xl border border-[var(--border)] bg-[var(--bg-card)] p-6 flex flex-col justify-between gap-5 hover:border-[var(--fg)] transition-all duration-300 shadow-sm hover:shadow-xl group/ghbox flex-1 min-h-[320px] overflow-hidden relative"
+              className="rounded-3xl border border-[var(--border)] bg-[var(--bg-card)] p-6 flex flex-col justify-between gap-5 hover:border-[var(--fg)] transition-all duration-300 shadow-sm flex-1 min-h-[320px] overflow-hidden relative"
             >
-              {/* HOVER PROFILE OVERLAY FOR GITHUB (MATCHING GITHUB PROFILE SCREENSHOT) */}
-              <div className="absolute inset-0 bg-[#0d1117]/95 backdrop-blur opacity-0 group-hover/ghbox:opacity-100 transition-opacity duration-500 pointer-events-none flex flex-col items-center justify-center p-6 z-20 text-center gap-2.5 text-white">
-                <div className="w-20 h-20 rounded-full p-[2px] border-2 border-emerald-400 shadow-2xl overflow-hidden transform group-hover/ghbox:scale-105 transition-transform duration-500 relative bg-black">
-                  <img src="https://github.com/22MIS1157.png" alt="AFNAAN AHMED 22MIS1157 GitHub Avatar" className="w-full h-full object-cover rounded-full" />
-                </div>
-                <div>
-                  <h4 className="font-grotesk font-black text-xl text-white tracking-tight m-0">AFNAAN AHMED</h4>
-                  <p className="font-mono text-xs text-emerald-400 mt-0.5">22MIS1157 · he/him</p>
-                  <p className="font-inter text-[11px] text-zinc-300 italic mt-1 max-w-xs">
-                    "Happy to be a programmer and always be serve as a developer"
-                  </p>
-                </div>
-                <div className="px-4 py-1.5 rounded-full bg-emerald-500 text-black font-mono text-[10px] font-bold tracking-widest uppercase shadow-lg mt-1">
-                  VIEW GITHUB REPOSITORIES ↗
-                </div>
-              </div>
-
-              {/* GitHub Card Header */}
-              <div className="flex items-center justify-between gap-3 border-b border-[var(--border)] pb-3.5 z-10 bg-[var(--bg-card)]/90 backdrop-blur">
+              {/* GitHub Header */}
+              <div className="flex items-center justify-between gap-3 border-b border-[var(--border)] pb-3.5 z-10">
                 <a
                   href="https://github.com/22MIS1157"
                   target="_blank"
@@ -268,7 +239,7 @@ export default function Contact() {
                   data-cursor="pointer"
                   className="flex items-center gap-3 group/gh truncate"
                 >
-                  <div className="p-2 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border)] group-hover/gh:border-[var(--fg)] group-hover/gh:scale-110 transition-all shrink-0">
+                  <div className="p-2 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border)] group-hover/gh:border-[var(--fg)] transition-colors shrink-0">
                     <GithubIcon />
                   </div>
                   <span className="font-grotesk font-bold text-base md:text-lg text-[var(--text-primary)] group-hover/gh:text-[var(--fg)] transition-colors truncate">
@@ -286,6 +257,22 @@ export default function Contact() {
                 </a>
               </div>
 
+              {/* PERMANENT PROFILE BADGE ROW FOR GITHUB */}
+              <div className="flex items-center gap-4 bg-[var(--bg-elevated)] p-4 rounded-2xl border border-[var(--border)] z-10">
+                <div className="w-14 h-14 rounded-full p-[2px] border-2 border-emerald-400 shrink-0 overflow-hidden bg-black shadow-md">
+                  <img src="https://github.com/22MIS1157.png" alt="AFNAAN AHMED 22MIS1157 GitHub Avatar" className="w-full h-full object-cover rounded-full" />
+                </div>
+                <div className="flex flex-col text-left overflow-hidden">
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-grotesk font-bold text-base text-[var(--text-primary)] m-0 leading-tight">AFNAAN AHMED</h4>
+                    <span className="font-mono text-[11px] text-emerald-500 font-bold">22MIS1157</span>
+                  </div>
+                  <p className="font-inter text-xs text-[var(--text-muted)] line-clamp-1 mt-0.5">
+                    "Happy to be a programmer and always be serve as a developer"
+                  </p>
+                </div>
+              </div>
+
               {/* MOVING PROJECT CARDS MARQUEE SLIDER */}
               <div className="relative w-full overflow-hidden py-1 flex-1 flex items-center z-10">
                 <motion.div
@@ -301,7 +288,7 @@ export default function Contact() {
                       target="_blank"
                       rel="noreferrer"
                       data-cursor="pointer"
-                      className="w-[240px] md:w-[260px] p-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-elevated)] hover:border-[var(--fg)] hover:scale-[1.03] transition-all duration-300 flex flex-col justify-between text-left group/item relative shrink-0 min-h-[130px] shadow-sm"
+                      className="w-[240px] md:w-[260px] p-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-elevated)] hover:border-[var(--fg)] hover:scale-[1.03] transition-all duration-300 flex flex-col justify-between text-left group/item relative shrink-0 min-h-[120px] shadow-sm"
                     >
                       <div className="flex items-start justify-between gap-1">
                         <h4 className="font-grotesk font-bold text-sm text-[var(--text-primary)] group-hover/item:text-[var(--fg)] transition-colors leading-tight">
@@ -333,7 +320,7 @@ export default function Contact() {
                 {/* Corner Reticle Brackets ┌ ┐ └ ┘ */}
                 <div className="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-[var(--fg)]" />
                 <div className="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-[var(--fg)]" />
-                <div className="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-[var(--fg)]" />
+                <div className="absolute bottom-3 left-3 w-3 h-3 border-b-3 border-l-2 border-[var(--fg)]" />
                 <div className="absolute bottom-3 right-3 w-3 h-3 border-b-2 border-r-2 border-[var(--fg)]" />
 
                 {/* Animated GIF Signature Logo */}
@@ -355,10 +342,10 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* COLUMN 3: RIGHT COLUMN (LINKEDIN & INSTAGRAM WITH CIRCULAR PROFILE PHOTO AVATAR HOVER REVEALS) */}
+          {/* COLUMN 3: RIGHT COLUMN (PERMANENT LINKEDIN & INSTAGRAM PROFILE CARDS) */}
           <div className="lg:col-span-3 flex flex-col gap-6 md:gap-8 justify-between">
             
-            {/* TOP LINKEDIN CARD WITH CIRCULAR PROFILE IMAGE HOVER OVERLAY */}
+            {/* TOP LINKEDIN CARD WITH PERMANENT PROFILE BADGE */}
             <motion.a
               href="https://www.linkedin.com/in/afnaan22mis1157/"
               target="_blank"
@@ -368,49 +355,8 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="relative rounded-3xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-[#0A66C2] hover:shadow-[0_0_30px_rgba(10,102,194,0.3)] transition-all duration-500 p-6 overflow-hidden flex flex-col justify-between text-left group/li min-h-[260px] block shadow-sm flex-1"
+              className="relative rounded-3xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-[#0A66C2] transition-all duration-300 p-6 overflow-hidden flex flex-col justify-between text-left group/li min-h-[260px] block shadow-sm flex-1"
             >
-              {/* ENHANCED DUAL-ROW FLOATING BACKGROUND ICON EFFECT */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25 dark:opacity-40 flex flex-col justify-around py-3">
-                {/* Row 1 */}
-                <motion.div
-                  className="flex items-center gap-7 w-max"
-                  animate={{ x: ['0%', '-50%'] }}
-                  transition={{ repeat: Infinity, duration: 16, ease: 'linear' }}
-                >
-                  {['react', 'node', 'python', 'aws', 'docker', 'git', 'pytorch', 'fastapi', 'postgresql', 'react', 'node', 'python'].map((slug, idx) => (
-                    <SimpleIconBg key={`li1-${slug}-${idx}`} slug={slug} isDark={isDark} />
-                  ))}
-                </motion.div>
-                {/* Row 2 */}
-                <motion.div
-                  className="flex items-center gap-7 w-max"
-                  animate={{ x: ['-50%', '0%'] }}
-                  transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
-                >
-                  {['tensorflow', 'typescript', 'javascript', 'html5', 'css3', 'unity', 'opencv', 'docker', 'tensorflow', 'typescript'].map((slug, idx) => (
-                    <SimpleIconBg key={`li2-${slug}-${idx}`} slug={slug} isDark={isDark} />
-                  ))}
-                </motion.div>
-              </div>
-
-              {/* CIRCULAR PROFILE IMAGE HOVER OVERLAY FOR LINKEDIN */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#0A66C2]/95 via-[#084e96]/95 to-[#06386d]/95 backdrop-blur opacity-0 group-hover/li:opacity-100 transition-opacity duration-400 p-6 flex flex-col items-center justify-center text-center text-white z-20 pointer-events-none gap-3">
-                <div className="w-20 h-20 rounded-full p-[2.5px] bg-white shadow-2xl overflow-hidden transform group-hover/li:scale-105 transition-transform duration-500 relative">
-                  <img src={profileImg} alt="Afnaan Ahmed P" className="w-full h-full object-cover object-top rounded-full" />
-                </div>
-                <div>
-                  <div className="flex items-center justify-center gap-1">
-                    <h4 className="font-grotesk font-black text-lg uppercase tracking-tight text-white m-0">AFNAAN AHMED P</h4>
-                    <VerifiedBadge />
-                  </div>
-                  <p className="font-mono text-xs text-blue-200 mt-1">linkedin.com/in/afnaan22mis1157</p>
-                </div>
-                <div className="px-4 py-1.5 rounded-full bg-white text-[#0A66C2] font-mono text-[10px] font-bold tracking-widest uppercase shadow-lg">
-                  CONNECT ON LINKEDIN ↗
-                </div>
-              </div>
-
               {/* Top Row: LinkedIn Logo Badge & Arrow */}
               <div className="relative z-10 flex items-center justify-between">
                 <div className="p-2 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border)] group-hover/li:border-[#0A66C2] transition-all shrink-0">
@@ -421,8 +367,27 @@ export default function Contact() {
                 </div>
               </div>
 
+              {/* PERMANENT LINKEDIN PROFILE DISPLAY */}
+              <div className="relative z-10 flex items-center gap-3 my-auto py-2">
+                <div className="w-14 h-14 rounded-full p-[2px] border-2 border-[#0A66C2] shrink-0 overflow-hidden shadow-md">
+                  <img src={profileImg} alt="Afnaan Ahmed P" className="w-full h-full object-cover object-top rounded-full" />
+                </div>
+                <div className="flex flex-col text-left truncate">
+                  <div className="flex items-center gap-1 truncate">
+                    <h4 className="font-grotesk font-bold text-sm text-[var(--text-primary)] truncate m-0">AFNAAN AHMED P</h4>
+                    <VerifiedBadge />
+                  </div>
+                  <p className="font-inter text-[11px] text-[var(--text-muted)] truncate mt-0.5">
+                    Python Backend Engineer
+                  </p>
+                  <p className="font-mono text-[10px] text-[#0A66C2] font-semibold mt-0.5">
+                    500+ Connections
+                  </p>
+                </div>
+              </div>
+
               {/* Lower Middle URL Pill & Bottom Connect Button */}
-              <div className="relative z-10 flex flex-col gap-2.5 mt-auto pt-4">
+              <div className="relative z-10 flex flex-col gap-2.5 mt-auto pt-2">
                 <div className="px-3 py-1.5 rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] text-[var(--text-secondary)] font-mono text-[11px] truncate text-center shadow-sm">
                   linkedin.com/in/afnaan22mis1157
                 </div>
@@ -433,7 +398,7 @@ export default function Contact() {
               </div>
             </motion.a>
 
-            {/* BOTTOM INSTAGRAM CARD WITH CIRCULAR INSTAGRAM STORY PROFILE AVATAR HOVER OVERLAY */}
+            {/* BOTTOM INSTAGRAM CARD WITH PERMANENT PROFILE BADGE */}
             <motion.a
               href="https://www.instagram.com/afnaan_k.391/"
               target="_blank"
@@ -443,26 +408,8 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="relative rounded-3xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-[#E4405F] hover:shadow-[0_0_30px_rgba(228,64,95,0.3)] transition-all duration-500 p-6 overflow-hidden flex flex-col justify-between text-left group/insta min-h-[220px] block shadow-sm"
+              className="relative rounded-3xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-[#E4405F] transition-all duration-300 p-6 overflow-hidden flex flex-col justify-between text-left group/insta min-h-[220px] block shadow-sm"
             >
-              {/* Background Ambient Radial Blur & Photo Grid Pattern */}
-              <div className="absolute inset-0 opacity-15 dark:opacity-25 pointer-events-none bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500 via-rose-500 to-purple-600" />
-
-              {/* CIRCULAR INSTAGRAM STORY AVATAR PROFILE IMAGE OVERLAY */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] opacity-0 group-hover/insta:opacity-95 transition-opacity duration-400 p-6 flex flex-col items-center justify-center text-center text-white z-20 pointer-events-none gap-3">
-                {/* Instagram Animated Story Gradient Avatar Ring */}
-                <div className="w-20 h-20 rounded-full p-[3px] bg-gradient-to-tr from-amber-300 via-rose-400 to-purple-300 shadow-2xl overflow-hidden transform group-hover/insta:scale-105 transition-transform duration-500 relative">
-                  <img src={profileImg} alt="afnaan_k.391" className="w-full h-full object-cover object-top rounded-full border-2 border-white" />
-                </div>
-                <div>
-                  <h4 className="font-grotesk font-black text-xl text-white m-0">afnaan_k.391</h4>
-                  <p className="font-mono text-xs text-amber-100 mt-0.5">392 Followers • VITian CC 27 🎓</p>
-                </div>
-                <div className="px-4 py-1.5 rounded-full bg-white text-[#E4405F] font-mono text-[10px] font-bold tracking-widest uppercase shadow-lg">
-                  FOLLOW ON INSTAGRAM ↗
-                </div>
-              </div>
-
               {/* Top Row: Instagram Logo Badge & Arrow */}
               <div className="relative z-10 flex items-center justify-between">
                 <div className="p-2 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border)] group-hover/insta:border-[#E4405F]/50 transition-colors shrink-0">
@@ -473,8 +420,24 @@ export default function Contact() {
                 </div>
               </div>
 
+              {/* PERMANENT INSTAGRAM PROFILE DISPLAY */}
+              <div className="relative z-10 flex items-center gap-3 my-auto py-2">
+                <div className="w-14 h-14 rounded-full p-[2px] bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] shrink-0 overflow-hidden shadow-md">
+                  <img src={profileImg} alt="afnaan_k.391" className="w-full h-full object-cover object-top rounded-full border border-white" />
+                </div>
+                <div className="flex flex-col text-left truncate">
+                  <h4 className="font-grotesk font-bold text-sm text-[var(--text-primary)] truncate m-0">afnaan_k.391</h4>
+                  <p className="font-inter text-[11px] text-[var(--text-muted)] truncate mt-0.5">
+                    Afnaan Ahmed (he/him)
+                  </p>
+                  <p className="font-mono text-[10px] text-[#E4405F] font-semibold mt-0.5">
+                    392 Followers • VITian CC 27 🎓
+                  </p>
+                </div>
+              </div>
+
               {/* Bottom Username Pill & Follow Button */}
-              <div className="relative z-10 flex flex-col gap-2.5 mt-auto pt-4">
+              <div className="relative z-10 flex flex-col gap-2.5 mt-auto pt-2">
                 <div className="px-3 py-1.5 rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)]/90 backdrop-blur text-[var(--text-secondary)] font-mono text-[11px] truncate text-center shadow-sm group-hover/insta:text-[#E4405F] transition-colors">
                   instagram.com/afnaan_k.391
                 </div>
